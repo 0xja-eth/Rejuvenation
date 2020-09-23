@@ -223,7 +223,7 @@ namespace UI.Common.Controls.AnimationSystem {
         /// <param name="name">变量名</param>
         /// <param name="val">值</param>
         public void setVar<T>(string name, T val) {
-            Debug.Log("setVar: " + name + "(" + typeof(T) + "): " + val);
+            debugLog("setVar: " + name + "(" + typeof(T) + "): " + val);
             if (typeof(T) == typeof(bool))
                 animator.SetBool(name, (bool)(object)val);
             else if (typeof(T) == typeof(int))
@@ -246,7 +246,7 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="state">状态名</param>
 		/// <param name="clip">动画片段</param>
 		public void changeAni(string state, AnimationClip clip) {
-			Debug.Log("changeAni: " + state + ": " + clip);
+			debugLog("changeAni: " + state + ": " + clip);
 			if (override_ == null) {
 				var runtime = animator.runtimeAnimatorController;
 				override_ = new AnimatorOverrideController(runtime);

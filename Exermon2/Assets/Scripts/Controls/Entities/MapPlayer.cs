@@ -9,7 +9,7 @@ namespace UI.Common.Controls.Entities {
 	using Common.Controls.AnimationSystem;
 
 	/// <summary>
-	/// 地图上的行走实体
+	/// 地图上的玩家实体
 	/// </summary>
 	public class MapPlayer : MapCharacter {
 
@@ -31,6 +31,26 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		protected override void update() {
 			base.update();
+			updateInput();
+		}
+
+		/// <summary>
+		/// 更新玩家输入事件
+		/// </summary>
+		void updateInput() {
+			updateMovement();
+		}
+		
+		/// <summary>
+		/// 更新移动
+		/// </summary>
+		void updateMovement() {
+			if (xDelta == 0 && yDelta == 0) return;
+
+			var force = new Vector2(xDelta, yDelta);
+			force *= Time.deltaTime * moveSpeed();
+
+			move(force.x, force.y);
 		}
 
 		#endregion
@@ -43,13 +63,6 @@ namespace UI.Common.Controls.Entities {
 		/// <returns></returns>
 		public override bool isMoveable() {
 			return moveable;
-		}
-
-		/// <summary>
-		/// 更新移动
-		/// </summary>
-		void updateMovement() {
-			moveDelta(xDelta, yDelta);
 		}
 
 		#endregion

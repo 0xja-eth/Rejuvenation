@@ -39,14 +39,14 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// </summary>
 		public AnimationController controller;
 
-		public RectTransform rectTransform;
+		//public RectTransform rectTransform;
 		public CanvasGroup canvasGroup;
 		public Graphic graphic;
 
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
-		Animation animation;
+		new Animation animation;
 
 		/// <summary>
 		/// 动画栈/缓冲队列
@@ -87,7 +87,7 @@ namespace UI.Common.Controls.AnimationSystem {
 		void setupAnimationObjects() {
 			animation = SceneUtils.ani(gameObject);
 
-			rectTransform = rectTransform ?? transform as RectTransform;
+			//rectTransform = rectTransform ?? transform as RectTransform;
 			canvasGroup = canvasGroup ?? SceneUtils.get<CanvasGroup>(gameObject);
 			graphic = graphic ?? SceneUtils.get<Graphic>(gameObject);
 		}
@@ -282,7 +282,6 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// 开始下一个动画视窗
 		/// </summary>
 		public void startNextAnimationView() {
-			Debug.Log(name + ": startNextAnimationView");
 			controller?.playNext();
 		}
 
@@ -295,7 +294,7 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// </summary>
 		public void play() {
 			var ani = curAni();
-			Debug.Log(name + " play: " + ani?.getName());
+			debugLog("play: " + ani?.getName());
 			ani?.setupAnimation(animation);
         }
 
@@ -371,7 +370,7 @@ namespace UI.Common.Controls.AnimationSystem {
 		}
 		public AnimationUtils.TempAnimation addAnimation(
             AnimationUtils.TempAnimation ani) {
-			Debug.Log(name + " addAnimation: " + ani.getName());
+			debugLog("addAnimation: " + ani.getName());
 			return enqueueAnimation(ani);
         }
 
@@ -382,12 +381,12 @@ namespace UI.Common.Controls.AnimationSystem {
 		AnimationUtils.TempAnimation enqueueAnimation(AnimationUtils.TempAnimation ani) {
 			foreach (var ani_ in animations)
 				if (ani_.isClipEquals(ani)) {
-					Debug.LogWarning("Adding animation: " + ani.getName() + " failed.");
+					debugWarning("Adding animation: " + ani.getName() + " failed.");
 					return ani_;
 				}
 			animations.AddLast(ani); return ani;
 		}
-		
+
 		#endregion
 
 		#region 预设动画
@@ -399,19 +398,55 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void moveTo(Vector2 target, string name = "Move", 
+		public AnimationUtils.TempAnimation moveTo(
+			Vector2 target, string name = "Move",
 			float duration = AnimationUtils.AniDuration, bool play = false) {
-			if (rectTransform == null) return;
-
 			var ani = addAnimation(name, true);
+
+			if (rectTransform == null)
+				transformMoveTo(target, ani, duration);
+			else
+				rectTransformMoveTo(target, ani, duration);
+
+			if (play) this.play();
+			return ani;
+		}
+		public AnimationUtils.TempAnimation moveTo(Vector3 target, string name = "Move",
+			float duration = AnimationUtils.AniDuration, bool play = false) {
+			var ani = addAnimation(name, true);
+
+			transformMoveTo(target, ani, duration);
+
+			if (play) this.play();
+			return ani;
+		}
+
+		/// <summary>
+		/// Transform移动
+		/// </summary>
+		void transformMoveTo(Vector3 target, 
+			AnimationUtils.TempAnimation ani, float duration) {
+			var ori = transform.localPosition;
+
+			ani.addCurve(typeof(Transform),
+				"m_LocalPosition.x", ori.x, target.x, duration);
+			ani.addCurve(typeof(Transform),
+				"m_LocalPosition.y", ori.y, target.y, duration);
+			ani.addCurve(typeof(Transform),
+				"m_LocalPosition.z", ori.z, target.z, duration);
+		}
+
+		/// <summary>
+		/// RectTransform移动
+		/// </summary>
+		void rectTransformMoveTo(Vector2 target,
+			AnimationUtils.TempAnimation ani, float duration) {
 			var ori = rectTransform.anchoredPosition;
 
 			ani.addCurve(typeof(RectTransform),
 				"m_AnchoredPosition.x", ori.x, target.x, duration);
 			ani.addCurve(typeof(RectTransform),
 				"m_AnchoredPosition.y", ori.y, target.y, duration);
-
-			if (play) this.play();
 		}
 
 		/// <summary>
@@ -421,12 +456,20 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void moveDelta(Vector2 delta, string name = "Move",
-			float duration = AnimationUtils.AniDuration, bool play = false) {
-			if (rectTransform == null) return;
+		public AnimationUtils.TempAnimation moveDelta(Vector2 delta, 
+			string name = "Move", float duration = AnimationUtils.AniDuration, bool play = false) {
 
-			var ori = rectTransform.anchoredPosition;
-			moveTo(ori + delta, name, duration, play);
+			Vector2 ori = (rectTransform == null ?
+				(Vector2)transform.localPosition : 
+				rectTransform.anchoredPosition);
+
+			return moveTo(ori + delta, name, duration, play);
+		}
+		public AnimationUtils.TempAnimation moveDelta(Vector3 delta, 
+			string name = "Move", float duration = AnimationUtils.AniDuration, bool play = false) {
+
+			var ori = transform.localPosition;
+			return moveTo(ori + delta, name, duration, play);
 		}
 
 		/// <summary>
@@ -436,21 +479,21 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void scaleTo(Vector3 target, string name = "Scale",
-			float duration = AnimationUtils.AniDuration, bool play = false) {
-			if (rectTransform == null) return;
-
+		public AnimationUtils.TempAnimation scaleTo(Vector3 target, 
+			string name = "Scale", float duration = AnimationUtils.AniDuration, bool play = false) {
+		
 			var ani = addAnimation(name, true);
-			var ori = rectTransform.localScale;
+			var ori = transform.localScale;
 
-			ani.addCurve(typeof(RectTransform),
+			ani.addCurve(typeof(Transform),
 				"m_LocalScale.x", ori.x, target.x, duration);
-			ani.addCurve(typeof(RectTransform),
+			ani.addCurve(typeof(Transform),
 				"m_LocalScale.y", ori.y, target.y, duration);
-			ani.addCurve(typeof(RectTransform),
+			ani.addCurve(typeof(Transform),
 				"m_LocalScale.z", ori.z, target.z, duration);
 
 			if (play) this.play();
+			return ani;
 		}
 
 		/// <summary>
@@ -460,12 +503,11 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void scaleDelta(Vector3 delta, string name = "Scale",
-			float duration = AnimationUtils.AniDuration, bool play = false) {
-			if (rectTransform == null) return;
+		public AnimationUtils.TempAnimation scaleDelta(Vector3 delta, 
+			string name = "Scale", float duration = AnimationUtils.AniDuration, bool play = false) {
 
-			var ori = rectTransform.localScale;
-			scaleTo(ori + delta, name, duration, play);
+			var ori = transform.localScale;
+			return scaleTo(ori + delta, name, duration, play);
 		}
 
 		/// <summary>
@@ -475,24 +517,21 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void rotateTo(Vector3 target, string name = "Rotate",
-			float duration = AnimationUtils.AniDuration, bool play = false) {
-
-			Debug.Log(this.name + ": rotateTo " + target + ", rectTransform: " + rectTransform);
-
-			if (rectTransform == null) return;
+		public AnimationUtils.TempAnimation rotateTo(Vector3 target, 
+			string name = "Rotate", float duration = AnimationUtils.AniDuration, bool play = false) {
 
 			var ani = addAnimation(name, true);
-			var ori = rectTransform.localEulerAngles;
+			var ori = transform.localEulerAngles;
 
-			ani.addCurve(typeof(RectTransform),
+			ani.addCurve(typeof(Transform),
 				"m_LocalEulerAngles.x", ori.x, target.x, duration);
-			ani.addCurve(typeof(RectTransform),
+			ani.addCurve(typeof(Transform),
 				"m_LocalEulerAngles.y", ori.y, target.y, duration);
-			ani.addCurve(typeof(RectTransform),
+			ani.addCurve(typeof(Transform),
 				"m_LocalEulerAngles.z", ori.z, target.z, duration);
 
 			if (play) this.play();
+			return ani;
 		}
 
 		/// <summary>
@@ -502,12 +541,11 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void rotateDelta(Vector3 delta, string name = "Rotate",
-			float duration = AnimationUtils.AniDuration, bool play = false) {
-			if (rectTransform == null) return;
+		public AnimationUtils.TempAnimation rotateDelta(Vector3 delta, 
+			string name = "Rotate", float duration = AnimationUtils.AniDuration, bool play = false) {
 
-			var ori = rectTransform.localEulerAngles;
-			rotateTo(ori + delta, name, duration, play);
+			var ori = transform.localEulerAngles;
+			return rotateTo(ori + delta, name, duration, play);
 		}
 
 		/// <summary>
@@ -517,9 +555,9 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void colorTo(Color target, string name = "Color",
-			float duration = AnimationUtils.AniDuration, bool play = false) {
-			if (graphic == null) return;
+		public AnimationUtils.TempAnimation colorTo(Color target, 
+			string name = "Color", float duration = AnimationUtils.AniDuration, bool play = false) {
+			if (graphic == null) return null;
 
 			var ani = addAnimation(name, true);
 			var ori = graphic.color;
@@ -534,6 +572,7 @@ namespace UI.Common.Controls.AnimationSystem {
 				"m_Color.b", ori.b, target.b, duration);
 
 			if (play) this.play();
+			return ani;
 		}
 
 		/// <summary>
@@ -543,9 +582,9 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void fadeTo(float alpha, string name = "Fade",
-			float duration = AnimationUtils.AniDuration, bool play = false) {
-			if (canvasGroup == null) return;
+		public AnimationUtils.TempAnimation fadeTo(float alpha, 
+			string name = "Fade", float duration = AnimationUtils.AniDuration, bool play = false) {
+			if (canvasGroup == null) return null;
 
 			var ani = addAnimation(name, true);
 			var ori = canvasGroup.alpha;
@@ -554,6 +593,7 @@ namespace UI.Common.Controls.AnimationSystem {
 				"m_Alpha", ori, alpha, duration);
 
 			if (play) this.play();
+			return ani;
 		}
 
 		/// <summary>
@@ -562,9 +602,9 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void fadeIn(string name = "FadeIn", 
+		public AnimationUtils.TempAnimation fadeIn(string name = "FadeIn", 
 			float duration = AnimationUtils.AniDuration, bool play = false) {
-			fadeTo(1, name, duration, play);
+			return fadeTo(1, name, duration, play);
 		}
 
 		/// <summary>
@@ -573,9 +613,9 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <param name="duration">时间</param>
 		/// <param name="name">动画名</param>
 		/// <param name="play">立即播放</param>
-		public void fadeOut(string name = "FadeOut",
+		public AnimationUtils.TempAnimation fadeOut(string name = "FadeOut", 
 			float duration = AnimationUtils.AniDuration, bool play = false) {
-			fadeTo(0, name, duration, play);
+			return fadeTo(0, name, duration, play);
 		}
 
 		#endregion

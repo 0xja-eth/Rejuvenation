@@ -128,17 +128,17 @@ namespace Core.UI {
 	/// </summary>
 	public abstract class BaseComponent : MonoBehaviour, IBaseComponent {
 
-        /// <summary>
-        /// 开始标志
-        /// </summary>
-        public bool awaked { get; protected set; } = false;
-        public bool started { get; protected set; } = false;
-		public bool updating { get; protected set; } = false;
-		public bool showDebug { get; protected set; } = false;
+		/// <summary>
+		/// 外部变量声明
+		/// </summary>
+		public bool showDebug = false;
 
 		/// <summary>
-		/// 内部变量声明
+		/// 属性
 		/// </summary>
+		public bool awaked { get; protected set; } = false;
+        public bool started { get; protected set; } = false;
+		public bool updating { get; protected set; } = false;
 		public bool initialized { get; protected set; } = false; // 初始化标志
 
 		/// <summary>
