@@ -65,3 +65,6 @@ crashlytics-build.properties
 # Downloaded assets
 DownloadedAssets/
 DownloadedAssets.meta
+
+# Deploy configure
+DeployConfig.cs
