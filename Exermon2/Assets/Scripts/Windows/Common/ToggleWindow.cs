@@ -94,7 +94,6 @@ namespace UI.Common.Windows {
 		/// 取消回调
 		/// </summary>
 		protected virtual void onCancel() {
-			Debug.Log(name + ": onCancel");
 			terminateRequest = true;
 		}
 

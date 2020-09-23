@@ -418,10 +418,33 @@ namespace Core.UI {
 		}
 
 		/// <summary>
+		/// 输出位置信息
+		/// </summary>
+		public virtual void debugPosition() {
+			var msg = debugFormat("position", transform.position);
+			msg += debugFormat("localPosition", transform.localPosition);
+
+			if (isCanvasComponent()) msg += debugFormat(
+				"anchoredPosition", rectTransform.anchoredPosition);
+
+			debugLog(msg);
+		}
+
+		/// <summary>
+		/// 返回调试格式化字符串
+		/// </summary>
+		/// <param name="key">键</param>
+		/// <param name="value">值</param>
+		/// <returns></returns>
+		protected string debugFormat(string key, object value) {
+			return string.Format("{0}: {1}\n", key, value);
+		}
+
+		/// <summary>
 		/// 调试日志
 		/// </summary>
 		/// <param name="obj"></param>
-		protected void debug(object obj, DebugType type, bool force = false) {
+		public void debug(object obj, DebugType type, bool force = false) {
 			if (!force && !showDebug) return;
 			var format = "{0}({1}): ";
 			var msg = string.Format(format, name, this);
@@ -435,13 +458,13 @@ namespace Core.UI {
 					UnityEngine.Debug.LogError(msg + obj); break;
 			}
 		}
-		protected void debugLog(object obj, bool force = false) {
+		public void debugLog(object obj, bool force = false) {
 			debug(obj, DebugType.Log, force);
 		}
-		protected void debugError(object obj, bool force = false) {
+		public void debugError(object obj, bool force = false) {
 			debug(obj, DebugType.Error, force);
 		}
-		protected void debugWarning(object obj, bool force = false) {
+		public void debugWarning(object obj, bool force = false) {
 			debug(obj, DebugType.Warning, force);
 		}
 
