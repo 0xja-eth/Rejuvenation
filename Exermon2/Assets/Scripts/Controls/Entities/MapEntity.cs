@@ -9,8 +9,7 @@ namespace UI.Common.Controls.Entities {
 	/// <summary>
 	/// 地图上的实体
 	/// </summary>
-	[RequireComponent(typeof(SpriteRenderer))]
-	[RequireComponent(typeof(Rigidbody2D))]
+	[RequireComponent(typeof(Collider2D))]
 	public class MapEntity : WorldComponent {
 
 		/// <summary>
@@ -20,10 +19,9 @@ namespace UI.Common.Controls.Entities {
 		public float y => transform.position.y;
 
 		/// <summary>
-		/// 内部组件定义
+		/// 内部控件设置
 		/// </summary>
-		protected new Rigidbody2D rigidbody;
-		protected SpriteRenderer sprite;
+		protected new Collider2D collider;
 
 		#region 初始化
 
@@ -32,11 +30,9 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			rigidbody = SceneUtils.get<Rigidbody2D>(gameObject);
-			sprite = SceneUtils.get<SpriteRenderer>(gameObject);
+			collider = SceneUtils.get<Collider2D>(gameObject);
 		}
 
 		#endregion
-
 	}
 }

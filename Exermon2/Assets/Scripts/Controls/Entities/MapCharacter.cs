@@ -11,6 +11,8 @@ namespace UI.Common.Controls.Entities {
 	/// <summary>
 	/// 地图上的行走实体
 	/// </summary>
+	[RequireComponent(typeof(SpriteRenderer))]
+	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(AnimatorExtend))]
 	[RequireComponent(typeof(AnimationExtend))]
 	public class MapCharacter : MapEntity {
@@ -50,6 +52,9 @@ namespace UI.Common.Controls.Entities {
 		/// <summary>
 		/// 内部控件设置
 		/// </summary>
+		protected new Rigidbody2D rigidbody;
+		protected SpriteRenderer sprite;
+
 		protected AnimatorExtend animator;
 		protected new AnimationExtend animation;
 
@@ -65,6 +70,9 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
+			rigidbody = SceneUtils.get<Rigidbody2D>(gameObject);
+			sprite = SceneUtils.get<SpriteRenderer>(gameObject);
+
 			animator = SceneUtils.get<AnimatorExtend>(gameObject);
 			animation = SceneUtils.get<AnimationExtend>(gameObject);
 		}
@@ -303,6 +311,13 @@ namespace UI.Common.Controls.Entities {
 			var index = (int)d - 1;
 			if (speed < 0) speed = moveSpeed();
 			move(dirX[index] * speed, dirY[index] * speed);
+		}
+
+		/// <summary>
+		/// 停止
+		/// </summary>
+		public void stop() {
+			rigidbody.velocity = Vector2.zero;
 		}
 
 		#endregion

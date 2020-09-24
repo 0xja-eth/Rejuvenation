@@ -45,12 +45,13 @@ namespace UI.Common.Controls.Entities {
 		/// 更新移动
 		/// </summary>
 		void updateMovement() {
-			if (xDelta == 0 && yDelta == 0) return;
+			if (xDelta == 0 && yDelta == 0) stop();
+			else {
+				var force = new Vector2(xDelta, yDelta);
+				force *= Time.deltaTime * moveSpeed();
 
-			var force = new Vector2(xDelta, yDelta);
-			force *= Time.deltaTime * moveSpeed();
-
-			move(force.x, force.y);
+				move(force.x, force.y);
+			}
 		}
 
 		#endregion
