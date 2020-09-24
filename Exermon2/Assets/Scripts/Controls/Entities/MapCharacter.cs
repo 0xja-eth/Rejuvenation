@@ -47,7 +47,7 @@ namespace UI.Common.Controls.Entities {
 		/// <summary>
 		/// 外部变量定义
 		/// </summary>
-		public float defaultMoveSpeed = 5f;
+		public float defaultMoveSpeed = 20; // 默认移动速度
 
 		/// <summary>
 		/// 内部控件设置

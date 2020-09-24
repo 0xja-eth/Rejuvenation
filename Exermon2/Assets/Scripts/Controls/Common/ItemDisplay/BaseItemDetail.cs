@@ -20,6 +20,7 @@ namespace UI.Common.Controls.ItemDisplays {
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
+		[RequireTarget]
 		BaseItemDisplay itemDisplay;
 
 		#region 初始化
@@ -29,8 +30,6 @@ namespace UI.Common.Controls.ItemDisplays {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			itemDisplay = SceneUtils.get<BaseItemDisplay>(gameObject);
-
 			initializeDrawFuncs();
 		}
 

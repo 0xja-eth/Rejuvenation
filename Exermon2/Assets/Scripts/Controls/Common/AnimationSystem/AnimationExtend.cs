@@ -31,7 +31,7 @@ namespace UI.Common.Controls.AnimationSystem {
 	/// <summary>
 	/// 动画拓展组件
 	/// </summary>
-	[RequireComponent(typeof(Animator))]
+	[RequireComponent(typeof(Animation))]
 	public class AnimationExtend : GeneralComponent {
 
 		/// <summary>
@@ -46,6 +46,7 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
+		[RequireTarget]
 		new Animation animation;
 
 		/// <summary>
@@ -85,8 +86,6 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// 配置动画物体
 		/// </summary>
 		void setupAnimationObjects() {
-			animation = SceneUtils.ani(gameObject);
-
 			//rectTransform = rectTransform ?? transform as RectTransform;
 			canvasGroup = canvasGroup ?? SceneUtils.get<CanvasGroup>(gameObject);
 			graphic = graphic ?? SceneUtils.get<Graphic>(gameObject);

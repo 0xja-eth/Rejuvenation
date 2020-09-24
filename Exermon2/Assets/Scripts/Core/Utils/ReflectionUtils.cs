@@ -12,7 +12,8 @@ namespace Core.Utils {
 		/// 默认绑定标志
 		/// </summary>
 		public static readonly BindingFlags DefaultFlag =
-			BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			BindingFlags.Instance | BindingFlags.Public | 
+			BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
 
 		/// <summary>
 		/// 快速处理成员
@@ -94,7 +95,7 @@ namespace Core.Utils {
 			var member = type as MemberInfo;
 			if (member == null) return;
 
-			foreach (Attribute a in member.GetCustomAttributes(false)) {
+			foreach (Attribute a in member.GetCustomAttributes(true)) {
 				var attr = a as A;
 				if (attr == null) continue;
 

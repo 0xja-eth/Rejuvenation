@@ -189,6 +189,7 @@ namespace Core.UI {
 		/// </summary>
 		private void Awake() {
             awaked = true;
+			debugLog("Awake");
 			if (!initialized) initialize();
 		}
 
@@ -199,7 +200,7 @@ namespace Core.UI {
 			if (!initialized) {
 				initialized = true;
 				initializeSystems();
-				initializeRequiredComponents();
+				initializeRequirements();
 				initializeOnce();
 			}
 			initializeEvery();
@@ -225,7 +226,7 @@ namespace Core.UI {
 		/// <summary>
 		/// 初始化需要的组件
 		/// </summary>
-		void initializeRequiredComponents() {
+		void initializeRequirements() {
 			var reqs = new List<Type>();
 			ReflectionUtils.processClassAttribute<RequireComponent>(
 				GetType(), (a) => {
@@ -267,7 +268,8 @@ namespace Core.UI {
         /// 初始化（开始）
         /// </summary>
         private void Start() {
-            started = true; start();
+			debugLog("Start");
+			started = true; start();
         }
 
         /// <summary>
