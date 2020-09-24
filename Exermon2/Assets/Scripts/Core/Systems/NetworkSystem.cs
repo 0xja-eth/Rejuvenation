@@ -303,12 +303,12 @@ namespace Core.Systems {
             //addStateDict(State.Error);
         }
 
-        /// <summary>
-        /// 初始化外部系统
-        /// </summary>
-        protected override void initializeSystems() {
-            gameSys = GameSystem.get();
-        }
+        ///// <summary>
+        ///// 初始化外部系统
+        ///// </summary>
+        //protected override void initializeSystems() {
+        //    gameSys = GameSystem.get();
+        //}
 
         #endregion
 

@@ -332,95 +332,140 @@ namespace Core.UI.Utils {
             }
         }
 
-        #endregion
+		#endregion
 
-        #region Find, GetComponent的封装
+		#region Find, GetComponent的封装
 
-        /// <summary>
-        /// 获取组件
-        /// </summary>
-        /// <typeparam name="T">组件类型</typeparam>
-        /// <param name="t">变换对象</param>
-        /// <remarks>
-        /// 取代 t.GetComponent<T> 的写法：SceneUtils.get<T>(obj)
-        /// </remarks>
-        /// <returns>返回获取的组件</returns>
-        public static T get<T>(Transform t) {
-            return t == null ? default : t.GetComponent<T>();
-        }
-        /// <summary>
-        /// 获取组件
-        /// </summary>
-        /// <typeparam name="T">组件类型</typeparam>
-        /// <param name="obj">物体对象</param>
-        /// <remarks>
-        /// 取代 obj.GetComponent<T> 的写法：SceneUtils.get<T>(obj)
-        /// </remarks>
-        /// <returns>返回获取的组件</returns>
-        public static T get<T>(GameObject obj) {
-            return obj == null ? default : obj.GetComponent<T>();
-        }
-        /// <summary>
-        /// 获取子物体下的组件
-        /// </summary>
-        /// <remarks>
-        /// 取代 parent.Find(obj).GetComponent<T> 的写法：
-        /// SceneUtils.find<T>(obj)
-        /// </remarks>
-        /// <typeparam name="T">组件类型</typeparam>
-        /// <param name="parent">父物体变换对象</param>
-        /// <param name="path">寻找路径</param>
-        /// <returns>返回查找到的组件</returns>
-        public static T find<T>(Transform parent, string path) {
-            return get<T>(parent.Find(path));
-        }
-        /// <summary>
-        /// 获取子物体下的组件
-        /// </summary>
-        /// <remarks>
-        /// 取代 parent.Find(obj).GetComponent<T> 的写法：
-        /// SceneUtils.find<T>(obj)
-        /// </remarks>
-        /// <typeparam name="T">组件类型</typeparam>
-        /// <param name="parent">父物体对象</param>
-        /// <param name="path">寻找路径</param>
-        /// <returns>返回查找到的组件</returns>
-        public static T find<T>(GameObject parent, string obj) {
-            return get<T>(parent.transform.Find(obj));
-        }
-        /// <summary>
-        /// 获取子物体下的 GameObject
-        /// </summary>
-        /// <remarks>
-        /// 取代 parent.Find(obj).gameObject 的写法：
-        /// SceneUtils.find(obj)
-        /// </remarks>
-        /// <param name="parent">父物体对象</param>
-        /// <param name="path">寻找路径</param>
-        /// <returns>返回查找到的物体</returns>
-        public static GameObject find(Transform parent, string obj) {
+		/// <summary>
+		/// 获取组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="comp">组件对象</param>
+		/// <remarks>
+		/// 取代 comp.GetComponent<T> 的写法：SceneUtils.get<T>(comp)
+		/// </remarks>
+		/// <returns>返回获取的组件</returns>
+		public static T get<T>(Component comp) {
+			return comp == null ? default : comp.GetComponent<T>();
+		}
+		public static Component get(Component comp, Type type) {
+			return comp == null ? default : comp.GetComponent(type);
+		}
+		/// <summary>
+		/// 获取组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="obj">物体对象</param>
+		/// <remarks>
+		/// 取代 obj.GetComponent<T> 的写法：SceneUtils.get<T>(obj)
+		/// </remarks>
+		/// <returns>返回获取的组件</returns>
+		public static T get<T>(GameObject obj) {
+			return obj == null ? default : obj.GetComponent<T>();
+		}
+		public static Component get(GameObject obj, Type type) {
+			return obj == null ? default : obj.GetComponent(type);
+		}
+		/// <summary>
+		/// 获取子物体下的组件
+		/// </summary>
+		/// <remarks>
+		/// 取代 parent.Find(obj).GetComponent<T> 的写法：
+		/// SceneUtils.find<T>(obj)
+		/// </remarks>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="parent">父物体变换对象</param>
+		/// <param name="path">寻找路径</param>
+		/// <returns>返回查找到的组件</returns>
+		public static T find<T>(Transform parent, string path) {
+			return get<T>(parent.Find(path));
+		}
+		public static Component find(
+			Transform parent, Type type, string path) {
+			return get(parent.Find(path), type);
+		}
+		/// <summary>
+		/// 获取子物体下的组件
+		/// </summary>
+		/// <remarks>
+		/// 取代 parent.Find(path).GetComponent<T> 的写法：
+		/// SceneUtils.find<T>(parent, path)
+		/// </remarks>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="parent">父物体对象</param>
+		/// <param name="path">寻找路径</param>
+		/// <returns>返回查找到的组件</returns>
+		public static T find<T>(GameObject parent, string path) {
+			return get<T>(parent.transform.Find(path));
+		}
+		public static Component find(
+			GameObject parent, Type type, string path) {
+			return get(parent.transform.Find(path), type);
+		}
+		/// <summary>
+		/// 获取子物体下的组件
+		/// </summary>
+		/// <remarks>
+		/// 取代 comp.transform.Find(path).GetComponent<T> 的写法：
+		/// SceneUtils.find<T>(comp, path)
+		/// </remarks>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="comp">父物体组件对象</param>
+		/// <param name="path">寻找路径</param>
+		/// <returns>返回查找到的组件</returns>
+		public static T find<T>(Component comp, string path) {
+			return find<T>(comp.transform, path);
+		}
+		public static Component find(
+			Component comp, Type type, string path) {
+			return find(comp.transform, type, path);
+		}
+		/// <summary>
+		/// 获取子物体下的 GameObject
+		/// </summary>
+		/// <remarks>
+		/// 取代 parent.Find(obj).gameObject 的写法：
+		/// SceneUtils.find(obj)
+		/// </remarks>
+		/// <param name="parent">父物体对象</param>
+		/// <param name="path">寻找路径</param>
+		/// <returns>返回查找到的物体</returns>
+		public static GameObject find(Transform parent, string obj) {
             return parent.Find(obj).gameObject;
-        }
-        /// <summary>
-        /// 获取子物体下的 GameObject
-        /// </summary>
-        /// <remarks>
-        /// 取代 parent.transform.Find(obj).gameObject 的写法：
-        /// SceneUtils.find(obj)
-        /// </remarks>
-        /// <param name="parent">父物体对象</param>
-        /// <param name="path">寻找路径</param>
-        /// <returns>返回查找到的物体</returns>
-        public static GameObject find(GameObject parent, string obj) {
-            return parent.transform.Find(obj).gameObject;
-        }
+		}
+		/// <summary>
+		/// 获取子物体下的 GameObject
+		/// </summary>
+		/// <remarks>
+		/// 取代 parent.transform.Find(obj).gameObject 的写法：
+		/// SceneUtils.find(obj)
+		/// </remarks>
+		/// <param name="parent">父物体对象</param>
+		/// <param name="path">寻找路径</param>
+		/// <returns>返回查找到的物体</returns>
+		public static GameObject find(GameObject parent, string obj) {
+			return parent.transform.Find(obj).gameObject;
+		}
+		/// <summary>
+		/// 获取子物体下的 GameObject
+		/// </summary>
+		/// <remarks>
+		/// 取代 parent.transform.Find(obj).gameObject 的写法：
+		/// SceneUtils.find(obj)
+		/// </remarks>
+		/// <param name="comp">父物体组件对象</param>
+		/// <param name="path">寻找路径</param>
+		/// <returns>返回查找到的物体</returns>
+		public static GameObject find(Component comp, string obj) {
+			return find(comp.transform, obj);
+		}
 
-        /// <summary>
-        /// 快速获取 Text 组件
-        /// </summary>
-        /// <param name="t">物体变换对象</param>
-        /// <returns>返回该对象的 Text 组件</returns>
-        public static Text text(Transform t) {
+		/// <summary>
+		/// 快速获取 Text 组件
+		/// </summary>
+		/// <param name="t">物体变换对象</param>
+		/// <returns>返回该对象的 Text 组件</returns>
+		public static Text text(Transform t) {
             return get<Text>(t);
         }
         /// <summary>

@@ -15,188 +15,202 @@ namespace Core.Data.Loaders {
 
 	using Utils;
 
-    /// <summary>
-    /// 数据控制器
-    /// </summary>
-    public static class DataLoader {
+	/// <summary>
+	/// 数据控制器
+	/// </summary>
+	public static class DataLoader {
 
-        /// <summary>
-        /// 更新时间格式
-        /// </summary>
-        // 系统内部存储的日期格式
-        public const string SystemDateFormat = "yyyy-MM-dd";
-        public const string SystemDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+		/// <summary>
+		/// 更新时间格式
+		/// </summary>
+		// 系统内部存储的日期格式
+		public const string SystemDateFormat = "yyyy-MM-dd";
+		public const string SystemDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
-        // 显示的日期格式
-        public const string DisplayDateFormat = "yyyy 年 MM 月 dd 日";
-        public const string DisplayDateTimeFormat = "yyyy 年 MM 月 dd 日 HH:mm:ss";
+		// 显示的日期格式
+		public const string DisplayDateFormat = "yyyy 年 MM 月 dd 日";
+		public const string DisplayDateTimeFormat = "yyyy 年 MM 月 dd 日 HH:mm:ss";
 
-        /// <summary>
-        /// 判断JsonData是否包含键
-        /// </summary>
-        /// <param name="json">要判断的JsonData</param>
-        /// <param name="key">键</param>
-        /// <returns>是否包含</returns>
-        public static bool contains(JsonData json, string key, bool showLog = false) {
-            bool res = json.Keys.Contains(key);
-            if (!res && showLog)
-                Debug.LogWarning("Hasn't Key: " + key + " in " + json.ToJson());
-            return res;
-        }
+		/// <summary>
+		/// 判断JsonData是否包含键
+		/// </summary>
+		/// <param name="json">要判断的JsonData</param>
+		/// <param name="key">键</param>
+		/// <returns>是否包含</returns>
+		public static bool contains(JsonData json, string key, bool showLog = false) {
+			bool res = json.Keys.Contains(key);
+			if (!res && showLog)
+				Debug.LogWarning("Hasn't Key: " + key + " in " + json.ToJson());
+			return res;
+		}
 
-        #region 加载JsonData
+		#region 加载JsonData
 
-        /// <summary>
-        /// 加载数据
-        /// </summary>
-        /// <param name="json">数据</param>
-        /// <param name="key">键</param>
-        public static JsonData load(JsonData json, string key, bool returnNull = true) {
-            if (contains(json, key, true)) return json[key];
-            if (returnNull) return null;
-            var data = new JsonData();
-            data.SetJsonType(JsonType.Object);
-            return data;
-        }
+		/// <summary>
+		/// 加载数据
+		/// </summary>
+		/// <param name="json">数据</param>
+		/// <param name="key">键</param>
+		public static JsonData load(JsonData json, string key, bool returnNull = true) {
+			if (contains(json, key, true)) return json[key];
+			if (returnNull) return null;
+			var data = new JsonData();
+			data.SetJsonType(JsonType.Object);
+			return data;
+		}
 
-        /// <typeparam name="T">读取数据类型</typeparam>
-        /// <param name="val">原始值</param>
-        /// <param name="ignoreNull">是否忽略空值</param>
-        public static T load<T>(T val, JsonData json, string key, bool ignoreNull = false) {
-            if (!contains(json, key, true)) return val; // 如果不存在键，则返回原样
-            return (T)load(typeof(T), val, json[key], ignoreNull);
-        }
-        /// <param name="data">数据</param>
-        public static T load<T>(T val, JsonData data, bool ignoreNull = false) {
-            if (data == null)
-                // 如果值为空且忽略空值，则返回原样
-                return ignoreNull ? val : default;
-            return (T)load(typeof(T), val, data);
-        }
-        /// <param name="type">类型</param>
-        public static object load(Type type, object val, JsonData json, string key, bool ignoreNull = false) {
-            if (!contains(json, key, true)) return val; // 如果不存在键，则返回原样
-            return load(type, val, json[key], ignoreNull);
-        }
-        public static object load(Type type, object val, JsonData data, bool ignoreNull = false) {
-            if (data == null)
-                // 如果值为空且忽略空值，则返回原样
-                return ignoreNull ? val : default;
-            // 判断特殊类型
-            try {
-                if (type.IsSubclassOf(typeof(BaseData)) || type == typeof(BaseData)) {
-                    // 只有当值为空（默认）时才会创建对象
-                    if (val == default) val = Activator.CreateInstance(type);
-                    ((BaseData)val).load(data);
-                    return val;
-                } else return _load(type, data);
-            } catch (Exception e) {
-                Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (load type: " + type + ", ori val: " + val + ")\n" + 
+		/// <typeparam name="T">读取数据类型</typeparam>
+		/// <param name="val">原始值</param>
+		/// <param name="ignoreNull">是否忽略空值</param>
+		public static T load<T>(T val, JsonData json, string key, bool ignoreNull = false) {
+			if (!contains(json, key, true)) return val; // 如果不存在键，则返回原样
+			return (T)load(typeof(T), val, json[key], ignoreNull);
+		}
+		/// <param name="data">数据</param>
+		public static T load<T>(T val, JsonData data, bool ignoreNull = false) {
+			if (data == null)
+				// 如果值为空且忽略空值，则返回原样
+				return ignoreNull ? val : default;
+			return (T)load(typeof(T), val, data);
+		}
+		/// <param name="type">类型</param>
+		public static object load(Type type, object val, JsonData json, string key, bool ignoreNull = false) {
+			if (!contains(json, key, true)) return val; // 如果不存在键，则返回原样
+			return load(type, val, json[key], ignoreNull);
+		}
+		public static object load(Type type, object val, JsonData data, bool ignoreNull = false) {
+			if (data == null)
+				// 如果值为空且忽略空值，则返回原样
+				return ignoreNull ? val : default;
+			// 判断特殊类型
+			try {
+				if (type.IsSubclassOf(typeof(BaseData)) || type == typeof(BaseData)) {
+					// 只有当值为空（默认）时才会创建对象
+					if (val == default) val = Activator.CreateInstance(type);
+					((BaseData)val).load(data);
+					return val;
+				} else return _load(type, data);
+			} catch (Exception e) {
+				Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (load type: " + type + ", ori val: " + val + ")\n" +
 					" in " + data.ToJson());
-                throw new Exception();
-            }
-        }
-        public static T load<T>(JsonData json, string key) {
-            if (!contains(json, key, true)) return default;
-            try {
-                return (T)_load(typeof(T), json[key]);
-            } catch (Exception e) {
+				throw new Exception();
+			}
+		}
+		public static T load<T>(JsonData json, string key) {
+			if (!contains(json, key, true)) return default;
+			try {
+				return (T)_load(typeof(T), json[key]);
+			} catch (Exception e) {
 				Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (load type: " + typeof(T) + ")\n" +
 					" in " + key + " of " + json.ToJson());
-                throw new Exception();
-            }
-        }
-        public static T load<T>(JsonData data) {
-            if (data == null) return default;
-            try {
-                return (T)_load(typeof(T), data);
-            } catch (Exception e) {
+				throw new Exception();
+			}
+		}
+		public static T load<T>(JsonData data) {
+			if (data == null) return default;
+			try {
+				return (T)_load(typeof(T), data);
+			} catch (Exception e) {
 				Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (load type: " + typeof(T) + ")\n" +
 					" in " + data.ToJson());
 				throw new Exception();
-            }
-        }
-        public static object load(Type type, JsonData json, string key) {
-            if (!contains(json, key, true)) return default;
-            try {
-                return _load(type, json[key]);
-            } catch (Exception e) {
-                Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (load type: " + type + ")\n" +
+			}
+		}
+		public static object load(Type type, JsonData json, string key) {
+			if (!contains(json, key, true)) return default;
+			try {
+				return _load(type, json[key]);
+			} catch (Exception e) {
+				Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (load type: " + type + ")\n" +
 					" in " + key + " of " + json.ToJson());
-                throw new Exception();
-            }
-        }
-        public static object load(Type type, JsonData data) {
-            try {
-                return _load(type, data);
-            } catch (Exception e) {
-                Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (load type: " + type + ")\n" +
+				throw new Exception();
+			}
+		}
+		public static object load(Type type, JsonData data) {
+			try {
+				return _load(type, data);
+			} catch (Exception e) {
+				Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (load type: " + type + ")\n" +
 					" in " + data.ToJson());
-                throw new Exception();
-            }
-        }
-        private static object _load(Type type, JsonData data) {
-            if (data == null) return default;
+				throw new Exception();
+			}
+		}
+		private static object _load(Type type, JsonData data) {
+			if (data == null) return default;
 
-            // 处理数组情况
-            if (type.IsArray) {
-                if (!data.IsArray) return default;
-                var cnt = data.Count;
-                var eleType = type.GetElementType();
-                var res = Array.CreateInstance(eleType, cnt);
-                for (var i = 0; i < cnt; ++i)
-                    res.SetValue(load(eleType, data[i]), i);
-                return res;
-            }
+			// 处理数组情况
+			if (type.IsArray) {
+				if (!data.IsArray) return default;
+				var cnt = data.Count;
+				var eleType = type.GetElementType();
+				var res = Array.CreateInstance(eleType, cnt);
+				for (var i = 0; i < cnt; ++i)
+					res.SetValue(load(eleType, data[i]), i);
+				return res;
+			}
 
-            // 处理列表情况
-            var interfaces = type.GetInterfaces();
-            foreach(var interf in interfaces) 
-                if (interf.Name == typeof(ICollection<>).Name) {
-                    if (!data.IsArray) return default;
-                    var cnt = data.Count;
-                    var eleType = type.GetGenericArguments()[0];
-                    var res = Activator.CreateInstance(type);
-                    for (var i = 0; i < cnt; ++i)
-                        type.GetMethod("Add").Invoke(res,
-                            new object[] { load(eleType, data[i]) });
-                    return res;
-                }
-            //if (type.Name == typeof(List<>).Name) {
-            //}
+			// 处理列表情况
+			var interfaces = type.GetInterfaces();
+			foreach (var interf in interfaces)
+				if (interf.Name == typeof(ICollection<>).Name) {
+					if (!data.IsArray) return default;
+					var cnt = data.Count;
+					var eleType = type.GetGenericArguments()[0];
+					var res = Activator.CreateInstance(type);
+					for (var i = 0; i < cnt; ++i)
+						type.GetMethod("Add").Invoke(res,
+							new object[] { load(eleType, data[i]) });
+					return res;
+				}
 
-            // 处理特殊类型
-            if (type == typeof(Color)) return loadColor(data);
-            if (type == typeof(DateTime)) return loadDateTime(data);
-            if (type == typeof(TimeSpan)) return loadTimeSpan(data);
-            if (type == typeof(Tuple<int, string>)) return loadTuple(data);
-            if (type == typeof(Texture2D)) return loadTexture2D(data);
-            if (type == typeof(AudioClip)) return loadAudioClip(data);
+			// 枚举
+			if (type.IsEnum) return loadEnum(type, (int)data);
 
-            if (type.IsSubclassOf(typeof(BaseData)) || type == typeof(BaseData))
-                return loadData(type, data);
+			// 处理特殊类型
+			if (type == typeof(Color)) return loadColor(data);
+			if (type == typeof(DateTime)) return loadDateTime(data);
+			if (type == typeof(TimeSpan)) return loadTimeSpan(data);
+			if (type == typeof(Tuple<int, string>)) return loadTuple(data);
+			if (type == typeof(Texture2D)) return loadTexture2D(data);
+			if (type == typeof(AudioClip)) return loadAudioClip(data);
 
-            // 处理基本类型
-            if (type == typeof(int)) return (int)data;
-            if (type == typeof(double))
-                return data.IsDouble ? (double)data : (int)data;
-            if (type == typeof(float))
-                return data.IsDouble ? (float)(double)data : (int)data;
-            if (type == typeof(string)) return (string)data;
-            if (type == typeof(bool)) return (bool)data;
+			if (type.IsSubclassOf(typeof(BaseData)) || type == typeof(BaseData))
+				return loadData(type, data);
 
-            // 其他情况下，直接返回即可
-            return data;
-        }
+			// 处理基本类型
+			if (type == typeof(int)) return (int)data;
+			if (type == typeof(double))
+				return data.IsDouble ? (double)data : (int)data;
+			if (type == typeof(float))
+				return data.IsDouble ? (float)(double)data : (int)data;
+			if (type == typeof(string)) return (string)data;
+			if (type == typeof(bool)) return (bool)data;
 
-        #region 具体加载函数
+			// 其他情况下，直接返回即可
+			return data;
+		}
 
-        /// <summary>
-        /// 加载颜色
-        /// </summary>
-        /// <param name="json">数据</param>
-        /// <returns>加载的颜色</returns>
-        static Color loadColor(JsonData data) {
+		#region 具体加载函数
+
+		/// <summary>
+		/// 加载枚举类型
+		/// </summary>
+		/// <param name="enumType"></param>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		static Enum loadEnum(Type enumType, int data) {
+			return Enum.ToObject(enumType, data) as Enum;
+		}
+		static T loadEnum<T>(int data) where T : Enum {
+			return (T)Enum.ToObject(typeof(T), data);
+		}
+
+		/// <summary>
+		/// 加载颜色
+		/// </summary>
+		/// <param name="json">数据</param>
+		/// <returns>加载的颜色</returns>
+		static Color loadColor(JsonData data) {
             return SceneUtils.str2Color((string)data);
         }
 
@@ -345,6 +359,9 @@ namespace Core.Data.Loaders {
 					return json;
 				}
 
+				// 枚举
+				if (type.IsEnum) return convertEnum(type, (Enum)data);
+
 				// 处理特殊类型
 				if (type == typeof(Color)) return convertColor((Color)data);
 				if (type == typeof(DateTime) && format == "date") return convertDate((DateTime)data);
@@ -375,7 +392,17 @@ namespace Core.Data.Loaders {
 		#region 具体转化函数
 
 		/// <summary>
-		/// 加载颜色
+		/// 转化枚举
+		/// </summary>
+		/// <param name="enumType"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		static JsonData convertEnum(Type enumType, Enum value) {
+			return value.GetHashCode();
+		}
+
+		/// <summary>
+		/// 转化颜色
 		/// </summary>
 		/// <param name="json">数据</param>
 		/// <returns>加载的颜色</returns>

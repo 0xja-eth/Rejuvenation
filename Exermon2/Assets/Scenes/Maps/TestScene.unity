@@ -5110,7 +5110,7 @@ GameObject:
   - component: {fileID: 311383680}
   - component: {fileID: 311383679}
   m_Layer: 0
-  m_Name: Camera (1)
+  m_Name: EffectCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

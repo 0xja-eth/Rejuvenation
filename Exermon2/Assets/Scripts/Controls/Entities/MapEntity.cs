@@ -21,6 +21,7 @@ namespace UI.Common.Controls.Entities {
 		/// <summary>
 		/// 内部控件设置
 		/// </summary>
+		[RequireTarget]
 		protected new Collider2D collider;
 
 		#region 初始化
@@ -30,7 +31,7 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			collider = SceneUtils.get<Collider2D>(gameObject);
+			//collider = get<Collider2D>();
 		}
 
 		#endregion

@@ -77,16 +77,7 @@ namespace Core.Services {
         protected virtual void initializeOperDict() {
             operDict = new Dictionary<int, Operation>();
         }
-
-        /// <summary>
-        /// 初始化外部系统
-        /// </summary>
-        protected override void initializeSystems() {
-            base.initializeSystems();
-            networkSys = NetworkSystem.get();
-            gameSys = GameSystem.get();
-        }
-
+		
         /// <summary>
         /// 添加操作字典
         /// </summary>

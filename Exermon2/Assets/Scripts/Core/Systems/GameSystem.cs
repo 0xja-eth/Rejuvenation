@@ -223,15 +223,15 @@ namespace Core.Systems {
             addStateDict(State.Ending);
         }
 
-        /// <summary>
-        /// 初始化外部系统
-        /// </summary>
-        protected override void initializeSystems() {
-            base.initializeSystems();
-            storageSys = StorageSystem.get();
-            networkSys = NetworkSystem.get();
-            dataSer = DataService.get();
-        }
+        ///// <summary>
+        ///// 初始化外部系统
+        ///// </summary>
+        //protected override void initializeSystems() {
+        //    base.initializeSystems();
+        //    storageSys = StorageSystem.get();
+        //    networkSys = NetworkSystem.get();
+        //    dataSer = DataService.get();
+        //}
 
         #endregion
 

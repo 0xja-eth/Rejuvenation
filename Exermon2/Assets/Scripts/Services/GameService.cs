@@ -42,24 +42,39 @@ namespace GameModule.Services {
 
 		PlayerService playerSer;
 
-        /// <summary>
-        /// 初始化外部系统
-        /// </summary>
-        protected override void initializeSystems() {
-            base.initializeSystems();
-            sceneSys = SceneSystem.get();
-            storageSys = StorageSystem.get();
-			playerSer = PlayerService.get();
+   //     /// <summary>
+   //     /// 初始化外部系统
+   //     /// </summary>
+   //     protected override void initializeSystems() {
+   //         base.initializeSystems();
+   //         sceneSys = SceneSystem.get();
+   //         storageSys = StorageSystem.get();
+			//playerSer = PlayerService.get();
+   //     }
 
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOthers() {
+			base.initializeOthers();
 			gameSys.reconnectedCallback = onReconnected;
-        }
+		}
 
-        #region 流程控制
+		#region 配置数据快捷获取
 
-        /// <summary>
-        /// 开始游戏（根据用户是否创建角色自动分配实际执行的操作）
-        /// </summary>
-        public void startGame() {
+		/// <summary>
+		/// 按键设定
+		/// </summary>
+		public KeyboardConfig keyboard => configure.keyboard;
+
+		#endregion
+
+		#region 流程控制
+
+		/// <summary>
+		/// 开始游戏（根据用户是否创建角色自动分配实际执行的操作）
+		/// </summary>
+		public void startGame() {
             storageSys.save();
         }
 

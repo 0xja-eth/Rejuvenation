@@ -1,8 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 using UnityEngine;
+
+using Core.Utils;
+using Core.Systems;
 
 namespace Core.UI {
 
@@ -129,6 +134,12 @@ namespace Core.UI {
 	public abstract class BaseComponent : MonoBehaviour, IBaseComponent {
 
 		/// <summary>
+		/// RequireComponent绑定对象特性
+		/// </summary>
+		[AttributeUsage(AttributeTargets.Field)]
+		public class RequireTargetAttribute : Attribute { }
+
+		/// <summary>
 		/// 外部变量声明
 		/// </summary>
 		public bool showDebug = false;
@@ -188,20 +199,59 @@ namespace Core.UI {
 			if (!initialized) {
 				initialized = true;
 				initializeSystems();
+				initializeRequiredComponents();
 				initializeOnce();
 			}
 			initializeEvery();
 		}
 
-		/// <summary>
-		/// 初次打开时初始化（子类中重载）
-		/// </summary>
-		protected virtual void initializeOnce() { }
+		#region 内部初始化
 
 		/// <summary>
 		/// 初始化系统/服务
 		/// </summary>
-		protected virtual void initializeSystems() { }
+		void initializeSystems() {
+			ReflectionUtils.processMember<FieldInfo, BaseSystem>(
+				GetType(), (field) => {
+					var fType = field.FieldType;
+					var getFunc = fType.GetMethod("get");
+					var val = getFunc.Invoke(null, null);
+
+					field.SetValue(this, val);
+					debugLog(field.Name + ": " + val);
+				});
+		}
+
+		/// <summary>
+		/// 初始化需要的组件
+		/// </summary>
+		void initializeRequiredComponents() {
+			var reqs = new List<Type>();
+			ReflectionUtils.processClassAttribute<RequireComponent>(
+				GetType(), (a) => {
+					debugLog(a.m_Type0);
+					if (a.m_Type0 != null) reqs.Add(a.m_Type0);
+					if (a.m_Type1 != null) reqs.Add(a.m_Type1);
+					if (a.m_Type2 != null) reqs.Add(a.m_Type2);
+				});
+
+			ReflectionUtils.processAttribute<
+				FieldInfo, RequireTargetAttribute>(
+				GetType(), (field, attr) => {
+					var fType = field.FieldType;
+					if (reqs.Contains(fType)) {
+						field.SetValue(this, get(fType));
+						debugLog(field.Name + ": " + get(fType));
+					}
+				});
+		}
+
+		#endregion
+
+		/// <summary>
+		/// 初次打开时初始化（子类中重载）
+		/// </summary>
+		protected virtual void initializeOnce() { }
 
 		/// <summary>
 		/// 每次打开时初始化（子类中重载）
@@ -372,6 +422,35 @@ namespace Core.UI {
 		/// 清除视窗
 		/// </summary>
 		protected virtual void clear() { }
+
+		#endregion
+
+		#region 组件控制
+
+		/// <summary>
+		/// 获取组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <returns></returns>
+		public T get<T>() {
+			return SceneUtils.get<T>(this);
+		}
+		public Component get(Type type) {
+			return SceneUtils.get(this, type);
+		}
+
+		/// <summary>
+		/// 寻找子组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="path">路径</param>
+		/// <returns></returns>
+		public T find<T>(string path) {
+			return SceneUtils.find<T>(this, path);
+		}
+		public Component find(Type type, string path) {
+			return SceneUtils.find(this, type, path);
+		}
 
 		#endregion
 
