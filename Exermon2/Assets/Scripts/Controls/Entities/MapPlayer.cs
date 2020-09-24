@@ -31,15 +31,19 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			updateInput();
-		}
+			//updateInput();
 
-		/// <summary>
-		/// 更新玩家输入事件
-		/// </summary>
-		void updateInput() {
-			updateMovement();
 		}
+        private void FixedUpdate() {
+            updateInput();
+        }
+
+        /// <summary>
+        /// 更新玩家输入事件
+        /// </summary>
+        void updateInput() {
+			updateMovement();
+        }
 		
 		/// <summary>
 		/// 更新移动
