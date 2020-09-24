@@ -34,6 +34,9 @@ namespace UI.Common.Controls.Entities {
 			//updateInput();
 
 		}
+        /// <summary>
+        /// 控制刚体刷新
+        /// </summary>
         private void FixedUpdate() {
             updateInput();
         }
