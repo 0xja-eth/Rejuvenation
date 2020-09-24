@@ -69,15 +69,7 @@ namespace Core.UI {
         void initializeSceneUtils() {
             SceneUtils.initialize(this, audioSource);
         }
-
-        /// <summary>
-        /// 初始化外部系统
-        /// </summary>
-        protected override void initializeSystems() {
-            gameSys = GameSystem.get();
-            sceneSys = SceneSystem.get();
-        }
-
+		
         /// <summary>
         /// 初始化其他项
         /// </summary>

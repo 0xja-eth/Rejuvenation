@@ -47,15 +47,19 @@ namespace UI.Common.Controls.Entities {
 		/// <summary>
 		/// 外部变量定义
 		/// </summary>
-		public float defaultMoveSpeed = 5f;
+		public float defaultMoveSpeed = 20; // 默认移动速度
 
 		/// <summary>
 		/// 内部控件设置
 		/// </summary>
+		[RequireTarget]
 		protected new Rigidbody2D rigidbody;
+		[RequireTarget]
 		protected SpriteRenderer sprite;
 
+		[RequireTarget]
 		protected AnimatorExtend animator;
+		[RequireTarget]
 		protected new AnimationExtend animation;
 
 		/// <summary>
@@ -70,11 +74,11 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			rigidbody = SceneUtils.get<Rigidbody2D>(gameObject);
-			sprite = SceneUtils.get<SpriteRenderer>(gameObject);
+			//rigidbody = SceneUtils.get<Rigidbody2D>(this);
+			//sprite = SceneUtils.get<SpriteRenderer>(this);
 
-			animator = SceneUtils.get<AnimatorExtend>(gameObject);
-			animation = SceneUtils.get<AnimationExtend>(gameObject);
+			//animator = SceneUtils.get<AnimatorExtend>(this);
+			//animation = SceneUtils.get<AnimationExtend>(this);
 		}
 
 		#endregion

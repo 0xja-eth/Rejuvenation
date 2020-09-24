@@ -58,14 +58,14 @@ namespace Core.Systems {
 
         #region 初始化
 
-        /// <summary>
-        /// 初始化外部系统
-        /// </summary>
-        protected override void initializeSystems() {
-            base.initializeSystems();
-            gameSys = GameSystem.get();
-            gameSer = GameService.get();
-        }
+        ///// <summary>
+        ///// 初始化外部系统
+        ///// </summary>
+        //protected override void initializeSystems() {
+        //    base.initializeSystems();
+        //    gameSys = GameSystem.get();
+        //    gameSer = GameService.get();
+        //}
 
         #endregion
 

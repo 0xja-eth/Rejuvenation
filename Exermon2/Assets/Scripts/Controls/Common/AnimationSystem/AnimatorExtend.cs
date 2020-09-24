@@ -17,10 +17,11 @@ namespace UI.Common.Controls.AnimationSystem {
 	[RequireComponent(typeof(Animator))]
 	public class AnimatorExtend : GeneralComponent {
 
-        /// <summary>
-        /// 内部组件设置
-        /// </summary>
-        Animator animator; // 动画组件
+		/// <summary>
+		/// 内部组件设置
+		/// </summary>
+		[RequireTarget]
+		Animator animator; // 动画组件
 
         /// <summary>
         /// 外部变量设置
@@ -67,8 +68,6 @@ namespace UI.Common.Controls.AnimationSystem {
         /// 初始化动画控制器
         /// </summary>
         void initAnimator() {
-			animator = SceneUtils.get<Animator>(transform);
-
             switchLayer(); initializeStates();
         }
 
