@@ -55,7 +55,8 @@ namespace Core.Systems {
 			ReflectionUtils.processMember<FieldInfo, BaseSystem>(
 				GetType(), (field) => {
 					var fType = field.FieldType;
-					var getFunc = fType.GetMethod("get");
+					var getFunc = fType.GetMethod("Get",
+						ReflectionUtils.DefaultStaticFlag);
 					var val = getFunc.Invoke(null, null);
 
 					field.SetValue(this, val);
@@ -179,7 +180,7 @@ namespace Core.Systems {
 		/// 单例函数
 		/// </summary>
 		protected static T _self;
-        public static T get() {
+        public static T Get() {
             if (_self == null) {
                 _self = new T();
                 _self.initialize();

@@ -36,6 +36,11 @@ namespace UI.Common.Controls.InputFields {
         bool enter = false;
         bool focused_ = false;
 
+		/// <summary>
+		/// 外部系统设置
+		/// </summary>
+		DataService dataSer;
+
         #region 初始化
 
         /// <summary>
@@ -72,7 +77,7 @@ namespace UI.Common.Controls.InputFields {
             createOptions();
         }
         public void configure(TypeData[] options) {
-            configure(DataService.get().typeDataToTuples(options));
+            configure(dataSer.typeDataToTuples(options));
         }
         public void configure(List<TypeData> options) {
             configure(options.ToArray());

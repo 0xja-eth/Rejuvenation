@@ -26,12 +26,12 @@ namespace UI.Common.Controls.Entities {
 		/// <summary>
 		/// 行动字典
 		/// </summary>
-		protected List<Event> events;
+		protected List<Event> events = new List<Event>();
 
 		/// <summary>
 		/// 外部系统
 		/// </summary>
-		GameService gameSer;
+		protected GameService gameSer;
 
 		#region 初始化
 

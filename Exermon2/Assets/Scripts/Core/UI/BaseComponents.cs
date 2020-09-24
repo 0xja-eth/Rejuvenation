@@ -215,7 +215,8 @@ namespace Core.UI {
 			ReflectionUtils.processMember<FieldInfo, BaseSystem>(
 				GetType(), (field) => {
 					var fType = field.FieldType;
-					var getFunc = fType.GetMethod("get");
+					var getFunc = fType.GetMethod("Get", 
+						ReflectionUtils.DefaultStaticFlag);
 					var val = getFunc.Invoke(null, null);
 
 					field.SetValue(this, val);
@@ -527,8 +528,8 @@ namespace Core.UI {
 		/// <param name="obj"></param>
 		public void debug(object obj, DebugType type, bool force = false) {
 			if (!force && !showDebug) return;
-			var format = "{0}({1}): ";
-			var msg = string.Format(format, name, this);
+			var format = "{0}: ";
+			var msg = string.Format(format, this);
 
 			switch (type) {
 				case DebugType.Log:

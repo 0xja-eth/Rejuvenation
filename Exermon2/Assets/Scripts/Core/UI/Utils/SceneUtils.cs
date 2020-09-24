@@ -121,9 +121,9 @@ namespace Core.UI.Utils {
         /// 初始化外部系统
         /// </summary>
         static void initializeSystems() {
-            gameSys = gameSys ?? GameSystem.get();
-            sceneSys = sceneSys ?? SceneSystem.get();
-            gameSer = gameSer ?? GameService.get();
+            gameSys = gameSys ?? GameSystem.Get();
+            sceneSys = sceneSys ?? SceneSystem.Get();
+            gameSer = gameSer ?? GameService.Get();
         }
 
         /// <summary>

@@ -12,8 +12,9 @@ namespace Core.Utils {
 		/// 默认绑定标志
 		/// </summary>
 		public static readonly BindingFlags DefaultFlag =
-			BindingFlags.Instance | BindingFlags.Public | 
-			BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
+			BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+		public static readonly BindingFlags DefaultStaticFlag =
+			BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Static;
 
 		/// <summary>
 		/// 快速处理成员

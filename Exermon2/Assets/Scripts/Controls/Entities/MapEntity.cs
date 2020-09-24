@@ -23,17 +23,6 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		[RequireTarget]
 		protected new Collider2D collider;
-
-		#region 初始化
-
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		protected override void initializeOnce() {
-			base.initializeOnce();
-			//collider = get<Collider2D>();
-		}
-
-		#endregion
+		
 	}
 }

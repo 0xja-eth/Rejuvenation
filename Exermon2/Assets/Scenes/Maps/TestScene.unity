@@ -5732,6 +5732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 404831119}
   - component: {fileID: 404831120}
+  - component: {fileID: 404831121}
   m_Layer: 0
   m_Name: NPC1
   m_TagString: Untagged
@@ -5779,6 +5780,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.88620937, y: 0.59334415}
   m_EdgeRadius: 0
+--- !u!114 &404831121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404831118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fcdbc9d8b9f42f448fb023275824a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebug: 1
+  eventPlayer: {fileID: 0}
 --- !u!1 &443577082
 GameObject:
   m_ObjectHideFlags: 0
@@ -35505,7 +35520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb3755b4671d9f44a2492898bb72f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 1
+  showDebug: 0
   defaultMoveSpeed: 15
   moveable: 1
 --- !u!114 &2104232141

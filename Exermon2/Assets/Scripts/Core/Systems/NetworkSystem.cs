@@ -89,7 +89,7 @@ namespace Core.Systems {
 			/// <param name="data">发送数据</param>
 			public static void processResponseData(string route, int index,
 				int status, string errmsg, JsonData data) {
-				var sys = get();
+				var sys = Get();
 
 				RequestObject req = sys.popRequestObject(route, index);
 				RequestObject.SuccessAction onSuccess = req.onSuccess;
@@ -144,7 +144,7 @@ namespace Core.Systems {
 			/// <param name="data">发送数据</param>
 			public static void processEmitData(string type, JsonData data) {
 				Debug.Log("processEmitData: " + type + ": " + data.ToJson());
-				Debug.Log("Self.socketName = " + get().socketName);
+				Debug.Log("Self.socketName = " + Get().socketName);
 
 				// 如果有注册的Emit处理函数
 				if (handlers.ContainsKey(type))
@@ -160,7 +160,7 @@ namespace Core.Systems {
 			/// </summary>
 			/// <param name="data">发送数据</param>
 			static void processLink(JsonData data) {
-				get().socketName = DataLoader.load<string>(data, "channel_name");
+				Get().socketName = DataLoader.load<string>(data, "channel_name");
 			}
 
 			/// <summary>
@@ -172,7 +172,7 @@ namespace Core.Systems {
 				var code = DataLoader.load<int>(data, "code");
 				var message = DataLoader.load<string>(data, "message");
 
-				if (channelName == get().socketName)
+				if (channelName == Get().socketName)
 					onSelfDisconnect(code, message);
 				else
 					onOtherDisconnect(channelName, code, message);
@@ -184,7 +184,7 @@ namespace Core.Systems {
 			/// <param name="code">断开连接码</param>
 			/// <param name="message">断开连接信息</param>
 			static void onSelfDisconnect(int code, string message) {
-				get().handleDisconnect(-1, message);
+				Get().handleDisconnect(-1, message);
 			}
 
 			/// <summary>
