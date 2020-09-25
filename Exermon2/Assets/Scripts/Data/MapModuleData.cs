@@ -62,6 +62,11 @@ namespace MapModuleData.Data {
 		public List<UnityAction> actions { get; protected set; } = new List<UnityAction>();
 
 		/// <summary>
+		/// 显示的图片
+		/// </summary>
+		public Sprite picture { get; protected set; }
+
+		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public Event() { }

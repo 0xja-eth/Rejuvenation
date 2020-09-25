@@ -14,6 +14,8 @@ using Core.Systems;
 
 using Core.UI.Utils;
 
+using BattleModule.Data;
+
 /// <summary>
 /// 基本系统
 /// </summary>
@@ -26,16 +28,17 @@ namespace PlayerModule.Services {
     /// </summary>
     public class PlayerService : BaseService<PlayerService> {
 
-        /// <summary>
-        /// 玩家
-        /// </summary>
-        public Player player { get; protected set; }
+		/// <summary>
+		/// 玩家
+		/// </summary>
+		public Player player { get; protected set; }
+		public Actor actor => player?.actor;
 
 		/// <summary>
 		/// 创建角色
 		/// </summary>
 		/// <param name="name"></param>
-        public void createPlayer(string name) {
+		public void createPlayer(string name) {
 			player = new Player(name);
 		}
 

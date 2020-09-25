@@ -13,6 +13,8 @@ using Core.Data.Loaders;
 using GameModule.Data;
 using GameModule.Services;
 
+using BattleModule.Data;
+
 using UI.Common.Controls.ParamDisplays;
 
 /// <summary>
@@ -39,6 +41,9 @@ namespace PlayerModule.Data {
 		[AutoConvert]
 		public string uid { get; protected set; }
 
+		[AutoConvert]
+		public Actor actor { get; protected set; }
+
 		/// <summary>
 		/// 转化为显示数据
 		/// </summary>
@@ -60,7 +65,7 @@ namespace PlayerModule.Data {
 		/// 构造函数
 		/// </summary>
 		/// <param name="name"></param>
-		public Player() { }
+		public Player() { actor = new Actor(); }
 		public Player(string name) {
 			this.name = name;
 			generateUid();

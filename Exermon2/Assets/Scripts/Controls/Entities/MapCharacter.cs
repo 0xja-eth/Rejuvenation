@@ -66,22 +66,6 @@ namespace UI.Common.Controls.Entities {
 		/// 内部变量定义
 		/// </summary>
 		protected bool moving = false;
-		
-		#region 初始化
-
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		protected override void initializeOnce() {
-			base.initializeOnce();
-			//rigidbody = SceneUtils.get<Rigidbody2D>(this);
-			//sprite = SceneUtils.get<SpriteRenderer>(this);
-
-			//animator = SceneUtils.get<AnimatorExtend>(this);
-			//animation = SceneUtils.get<AnimationExtend>(this);
-		}
-
-		#endregion
 
 		#region 更新
 
