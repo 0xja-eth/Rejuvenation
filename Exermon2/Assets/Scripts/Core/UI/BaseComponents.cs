@@ -441,6 +441,12 @@ namespace Core.UI {
 		public Component get(Type type) {
 			return SceneUtils.get(this, type);
 		}
+		public T[] gets<T>() {
+			return SceneUtils.gets<T>(this);
+		}
+		public Component[] gets(Type type) {
+			return SceneUtils.gets(this, type);
+		}
 
 		/// <summary>
 		/// 寻找子组件

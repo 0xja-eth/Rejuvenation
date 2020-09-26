@@ -12,7 +12,7 @@ namespace UI.Common.Controls.BattleSystem {
 	/// <summary>
 	/// 地图上的玩家实体
 	/// </summary>
-	public class MapPlayer : MapCharacter {
+	public class MapPlayer : MapBattler {
 
 		/// <summary>
 		/// 外部变量定义
@@ -36,6 +36,17 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 外部系统设置
 		/// </summary>
 		PlayerService playerSer;
+
+		#region 初始化
+
+		/// <summary>
+		/// 初始化敌人显示组件
+		/// </summary>
+		protected override void initializeBattlerDisplay() {
+			display.setItem(playerSer.actor.runtimeActor);
+		}
+
+		#endregion
 
 		#region 更新
 

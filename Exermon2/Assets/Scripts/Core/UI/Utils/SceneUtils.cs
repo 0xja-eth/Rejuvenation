@@ -366,6 +366,38 @@ namespace Core.UI.Utils {
 		public static Component get(GameObject obj, Type type) {
 			return obj == null ? default : obj.GetComponent(type);
 		}
+		
+		/// <summary>
+		/// 获取组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="comp">组件对象</param>
+		/// <remarks>
+		/// 取代 comp.GetComponent<T> 的写法：SceneUtils.get<T>(comp)
+		/// </remarks>
+		/// <returns>返回获取的组件</returns>
+		public static T[] gets<T>(Component comp) {
+			return comp == null ? default : comp.GetComponents<T>();
+		}
+		public static Component[] gets(Component comp, Type type) {
+			return comp == null ? default : comp.GetComponents(type);
+		}
+		/// <summary>
+		/// 获取组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="obj">物体对象</param>
+		/// <remarks>
+		/// 取代 obj.GetComponent<T> 的写法：SceneUtils.get<T>(obj)
+		/// </remarks>
+		/// <returns>返回获取的组件</returns>
+		public static T[] gets<T>(GameObject obj) {
+			return obj == null ? default : obj.GetComponents<T>();
+		}
+		public static Component[] gets(GameObject obj, Type type) {
+			return obj == null ? default : obj.GetComponents(type);
+		}
+
 		/// <summary>
 		/// 获取子物体下的组件
 		/// </summary>

@@ -228,6 +228,7 @@ namespace BattleModule.Data {
 	/// <summary>
 	/// 技能
 	/// </summary>
+	[Serializable]
 	public class Skill : BaseData {
 
 		/// <summary>
@@ -322,8 +323,9 @@ namespace BattleModule.Data {
 		public const int MHPParamId = 1;
 		public const int AttackParamId = 2;
 		public const int DefenseParamId = 3;
+		public const int SpeedParamId = 4;
 
-		public const int MaxParamCount = 3;
+		public const int MaxParamCount = 4;
 
 		/// <summary>
 		/// 属性
@@ -356,29 +358,13 @@ namespace BattleModule.Data {
 		#region 属性快捷定义
 
 		/// <summary>
-		/// 最大生命值
+		/// 快捷定义
 		/// </summary>
-		/// <returns></returns>
-		public int mhp() {
-			return (int)Math.Round(param(MHPParamId));
-		}
+		public int mhp => (int)Math.Round(param(MHPParamId));
+		public float attack => param(AttackParamId);
+		public float defense => param(DefenseParamId);
+		public float speed => param(SpeedParamId);
 
-		/// <summary>
-		/// 力量
-		/// </summary>
-		/// <returns></returns>
-		public float attack() {
-			return param(AttackParamId);
-		}
-
-		/// <summary>
-		/// 格挡
-		/// </summary>
-		/// <returns></returns>
-		public float defense() {
-			return param(DefenseParamId);
-		}
-		
 		/// <summary>
 		/// 基础最大生命值
 		/// </summary>
@@ -396,7 +382,13 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual float baseDefense() { return battler.defense; }
-		
+
+		/// <summary>
+		/// 基础速度
+		/// </summary>
+		/// <returns></returns>
+		protected virtual float baseSpeed() { return battler.speed; }
+
 		#endregion
 
 		#region HP控制
@@ -467,7 +459,7 @@ namespace BattleModule.Data {
 		/// <param name="show">是否显示</param>
 		public void changeHP(int value, bool show = true) {
 			var oriHp = hp;
-			hp = Mathf.Clamp(value, 0, mhp());
+			hp = Mathf.Clamp(value, 0, mhp);
 			if (show) setHPChange(hp - oriHp);
 			if (hp <= 0) onDie();
 		}
@@ -487,7 +479,7 @@ namespace BattleModule.Data {
 		/// <param name="rate">增加率</param>
 		/// <param name="show">是否显示</param>
 		public void addHP(double rate, bool show = true) {
-			changeHP((int)Math.Round(hp + mhp() * rate), show);
+			changeHP((int)Math.Round(hp + mhp * rate), show);
 		}
 
 		/// <summary>
@@ -500,7 +492,7 @@ namespace BattleModule.Data {
 
 			int val = sumTraits(traits);
 			rate += sumTraits(traits, 1) / 100.0;
-			addHP((int)Math.Round(mhp() * rate + val));
+			addHP((int)Math.Round(mhp * rate + val));
 		}
 
 		/// <summary>
@@ -508,7 +500,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="show">是否显示</param>
 		public void recoverAll(bool show = true) {
-			changeHP(mhp(), show);
+			changeHP(mhp, show);
 		}
 
 		/// <summary>
@@ -533,6 +525,7 @@ namespace BattleModule.Data {
 				case MHPParamId: return baseMHP();
 				case AttackParamId: return baseAttack();
 				case DefenseParamId: return baseDefense();
+				case SpeedParamId: return baseSpeed();
 				default: return 0;
 			}
 		}
@@ -863,6 +856,49 @@ namespace BattleModule.Data {
 
 		#endregion
 
+		#region 行动控制
+
+		/// <summary>
+		/// 行动序列
+		/// </summary>
+		Queue<RuntimeAction> actions = new Queue<RuntimeAction>();
+
+		/// <summary>
+		/// 当前行动
+		/// </summary>
+		/// <returns></returns>
+		public virtual RuntimeAction currentAction() {
+			if (actions.Count <= 0) return null;
+			var action = actions.Dequeue();
+			return action;
+		}
+
+		/// <summary>
+		/// 增加行动
+		/// </summary>
+		/// <param name="action">行动</param>
+		public void addAction(RuntimeAction action) {
+			actions.Enqueue(action);
+		}
+		public void addAction(Skill skill) {
+			addAction(new RuntimeAction(this, skill));
+		}
+
+		/// <summary>
+		/// 处理指定行动
+		/// </summary>
+		public virtual void processAction(RuntimeAction action) {
+		}
+
+		/// <summary>
+		/// 清除所有行动
+		/// </summary>
+		public void clearActions() {
+			actions.Clear();
+		}
+
+		#endregion
+
 		#region 回调控制
 
 		/// <summary>
@@ -995,6 +1031,14 @@ namespace BattleModule.Data {
 		/// 结果
 		/// </summary>
 		public RuntimeActionResult[] results { get; protected set; } = null;
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public RuntimeAction() { }
+		public RuntimeAction(RuntimeBattler subject, Skill skill) {
+			this.subject = subject; this.skill = skill;
+		}
 	}
 
 	/// <summary>

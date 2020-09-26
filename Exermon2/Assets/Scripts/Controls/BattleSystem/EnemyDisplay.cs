@@ -8,7 +8,7 @@ namespace UI.Common.Controls.BattleSystem {
 	/// <summary>
 	/// 敌人状态显示
 	/// </summary>
-	public class EnemyDisplay : ItemDisplay<RuntimeEnemy> {
+	public class BattlerDisplay : ItemDisplay<RuntimeBattler> {
 
 		/// <summary>
 		/// 外部组件设置
@@ -35,7 +35,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 绘制物品
 		/// </summary>
 		/// <param name="item"></param>
-		protected override void drawExactlyItem(RuntimeEnemy item) {
+		protected override void drawExactlyItem(RuntimeBattler item) {
 			base.drawExactlyItem(item);
 
 		}
