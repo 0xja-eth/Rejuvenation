@@ -15,11 +15,14 @@ namespace UI.Common.Controls.Entities {
 	/// <summary>
 	/// 地图上的事件
 	/// </summary>
+	[RequireComponent(typeof(EventProcessor))]
 	public class MapEvent : MapEntity {
 
 		/// <summary>
-		/// 产生碰撞的玩家
+		/// 内部组件设置
 		/// </summary>
+		[RequireTarget]
+		protected EventProcessor display;
 		[HideInInspector]
 		public MapPlayer eventPlayer;
 
@@ -58,72 +61,73 @@ namespace UI.Common.Controls.Entities {
 		protected override void update() {
 			base.update();
 			currentEvent_ = null;
+			display.setItem(currentEvent());
 		}
 
 		#endregion
 
-		#region 碰撞检测
+		//#region 碰撞检测
 
-		/// <summary>
-		/// 碰撞开始
-		/// </summary>
-		/// <param name="collision"></param>
-		private void OnTriggerEnter2D(Collider2D collision) {
-			var player = SceneUtils.get<MapPlayer>(collision);
-			if (player != null) onPlayerCollEnter(player);
-		}
+		///// <summary>
+		///// 碰撞开始
+		///// </summary>
+		///// <param name="collision"></param>
+		//private void OnTriggerEnter2D(Collider2D collision) {
+		//	var player = SceneUtils.get<MapPlayer>(collision);
+		//	if (player != null) onPlayerCollEnter(player);
+		//}
 
-		/// <summary>
-		/// 碰撞持续
-		/// </summary>
-		/// <param name="collision"></param>
-		private void OnTriggerStay2D(Collider2D collision) {
-			var player = SceneUtils.get<MapPlayer>(collision);
-			if (player != null) onPlayerCollStay(player);
-		}
+		///// <summary>
+		///// 碰撞持续
+		///// </summary>
+		///// <param name="collision"></param>
+		//private void OnTriggerStay2D(Collider2D collision) {
+		//	var player = SceneUtils.get<MapPlayer>(collision);
+		//	if (player != null) onPlayerCollStay(player);
+		//}
 
-		/// <summary>
-		/// 碰撞结束
-		/// </summary>
-		/// <param name="collision"></param>
-		private void OnTriggerExit2D(Collider2D collision) {
-			var player = SceneUtils.get<MapPlayer>(collision);
-			if (player != null) onPlayerCollExit(player);
-		}
+		///// <summary>
+		///// 碰撞结束
+		///// </summary>
+		///// <param name="collision"></param>
+		//private void OnTriggerExit2D(Collider2D collision) {
+		//	var player = SceneUtils.get<MapPlayer>(collision);
+		//	if (player != null) onPlayerCollExit(player);
+		//}
 
-		/// <summary>
-		/// 玩家碰撞开始
-		/// </summary>
-		/// <param name="player"></param>
-		protected virtual void onPlayerCollEnter(MapPlayer player) {
-			processTrigger(player, Event.TriggerType.CollEnter);
-		}
+		///// <summary>
+		///// 玩家碰撞开始
+		///// </summary>
+		///// <param name="player"></param>
+		//protected virtual void onPlayerCollEnter(MapPlayer player) {
+		//	processTrigger(player, Event.TriggerType.CollEnter);
+		//}
 
-		/// <summary>
-		/// 玩家碰撞持续
-		/// </summary>
-		/// <param name="player"></param>
-		protected virtual void onPlayerCollStay(MapPlayer player) {
-			processTrigger(player, isSearching ? 
-				Event.TriggerType.CollSearch : Event.TriggerType.CollStay);
-		}
+		///// <summary>
+		///// 玩家碰撞持续
+		///// </summary>
+		///// <param name="player"></param>
+		//protected virtual void onPlayerCollStay(MapPlayer player) {
+		//	processTrigger(player, isSearching ? 
+		//		Event.TriggerType.CollSearch : Event.TriggerType.CollStay);
+		//}
 
-		/// <summary>
-		/// 玩家碰撞结束
-		/// </summary>
-		/// <param name="player"></param>
-		protected virtual void onPlayerCollExit(MapPlayer player) {
-			processTrigger(player, Event.TriggerType.CollExit);
-		}
+		///// <summary>
+		///// 玩家碰撞结束
+		///// </summary>
+		///// <param name="player"></param>
+		//protected virtual void onPlayerCollExit(MapPlayer player) {
+		//	processTrigger(player, Event.TriggerType.CollExit);
+		//}
 
-		#endregion
+		////#endregion
 
 		#region 事件控制
 
-		/// <summary>
-		/// 是否处于搜索状态
-		/// </summary>
-		public bool isSearching => Input.GetKeyDown(gameSer.keyboard.searchKey);
+		///// <summary>
+		///// 是否处于搜索状态
+		///// </summary>
+		//public bool isSearching => Input.GetKeyDown(gameSer.keyboard.searchKey);
 
 		/// <summary>
 		/// 当前事件
@@ -156,38 +160,38 @@ namespace UI.Common.Controls.Entities {
 			events.Remove(event_);
 		}
 
-		#region 执行事件
+		//#region 执行事件
 
-		/// <summary>
-		/// 处理触发
-		/// </summary>
-		/// <param name="player">触发相关的玩家</param>
-		/// <param name="type">触发类型</param>
-		/// <returns></returns>
-		public void processTrigger(MapPlayer player, Event.TriggerType type) {
-			eventPlayer = player; processTrigger(type);
-		}
-		public void processTrigger(Event.TriggerType type) {
-			if (judgeTrigger(type)) processAction();
-		}
+		///// <summary>
+		///// 处理触发
+		///// </summary>
+		///// <param name="player">触发相关的玩家</param>
+		///// <param name="type">触发类型</param>
+		///// <returns></returns>
+		//public void processTrigger(MapPlayer player, Event.TriggerType type) {
+		//	eventPlayer = player; processTrigger(type);
+		//}
+		//public void processTrigger(Event.TriggerType type) {
+		//	if (judgeTrigger(type)) processAction();
+		//}
 
-		/// <summary>
-		/// 判断是否触发
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
-		bool judgeTrigger(Event.TriggerType type) {
-			return currentEvent()?.triggerType == type;
-		}
+		///// <summary>
+		///// 判断是否触发
+		///// </summary>
+		///// <param name="type"></param>
+		///// <returns></returns>
+		//bool judgeTrigger(Event.TriggerType type) {
+		//	return currentEvent()?.triggerType == type;
+		//}
 
-		/// <summary>
-		/// 处理事件
-		/// </summary>
-		void processAction() {
-			currentEvent()?.process();
-		}
+		///// <summary>
+		///// 处理事件
+		///// </summary>
+		//void processAction() {
+		//	currentEvent()?.process();
+		//}
 
-		#endregion
+		//#endregion
 
 		#endregion
 

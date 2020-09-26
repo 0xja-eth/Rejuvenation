@@ -18,6 +18,11 @@ namespace UI.Common.Controls.Entities {
 	public abstract class MapEnemy : MapCharacter {
 
 		/// <summary>
+		/// 类型
+		/// </summary>
+		public override Type type => Type.Enemy;
+
+		/// <summary>
 		/// 敌人ID
 		/// </summary>
 		public abstract int enemyId { get; }

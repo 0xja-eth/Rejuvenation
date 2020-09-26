@@ -18,6 +18,13 @@ namespace UI.Common.Controls.Entities {
 	public class MapCharacter : MapEntity {
 
 		/// <summary>
+		/// 类型
+		/// </summary>
+		public enum Type {
+			NPC, Enemy, Player
+		}
+
+		/// <summary>
 		/// 常量定义
 		/// </summary>
 		const float ZeroVelocityThreshold = 0.001f;
@@ -66,6 +73,11 @@ namespace UI.Common.Controls.Entities {
 		/// 内部变量定义
 		/// </summary>
 		protected bool moving = false;
+
+		/// <summary>
+		/// 类型
+		/// </summary>
+		public virtual Type type => Type.NPC;
 
 		#region 更新
 

@@ -455,6 +455,19 @@ namespace Core.UI {
 			return SceneUtils.find(this, type, path);
 		}
 
+		/// <summary>
+		/// 寻找子组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="path">路径</param>
+		/// <returns></returns>
+		public T findParent<T>() {
+			return SceneUtils.findParent<T>(this);
+		}
+		public Component findParent(Type type) {
+			return SceneUtils.findParent(this, type);
+		}
+
 		#endregion
 
 		#region 协程控制

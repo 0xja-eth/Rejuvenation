@@ -461,6 +461,58 @@ namespace Core.UI.Utils {
 		}
 
 		/// <summary>
+		/// 获取父物体下的 GameObject
+		/// </summary>
+		/// <remarks>
+		/// </remarks>
+		/// <typeparam name="T">父物体包含的组件类型</typeparam>
+		/// <param name="self">当前物体组件对象</param>
+		/// <returns>返回查找到的物体</returns>
+		public static T findParent<T>(GameObject self) {
+			return findParent<T>(self.transform);
+		}
+		public static T findParent<T>(Transform self) {
+			var parent = self.parent;
+			if (parent == null) return default;
+
+			var res = get<T>(parent);
+			if (res != null) return res;
+			return findParent<T>(parent);
+		}
+		public static T findParent<T>(Component self) {
+			return findParent<T>(self.transform);
+		}
+		/// <param name="type">父物体包含的组件类型</param>
+		public static Component findParent(GameObject self, Type type) {
+			return findParent(self.transform, type);
+		}
+		public static Component findParent(Transform self, Type type) {
+			var parent = self.parent;
+			if (parent == null) return default;
+
+			var res = get(parent, type);
+			if (res != null) return res;
+			return findParent(parent, type);
+		}
+		public static Component findParent(Component self, Type type) {
+			return findParent(self.transform, type);
+		}
+		public static GameObject findParent(GameObject self) {
+			return findParent(self.transform);
+		}
+		public static GameObject findParent(Transform self) {
+			var parent = self.parent;
+			if (parent == null) return default;
+
+			var res = parent.gameObject;
+			if (res != null) return res;
+			return findParent(parent);
+		}
+		public static GameObject findParent(Component self) {
+			return findParent(self.transform);
+		}
+
+		/// <summary>
 		/// 快速获取 Text 组件
 		/// </summary>
 		/// <param name="t">物体变换对象</param>

@@ -19,6 +19,11 @@ namespace UI.Common.Controls.Entities {
 		public bool moveable = true;
 
 		/// <summary>
+		/// 类型
+		/// </summary>
+		public override Type type => Type.Player;
+
+		/// <summary>
 		/// 属性
 		/// </summary>
 		protected float xDelta => Input.GetAxis("Horizontal");
@@ -63,7 +68,7 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		/// <returns></returns>
 		public override bool isMoveable() {
-			return moveable;
+			return base.isMoveable() && map.active && moveable ;
 		}
 
 		#endregion
