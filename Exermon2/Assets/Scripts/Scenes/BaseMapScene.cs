@@ -12,7 +12,7 @@ using Core.UI;
 using Core.UI.Utils;
 
 using UI.Common.Windows;
-using UI.Common.Controls.Entities;
+using UI.Common.Controls.MapSystem;
 
 namespace UI.BaseMapScene {
 

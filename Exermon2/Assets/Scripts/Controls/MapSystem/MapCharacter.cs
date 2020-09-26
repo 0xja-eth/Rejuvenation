@@ -4,7 +4,7 @@ using UnityEngine;
 using Core.UI;
 using Core.UI.Utils;
 
-namespace UI.Common.Controls.Entities {
+namespace UI.Common.Controls.MapSystem {
 
 	using Common.Controls.AnimationSystem;
 

@@ -13,12 +13,12 @@ using Core.Data.Loaders;
 /// <summary>
 /// 地图模块
 /// </summary>
-namespace MapModuleData { }
+namespace MapModule { }
 
 /// <summary>
 /// ITU模块数据
 /// </summary>
-namespace MapModuleData.Data {
+namespace MapModule.Data {
 
 	/// <summary>
 	/// 事件

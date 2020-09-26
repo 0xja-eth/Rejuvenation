@@ -8,9 +8,9 @@ using Core.UI.Utils;
 
 using GameModule.Services;
 
-using Event = MapModuleData.Data.Event;
+using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.Entities.Events {
+namespace UI.Common.Controls.MapSystem.Events {
 
 	/// <summary>
 	/// 地图上的事件

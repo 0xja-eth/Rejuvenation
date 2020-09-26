@@ -5,7 +5,7 @@ using Core.UI;
 
 using UnityEngine;
 
-namespace UI.Common.Controls.Entities {
+namespace UI.Common.Controls.MapSystem {
 
 	/// <summary>
 	/// 地图类

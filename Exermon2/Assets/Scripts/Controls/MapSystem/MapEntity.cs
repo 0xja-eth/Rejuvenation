@@ -4,7 +4,7 @@ using UnityEngine;
 using Core.UI;
 using Core.UI.Utils;
 
-namespace UI.Common.Controls.Entities {
+namespace UI.Common.Controls.MapSystem {
 
 	/// <summary>
 	/// 地图上的实体

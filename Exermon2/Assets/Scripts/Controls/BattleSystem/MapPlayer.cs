@@ -1,12 +1,13 @@
 ﻿
 using UnityEngine;
 
-using Core.UI;
-using Core.UI.Utils;
+using BattleModule.Data;
 
-namespace UI.Common.Controls.Entities {
+using PlayerModule.Services;
 
-	using Common.Controls.AnimationSystem;
+namespace UI.Common.Controls.BattleSystem {
+
+	using MapSystem;
 
 	/// <summary>
 	/// 地图上的玩家实体
@@ -26,8 +27,15 @@ namespace UI.Common.Controls.Entities {
 		/// <summary>
 		/// 属性
 		/// </summary>
+		public Actor actor => playerSer.actor;
+
 		protected float xDelta => Input.GetAxis("Horizontal");
 		protected float yDelta => Input.GetAxis("Vertical");
+
+		/// <summary>
+		/// 外部系统设置
+		/// </summary>
+		PlayerService playerSer;
 
 		#region 更新
 
@@ -62,6 +70,14 @@ namespace UI.Common.Controls.Entities {
 		#endregion
 
 		#region 移动控制
+
+		/// <summary>
+		/// 移动速度
+		/// </summary>
+		/// <returns></returns>
+		public override float moveSpeed() {
+			return actor.speed;
+		}
 
 		/// <summary>
 		/// 能否移动

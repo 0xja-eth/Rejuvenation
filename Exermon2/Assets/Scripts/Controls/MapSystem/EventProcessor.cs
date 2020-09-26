@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Events;
 
-using Core.UI;
 using Core.UI.Utils;
 
 using GameModule.Services;
 
 using UI.Common.Controls.ItemDisplays;
 
-using Event = MapModuleData.Data.Event;
-using MapModuleData.Data;
+using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.Entities {
+namespace UI.Common.Controls.MapSystem {
+
+	using BattleSystem;
 
 	/// <summary>
 	/// 地图上的事件

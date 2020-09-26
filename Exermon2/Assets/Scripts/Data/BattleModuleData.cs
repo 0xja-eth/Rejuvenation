@@ -125,6 +125,7 @@ namespace BattleModule.Data {
 	/// <summary>
 	/// 敌人
 	/// </summary>
+	[Serializable]
 	public class Enemy : Battler {
 
 		/// <summary>
@@ -189,6 +190,8 @@ namespace BattleModule.Data {
 		/// </summary>
 		[AutoConvert]
 		public ControlType control { get; protected set; } = ControlType.Present;
+		[AutoConvert]
+		public RuntimeActor runtimeActor { get; protected set; }
 
 		/// <summary>
 		/// 玩家
@@ -212,11 +215,13 @@ namespace BattleModule.Data {
 		/// </summary>
 		public Actor() { }
 		public Actor(Player player) {
-			this.player = player;
 			name = player.name;
 			mhp = DefaultMHP;
 			attack = DefaultAttack;
 			defense = DefaultDefense;
+
+			this.player = player;
+			runtimeActor = new RuntimeActor();
 		}
 	}
 
@@ -945,9 +950,14 @@ namespace BattleModule.Data {
 		public int enemyId { get; protected set; }
 
 		/// <summary>
+		/// 自定义敌人
+		/// </summary>
+		public Enemy customEnemy = null;
+
+		/// <summary>
 		/// 战斗者
 		/// </summary>
-		public override Battler battler => enemy();
+		public override Battler battler => customEnemy ?? enemy();
 
 		/// <summary>
 		/// 获取标签实例

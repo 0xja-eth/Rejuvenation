@@ -8,9 +8,9 @@ using Core.UI.Utils;
 
 using GameModule.Services;
 
-using Event = MapModuleData.Data.Event;
+using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.Entities {
+namespace UI.Common.Controls.MapSystem {
 
 	/// <summary>
 	/// 地图上的事件
@@ -22,9 +22,7 @@ namespace UI.Common.Controls.Entities {
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
-		protected EventProcessor display;
-		[HideInInspector]
-		public MapPlayer eventPlayer;
+		protected EventProcessor processor;
 
 		/// <summary>
 		/// 行动字典
@@ -61,7 +59,7 @@ namespace UI.Common.Controls.Entities {
 		protected override void update() {
 			base.update();
 			currentEvent_ = null;
-			display.setItem(currentEvent());
+			processor.setItem(currentEvent());
 		}
 
 		#endregion
