@@ -5792,8 +5792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fcdbc9d8b9f42f448fb023275824a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 1
-  eventPlayer: {fileID: 0}
 --- !u!1 &443577082
 GameObject:
   m_ObjectHideFlags: 0
@@ -26392,7 +26390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1664069619
 Transform:
   m_ObjectHideFlags: 0
@@ -35597,6 +35595,7 @@ GameObject:
   - component: {fileID: 2104232142}
   - component: {fileID: 2104232141}
   - component: {fileID: 2104232140}
+  - component: {fileID: 2104232144}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -35715,7 +35714,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &2104232139
 Animator:
@@ -35796,6 +35795,19 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &2104232144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104232134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad94ab68c60b69499964a9c7487e2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebug: 0
 --- !u!1 &2140885628
 GameObject:
   m_ObjectHideFlags: 0
