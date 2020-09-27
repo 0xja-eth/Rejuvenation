@@ -1,17 +1,18 @@
 ﻿
 using UnityEngine;
 
-using Core.UI;
-using Core.UI.Utils;
+using BattleModule.Data;
 
-namespace UI.Common.Controls.Entities {
+using PlayerModule.Services;
 
-	using Common.Controls.AnimationSystem;
+namespace UI.Common.Controls.BattleSystem {
+
+	using MapSystem;
 
 	/// <summary>
 	/// 地图上的玩家实体
 	/// </summary>
-	public class MapPlayer : MapCharacter {
+	public class MapPlayer : MapBattler {
 
 		/// <summary>
 		/// 外部变量定义
@@ -19,10 +20,33 @@ namespace UI.Common.Controls.Entities {
 		public bool moveable = true;
 
 		/// <summary>
+		/// 类型
+		/// </summary>
+		public override Type type => Type.Player;
+
+		/// <summary>
 		/// 属性
 		/// </summary>
+		public Actor actor => playerSer.actor;
+
 		protected float xDelta => Input.GetAxis("Horizontal");
 		protected float yDelta => Input.GetAxis("Vertical");
+
+		/// <summary>
+		/// 外部系统设置
+		/// </summary>
+		PlayerService playerSer;
+
+		#region 初始化
+
+		/// <summary>
+		/// 初始化敌人显示组件
+		/// </summary>
+		protected override void initializeBattlerDisplay() {
+			display.setItem(playerSer.actor.runtimeActor);
+		}
+
+		#endregion
 
 		#region 更新
 
@@ -66,11 +90,19 @@ namespace UI.Common.Controls.Entities {
 		#region 移动控制
 
 		/// <summary>
+		/// 移动速度
+		/// </summary>
+		/// <returns></returns>
+		public override float moveSpeed() {
+			return actor.speed;
+		}
+
+		/// <summary>
 		/// 能否移动
 		/// </summary>
 		/// <returns></returns>
 		public override bool isMoveable() {
-			return moveable;
+			return base.isMoveable() && map.active && moveable ;
 		}
 
 		#endregion

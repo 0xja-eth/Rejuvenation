@@ -48,8 +48,6 @@ namespace UI.Common.Controls.ItemDisplays {
         Transform oriParent; // 原有父变换
         Vector2 oriPosition;
 
-        RectTransform rectTransform;
-
         #region 初始化
 
         /// <summary>
@@ -57,7 +55,6 @@ namespace UI.Common.Controls.ItemDisplays {
         /// </summary>
         protected override void initializeOnce() {
             base.initializeOnce();
-            rectTransform = transform as RectTransform;
         }
 
 		#endregion

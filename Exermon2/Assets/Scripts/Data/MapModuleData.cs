@@ -13,12 +13,12 @@ using Core.Data.Loaders;
 /// <summary>
 /// 地图模块
 /// </summary>
-namespace MapModuleData { }
+namespace MapModule { }
 
 /// <summary>
 /// ITU模块数据
 /// </summary>
-namespace MapModuleData.Data {
+namespace MapModule.Data {
 
 	/// <summary>
 	/// 事件
@@ -60,6 +60,11 @@ namespace MapModuleData.Data {
 		/// 事件
 		/// </summary>
 		public List<UnityAction> actions { get; protected set; } = new List<UnityAction>();
+
+		/// <summary>
+		/// 显示的图片
+		/// </summary>
+		public Sprite picture { get; protected set; }
 
 		/// <summary>
 		/// 构造函数

@@ -177,7 +177,7 @@ namespace Core.Systems {
                 result += "\n" + point.Item1 + ": " + ms + "ms";
             }
             string final = "Sum: " + (sum / Stopwatch.Frequency * 1000) + "ms";
-            if (alert) GameSystem.get().requestAlert(
+            if (alert) GameSystem.Get().requestAlert(
                 "<size=18>" + result + "\n</size>" + final);
 
 			log(result + "\n" + final);

@@ -4,7 +4,7 @@ using UnityEngine;
 using Core.UI;
 using Core.UI.Utils;
 
-namespace UI.Common.Controls.Entities {
+namespace UI.Common.Controls.MapSystem {
 
 	/// <summary>
 	/// 地图上的实体
@@ -23,17 +23,22 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		[RequireTarget]
 		protected new Collider2D collider;
-
-		#region 初始化
+		protected Map map;
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			//collider = get<Collider2D>();
+			
 		}
 
-		#endregion
+		/// <summary>
+		/// 初始化地图配置
+		/// </summary>
+		void initializeMap() {
+			map = findParent<Map>();
+			map?.addEntity(this);
+		}
 	}
 }

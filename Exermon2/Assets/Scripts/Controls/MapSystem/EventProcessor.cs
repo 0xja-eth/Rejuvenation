@@ -1,37 +1,40 @@
 ﻿using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Events;
 
-using Core.UI;
 using Core.UI.Utils;
 
 using GameModule.Services;
 
-using Event = MapModuleData.Data.Event;
+using UI.Common.Controls.ItemDisplays;
 
-namespace UI.Common.Controls.Entities {
+using Event = MapModule.Data.Event;
+
+namespace UI.Common.Controls.MapSystem {
+
+	using BattleSystem;
 
 	/// <summary>
 	/// 地图上的事件
 	/// </summary>
-	public class MapEvent : MapEntity {
+	[RequireComponent(typeof(Collider2D))]
+	public class EventProcessor : ItemDisplay<Event> {
 
 		/// <summary>
-		/// 产生碰撞的玩家
+		/// 外部组件设置
+		/// </summary>
+		public SpriteRenderer sprite;
+
+		/// <summary>
+		/// 碰撞的玩家
 		/// </summary>
 		[HideInInspector]
 		public MapPlayer eventPlayer;
 
 		/// <summary>
-		/// 行动字典
-		/// </summary>
-		protected List<Event> events;
-
-		/// <summary>
 		/// 外部系统
 		/// </summary>
-		GameService gameSer;
+		protected GameService gameSer;
 
 		#region 初始化
 
@@ -40,13 +43,8 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			initializeActions();
+			sprite = sprite ?? get<SpriteRenderer>();
 		}
-
-		/// <summary>
-		/// 初始化事件行动
-		/// </summary>
-		protected virtual void initializeActions() { }
 
 		#endregion
 
@@ -57,7 +55,7 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			currentEvent_ = null;
+			processTrigger(Event.TriggerType.Always);
 		}
 
 		#endregion
@@ -104,7 +102,7 @@ namespace UI.Common.Controls.Entities {
 		/// </summary>
 		/// <param name="player"></param>
 		protected virtual void onPlayerCollStay(MapPlayer player) {
-			processTrigger(player, isSearching ? 
+			processTrigger(player, isSearching ?
 				Event.TriggerType.CollSearch : Event.TriggerType.CollStay);
 		}
 
@@ -124,37 +122,6 @@ namespace UI.Common.Controls.Entities {
 		/// 是否处于搜索状态
 		/// </summary>
 		public bool isSearching => Input.GetKeyDown(gameSer.keyboard.searchKey);
-
-		/// <summary>
-		/// 当前事件
-		/// </summary>
-		/// <returns></returns>
-		Event currentEvent_ = null;
-		public Event currentEvent() {
-			if (currentEvent_ == null) 
-				foreach (var event_ in events)
-					if (event_.isValid()) currentEvent_ = event_;
-
-			return currentEvent_;
-		}
-
-		/// <summary>
-		/// 添加事件
-		/// </summary>
-		/// <param name="action">事件</param>
-		/// <param name="cond">条件</param>
-		public void addEvent(Event event_) {
-			events.Add(event_);
-		}
-
-		/// <summary>
-		/// 添加事件
-		/// </summary>
-		/// <param name="action">事件</param>
-		/// <param name="cond">条件</param>
-		public void removeEvent(Event event_) {
-			events.Remove(event_);
-		}
 
 		#region 执行事件
 
@@ -177,19 +144,39 @@ namespace UI.Common.Controls.Entities {
 		/// <param name="type"></param>
 		/// <returns></returns>
 		bool judgeTrigger(Event.TriggerType type) {
-			return currentEvent()?.triggerType == type;
+			return item?.triggerType == type;
 		}
 
 		/// <summary>
 		/// 处理事件
 		/// </summary>
 		void processAction() {
-			currentEvent()?.process();
+			item?.process();
 		}
 
 		#endregion
 
 		#endregion
 
+		#region 界面刷新
+
+		/// <summary>
+		/// 绘制物品
+		/// </summary>
+		/// <param name="item"></param>
+		protected override void drawExactlyItem(Event item) {
+			base.drawExactlyItem(item);
+			if (sprite) sprite.sprite = item.picture;
+		}
+
+		/// <summary>
+		/// 绘制空物品
+		/// </summary>
+		protected override void drawEmptyItem() {
+			base.drawEmptyItem();
+			if (sprite) sprite.sprite = null;
+		}
+
+		#endregion
 	}
 }

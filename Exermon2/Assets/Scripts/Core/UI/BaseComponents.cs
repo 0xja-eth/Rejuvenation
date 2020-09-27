@@ -215,7 +215,8 @@ namespace Core.UI {
 			ReflectionUtils.processMember<FieldInfo, BaseSystem>(
 				GetType(), (field) => {
 					var fType = field.FieldType;
-					var getFunc = fType.GetMethod("get");
+					var getFunc = fType.GetMethod("Get", 
+						ReflectionUtils.DefaultStaticFlag);
 					var val = getFunc.Invoke(null, null);
 
 					field.SetValue(this, val);
@@ -440,6 +441,12 @@ namespace Core.UI {
 		public Component get(Type type) {
 			return SceneUtils.get(this, type);
 		}
+		public T[] gets<T>() {
+			return SceneUtils.gets<T>(this);
+		}
+		public Component[] gets(Type type) {
+			return SceneUtils.gets(this, type);
+		}
 
 		/// <summary>
 		/// 寻找子组件
@@ -452,6 +459,19 @@ namespace Core.UI {
 		}
 		public Component find(Type type, string path) {
 			return SceneUtils.find(this, type, path);
+		}
+
+		/// <summary>
+		/// 寻找子组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="path">路径</param>
+		/// <returns></returns>
+		public T findParent<T>() {
+			return SceneUtils.findParent<T>(this);
+		}
+		public Component findParent(Type type) {
+			return SceneUtils.findParent(this, type);
 		}
 
 		#endregion
@@ -527,8 +547,8 @@ namespace Core.UI {
 		/// <param name="obj"></param>
 		public void debug(object obj, DebugType type, bool force = false) {
 			if (!force && !showDebug) return;
-			var format = "{0}({1}): ";
-			var msg = string.Format(format, name, this);
+			var format = "{0}: ";
+			var msg = string.Format(format, this);
 
 			switch (type) {
 				case DebugType.Log:

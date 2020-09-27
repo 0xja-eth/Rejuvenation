@@ -199,7 +199,7 @@ namespace Core.Services {
 		/// 获取uid
 		/// </summary>
 		/// <returns></returns>
-		public Player getPlayer() { return PlayerService.get().player; }
+		public Player getPlayer() { return PlayerService.Get().player; }
 
 		/// <summary>
 		/// 获取uid

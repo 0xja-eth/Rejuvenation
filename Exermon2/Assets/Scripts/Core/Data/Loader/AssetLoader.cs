@@ -192,12 +192,27 @@ namespace Core.Data.Loaders {
 		/// <returns>2D纹理</returns>
 		public static Texture2D loadTexture2D(string path, string fileName) {
 			return loadAsset<Texture2D>(path, fileName);
-        }
-        /// <param name="name">文件主体名称</param>
-        /// <param name="id">序号</param>
-        static Texture2D loadTexture2D(string path, string name, int id) {
-            return loadTexture2D(path, name + "_" + id);
-        }
+		}
+		/// <param name="name">文件主体名称</param>
+		/// <param name="id">序号</param>
+		static Texture2D loadTexture2D(string path, string name, int id) {
+			return loadTexture2D(path, name + "_" + id);
+		}
+
+		/// <summary>
+		/// 读取预制件
+		/// </summary>
+		/// <param name="path">路径</param>
+		/// <param name="fileName">文件名</param>
+		/// <returns>2D纹理</returns>
+		public static GameObject loadPerfab(string path, string fileName) {
+			return loadAsset<GameObject>(path, fileName);
+		}
+		/// <param name="name">文件主体名称</param>
+		/// <param name="id">序号</param>
+		static GameObject loadPerfab(string path, string name, int id) {
+			return loadPerfab(path, name + "_" + id);
+		}
 
 		/// <summary>
 		/// 读取音频

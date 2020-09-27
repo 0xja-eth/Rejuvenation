@@ -121,9 +121,9 @@ namespace Core.UI.Utils {
         /// 初始化外部系统
         /// </summary>
         static void initializeSystems() {
-            gameSys = gameSys ?? GameSystem.get();
-            sceneSys = sceneSys ?? SceneSystem.get();
-            gameSer = gameSer ?? GameService.get();
+            gameSys = gameSys ?? GameSystem.Get();
+            sceneSys = sceneSys ?? SceneSystem.Get();
+            gameSer = gameSer ?? GameService.Get();
         }
 
         /// <summary>
@@ -366,6 +366,38 @@ namespace Core.UI.Utils {
 		public static Component get(GameObject obj, Type type) {
 			return obj == null ? default : obj.GetComponent(type);
 		}
+		
+		/// <summary>
+		/// 获取组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="comp">组件对象</param>
+		/// <remarks>
+		/// 取代 comp.GetComponent<T> 的写法：SceneUtils.get<T>(comp)
+		/// </remarks>
+		/// <returns>返回获取的组件</returns>
+		public static T[] gets<T>(Component comp) {
+			return comp == null ? default : comp.GetComponents<T>();
+		}
+		public static Component[] gets(Component comp, Type type) {
+			return comp == null ? default : comp.GetComponents(type);
+		}
+		/// <summary>
+		/// 获取组件
+		/// </summary>
+		/// <typeparam name="T">组件类型</typeparam>
+		/// <param name="obj">物体对象</param>
+		/// <remarks>
+		/// 取代 obj.GetComponent<T> 的写法：SceneUtils.get<T>(obj)
+		/// </remarks>
+		/// <returns>返回获取的组件</returns>
+		public static T[] gets<T>(GameObject obj) {
+			return obj == null ? default : obj.GetComponents<T>();
+		}
+		public static Component[] gets(GameObject obj, Type type) {
+			return obj == null ? default : obj.GetComponents(type);
+		}
+
 		/// <summary>
 		/// 获取子物体下的组件
 		/// </summary>
@@ -458,6 +490,58 @@ namespace Core.UI.Utils {
 		/// <returns>返回查找到的物体</returns>
 		public static GameObject find(Component comp, string obj) {
 			return find(comp.transform, obj);
+		}
+
+		/// <summary>
+		/// 获取父物体下的 GameObject
+		/// </summary>
+		/// <remarks>
+		/// </remarks>
+		/// <typeparam name="T">父物体包含的组件类型</typeparam>
+		/// <param name="self">当前物体组件对象</param>
+		/// <returns>返回查找到的物体</returns>
+		public static T findParent<T>(GameObject self) {
+			return findParent<T>(self.transform);
+		}
+		public static T findParent<T>(Transform self) {
+			var parent = self.parent;
+			if (parent == null) return default;
+
+			var res = get<T>(parent);
+			if (res != null) return res;
+			return findParent<T>(parent);
+		}
+		public static T findParent<T>(Component self) {
+			return findParent<T>(self.transform);
+		}
+		/// <param name="type">父物体包含的组件类型</param>
+		public static Component findParent(GameObject self, Type type) {
+			return findParent(self.transform, type);
+		}
+		public static Component findParent(Transform self, Type type) {
+			var parent = self.parent;
+			if (parent == null) return default;
+
+			var res = get(parent, type);
+			if (res != null) return res;
+			return findParent(parent, type);
+		}
+		public static Component findParent(Component self, Type type) {
+			return findParent(self.transform, type);
+		}
+		public static GameObject findParent(GameObject self) {
+			return findParent(self.transform);
+		}
+		public static GameObject findParent(Transform self) {
+			var parent = self.parent;
+			if (parent == null) return default;
+
+			var res = parent.gameObject;
+			if (res != null) return res;
+			return findParent(parent);
+		}
+		public static GameObject findParent(Component self) {
+			return findParent(self.transform);
 		}
 
 		/// <summary>

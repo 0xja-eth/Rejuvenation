@@ -4,7 +4,7 @@ using UnityEngine;
 using Core.UI;
 using Core.UI.Utils;
 
-namespace UI.Common.Controls.Entities {
+namespace UI.Common.Controls.MapSystem {
 
 	using Common.Controls.AnimationSystem;
 
@@ -16,6 +16,13 @@ namespace UI.Common.Controls.Entities {
 	[RequireComponent(typeof(AnimatorExtend))]
 	[RequireComponent(typeof(AnimationExtend))]
 	public class MapCharacter : MapEntity {
+
+		/// <summary>
+		/// 类型
+		/// </summary>
+		public enum Type {
+			NPC, Enemy, Player
+		}
 
 		/// <summary>
 		/// 常量定义
@@ -66,22 +73,11 @@ namespace UI.Common.Controls.Entities {
 		/// 内部变量定义
 		/// </summary>
 		protected bool moving = false;
-		
-		#region 初始化
 
 		/// <summary>
-		/// 初始化
+		/// 类型
 		/// </summary>
-		protected override void initializeOnce() {
-			base.initializeOnce();
-			//rigidbody = SceneUtils.get<Rigidbody2D>(this);
-			//sprite = SceneUtils.get<SpriteRenderer>(this);
-
-			//animator = SceneUtils.get<AnimatorExtend>(this);
-			//animation = SceneUtils.get<AnimationExtend>(this);
-		}
-
-		#endregion
+		public virtual Type type => Type.NPC;
 
 		#region 更新
 

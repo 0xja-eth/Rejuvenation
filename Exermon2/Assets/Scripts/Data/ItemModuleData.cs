@@ -754,7 +754,7 @@ namespace ItemModule.Data {
 		/// </summary>
 		/// <returns></returns>
 		public T item() {
-			return DataService.get().get<T>(itemId);
+			return DataService.Get().get<T>(itemId);
 		}
 
 		/// <summary>
