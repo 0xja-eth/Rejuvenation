@@ -71,7 +71,6 @@ namespace UI.Common.Controls.ItemDisplays {
 				requestRefresh();
 			}
 		}
-
 		[SerializeField]
 		bool _selectable = true; // 能否选择
 		public virtual bool selectable {
