@@ -109,16 +109,20 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		[AutoConvert]
-		public string name { get; protected set; }
-		[AutoConvert]
-		public int mhp { get; protected set; }
-		[AutoConvert]
-		public float speed { get; protected set; }
-		[AutoConvert]
-		public float attack { get; protected set; } = 0;
-		[AutoConvert]
-		public float defense { get; protected set; } = 0;
+		[SerializeField] string _name;
+		[AutoConvert] public string name { get => name; set { name = value; } }
+
+		[SerializeField] int _mhp;
+		[AutoConvert] public int mhp { get => mhp; set { mhp = value; } }
+
+		[SerializeField] float _speed;
+		[AutoConvert] public float speed { get => speed; set { speed = value; } }
+
+		[SerializeField] float _attack = 0;
+		[AutoConvert] public float attack { get => attack; set { attack = value; } }
+
+		[SerializeField] float _defense = 0;
+		[AutoConvert] public float defense { get => defense; set { defense = value; } }
 
 	}
 
@@ -151,18 +155,20 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		[AutoConvert]
-		public string description { get; protected set; }
-		
-		[AutoConvert]
-		public RefreshType refreshType { get; protected set; } = RefreshType.OnDead;
+		[SerializeField] string _description;
+		[AutoConvert] public string description { get => description; set { description = value; } }
 
-		[AutoConvert]
-		public float criticalRange { get; protected set; }
-		[AutoConvert]
-		public BehaviourType generalBehaviour { get; protected set; } = BehaviourType.None;
-		[AutoConvert]
-		public BehaviourType criticalBehaviour { get; protected set; } = BehaviourType.Close;
+		[SerializeField] RefreshType _refreshType = RefreshType.OnDead;
+		[AutoConvert] public RefreshType refreshType { get => refreshType; set { refreshType = value; } }
+
+		[SerializeField] float _criticalRange;
+		[AutoConvert] public float criticalRange { get => criticalRange; set { criticalRange = value; } }
+
+		[SerializeField] BehaviourType _generalBehaviour = BehaviourType.None;
+		[AutoConvert] public BehaviourType generalBehaviour { get => generalBehaviour; set { generalBehaviour = value; } }
+
+		[SerializeField] BehaviourType _criticalBehaviour = BehaviourType.Close;
+		[AutoConvert] public BehaviourType criticalBehaviour { get => criticalBehaviour; set { criticalBehaviour = value; } }
 
 	}
 
@@ -241,20 +247,26 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		[AutoConvert]
-		public string name { get; protected set; } 
-		[AutoConvert]
-		public string description { get; protected set; }
-		[AutoConvert]
-		public Type type { get; protected set; } = Type.ShortRange;
-		[AutoConvert]
-		public float frequency { get; protected set; }
-		[AutoConvert]
-		public float speed { get; protected set; }
-		[AutoConvert]
-		public float range { get; protected set; }
-		[AutoConvert]
-		public float power { get; protected set; }
+		[SerializeField] string _name;
+		[AutoConvert] public string name { get => name; set { name = value; } }
+
+		[SerializeField] string _description;
+		[AutoConvert] public string description { get => description; set { description = value; } }
+
+		[SerializeField] Type _type = Type.ShortRange;
+		[AutoConvert] public Type type { get => type; set { type = value; } }
+
+		[SerializeField] float _frequency;
+		[AutoConvert] public float frequency { get => frequency; set { frequency = value; } }
+
+		[SerializeField] float _speed;
+		[AutoConvert] public float speed { get => speed; set { speed = value; } }
+
+		[SerializeField] float _range;
+		[AutoConvert] public float range { get => range; set { range = value; } }
+
+		[SerializeField] float _power;
+		[AutoConvert] public float power { get => power; set { power = value; } }
 
 	}
 
@@ -888,6 +900,7 @@ namespace BattleModule.Data {
 		/// 处理指定行动
 		/// </summary>
 		public virtual void processAction(RuntimeAction action) {
+
 		}
 
 		/// <summary>

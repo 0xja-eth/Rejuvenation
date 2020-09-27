@@ -31,9 +31,9 @@ namespace UI.Common.Controls.MapSystem {
 		public Skill customSkill = null; // 自定义技能数据
 
 		/// <summary>
-		/// 敌人ID
+		/// 技能ID
 		/// </summary>
-		public abstract int skillId { get; }
+		public virtual int skillId => 0;
 
 		/// <summary>
 		/// 敌人

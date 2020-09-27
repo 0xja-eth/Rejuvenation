@@ -21,13 +21,7 @@ namespace UI.Common.Controls.BattleSystem {
 		public bool useCustomParams = false; // 是否使用自定义属性
 
 		public Enemy customEnemy = null; // 自定义敌人数据
-
-		/// <summary>
-		/// 内部组件设置
-		/// </summary>
-		[RequireTarget]
-		protected BattlerDisplay display;
-
+		
 		/// <summary>
 		/// 类型
 		/// </summary>
@@ -36,7 +30,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 敌人ID
 		/// </summary>
-		public abstract int enemyId { get; }
+		public virtual int enemyId => 0;
 
 		/// <summary>
 		/// 敌人

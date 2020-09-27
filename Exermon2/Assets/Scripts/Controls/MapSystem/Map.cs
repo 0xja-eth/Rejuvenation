@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace UI.Common.Controls.MapSystem {
 
+	using BattleSystem;
+
 	/// <summary>
 	/// 地图类
 	/// </summary>

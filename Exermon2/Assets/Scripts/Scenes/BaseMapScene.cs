@@ -21,5 +21,11 @@ namespace UI.BaseMapScene {
 	/// </summary>
 	public abstract class BaseMapScene : BaseScene {
 
+		/// <summary>
+		/// 外部组件设置
+		/// </summary>
+		public Map map1, map2;
+
+
 	}
 }
