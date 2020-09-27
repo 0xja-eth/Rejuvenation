@@ -270,6 +270,42 @@ namespace BattleModule.Data {
 		[SerializeField] float _power;
 		[AutoConvert] public float power { get => _power; set { _power = value; } }
 
+		//[SerializeField] int _animationId;
+		[AutoConvert]
+		public int startAnimationId { get; set; }
+		[AutoConvert]
+		public int targetAnimationId { get; set; }
+		//{
+		//	get => _animationId;
+		//	set { _animationId = value; }
+		//}
+
+		/// <summary>
+		/// Editor中赋值
+		/// </summary>
+		[SerializeField] AnimationClip _startAnimation;
+		[SerializeField] AnimationClip _targetAnimation;
+
+		/// <summary>
+		/// 获取动画实例
+		/// </summary>
+		/// <returns></returns>
+		protected CacheAttr<AnimationClip> startAnimation_ = null;
+		protected AnimationClip _startAnimation_() {
+			return AssetLoader.loadAnimation(startAnimationId);
+		}
+		public AnimationClip startAnimation() {
+			return _startAnimation ?? startAnimation_?.value();
+		}
+
+		protected CacheAttr<AnimationClip> targetAnimation_ = null;
+		protected AnimationClip _targetAnimation_() {
+			return AssetLoader.loadAnimation(targetAnimationId);
+		}
+		public AnimationClip targetAnimation() {
+			return _targetAnimation ?? targetAnimation_?.value();
+		}
+
 	}
 
 	#region 运行时数据

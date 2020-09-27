@@ -20,6 +20,15 @@ namespace UI.Common.Controls.MapSystem {
 	public abstract class SkillProcessor : WorldComponent { // ItemDisplay<Skill> {
 
 		/// <summary>
+		/// 字符串常量定义
+		/// </summary>
+		const string SkillStateName = "Skill";
+		const string SkillAttrName = "skill";
+
+		const string TargetStateName = "Target";
+		const string TargetAttrName = "target";
+
+		/// <summary>
 		/// 外部组件设置
 		/// </summary>
 		public new Collider2D collider;
@@ -116,7 +125,18 @@ namespace UI.Common.Controls.MapSystem {
 		/// 使用技能
 		/// </summary>
 		/// <returns></returns>
-		protected abstract void onUse();
+		protected virtual void onUse() {
+			playUseAnimation();
+		}
+
+		/// <summary>
+		/// 播放使用动画
+		/// </summary>
+		void playUseAnimation() {
+			var animation = skill.startAnimation();
+			animator?.changeAni(SkillStateName, animation);
+			animator?.setVar(SkillAttrName);
+		}
 
 		/// <summary>
 		/// 使用后回调
@@ -151,6 +171,11 @@ namespace UI.Common.Controls.MapSystem {
 		/// <param name="battler"></param>
 		protected virtual void applyMapBattler(MapBattler battler) {
 
+			var animation = skill.targetAnimation();
+			var animator = battler.animator;
+
+			animator?.changeAni(TargetStateName, animation);
+			animator?.setVar(TargetAttrName);
 		}
 
 		#endregion
