@@ -6,7 +6,7 @@ using BattleModule.Data;
 namespace UI.Common.Controls.BattleSystem {
 
 	/// <summary>
-	/// 敌人状态显示
+	/// 战斗者状态显示
 	/// </summary>
 	public class BattlerDisplay : ItemDisplay<RuntimeBattler> {
 

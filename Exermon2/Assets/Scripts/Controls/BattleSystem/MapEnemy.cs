@@ -49,7 +49,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 初始化敌人显示组件
 		/// </summary>
-		protected override void initializeBattlerDisplay() {
+		protected override void setupBattlerDisplay() {
 			var runtimeEnemy = new RuntimeEnemy(enemyId);
 			if (useCustomParams)
 				runtimeEnemy.customEnemy = customEnemy;
@@ -65,7 +65,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			updateSkill();
+			if (isValid()) updateSkill();
 		}
 
 		#endregion
@@ -81,6 +81,7 @@ namespace UI.Common.Controls.BattleSystem {
 			var list = skillProcessors.FindAll(p => p.isUsable());
 			var skill = randomSkill(list);
 
+			if (skill == null) return;
 			runtimeBattler.addAction(skill.skill);
 		}
 

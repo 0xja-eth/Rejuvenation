@@ -110,19 +110,19 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		[SerializeField] string _name;
-		[AutoConvert] public string name { get => name; set { name = value; } }
+		[AutoConvert] public string name { get => _name; set { _name = value; } }
 
-		[SerializeField] int _mhp;
-		[AutoConvert] public int mhp { get => mhp; set { mhp = value; } }
+		[SerializeField] int _mhp = 4;
+		[AutoConvert] public int mhp { get => _mhp; set { _mhp = value; } }
 
-		[SerializeField] float _speed;
-		[AutoConvert] public float speed { get => speed; set { speed = value; } }
+		[SerializeField] float _speed = 2;
+		[AutoConvert] public float speed { get => _speed; set { _speed = value; } }
 
 		[SerializeField] float _attack = 0;
-		[AutoConvert] public float attack { get => attack; set { attack = value; } }
+		[AutoConvert] public float attack { get => _attack; set { _attack = value; } }
 
 		[SerializeField] float _defense = 0;
-		[AutoConvert] public float defense { get => defense; set { defense = value; } }
+		[AutoConvert] public float defense { get => _defense; set { _defense = value; } }
 
 	}
 
@@ -156,19 +156,19 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		[SerializeField] string _description;
-		[AutoConvert] public string description { get => description; set { description = value; } }
+		[AutoConvert] public string description { get => _description; set { _description = value; } }
 
 		[SerializeField] RefreshType _refreshType = RefreshType.OnDead;
-		[AutoConvert] public RefreshType refreshType { get => refreshType; set { refreshType = value; } }
+		[AutoConvert] public RefreshType refreshType { get => _refreshType; set { _refreshType = value; } }
 
 		[SerializeField] float _criticalRange;
-		[AutoConvert] public float criticalRange { get => criticalRange; set { criticalRange = value; } }
+		[AutoConvert] public float criticalRange { get => _criticalRange; set { _criticalRange = value; } }
 
 		[SerializeField] BehaviourType _generalBehaviour = BehaviourType.None;
-		[AutoConvert] public BehaviourType generalBehaviour { get => generalBehaviour; set { generalBehaviour = value; } }
+		[AutoConvert] public BehaviourType generalBehaviour { get => _generalBehaviour; set { _generalBehaviour = value; } }
 
 		[SerializeField] BehaviourType _criticalBehaviour = BehaviourType.Close;
-		[AutoConvert] public BehaviourType criticalBehaviour { get => criticalBehaviour; set { criticalBehaviour = value; } }
+		[AutoConvert] public BehaviourType criticalBehaviour { get => _criticalBehaviour; set { _criticalBehaviour = value; } }
 
 	}
 
@@ -182,12 +182,13 @@ namespace BattleModule.Data {
 		/// </summary>
 		public const int DefaultMHP = 6; // 初始体力值
 		public const float DefaultAttack = 0; // 初始力量
-		public const float DefaultDefense = 0; // 初始格挡
+        public const float DefaultDefense = 0; // 初始格挡
+        public const float DefaultSpeed = 2; // 初始速度
 
-		/// <summary>
-		/// 控制模式
-		/// </summary>
-		public enum ControlType {
+        /// <summary>
+        /// 控制模式
+        /// </summary>
+        public enum ControlType {
 			Present, Past, Both
 		}
 
@@ -225,8 +226,9 @@ namespace BattleModule.Data {
 			mhp = DefaultMHP;
 			attack = DefaultAttack;
 			defense = DefaultDefense;
+            speed = DefaultSpeed;
 
-			this.player = player;
+            this.player = player;
 			runtimeActor = new RuntimeActor();
 		}
 	}
@@ -248,25 +250,25 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		[SerializeField] string _name;
-		[AutoConvert] public string name { get => name; set { name = value; } }
+		[AutoConvert] public string name { get => _name; set { _name = value; } }
 
 		[SerializeField] string _description;
-		[AutoConvert] public string description { get => description; set { description = value; } }
+		[AutoConvert] public string description { get => _description; set { _description = value; } }
 
 		[SerializeField] Type _type = Type.ShortRange;
-		[AutoConvert] public Type type { get => type; set { type = value; } }
+		[AutoConvert] public Type type { get => _type; set { _type = value; } }
 
 		[SerializeField] float _frequency;
-		[AutoConvert] public float frequency { get => frequency; set { frequency = value; } }
+		[AutoConvert] public float frequency { get => _frequency; set { _frequency = value; } }
 
 		[SerializeField] float _speed;
-		[AutoConvert] public float speed { get => speed; set { speed = value; } }
+		[AutoConvert] public float speed { get => _speed; set { _speed = value; } }
 
 		[SerializeField] float _range;
-		[AutoConvert] public float range { get => range; set { range = value; } }
+		[AutoConvert] public float range { get => _range; set { _range = value; } }
 
 		[SerializeField] float _power;
-		[AutoConvert] public float power { get => power; set { power = value; } }
+		[AutoConvert] public float power { get => _power; set { _power = value; } }
 
 	}
 

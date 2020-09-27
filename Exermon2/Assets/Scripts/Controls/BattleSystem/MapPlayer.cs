@@ -42,7 +42,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 初始化敌人显示组件
 		/// </summary>
-		protected override void initializeBattlerDisplay() {
+		protected override void setupBattlerDisplay() {
 			display.setItem(playerSer.actor.runtimeActor);
 		}
 
@@ -51,17 +51,10 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 更新
 
 		/// <summary>
-		/// 更新
+		/// 控制刚体刷新
 		/// </summary>
-		protected override void update() {
-			base.update();
-			//updateInput();
-
-		}
-        /// <summary>
-        /// 控制刚体刷新
-        /// </summary>
-        private void FixedUpdate() {
+		protected override void fixedUpdate() {
+			base.fixedUpdate();
             updateInput();
         }
 
@@ -70,6 +63,7 @@ namespace UI.Common.Controls.BattleSystem {
         /// </summary>
         void updateInput() {
 			updateMovement();
+			updateSkill();
         }
 		
 		/// <summary>
@@ -78,11 +72,16 @@ namespace UI.Common.Controls.BattleSystem {
 		void updateMovement() {
 			if (xDelta == 0 && yDelta == 0) stop();
 			else {
-				var force = new Vector2(xDelta, yDelta);
-				force *= Time.deltaTime * moveSpeed();
-
-				move(force.x, force.y);
+				var speed = new Vector2(xDelta, yDelta);
+				move(speed * moveSpeed());
 			}
+		}
+
+		/// <summary>
+		/// 更新技能使用
+		/// </summary>
+		void updateSkill() {
+
 		}
 
 		#endregion
@@ -93,17 +92,18 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 移动速度
 		/// </summary>
 		/// <returns></returns>
-		public override float moveSpeed() {
-			return actor.speed;
-		}
+		//public override float moveSpeed() {
+		//	return actor.speed;
+		//}
 
 		/// <summary>
 		/// 能否移动
 		/// </summary>
 		/// <returns></returns>
 		public override bool isMoveable() {
-			return base.isMoveable() && map.active && moveable ;
-		}
+            return base.isMoveable() && map.active && moveable;
+
+        }
 
 		#endregion
 	}

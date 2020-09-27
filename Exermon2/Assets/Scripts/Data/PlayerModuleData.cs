@@ -65,10 +65,11 @@ namespace PlayerModule.Data {
 		/// 构造函数
 		/// </summary>
 		/// <param name="name"></param>
-		public Player() { actor = new Actor(); }
+		public Player() { }
 		public Player(string name) {
 			this.name = name;
-			generateUid();
+            generateUid();
+            actor = new Actor(this);
 		}
 	}
 }

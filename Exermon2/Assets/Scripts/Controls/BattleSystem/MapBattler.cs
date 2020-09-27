@@ -41,25 +41,25 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 初始化
 
 		/// <summary>
-		/// 初始化
+		/// 开始
 		/// </summary>
-		protected override void initializeOnce() {
-			base.initializeOnce();
-			initializeBattlerDisplay();
-			initializeSkillProcessors();
-		}
-		
-		/// <summary>
-		/// 初始化技能处理器
-		/// </summary>
-		void initializeSkillProcessors() {
-			skillProcessors.AddRange(gets<SkillProcessor>());
+		protected override void start() {
+			base.start();
+			setupBattlerDisplay();
+			setupSkillProcessors();
 		}
 
 		/// <summary>
-		/// 初始化敌人显示组件
+		/// 配置战斗者显示组件
 		/// </summary>
-		protected abstract void initializeBattlerDisplay();
+		protected abstract void setupBattlerDisplay();
+
+		/// <summary>
+		/// 配置技能处理器
+		/// </summary>
+		void setupSkillProcessors() {
+			skillProcessors.AddRange(gets<SkillProcessor>());
+		}
 
 		#endregion
 
@@ -70,7 +70,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			updateAction();
+			if (isValid()) updateAction();
 		}
 
 		#endregion
@@ -82,7 +82,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		public override float moveSpeed() {
-			return runtimeBattler.speed;
+            return runtimeBattler.speed;
 		}
 
 		#endregion
@@ -113,6 +113,14 @@ namespace UI.Common.Controls.BattleSystem {
 		#endregion
 
 		#region 行动控制
+
+		/// <summary>
+		/// 是否可用
+		/// </summary>
+		/// <returns></returns>
+		public bool isValid() {
+			return runtimeBattler != null;
+		}
 
 		/// <summary>
 		/// 是否行动中

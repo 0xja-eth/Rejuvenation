@@ -54,7 +54,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 外部变量定义
 		/// </summary>
-		public float defaultMoveSpeed = 20; // 默认移动速度
+		public float defaultMoveSpeed = 2; // 默认移动速度
 
 		/// <summary>
 		/// 内部控件设置

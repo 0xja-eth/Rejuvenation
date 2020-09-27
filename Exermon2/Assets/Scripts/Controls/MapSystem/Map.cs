@@ -12,12 +12,8 @@ namespace UI.Common.Controls.MapSystem {
 	/// <summary>
 	/// 地图类
 	/// </summary>
+	[RequireComponent(typeof(CameraController))]
 	public class Map : WorldComponent {
-
-		/// <summary>
-		/// 外部组件设置
-		/// </summary>
-		public new Camera camera;
 
 		/// <summary>
 		/// 内部变量定义
@@ -25,10 +21,14 @@ namespace UI.Common.Controls.MapSystem {
 		public bool active = true;
 
 		/// <summary>
-		/// 内部变量定义
+		/// 内部组件设置
 		/// </summary>
+		[RequireTarget]
+		CameraController cameraController;
+
 		[HideInInspector]
 		public MapPlayer player;
+
 		List<MapEntity> entities = new List<MapEntity>();
 
 		#region 实体管理

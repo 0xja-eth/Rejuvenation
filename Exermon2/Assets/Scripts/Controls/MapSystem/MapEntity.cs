@@ -30,7 +30,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			
+			initializeMap();
 		}
 
 		/// <summary>

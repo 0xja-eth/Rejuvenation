@@ -31,13 +31,14 @@ namespace Core.Systems {
 
             NoneScene = -1,
 
-            TitleScene = 0,
-        }
+			TitleScene = 0,
+			TestScene = 1,
+		}
 
-        /// <summary>
-        /// 场景栈
-        /// </summary>
-        Stack<Scene> sceneStack = new Stack<Scene>();
+		/// <summary>
+		/// 场景栈
+		/// </summary>
+		Stack<Scene> sceneStack = new Stack<Scene>();
 
         /// <summary>
         /// 通道数据

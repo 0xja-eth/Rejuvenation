@@ -321,6 +321,20 @@ namespace Core.UI {
 		/// <summary>
 		/// 更新
 		/// </summary>
+		private void FixedUpdate() {
+			updating = true;
+			fixedUpdate();
+			updating = false;
+		}
+
+		/// <summary>
+		/// 更新（同FixedUpdate）
+		/// </summary>
+		protected virtual void fixedUpdate() { }
+
+		/// <summary>
+		/// 更新
+		/// </summary>
 		private void Update() {
             updating = true;
             update();
