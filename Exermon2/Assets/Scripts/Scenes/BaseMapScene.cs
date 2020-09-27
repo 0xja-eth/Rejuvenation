@@ -49,7 +49,7 @@ namespace UI.BaseMapScene {
 		/// <summary>
 		/// 分屏
 		/// </summary>
-		public void splitCamera() {
+		public void splitCamera(SplitType type) {
 			// TODO: 添加分屏动画代码
 		}
 
