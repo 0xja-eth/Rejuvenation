@@ -31,6 +31,11 @@ namespace UI.Common.Controls.MapSystem {
 
 		List<MapEntity> entities = new List<MapEntity>();
 
+		/// <summary>
+		/// 属性
+		/// </summary>
+		public new Camera camera => cameraController.camera;
+
 		#region 实体管理
 
 		/// <summary>

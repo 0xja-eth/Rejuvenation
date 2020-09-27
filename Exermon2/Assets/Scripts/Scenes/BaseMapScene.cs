@@ -50,7 +50,7 @@ namespace UI.BaseMapScene {
 		/// 分屏
 		/// </summary>
 		public void splitCamera() {
-
+			// TODO: 添加分屏动画代码
 		}
 
 		#endregion
