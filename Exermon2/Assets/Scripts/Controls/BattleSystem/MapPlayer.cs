@@ -43,7 +43,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 初始化敌人显示组件
 		/// </summary>
 		protected override void initializeBattlerDisplay() {
-			display.setItem(playerSer.actor.runtimeActor);
+            playerSer.createPlayer("Player");
+            display.setItem(playerSer.actor.runtimeActor);
 		}
 
 		#endregion
@@ -79,7 +80,7 @@ namespace UI.Common.Controls.BattleSystem {
 			if (xDelta == 0 && yDelta == 0) stop();
 			else {
 				var force = new Vector2(xDelta, yDelta);
-				force *= Time.deltaTime * moveSpeed();
+				force *= moveSpeed();
 
 				move(force.x, force.y);
 			}
@@ -93,17 +94,18 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 移动速度
 		/// </summary>
 		/// <returns></returns>
-		public override float moveSpeed() {
-			return actor.speed;
-		}
+		//public override float moveSpeed() {
+		//	return actor.speed;
+		//}
 
 		/// <summary>
 		/// 能否移动
 		/// </summary>
 		/// <returns></returns>
 		public override bool isMoveable() {
-			return base.isMoveable() && map.active && moveable ;
-		}
+            return base.isMoveable() && moveable;//map.active && moveable ;
+
+        }
 
 		#endregion
 	}

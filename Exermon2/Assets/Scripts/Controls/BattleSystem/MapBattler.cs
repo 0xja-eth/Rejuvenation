@@ -82,7 +82,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		public override float moveSpeed() {
-			return runtimeBattler.speed;
+            return runtimeBattler.speed; //s == 0 ? base.moveSpeed() : runtimeBattler.speed;
 		}
 
 		#endregion
