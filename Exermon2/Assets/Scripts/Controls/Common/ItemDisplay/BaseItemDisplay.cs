@@ -49,7 +49,7 @@ namespace UI.Common.Controls.ItemDisplays {
         /// </summary>
         /// <typeparam name="T">物品类型</typeparam>
         /// <param name="func">绘制函数</param>
-        public virtual void registerItemType<T>(UnityAction<T> func) where T : BaseItem{
+        public void registerItemType<T>(UnityAction<T> func) where T : BaseItem{
             UnityAction<BaseItem> func_ = (item) => func?.Invoke((T)item);
             var typeName = typeof(T).Name;
             var enumType = typeof(BaseItem.Type);

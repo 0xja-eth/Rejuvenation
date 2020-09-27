@@ -17,12 +17,18 @@ namespace UI.Common.Controls.MapSystem {
 	/// <summary>
 	/// 地图上的事件
 	/// </summary>
-	[RequireComponent(typeof(Collider2D))]
-	public abstract class ActorNormalAttack : SkillProcessor {// ItemDisplay<Skill> {
+	public class ActorNormalAttack : SkillProcessor {// ItemDisplay<Skill> {
 
-		[RequireTarget]
-		protected new Collider2D collider;
+		#region 执行&使用
 
+		/// <summary>
+		/// 使用技能
+		/// </summary>
+		protected override void onUse() {
+
+		}
+
+		#endregion
 
 	}
 }

@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-using Core.Data;
+using Core.UI.Utils;
 
 using BattleModule.Data;
 
@@ -30,7 +30,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
-		RuntimeAction currentAction;
+		[HideInInspector]
+		public RuntimeAction currentAction;
 		SkillProcessor currentProcessor;
 
 		/// <summary>
@@ -46,7 +47,6 @@ namespace UI.Common.Controls.BattleSystem {
 		protected override void start() {
 			base.start();
 			setupBattlerDisplay();
-			setupSkillProcessors();
 		}
 
 		/// <summary>
@@ -55,10 +55,11 @@ namespace UI.Common.Controls.BattleSystem {
 		protected abstract void setupBattlerDisplay();
 
 		/// <summary>
-		/// 配置技能处理器
+		/// 初始化碰撞函数
 		/// </summary>
-		void setupSkillProcessors() {
-			skillProcessors.AddRange(gets<SkillProcessor>());
+		protected override void initializeCollFuncs() {
+			base.initializeCollFuncs();
+			registerOnEnterFunc<SkillProcessor>(onSkillHit);
 		}
 
 		#endregion
@@ -75,6 +76,10 @@ namespace UI.Common.Controls.BattleSystem {
 
 		#endregion
 
+		#region 碰撞处理
+
+		#endregion
+
 		#region 移动控制
 
 		/// <summary>
@@ -88,6 +93,15 @@ namespace UI.Common.Controls.BattleSystem {
 		#endregion
 
 		#region 技能控制
+
+		/// <summary>
+		/// 添加技能处理器
+		/// </summary>
+		/// <param name="processor"></param>
+		public void addSkillProcessor(SkillProcessor processor) {
+			if (!skillProcessors.Contains(processor))
+				skillProcessors.Add(processor);
+		}
 
 		/// <summary>
 		/// 获取指定技能的处理器
@@ -110,6 +124,27 @@ namespace UI.Common.Controls.BattleSystem {
 			currentProcessor?.use();
 		}
 
+		/// <summary>
+		/// 技能命中回调
+		/// </summary>
+		/// <param name="skill"></param>
+		void onSkillHit(SkillProcessor skill) {
+			if (skill.battler == this) return;
+			skill.apply(this);
+		}
+
+		#endregion
+
+		#region 状态判断
+
+		/// <summary>
+		/// 能否移动
+		/// </summary>
+		/// <returns></returns>
+		public override bool isMoveable() {
+			return base.isMoveable() && !isActing();
+		}
+		
 		#endregion
 
 		#region 行动控制
@@ -127,7 +162,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isActing() {
-			return currentProcessor && currentProcessor.isRunning();
+			return currentProcessor && currentProcessor.isUsing();
 		}
 
 		/// <summary>
@@ -150,6 +185,13 @@ namespace UI.Common.Controls.BattleSystem {
 		}
 
 		/// <summary>
+		/// 处理行动
+		/// </summary>
+		protected virtual void processAction() {
+			useSkill(currentAction.skill);
+		}
+
+		/// <summary>
 		/// 行动开始
 		/// </summary>
 		protected virtual void onActionStart() {
@@ -157,12 +199,13 @@ namespace UI.Common.Controls.BattleSystem {
 		}
 
 		/// <summary>
-		/// 处理行动
+		/// 行动开始
 		/// </summary>
-		protected virtual void processAction() {
-			useSkill(currentAction.skill);
+		protected virtual void onActionEnd() {
+			runtimeBattler.onActionStart(currentAction);
 		}
 
 		#endregion
+
 	}
 }

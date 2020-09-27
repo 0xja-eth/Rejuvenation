@@ -5,6 +5,8 @@ using BattleModule.Data;
 
 using PlayerModule.Services;
 
+using Event = MapModule.Data.Event;
+
 namespace UI.Common.Controls.BattleSystem {
 
 	using MapSystem;
@@ -40,6 +42,16 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 初始化
 
 		/// <summary>
+		/// 初始化碰撞函数
+		/// </summary>
+		protected override void initializeCollFuncs() {
+			base.initializeCollFuncs();
+			registerOnEnterFunc<MapEvent>(onEventCollEnter);
+			registerOnStayFunc<MapEvent>(onEventCollStay);
+			registerOnExitFunc<MapEvent>(onEventCollExit);
+		}
+
+		/// <summary>
 		/// 初始化敌人显示组件
 		/// </summary>
 		protected override void setupBattlerDisplay() {
@@ -65,7 +77,40 @@ namespace UI.Common.Controls.BattleSystem {
 			updateMovement();
 			updateSkill();
         }
-		
+
+		#endregion
+
+		#region 事件处理
+
+		/// <summary>
+		/// 事件碰撞开始
+		/// </summary>
+		/// <param name="player"></param>
+		void onEventCollEnter(MapEvent event_) {
+			event_.processTrigger(this, Event.TriggerType.CollEnter);
+		}
+
+		/// <summary>
+		/// 事件碰撞持续
+		/// </summary>
+		/// <param name="player"></param>
+		void onEventCollStay(MapEvent event_) {
+			event_.processTrigger(this, event_.isSearching ?
+				Event.TriggerType.CollSearch : Event.TriggerType.CollStay);
+		}
+
+		/// <summary>
+		/// 事件碰撞结束
+		/// </summary>
+		/// <param name="player"></param>
+		void onEventCollExit(MapEvent event_) {
+			event_.processTrigger(this, Event.TriggerType.CollExit);
+		}
+
+		#endregion
+
+		#region 移动控制
+
 		/// <summary>
 		/// 更新移动
 		/// </summary>
@@ -78,32 +123,23 @@ namespace UI.Common.Controls.BattleSystem {
 		}
 
 		/// <summary>
-		/// 更新技能使用
-		/// </summary>
-		void updateSkill() {
-
-		}
-
-		#endregion
-
-		#region 移动控制
-
-		/// <summary>
-		/// 移动速度
-		/// </summary>
-		/// <returns></returns>
-		//public override float moveSpeed() {
-		//	return actor.speed;
-		//}
-
-		/// <summary>
 		/// 能否移动
 		/// </summary>
 		/// <returns></returns>
 		public override bool isMoveable() {
             return base.isMoveable() && map.active && moveable;
-
         }
+
+		#endregion
+
+		#region 技能控制
+
+		/// <summary>
+		/// 更新技能使用
+		/// </summary>
+		void updateSkill() {
+
+		}
 
 		#endregion
 	}

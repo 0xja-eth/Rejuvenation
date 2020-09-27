@@ -15,11 +15,14 @@ namespace UI.Common.Controls.MapSystem {
 	using BattleSystem;
 
 	/// <summary>
-	/// 地图上的事件
+	/// 技能处理器
 	/// </summary>
-	[RequireComponent(typeof(MapBattler))]
-	[RequireComponent(typeof(AnimatorExtend))]
-	public abstract class SkillProcessor : WorldComponent {// ItemDisplay<Skill> {
+	public abstract class SkillProcessor : WorldComponent { // ItemDisplay<Skill> {
+
+		/// <summary>
+		/// 外部组件设置
+		/// </summary>
+		public new Collider2D collider;
 
 		/// <summary>
 		/// 外部变量设置
@@ -45,18 +48,44 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
-		[RequireTarget]
-		protected MapBattler battler;
-		[RequireTarget]
+		[HideInInspector]
+		public MapBattler battler;
 		protected AnimatorExtend animator;
 
-		#region 执行&使用
+		/// <summary>
+		/// 内部变量定义
+		/// </summary>
+		RuntimeAction currentAction => battler.currentAction;
+
+		#region 初始化
 
 		/// <summary>
-		/// 执行中
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
+			base.initializeOnce();
+			initializeBattler();
+		}
+
+		/// <summary>
+		/// 初始化战斗者
+		/// </summary>
+		void initializeBattler() {
+			battler = findParent<MapBattler>();
+			animator = battler.animator;
+
+			battler.addSkillProcessor(this);
+		}
+
+		#endregion
+
+		#region 使用
+
+		/// <summary>
+		/// 使用中
 		/// </summary>
 		/// <returns></returns>
-		public virtual bool isRunning() {
+		public virtual bool isUsing() {
 			return false;
 		}
 
@@ -65,15 +94,17 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isUsable() {
-			return true;
+			return !isUsing();
 		}
 
 		/// <summary>
 		/// 使用技能
 		/// </summary>
 		/// <returns></returns>
-		public void use() {
+		public bool use() {
+			if (!isUsable()) return false;
 			beforeUse(); onUse(); afterUse();
+			return true;
 		}
 
 		/// <summary>
@@ -91,6 +122,36 @@ namespace UI.Common.Controls.MapSystem {
 		/// 使用后回调
 		/// </summary>
 		protected virtual void afterUse() { }
+
+		#endregion
+
+		#region 作用
+
+		/// <summary>
+		/// 作用到指定Battler
+		/// </summary>
+		/// <param name="battler"></param>
+		public virtual void apply(MapBattler battler) {
+			applyRuntimeBattler(battler.runtimeBattler);
+			applyMapBattler(battler);
+		}
+
+		/// <summary>
+		/// 应用到运行时数据
+		/// </summary>
+		/// <param name="battler"></param>
+		void applyRuntimeBattler(RuntimeBattler battler) {
+			var res = currentAction.makeResult(battler);
+			battler.applyResult(res);
+		}
+
+		/// <summary>
+		/// 应用到运行时数据
+		/// </summary>
+		/// <param name="battler"></param>
+		protected virtual void applyMapBattler(MapBattler battler) {
+
+		}
 
 		#endregion
 	}

@@ -26768,6 +26768,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   defaultMoveSpeed: 20
+  rigidbody: {fileID: 0}
+  sprite: {fileID: 0}
+  animator: {fileID: 0}
+  animation: {fileID: 0}
   skillProcessors: []
   useCustomParams: 1
   customEnemy:
@@ -36111,6 +36115,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 1
   defaultMoveSpeed: 20
+  rigidbody: {fileID: 0}
+  sprite: {fileID: 0}
+  animator: {fileID: 0}
+  animation: {fileID: 0}
   skillProcessors: []
   moveable: 1
 --- !u!114 &2104232141
@@ -36413,6 +36421,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   defaultMoveSpeed: 20
+  rigidbody: {fileID: 0}
+  sprite: {fileID: 0}
+  animator: {fileID: 0}
+  animation: {fileID: 0}
   skillProcessors: []
   moveable: 0
 --- !u!114 &2140885635

@@ -1,8 +1,14 @@
-﻿
+﻿using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Events;
 
 using Core.UI;
 using Core.UI.Utils;
+
+using CollFunc = UnityEngine.Events.UnityAction<UnityEngine.Collider2D>;
+using CollFuncList = System.Collections.Generic.List<
+	UnityEngine.Events.UnityAction<UnityEngine.Collider2D>>;
 
 namespace UI.Common.Controls.MapSystem {
 
@@ -59,15 +65,15 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 内部控件设置
 		/// </summary>
-		[RequireTarget]
-		protected new Rigidbody2D rigidbody;
-		[RequireTarget]
-		protected SpriteRenderer sprite;
+		[RequireTarget] [HideInInspector]
+		public new Rigidbody2D rigidbody;
+		[RequireTarget] [HideInInspector]
+		public SpriteRenderer sprite;
 
-		[RequireTarget]
-		protected AnimatorExtend animator;
-		[RequireTarget]
-		protected new AnimationExtend animation;
+		[RequireTarget] [HideInInspector]
+		public AnimatorExtend animator;
+		[RequireTarget] [HideInInspector]
+		public new AnimationExtend animation;
 
 		/// <summary>
 		/// 内部变量定义
@@ -78,6 +84,23 @@ namespace UI.Common.Controls.MapSystem {
 		/// 类型
 		/// </summary>
 		public virtual Type type => Type.NPC;
+
+		#region 初始化
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
+			base.initializeOnce();
+			initializeCollFuncs();
+		}
+
+		/// <summary>
+		/// 初始化碰撞函数
+		/// </summary>
+		protected virtual void initializeCollFuncs() { }
+
+		#endregion
 
 		#region 更新
 
@@ -98,6 +121,76 @@ namespace UI.Common.Controls.MapSystem {
 			checkMoveEnd();
 		}
 
+		#endregion
+
+		#region 碰撞处理
+
+		/// <summary>
+		/// 各种碰撞处理函数
+		/// </summary>
+		CollFuncList onEnterFuncs = new CollFuncList();
+		CollFuncList onStayFuncs = new CollFuncList();
+		CollFuncList onExitFuncs = new CollFuncList();
+
+		/// <summary>
+		/// 注册碰撞处理函数
+		/// </summary>
+		/// <typeparam name="T">物品类型</typeparam>
+		/// <param name="func">绘制函数</param>
+		public void registerOnEnterFunc<T>(
+			UnityAction<T> func) where T : WorldComponent {
+			registerCollFunc(onEnterFuncs, func);
+		}
+		public void registerOnStayFunc<T>(
+			UnityAction<T> func) where T : WorldComponent {
+			registerCollFunc(onStayFuncs, func);
+		}
+		public void registerOnExitFunc<T>(
+			UnityAction<T> func) where T : WorldComponent {
+			registerCollFunc(onExitFuncs, func);
+		}
+		void registerCollFunc<T>(CollFuncList funcs,
+			UnityAction<T> func) where T : WorldComponent {
+
+			CollFunc func_ = (coll) => {
+				var item = SceneUtils.get<T>(coll);
+				if (item != null) func?.Invoke(item);
+			};
+			funcs.Add(func_);
+		}
+
+		/// <summary>
+		/// 碰撞开始
+		/// </summary>
+		/// <param name="collision"></param>
+		void OnTriggerEnter2D(Collider2D collision) {
+			onTrigger(collision, onEnterFuncs);
+		}
+
+		/// <summary>
+		/// 碰撞持续
+		/// </summary>
+		/// <param name="collision"></param>
+		void OnTriggerStay2D(Collider2D collision) {
+			onTrigger(collision, onStayFuncs);
+		}
+
+		/// <summary>
+		/// 碰撞结束
+		/// </summary>
+		/// <param name="collision"></param>
+		void OnTriggerExit2D(Collider2D collision) {
+			onTrigger(collision, onExitFuncs);
+		}
+
+		/// <summary>
+		/// 统一碰撞回调处理
+		/// </summary>
+		/// <param name="collision"></param>
+		void onTrigger(Collider2D collision, CollFuncList funcs) {
+			foreach (var func in funcs) func.Invoke(collision);
+		}
+		
 		#endregion
 
 		#region 回调控制
@@ -143,10 +236,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 移动中回调
 		/// </summary>
-		protected virtual void onMove() {
-			debugLog("Moving");
-			//refreshFacing();
-		}
+		protected virtual void onMove() { }
 
 		#endregion
 

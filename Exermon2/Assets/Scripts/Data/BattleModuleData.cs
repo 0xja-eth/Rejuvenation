@@ -285,7 +285,7 @@ namespace BattleModule.Data {
 		[AutoConvert]
 		public int paramId { get; protected set; } // 属性ID
 		[AutoConvert]
-		public int value { get; protected set; } // 改变数值
+		public float value { get; protected set; } // 改变数值
 		[AutoConvert]
 		public double rate { get; protected set; } // 改变比率
 		[AutoConvert]
@@ -319,7 +319,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		public RuntimeBuff() { }
 		public RuntimeBuff(int paramId,
-			int value = 0, double rate = 1, float seconds = 0) {
+			float value = 0, double rate = 1, float seconds = 0) {
 			this.paramId = paramId; this.value = value;
 			this.rate = rate; this.seconds = seconds;
 		}
@@ -550,9 +550,10 @@ namespace BattleModule.Data {
 		/// <param name="paramId">属性ID</param>
 		/// <returns></returns>
 		public float buffValue(int paramId) {
-			int value = 0;
+			float value = 0;
 			foreach (var buff in buffs)
-				if (buff.paramId == paramId && !buff.isOutOfDate()) value += buff.value;
+				if (buff.paramId == paramId && 
+					!buff.isOutOfDate()) value += buff.value;
 			return value;
 		}
 
@@ -899,17 +900,46 @@ namespace BattleModule.Data {
 		}
 
 		/// <summary>
-		/// 处理指定行动
-		/// </summary>
-		public virtual void processAction(RuntimeAction action) {
-
-		}
-
-		/// <summary>
 		/// 清除所有行动
 		/// </summary>
 		public void clearActions() {
 			actions.Clear();
+		}
+
+		#endregion
+		
+		#region 结果控制
+
+		/// <summary>
+		/// 当前结果
+		/// </summary>
+		RuntimeActionResult currentResult = null;
+
+		/// <summary>
+		/// 应用结果
+		/// </summary>
+		/// <param name="result"></param>
+		public void applyResult(RuntimeActionResult result) {
+			currentResult = result;
+			// TODO: 结果应用
+			CalcService.ResultApplyCalc.apply(this, result);
+		}
+
+		/// <summary>
+		/// 获取当前结果（用于显示）
+		/// </summary>
+		/// <returns></returns>
+		public RuntimeActionResult getResult() {
+			var res = currentResult;
+			clearResult();
+			return res;
+		}
+
+		/// <summary>
+		/// 清除当前结果
+		/// </summary>
+		public void clearResult() {
+			currentResult = null;
 		}
 
 		#endregion
@@ -1054,6 +1084,14 @@ namespace BattleModule.Data {
 		public RuntimeAction(RuntimeBattler subject, Skill skill) {
 			this.subject = subject; this.skill = skill;
 		}
+
+		/// <summary>
+		/// 生成结果
+		/// </summary>
+		/// <param name="object_"></param>
+		public RuntimeActionResult makeResult(RuntimeBattler object_) {
+			return new RuntimeActionResult(object_, this);
+		}
 	}
 
 	/// <summary>
@@ -1075,7 +1113,7 @@ namespace BattleModule.Data {
 		/// 状态/Buff变更
 		/// </summary>
 		[AutoConvert]
-		public RuntimeBuff[] addBuffs { get; set; }
+		public List<RuntimeBuff> addBuffs { get; set; } = new List<RuntimeBuff>();
 
 		/// <summary>
 		/// 行动
@@ -1093,6 +1131,7 @@ namespace BattleModule.Data {
 		public RuntimeActionResult() { }
 		public RuntimeActionResult(RuntimeBattler object_, RuntimeAction action) {
 			this.object_ = object_; this.action = action;
+			CalcService.ActionResultGenerator.generate(this);
 		}
 	}
 
