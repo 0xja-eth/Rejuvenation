@@ -798,30 +798,6 @@ namespace BattleModule.Data {
 			freezing = Math.Max(freezing, val);
 		}
 
-		/// <summary>
-		/// 是否受击
-		/// </summary>
-		/// <returns></returns>
-		public bool isHitting() {
-			return hitting > 0;
-		}
-
-		/// <summary>
-		/// 是否硬直
-		/// </summary>
-		/// <returns></returns>
-		public bool isFreezing() {
-			return freezing > 0;
-		}
-
-		/// <summary>
-		/// 是否处于受击中
-		/// </summary>
-		/// <returns></returns>
-		public bool isHittingOrFreezing() {
-			return isHitting() || isFreezing();
-		}
-
 		#endregion
 
 		#region 特性控制
@@ -1159,6 +1135,59 @@ namespace BattleModule.Data {
 		/// </summary>
 		protected virtual void onDie() {
 			changeState(BattlerState.Dead);
+		}
+
+		#endregion
+
+		#region 状态判断
+
+		/// <summary>
+		/// 是否行动中
+		/// </summary>
+		/// <returns></returns>
+		public bool isActing() {
+			return isState(BattlerState.Using);
+		}
+
+		/// <summary>
+		/// 是否受击
+		/// </summary>
+		/// <returns></returns>
+		public bool isHitting() {
+			return hitting > 0;
+		}
+
+		/// <summary>
+		/// 是否硬直
+		/// </summary>
+		/// <returns></returns>
+		public bool isFreezing() {
+			return freezing > 0;
+		}
+
+		/// <summary>
+		/// 是否处于受击中
+		/// </summary>
+		/// <returns></returns>
+		public bool isHittingOrFreezing() {
+			return isHitting() || isFreezing();
+		}
+
+		/// <summary>
+		/// 能否移动
+		/// </summary>
+		/// <returns></returns>
+		public override bool isMoveable() {
+			return base.isMoveable() && !isActing();
+		}
+
+		/// <summary>
+		/// 是否空闲
+		/// </summary>
+		/// <returns></returns>
+		public override bool isIdle() {
+			return base.isIdle() && !isActing() 
+				&& !isHittingOrFreezing();
 		}
 
 		#endregion

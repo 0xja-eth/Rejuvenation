@@ -49,7 +49,7 @@ namespace UI.Common.Controls.BattleSystem {
 		[HideInInspector]
 		public SkillProcessor currentProcessor;
 
-		protected bool freezing = false;
+		//protected bool freezing = false;
 
 		/// <summary>
 		/// 运行时战斗者
@@ -86,16 +86,30 @@ namespace UI.Common.Controls.BattleSystem {
 		protected override void setupStateChanges() {
 			base.setupStateChanges();
 
-			//runtimeBattler.addStateDict(
-			//	RuntimeBattler.BattlerState.Idle, updateIdle);
-			//runtimeBattler.addStateDict(
-			//	RuntimeBattler.BattlerState.Moving, updateMoving);
-			//runtimeBattler.addStateDict(
-			//	RuntimeBattler.BattlerState.Using, updateUsing);
-			//runtimeBattler.addStateDict(
-			//	RuntimeBattler.BattlerState.Hitting, updateHitting);
-			//runtimeBattler.addStateDict(
-			//	RuntimeBattler.BattlerState.Freezing, updateFreezing);
+			runtimeBattler?.addStateDict(
+				RuntimeBattler.BattlerState.Idle, updateIdle);
+			runtimeBattler?.addStateDict(
+				RuntimeBattler.BattlerState.Using, updateUsing);
+
+			runtimeBattler?.addStateChange(
+				RuntimeBattler.BattlerState.Idle,
+				RuntimeBattler.BattlerState.Hitting,
+				onFreezeStart);
+			runtimeBattler?.addStateChange(
+				RuntimeBattler.BattlerState.Moving,
+				RuntimeBattler.BattlerState.Hitting,
+				onFreezeStart);
+			runtimeBattler?.addStateChange(
+				RuntimeBattler.BattlerState.Using,
+				RuntimeBattler.BattlerState.Hitting,
+				onFreezeStart);
+
+			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
+
+			runtimeBattler?.addStateChange(
+				RuntimeBattler.BattlerState.Freezing,
+				RuntimeBattler.BattlerState.Idle,
+				onFreezeEnd);
 		}
 
 		#endregion
@@ -115,16 +129,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 更新具体状态
 		/// </summary>
 		protected virtual void updateIdle() {
-			if (isMoving()) changeState(RuntimeBattler.BattlerState.Moving);
-			else updateAction();
-		}
-
-		/// <summary>
-		/// 更新移动
-		/// </summary>
-		sealed protected override void updateMoving() {
-			if (isState(RuntimeBattler.BattlerState.Moving))
-				base.updateMoving();
+			if(runtimeBattler.isIdle()) updateAction();
 		}
 
 		/// <summary>
@@ -133,67 +138,19 @@ namespace UI.Common.Controls.BattleSystem {
 		protected virtual void updateUsing() {
 			updateActing();
 		}
-
-		/// <summary>
-		/// 更新受击
-		/// </summary>
-		protected virtual void updateHitting() {
-			checkFreezeStart();
-		}
-
-		/// <summary>
-		/// 更新硬直
-		/// </summary>
-		protected virtual void updateFreezing() {
-			checkFreezeEnd();
-		}
-
-		/// <summary>
-		/// 开始移动回调
-		/// </summary>
-		protected override void onMoveStart() {
-			base.onMoveStart();
-			changeState(RuntimeBattler.BattlerState.Moving);
-		}
-
-		/// <summary>
-		/// 结束移动回调
-		/// </summary>
-		protected override void onMoveEnd() {
-			base.onMoveEnd();
-			changeState(RuntimeBattler.BattlerState.Idle);
-		}
-
-		/// <summary>
-		/// 检查是否开始硬直
-		/// </summary>
-		/// <returns></returns>
-		void checkFreezeStart() {
-			if (!freezing && runtimeBattler.
-				isHittingOrFreezing()) onFreezeStart();
-		}
-
-		/// <summary>
-		/// 检查是否结束硬直
-		/// </summary>
-		/// <returns></returns>
-		void checkFreezeEnd() {
-			if (freezing && !runtimeBattler.
-				isHittingOrFreezing()) onFreezeEnd();
-		}
-
+		
 		/// <summary>
 		/// 开始硬直回调
 		/// </summary>
 		protected virtual void onFreezeStart() {
-			animator?.setVar(FreezeAttrName, freezing = true);
+			animator?.setVar(FreezeAttrName, true);
 		}
 
 		/// <summary>
 		/// 结束硬直回调
 		/// </summary>
 		protected virtual void onFreezeEnd() {
-			animator.setVar(FreezeAttrName, freezing = false);
+			animator.setVar(FreezeAttrName, false);
 		}
 
 		#endregion
@@ -205,24 +162,6 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 状态判断
 
 		/// <summary>
-		/// 状态判断
-		/// </summary>
-		/// <param name="state"></param>
-		/// <returns></returns>
-		public bool isState(RuntimeBattler.BattlerState state) {
-			return runtimeBattler.isState(state);
-		}
-
-		/// <summary>
-		/// 状态改变
-		/// </summary>
-		/// <param name="state"></param>
-		/// <returns></returns>
-		public void changeState(RuntimeBattler.BattlerState state) {
-			runtimeBattler.changeState(state);
-		}
-
-		/// <summary>
 		/// 是否可用
 		/// </summary>
 		/// <returns></returns>
@@ -230,30 +169,30 @@ namespace UI.Common.Controls.BattleSystem {
 			return runtimeBattler != null;
 		}
 
-		/// <summary>
-		/// 是否行动中
-		/// </summary>
-		/// <returns></returns>
-		public bool isActing() {
-			return currentProcessor && currentProcessor.isUsing;
-		}
+		///// <summary>
+		///// 是否行动中
+		///// </summary>
+		///// <returns></returns>
+		//public bool isActing() {
+		//	return currentProcessor && currentProcessor.isUsing;
+		//}
 
-		/// <summary>
-		/// 能否移动
-		/// </summary>
-		/// <returns></returns>
-		public override bool isMoveable() {
-			return base.isMoveable() && !isActing();
-		}
+		///// <summary>
+		///// 能否移动
+		///// </summary>
+		///// <returns></returns>
+		//public override bool isMoveable() {
+		//	return base.isMoveable() && !isActing();
+		//}
 
-		/// <summary>
-		/// 是否空闲
-		/// </summary>
-		/// <returns></returns>
-		public override bool isIdle() {
-			return base.isIdle() && !isActing() && 
-				!runtimeBattler.isFreezing();
-		}
+		///// <summary>
+		///// 是否空闲
+		///// </summary>
+		///// <returns></returns>
+		//public override bool isIdle() {
+		//	return base.isIdle() && !isActing() && 
+		//		!runtimeBattler.isFreezing();
+		//}
 
 		#endregion
 
@@ -360,7 +299,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <returns></returns>
 		void checkActionEnd() {
 			if (!isPlayingSkillAnimation()
-				&& isActing()) onActionEnd();
+				&& runtimeBattler.isActing()) onActionEnd();
 		}
 
 		/// <summary>
@@ -369,8 +308,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <param name="action"></param>
 		public void startAction(RuntimeAction action) {
 			if ((currentAction = action) == null) return;
-			onActionStart();
-			processAction();
+			onActionStart(); processAction();
 		}
 
 		/// <summary>

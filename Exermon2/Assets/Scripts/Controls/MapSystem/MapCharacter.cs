@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 using UnityEngine;
 using UnityEngine.Events;
@@ -377,6 +377,24 @@ namespace UI.Common.Controls.MapSystem {
 		#endregion
 
 		#region 状态判断
+
+		/// <summary>
+		/// 状态判断
+		/// </summary>
+		/// <param name="state"></param>
+		/// <returns></returns>
+		public bool isState(Enum state) {
+			return runtimeCharacter.isState(state);
+		}
+
+		/// <summary>
+		/// 状态改变（禁用）
+		/// </summary>
+		/// <param name="state"></param>
+		/// <returns></returns>
+		public void changeState(Enum state) {
+			runtimeCharacter.changeState(state);
+		}
 
 		///// <summary>
 		///// 是否移动中

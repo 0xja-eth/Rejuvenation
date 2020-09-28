@@ -19,7 +19,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 外部变量定义
 		/// </summary>
-		public bool moveable = true;
+		public bool inputable = true;
 
 		/// <summary>
 		/// 类型
@@ -74,8 +74,8 @@ namespace UI.Common.Controls.BattleSystem {
         /// 更新玩家输入事件
         /// </summary>
         void updateInput() {
-			updateMovement();
-			updateSkill();
+			if (!isInputable()) return;
+			updateMovement(); updateSkill();
         }
 
 		#endregion
@@ -123,11 +123,11 @@ namespace UI.Common.Controls.BattleSystem {
 		}
 
 		/// <summary>
-		/// 能否移动
+		/// 能否输入
 		/// </summary>
 		/// <returns></returns>
-		public override bool isMoveable() {
-            return base.isMoveable() && map.active && moveable;
+		public bool isInputable() {
+            return map.active && inputable;
         }
 
 		#endregion
@@ -138,7 +138,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 更新技能使用
 		/// </summary>
 		void updateSkill() {
-
+			// TODO: 人物技能
 		}
 
 		#endregion

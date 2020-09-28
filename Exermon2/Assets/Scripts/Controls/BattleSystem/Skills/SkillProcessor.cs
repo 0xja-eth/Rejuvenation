@@ -54,6 +54,8 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
+		RuntimeBattler runtimeBattler => battler.runtimeBattler;
+
 		RuntimeAction currentAction => battler.currentAction;
 
 		/// <summary>
@@ -89,7 +91,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isUsable() {
-			return battler.isIdle() && !isUsing;
+			return runtimeBattler.isIdle() && !isUsing;
 		}
 
 		/// <summary>
