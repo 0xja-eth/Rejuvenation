@@ -56,6 +56,7 @@ namespace GameModule.Services {
 			void processEffect() {
 				// TODO: 添加更多效果
 				processDamage(skill.power);
+				processHitFreeze(skill.hitting, skill.freezing);
 			}
 
 			#region 处理函数
@@ -107,7 +108,16 @@ namespace GameModule.Services {
 
 				return (int)Math.Round(Math.Max(res, 1));
 			}
-			
+
+			/// <summary>
+			/// 处理受击硬直
+			/// </summary>
+			/// <param name="f">硬直</param>
+			void processHitFreeze(float h, float f) {
+				result.hitting = h;
+				result.freezing = f;
+			}
+
 			/// <summary>
 			/// 处理Buff
 			/// </summary>
@@ -155,6 +165,7 @@ namespace GameModule.Services {
 			public static void apply(RuntimeBattler battler, RuntimeActionResult result) {
 				var calc = new ResultApplyCalc(battler, result);
 				calc.processHP();
+
 				calc.processAddBuffs();
 			}
 
@@ -181,6 +192,14 @@ namespace GameModule.Services {
 				battler.addHP(-result.hpDrain);
 
 				subject.addHP(result.hpDrain);
+			}
+
+			/// <summary>
+			/// 处理硬直
+			/// </summary>
+			void processHitFreeze() {
+				battler.setHitting(result.hitting);
+				battler.setFreezing(result.freezing);
 			}
 
 			/// <summary>

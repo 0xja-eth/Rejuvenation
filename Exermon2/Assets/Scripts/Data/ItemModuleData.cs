@@ -37,6 +37,8 @@ namespace ItemModule.Data {
 		public enum Type {
 			Unset = 0,  // 未设置
 
+			Skill = 1, // 技能
+
 			// ===！！！！不能轻易修改序号！！！！===
 			//// LimitedItem 1~100
 			//// UsableItem
@@ -70,9 +72,9 @@ namespace ItemModule.Data {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		public string name { get; protected set; }
+		public virtual string name { get; protected set; }
 		[AutoConvert]
-		public string description { get; protected set; }
+		public virtual string description { get; protected set; }
 		[AutoConvert]
 		public int type { get; protected set; } // 物品类型
 
@@ -98,6 +100,14 @@ namespace ItemModule.Data {
 		/// </summary>
 		/// <returns></returns>
 		public virtual int maxCount() { return 1; }
+
+		/// <summary>
+		/// ToString
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return string.Format("[{0}:{1}. {2}]", GetType(), id, name);
+		}
 	}
 
 	///// <summary>

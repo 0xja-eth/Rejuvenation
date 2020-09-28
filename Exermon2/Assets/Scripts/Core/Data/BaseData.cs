@@ -500,6 +500,14 @@ namespace Core.Data {
 		/// <returns>JSON字符串</returns>
 		public string rawJson() { return rawData.ToJson(); }
 
+		/// <summary>
+		/// ToString
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return string.Format("[{0}:{1}]", GetType(), id);
+		}
+
 		#endregion
 
 		#region 缓存处理

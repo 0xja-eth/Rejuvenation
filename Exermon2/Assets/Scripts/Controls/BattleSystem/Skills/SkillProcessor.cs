@@ -18,16 +18,7 @@ namespace UI.Common.Controls.MapSystem {
 	/// 技能处理器
 	/// </summary>
 	public abstract class SkillProcessor : WorldComponent { // ItemDisplay<Skill> {
-
-		/// <summary>
-		/// 字符串常量定义
-		/// </summary>
-		const string SkillStateName = "Skill";
-		const string SkillAttrName = "skill";
-
-		const string TargetStateName = "Target";
-		const string TargetAttrName = "target";
-
+		
 		/// <summary>
 		/// 外部组件设置
 		/// </summary>
@@ -59,12 +50,16 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		[HideInInspector]
 		public MapBattler battler;
-		protected AnimatorExtend animator;
 
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
 		RuntimeAction currentAction => battler.currentAction;
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		public bool isUsing { get; protected set; } = false;
 
 		#region 初始化
 
@@ -81,29 +76,20 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		void initializeBattler() {
 			battler = findParent<MapBattler>();
-			animator = battler.animator;
 
-			battler.addSkillProcessor(this);
+			battler?.addSkillProcessor(this);
 		}
 
 		#endregion
 
 		#region 使用
-
-		/// <summary>
-		/// 使用中
-		/// </summary>
-		/// <returns></returns>
-		public virtual bool isUsing() {
-			return false;
-		}
-
+		
 		/// <summary>
 		/// 当前状态能否使用
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isUsable() {
-			return !isUsing();
+			return battler.isIdle() && !isUsing;
 		}
 
 		/// <summary>
@@ -112,14 +98,17 @@ namespace UI.Common.Controls.MapSystem {
 		/// <returns></returns>
 		public bool use() {
 			if (!isUsable()) return false;
-			beforeUse(); onUse(); afterUse();
+			onUseStart(); onUse();
 			return true;
 		}
 
 		/// <summary>
 		/// 使用前回调
 		/// </summary>
-		protected virtual void beforeUse() { }
+		protected virtual void onUseStart() {
+			debugLog("On skill start: " + skill);
+			isUsing = true;
+		}
 
 		/// <summary>
 		/// 使用技能
@@ -133,15 +122,16 @@ namespace UI.Common.Controls.MapSystem {
 		/// 播放使用动画
 		/// </summary>
 		void playUseAnimation() {
-			var animation = skill.startAnimation();
-			animator?.changeAni(SkillStateName, animation);
-			animator?.setVar(SkillAttrName);
+			battler.playSkillAnimation(skill.startAnimation());
 		}
 
 		/// <summary>
 		/// 使用后回调
 		/// </summary>
-		protected virtual void afterUse() { }
+		public virtual void onUseEnd() {
+			debugLog("On skill end: " + skill);
+			isUsing = false;
+		}
 
 		#endregion
 
@@ -152,6 +142,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <param name="battler"></param>
 		public virtual void apply(MapBattler battler) {
+			debugLog("Apply skill: " + skill + " -> " + battler);
 			applyRuntimeBattler(battler.runtimeBattler);
 			applyMapBattler(battler);
 		}
@@ -170,12 +161,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <param name="battler"></param>
 		protected virtual void applyMapBattler(MapBattler battler) {
-
-			var animation = skill.targetAnimation();
-			var animator = battler.animator;
-
-			animator?.changeAni(TargetStateName, animation);
-			animator?.setVar(TargetAttrName);
+			battler.playSkillAnimation(skill.targetAnimation());
 		}
 
 		#endregion

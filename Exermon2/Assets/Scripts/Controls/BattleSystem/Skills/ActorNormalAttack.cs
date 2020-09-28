@@ -20,14 +20,7 @@ namespace UI.Common.Controls.MapSystem {
 	public class ActorNormalAttack : SkillProcessor {// ItemDisplay<Skill> {
 
 		#region 执行&使用
-
-		/// <summary>
-		/// 使用技能
-		/// </summary>
-		protected override void onUse() {
-
-		}
-
+		
 		#endregion
 
 	}

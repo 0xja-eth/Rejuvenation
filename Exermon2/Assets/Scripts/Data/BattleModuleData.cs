@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
-using Random = UnityEngine.Random;
+using UnityEngine.Events;
 
 using LitJson;
 
@@ -16,7 +16,9 @@ using GameModule.Services;
 using PlayerModule.Data;
 using PlayerModule.Services;
 
-using UI.Common.Controls.ParamDisplays;
+using MapModule.Data;
+
+using ItemModule.Data;
 
 /// <summary>
 /// 战斗模块
@@ -237,12 +239,12 @@ namespace BattleModule.Data {
 	/// 技能
 	/// </summary>
 	[Serializable]
-	public class Skill : BaseData {
+	public class Skill : BaseItem {
 
 		/// <summary>
 		/// 攻击类型
 		/// </summary>
-		public enum Type {
+		public enum RangeType {
 			ShortRange, LongRange
 		}
 
@@ -250,13 +252,17 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		[SerializeField] string _name;
-		[AutoConvert] public string name { get => _name; set { _name = value; } }
+		[AutoConvert] public override string name {
+			get => _name; protected set { _name = value; }
+		}
 
 		[SerializeField] string _description;
-		[AutoConvert] public string description { get => _description; set { _description = value; } }
+		[AutoConvert] public override string description {
+			get => _description; protected set { _description = value; }
+		}
 
-		[SerializeField] Type _type = Type.ShortRange;
-		[AutoConvert] public Type type { get => _type; set { _type = value; } }
+		[SerializeField] RangeType _rangeType = RangeType.ShortRange;
+		[AutoConvert] public RangeType rangeType { get => _rangeType; set { _rangeType = value; } }
 
 		[SerializeField] float _frequency;
 		[AutoConvert] public float frequency { get => _frequency; set { _frequency = value; } }
@@ -267,9 +273,21 @@ namespace BattleModule.Data {
 		[SerializeField] float _range;
 		[AutoConvert] public float range { get => _range; set { _range = value; } }
 
-		[SerializeField] float _power;
+		/// <summary>
+		/// 效果属性
+		/// </summary>
+		[SerializeField] float _power = 1;
 		[AutoConvert] public float power { get => _power; set { _power = value; } }
 
+		[SerializeField] float _hitting = 0.4f;
+		[AutoConvert] public float hitting { get => _hitting; set { _hitting = value; } }
+
+		[SerializeField] float _freezing = 0.75f;
+		[AutoConvert] public float freezing { get => _freezing; set { _freezing = value; } }
+
+		/// <summary>
+		/// 动画属性
+		/// </summary>
 		//[SerializeField] int _animationId;
 		[AutoConvert]
 		public int startAnimationId { get; set; }
@@ -365,7 +383,7 @@ namespace BattleModule.Data {
 	/// <summary>
 	/// 战斗者
 	/// </summary>
-	public abstract class RuntimeBattler : BaseData {
+	public abstract class RuntimeBattler : RuntimeCharacter {
 
 		/// <summary>
 		/// 属性ID约定
@@ -378,13 +396,42 @@ namespace BattleModule.Data {
 		public const int MaxParamCount = 4;
 
 		/// <summary>
+		/// 状态
+		/// </summary>
+		public enum BattlerState {
+			Idle, // 空闲
+			Moving, // 移动中
+			Using, // 使用物品/技能
+			Hitting, // 受击
+			Freezing, // 冻结（硬直）
+			Dead, // 死亡
+		}
+
+		/// <summary>
 		/// 属性
 		/// </summary>
 		[AutoConvert]
 		public int hp { get; protected set; }
 		[AutoConvert]
 		public List<RuntimeBuff> buffs { get; protected set; } = new List<RuntimeBuff>();
+
+		#region 战斗中变量标志
+
+		[AutoConvert]
+		public float hitting { get; protected set; } = 0; // 受击时间
+		[AutoConvert]
+		public float freezing { get; protected set; } = 0; // 硬直时间
 		
+		#endregion
+
+		/// <summary>
+		/// ID是否可用
+		/// </summary>
+		/// <returns></returns>
+		protected override bool idEnable() {
+			return false;
+		}
+
 		/// <summary>
 		/// 是否玩家
 		/// </summary>
@@ -403,6 +450,26 @@ namespace BattleModule.Data {
 		/// <returns></returns>
 		public abstract Battler battler { get; }
 
+		#region 初始化
+
+		/// <summary>
+		/// 初始化状态
+		/// </summary>
+		protected override void initializeStates() {
+			base.initializeStates();
+
+			//addStateDict(BattlerState.Idle, updateIdle);
+			//addStateDict(BattlerState.Moving, updateMoving);
+			addStateDict(BattlerState.Using, updateUsing);
+			addStateDict(BattlerState.Hitting, updateHitting);
+			addStateDict(BattlerState.Freezing, updateFreezing);
+			addStateDict(BattlerState.Dead, updateDead);
+
+			//changeState(BattlerState.Idle);
+		}
+
+		#endregion
+
 		#region 属性控制
 
 		#region 属性快捷定义
@@ -414,6 +481,14 @@ namespace BattleModule.Data {
 		public float attack => param(AttackParamId);
 		public float defense => param(DefenseParamId);
 		public float speed => param(SpeedParamId);
+
+		/// <summary>
+		/// 移动速度
+		/// </summary>
+		/// <returns></returns>
+		public override float moveSpeed() {
+			return speed;
+		}
 
 		/// <summary>
 		/// 基础最大生命值
@@ -699,6 +774,56 @@ namespace BattleModule.Data {
 
 		#endregion
 
+		#region 速度控制
+
+
+
+		#endregion
+
+		#region 硬直控制
+
+		/// <summary>
+		/// 设置受击
+		/// </summary>
+		/// <param name="val"></param>
+		public void setHitting(float val) {
+			hitting = val; changeState(BattlerState.Hitting);
+		}
+
+		/// <summary>
+		/// 设置硬直
+		/// </summary>
+		/// <param name="val"></param>
+		public void setFreezing(float val) {
+			freezing = Math.Max(freezing, val);
+		}
+
+		/// <summary>
+		/// 是否受击
+		/// </summary>
+		/// <returns></returns>
+		public bool isHitting() {
+			return hitting > 0;
+		}
+
+		/// <summary>
+		/// 是否硬直
+		/// </summary>
+		/// <returns></returns>
+		public bool isFreezing() {
+			return freezing > 0;
+		}
+
+		/// <summary>
+		/// 是否处于受击中
+		/// </summary>
+		/// <returns></returns>
+		public bool isHittingOrFreezing() {
+			return isHitting() || isFreezing();
+		}
+
+		#endregion
+
 		#region 特性控制
 
 		/// <summary>
@@ -904,6 +1029,16 @@ namespace BattleModule.Data {
 		}
 
 		#endregion
+		
+		/// <summary>
+		/// 更新BUFF
+		/// </summary>
+		void updateBuffs() {
+			for (int i = buffs.Count - 1; i >= 0; --i) {
+				var buff = buffs[i]; buff.update();
+				if (buff.isOutOfDate()) removeBuff(i);
+			}
+		}
 
 		#endregion
 
@@ -987,14 +1122,22 @@ namespace BattleModule.Data {
 		/// </summary>
 		public virtual void onBattleStart() {
 			clearBuffs();
+			changeState(BattlerState.Idle);
 		}
 
 		/// <summary>
 		/// 行动开始回调
 		/// </summary>
-		/// <param name="round">回合数</param>
 		public virtual void onActionStart(RuntimeAction action) {
 			_addedBuffs.Clear();
+			changeState(BattlerState.Using);
+		}
+
+		/// <summary>
+		/// 当前行动结束回调
+		/// </summary>
+		public virtual void onActionEnd(RuntimeAction action) {
+			changeState(BattlerState.Idle);
 		}
 
 		#region BUFF回调
@@ -1012,31 +1155,66 @@ namespace BattleModule.Data {
 		#endregion
 
 		/// <summary>
-		/// 当前行动结束回调
-		/// </summary>
-		public virtual void onActionEnd(RuntimeAction action) { }
-
-		/// <summary>
 		/// 死亡回调
 		/// </summary>
-		protected virtual void onDie() { }
+		protected virtual void onDie() {
+			changeState(BattlerState.Dead);
+		}
+
+		#endregion
+
+		#region 状态更新
+
+		/// <summary>
+		/// 更新空闲状态
+		/// </summary>
+		protected override void updateIdle() {
+			base.updateIdle();
+		}
+
+		/// <summary>
+		/// 更新移动状态
+		/// </summary>
+		protected override void updateMoving() {
+			base.updateMoving();
+		}
+
+		/// <summary>
+		/// 更新使用状态
+		/// </summary>
+		protected virtual void updateUsing() { }
+
+		/// <summary>
+		/// 更新受击状态
+		/// </summary>
+		protected virtual void updateHitting() {
+			hitting = Math.Max(0, hitting - Time.deltaTime);
+			if (!isHitting()) changeState(BattlerState.Freezing);
+		}
+
+		/// <summary>
+		/// 更新硬直状态
+		/// </summary>
+		protected virtual void updateFreezing() {
+			freezing = Math.Max(0, freezing - Time.deltaTime);
+			if (!isFreezing()) changeState(BattlerState.Idle);
+		}
+
+		/// <summary>
+		/// 更新死亡
+		/// </summary>
+		protected virtual void updateDead() { }
+
+		#endregion
+
+		#region 更新
 
 		/// <summary>
 		/// 每帧更新
 		/// </summary>
-		/// <param name="round">回合数</param>
-		public virtual void update() {
+		public override void update() {
+			base.update();
 			updateBuffs();
-		}
-
-		/// <summary>
-		/// 更新BUFF
-		/// </summary>
-		void updateBuffs() {
-			for (int i = buffs.Count - 1; i >= 0; --i) {
-				var buff = buffs[i]; buff.update();
-				if (buff.isOutOfDate()) removeBuff(i);
-			}
 		}
 
 		#endregion
@@ -1139,11 +1317,19 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		public int hpDamage { get; set; }
+		public float hpDamage { get; set; }
 		[AutoConvert]
-		public int hpRecover { get; set; }
+		public float hpRecover { get; set; }
 		[AutoConvert]
-		public int hpDrain { get; set; }
+		public float hpDrain { get; set; }
+
+		/// <summary>
+		/// 受击与硬直
+		/// </summary>
+		[AutoConvert]
+		public float hitting { get; set; }
+		[AutoConvert]
+		public float freezing { get; set; }
 
 		/// <summary>
 		/// 状态/Buff变更

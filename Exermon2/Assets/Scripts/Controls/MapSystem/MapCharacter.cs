@@ -6,6 +6,8 @@ using UnityEngine.Events;
 using Core.UI;
 using Core.UI.Utils;
 
+using MapModule.Data;
+
 using CollFunc = UnityEngine.Events.UnityAction<UnityEngine.Collider2D>;
 using CollFuncList = System.Collections.Generic.List<
 	UnityEngine.Events.UnityAction<UnityEngine.Collider2D>>;
@@ -31,31 +33,12 @@ namespace UI.Common.Controls.MapSystem {
 		}
 
 		/// <summary>
-		/// 常量定义
+		/// 动画常量定义
 		/// </summary>
-		const float ZeroVelocityThreshold = 0.001f;
-		static readonly float Sqrt2 = Mathf.Sqrt(2);
+		protected const string IdleStateName = "Idle";
+		protected const string WalkStateName = "Walk";
 
-		protected const string MovingAttr = "moving";
-
-		/// <summary>
-		/// 朝向
-		/// </summary>
-		public enum Direction {
-			LeftUp = 7,   Up = 8,   RightUp = 9,
-			Left = 4,     None = 5, Right = 6,
-			LeftDown = 1, Down = 2, RightDown = 3
-		}
-
-		/// <summary>
-		/// 方向位移
-		/// </summary>
-		public static readonly float[] dirX = new float[] {
-			-Sqrt2, 0, Sqrt2, -1, 0, 1, -Sqrt2, 0, Sqrt2
-		};
-		public static readonly float[] dirY = new float[] {
-			-Sqrt2, -1, -Sqrt2, 0, 0, 0, Sqrt2, 1, Sqrt2
-		};
+		protected const string MovingAttrName = "moving";
 
 		/// <summary>
 		/// 外部变量定义
@@ -78,12 +61,29 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
-		protected bool moving = false;
+		//protected bool moving = false;
 
 		/// <summary>
 		/// 类型
 		/// </summary>
 		public virtual Type type => Type.NPC;
+
+		/// <summary>
+		/// 运行时敌人
+		/// </summary>
+		RuntimeCharacter _runtimeCharacter = new RuntimeCharacter();
+		public virtual RuntimeCharacter runtimeCharacter => _runtimeCharacter;
+
+		/// <summary>
+		/// 速度
+		/// </summary>
+		public Vector2 velocity => runtimeCharacter.velocity;
+
+		/// <summary>
+		/// 朝向
+		/// </summary>
+		public RuntimeCharacter.Direction direction 
+			=> runtimeCharacter.direction;
 
 		#region 初始化
 
@@ -100,6 +100,28 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		protected virtual void initializeCollFuncs() { }
 
+		/// <summary>
+		/// 启动
+		/// </summary>
+		protected override void start() {
+			base.start();
+			setupStateChanges();
+		}
+
+		/// <summary>
+		/// 配置运行时角色
+		/// </summary>
+		protected virtual void setupStateChanges() {
+			runtimeCharacter?.addStateChange(
+				RuntimeCharacter.State.Idle,
+				RuntimeCharacter.State.Moving, onMoveStart);
+			runtimeCharacter?.addStateChange(
+				RuntimeCharacter.State.Moving,
+				RuntimeCharacter.State.Idle, onMoveEnd);
+			runtimeCharacter?.addStateDict(
+				RuntimeCharacter.State.Moving, onMove);
+		}
+
 		#endregion
 
 		#region 更新
@@ -109,17 +131,42 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			updateMoving();
+			updateCharacter();
+			updateVelocity();
 		}
 
 		/// <summary>
-		/// 更新移动
+		/// 更新战斗者
 		/// </summary>
-		void updateMoving() {
-			checkMoveStart();
-			checkMoving();
-			checkMoveEnd();
+		void updateCharacter() {
+			runtimeCharacter.update();
 		}
+
+		/// <summary>
+		/// 更新位置
+		/// </summary>
+		void updatePosition() {
+			var pos = runtimeCharacter.transferPoint;
+			if (pos == null) return;
+
+			rigidbody.position = (Vector2)pos;
+		}
+
+		/// <summary>
+		/// 更新速度
+		/// </summary>
+		void updateVelocity() {
+			rigidbody.velocity = velocity;
+		}
+
+		///// <summary>
+		///// 更新移动
+		///// </summary>
+		//protected virtual void updateMoving() {
+		//	checkMoveStart();
+		//	checkMoving();
+		//	checkMoveEnd();
+		//}
 
 		#endregion
 
@@ -195,42 +242,42 @@ namespace UI.Common.Controls.MapSystem {
 
 		#region 回调控制
 
-		/// <summary>
-		/// 检查是否开始移动
-		/// </summary>
-		/// <returns></returns>
-		void checkMoveStart() {
-			if (isMoving() && !moving) onMoveStart();
-		}
+		///// <summary>
+		///// 检查是否开始移动
+		///// </summary>
+		///// <returns></returns>
+		//void checkMoveStart() {
+		//	if (isMoving() && !moving) onMoveStart();
+		//}
 
-		/// <summary>
-		/// 检查是否结束移动
-		/// </summary>
-		/// <returns></returns>
-		void checkMoving() {
-			if (isMoving() && moving) onMove();
-		}
+		///// <summary>
+		///// 检查是否结束移动
+		///// </summary>
+		///// <returns></returns>
+		//void checkMoving() {
+		//	if (isMoving() && moving) onMove();
+		//}
 
-		/// <summary>
-		/// 检查是否结束移动
-		/// </summary>
-		/// <returns></returns>
-		void checkMoveEnd() {
-			if (!isMoving() && moving) onMoveEnd();
-		}
+		///// <summary>
+		///// 检查是否结束移动
+		///// </summary>
+		///// <returns></returns>
+		//void checkMoveEnd() {
+		//	if (!isMoving() && moving) onMoveEnd();
+		//}
 
 		/// <summary>
 		/// 开始移动回调
 		/// </summary>
 		protected virtual void onMoveStart() {
-			animator?.setVar("moving", moving = true);
+			animator?.setVar(MovingAttrName, true);
 		}
 
 		/// <summary>
 		/// 结束移动回调
 		/// </summary>
 		protected virtual void onMoveEnd() {
-			animator.setVar("moving", moving = false);
+			animator.setVar(MovingAttrName, false);
 		}
 
 		/// <summary>
@@ -240,40 +287,46 @@ namespace UI.Common.Controls.MapSystem {
 
 		#endregion
 
+		#region 动画控制
+
+		/// <summary>
+		/// 是否处于某动画状态
+		/// </summary>
+		/// <param name="state">状态名</param>
+		/// <returns></returns>
+		public bool isAnimationState(string state) {
+			return animator != null && animator.isState(state);
+		}
+		public bool isPlayingIdleAnimation() {
+			return isAnimationState(IdleStateName);
+		}
+		public bool isPlayingWalkAnimation() {
+			return isAnimationState(WalkStateName);
+		}
+
+		/// <summary>
+		/// 切换并播放动画
+		/// </summary>
+		/// <param name="state">状态名</param>
+		/// <param name="attr">控制状态的属性名（Trigger）</param>
+		/// <param name="animation">动画</param>
+		public void playAnimation(string state, string attr, AnimationClip animation) {
+			animator?.changeAni(state, animation);
+			animator?.setVar(attr);
+		}
+
+		#endregion
+
 		#region 移动控制
 
 		#region 朝向相关
-		
-		/// <summary>
-		/// 判断方向（静态）
-		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <returns></returns>
-		public static Direction judgeDirection(float x, float y) {
-			if (x == 0 && y > 0) return Direction.Up;
-			if (x == 0 && y < 0) return Direction.Down;
-
-			if (x > 0 && y == 0) return Direction.Right;
-			if (x > 0 && y > 0) return Direction.RightUp;
-			if (x > 0 && y < 0) return Direction.RightDown;
-
-			if (x < 0 && y == 0) return Direction.Left;
-			if (x < 0 && y > 0) return Direction.LeftUp;
-			if (x < 0 && y < 0) return Direction.LeftDown;
-
-			return Direction.None;
-		}
-		public static Direction judgeDirection(Vector2 vec) {
-			return judgeDirection(vec.x, vec.y);
-		}
 
 		/// <summary>
 		/// 获取当前朝向
 		/// </summary>
 		/// <returns></returns>
-		public Direction currentDirection() {
-			return judgeDirection(currentVelocity());
+		public RuntimeCharacter.Direction currentDirection() {
+			return RuntimeCharacter.judgeDirection(velocity);
 		}
 
 		/// <summary>
@@ -281,25 +334,25 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isFacingLeft() {
-			return isFacingLeft(currentVelocity());
+			return isFacingLeft(velocity);
 		}
 		public bool isFacingLeft(Vector2 vec) {
 			return vec.x < 0;
 		}
 		public bool isFacingRight() {
-			return isFacingRight(currentVelocity());
+			return isFacingRight(velocity);
 		}
 		public bool isFacingRight(Vector2 vec) {
 			return vec.x > 0;
 		}
 		public bool isFacingUp() {
-			return isFacingUp(currentVelocity());
+			return isFacingUp(velocity);
 		}
 		public bool isFacingUp(Vector2 vec) {
 			return vec.y < 0;
 		}
 		public bool isFacingDown() {
-			return isFacingDown(currentVelocity());
+			return isFacingDown(velocity);
 		}
 		public bool isFacingDown(Vector2 vec) {
 			return vec.y > 0;
@@ -316,38 +369,34 @@ namespace UI.Common.Controls.MapSystem {
 			if (isFacingRight(vec)) sprite.flipX = true;
 			else if (isFacingLeft(vec)) sprite.flipX = false;
 		}
+		public void refreshFacing(RuntimeCharacter.Direction d) {
+			var vec = RuntimeCharacter.judgeVector(d);
+			refreshFacing(vec);
+		}
 
 		#endregion
 
 		#region 状态判断
 
-		/// <summary>
-		/// 能否移动
-		/// </summary>
-		/// <returns></returns>
-		public virtual bool isMoveable() {
-			return true;
-		}
+		///// <summary>
+		///// 是否移动中
+		///// </summary>
+		///// <returns></returns>
+		//public virtual bool isMoving() {
+		//	return 
+		//}
 
-		/// <summary>
-		/// 能否转移
-		/// </summary>
-		/// <returns></returns>
-		public virtual bool isTransferable() {
-			return isMoveable();
-		}
-
-		/// <summary>
-		/// 是否移动中
-		/// </summary>
-		/// <returns></returns>
-		public virtual bool isMoving() {
-			return rigidbody.velocity.magnitude > ZeroVelocityThreshold;
-		}
+		///// <summary>
+		///// 是否空闲
+		///// </summary>
+		///// <returns></returns>
+		//public virtual bool isIdle() {
+		//	return !isMoving();
+		//}
 
 		#endregion
 
-		#region 属性获取
+		#region 移动操作
 
 		/// <summary>
 		/// 移动速度
@@ -358,25 +407,12 @@ namespace UI.Common.Controls.MapSystem {
 		}
 
 		/// <summary>
-		/// 当前速度
-		/// </summary>
-		/// <returns></returns>
-		public virtual Vector2 currentVelocity() {
-			return rigidbody.velocity;
-		}
-
-		#endregion
-
-		#region 移动操作
-
-		/// <summary>
 		/// 转移到指定位置
 		/// </summary>
 		/// <param name="x">x坐标</param>
 		/// <param name="y">y坐标</param>
 		public void transfer(float x, float y, bool force = false) {
-			if (!force && !isMoveable()) return;
-			rigidbody.position = new Vector2(x, y);
+			runtimeCharacter?.transfer(x, y, force);
 		}
 
 		/// <summary>
@@ -388,26 +424,27 @@ namespace UI.Common.Controls.MapSystem {
 			move(new Vector2(x, y), force);
 		}
 		public void move(Vector2 vec, bool force = false) {
-			if (!force && !isMoveable()) return;
-
-			refreshFacing(rigidbody.velocity = vec);
+			runtimeCharacter?.move(vec, force);
+			refreshFacing(vec);
 		}
 
 		/// <summary>
 		/// 朝一个方向移动
 		/// </summary>
 		/// <param name="d"></param>
-		public void moveDirection(Direction d, float speed = -1) {
-			var index = (int)d - 1;
+		public void moveDirection(
+			RuntimeCharacter.Direction d, 
+			float speed = -1, bool force = false) {
 			if (speed < 0) speed = moveSpeed();
-			move(dirX[index] * speed, dirY[index] * speed);
+			runtimeCharacter?.moveDirection(d, speed, force);
+			refreshFacing(d);
 		}
 
 		/// <summary>
 		/// 停止
 		/// </summary>
 		public void stop() {
-			rigidbody.velocity = Vector2.zero;
+			runtimeCharacter?.stop();
 		}
 
 		#endregion
