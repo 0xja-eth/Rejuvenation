@@ -50,10 +50,13 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 初始化敌人显示组件
 		/// </summary>
 		protected override void setupBattlerDisplay() {
-			var runtimeEnemy = new RuntimeEnemy(enemyId);
+			RuntimeEnemy enemy;
 			if (useCustomParams)
-				runtimeEnemy.customEnemy = customEnemy;
-			display.setItem(runtimeEnemy);
+				enemy = new RuntimeEnemy(enemyId, customEnemy);
+			else
+				enemy = new RuntimeEnemy(enemyId);
+
+			display.setItem(enemy);
 		}
 
 		#endregion

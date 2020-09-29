@@ -673,6 +673,14 @@ namespace BattleModule.Data {
 		}
 
 		/// <summary>
+		/// HP率
+		/// </summary>
+		/// <returns></returns>
+		public float hpRate() {
+			return Mathf.Clamp01(hp / mhp);
+		}
+
+		/// <summary>
 		/// 是否死亡
 		/// </summary>
 		/// <returns></returns>
@@ -1319,6 +1327,13 @@ namespace BattleModule.Data {
 			updateBuffs();
 		}
 
+		/// <summary>
+		/// 初次更新
+		/// </summary>
+		protected override void firstUpdate() {
+			base.firstUpdate(); hp = mhp;
+		}
+
 		#endregion
 
 	}
@@ -1373,6 +1388,9 @@ namespace BattleModule.Data {
 		/// </summary>
 		public RuntimeEnemy() { }
 		public RuntimeEnemy(int enemyId) { this.enemyId = enemyId; }
+		public RuntimeEnemy(int enemyId, Enemy customEnemy) : this(enemyId) {
+			this.customEnemy = customEnemy;
+		}
 
 		/// <summary>
 		/// 更新空闲状态

@@ -183,6 +183,11 @@ namespace MapModule.Data {
 		}
 
 		/// <summary>
+		/// 初次更新
+		/// </summary>
+		bool isFirstUpdate = true;
+
+		/// <summary>
 		/// 状态机
 		/// </summary>
 		public StateMachine stateMachine { get; protected set; } = new StateMachine();
@@ -199,6 +204,7 @@ namespace MapModule.Data {
 		/// </summary>
 		void initialize() {
 			initializeStates();
+			initializeOthers();
 		}
 
 		/// <summary>
@@ -210,6 +216,11 @@ namespace MapModule.Data {
 
 			changeState(State.Idle);
 		}
+
+		/// <summary>
+		/// 初始化其他
+		/// </summary>
+		protected virtual void initializeOthers() { }
 
 		#endregion
 
@@ -381,8 +392,17 @@ namespace MapModule.Data {
 		/// </summary>
 		/// <param name="round">回合数</param>
 		public virtual void update() {
+			if (isFirstUpdate) firstUpdate();
+
 			updateStateMachine();
 			updateDirection();
+		}
+
+		/// <summary>
+		/// 初次更新
+		/// </summary>
+		protected virtual void firstUpdate() {
+			isFirstUpdate = false;
 		}
 
 		/// <summary>
