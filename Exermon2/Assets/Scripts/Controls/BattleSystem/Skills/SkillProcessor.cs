@@ -54,6 +54,9 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
+		[HideInInspector]
+		public RuntimeSkill runtimeSkill = null;
+
 		RuntimeBattler runtimeBattler => battler.runtimeBattler;
 
 		RuntimeAction currentAction => battler.currentAction;
@@ -70,7 +73,15 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
+			initializeRuntimeSkill();
 			initializeBattler();
+		}
+
+		/// <summary>
+		/// 初始化运行时技能
+		/// </summary>
+		void initializeRuntimeSkill() {
+			runtimeSkill = new RuntimeSkill(skill, rate, isUsable);
 		}
 
 		/// <summary>
@@ -78,7 +89,6 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		void initializeBattler() {
 			battler = findParent<MapBattler>();
-
 			battler?.addSkillProcessor(this);
 		}
 
@@ -91,7 +101,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isUsable() {
-			return runtimeBattler.isIdle() && !isUsing;
+			return !isUsing;
 		}
 
 		/// <summary>

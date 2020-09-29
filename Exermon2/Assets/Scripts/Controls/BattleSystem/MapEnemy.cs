@@ -58,50 +58,5 @@ namespace UI.Common.Controls.BattleSystem {
 
 		#endregion
 
-		#region 更新
-
-		/// <summary>
-		/// 更新
-		/// </summary>
-		protected override void update() {
-			base.update();
-			if (isValid()) updateSkill();
-		}
-
-		#endregion
-
-		#region 技能控制
-
-		/// <summary>
-		/// 更新技能使用
-		/// </summary>
-		void updateSkill() {
-			if (isActing()) return;
-
-			var list = skillProcessors.FindAll(p => p.isUsable());
-			var skill = randomSkill(list);
-
-			if (skill == null) return;
-			runtimeBattler.addAction(skill.skill);
-		}
-
-		/// <summary>
-		/// 随机技能
-		/// </summary>
-		/// <returns></returns>
-		SkillProcessor randomSkill(List<SkillProcessor> list) {
-			var sum = 0f; // 总权重值
-			foreach (var p in list) sum += p.rate;
-
-			var rand = Random.Range(0, sum);
-			foreach (var p in list)
-				if ((rand -= p.rate) <= 0)
-					return p;
-
-			return null;
-		}
-
-		#endregion
-
 	}
 }

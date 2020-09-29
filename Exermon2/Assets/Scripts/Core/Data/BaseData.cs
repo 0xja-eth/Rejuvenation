@@ -608,4 +608,19 @@ namespace Core.Data {
 			addToPool();
 		}
 	}
+
+	/// <summary>
+	/// 运行时数据
+	/// </summary>
+	public class RuntimeData : BaseData {
+
+		/// <summary>
+		/// /ID是否可用
+		/// </summary>
+		/// <returns></returns>
+		protected override bool idEnable() {
+			return false;
+		}
+
+	}
 }

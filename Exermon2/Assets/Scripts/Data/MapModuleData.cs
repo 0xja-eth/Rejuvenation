@@ -99,7 +99,7 @@ namespace MapModule.Data {
 	/// <summary>
 	/// 行走人物（处理行走相关的静态变量/方法）
 	/// </summary>
-	public class RuntimeCharacter : BaseData {
+	public class RuntimeCharacter : RuntimeData {
 
 		#region 静态定义
 

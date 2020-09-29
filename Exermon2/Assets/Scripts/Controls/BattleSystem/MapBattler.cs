@@ -129,7 +129,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 更新具体状态
 		/// </summary>
 		protected virtual void updateIdle() {
-			if(runtimeBattler.isIdle()) updateAction();
+			updateAction();
 		}
 
 		/// <summary>
@@ -241,8 +241,10 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="processor"></param>
 		public void addSkillProcessor(SkillProcessor processor) {
-			if (!skillProcessors.Contains(processor))
+			if (!skillProcessors.Contains(processor)) {
 				skillProcessors.Add(processor);
+				runtimeBattler.addSkill(processor.runtimeSkill);
+			}
 		}
 
 		/// <summary>

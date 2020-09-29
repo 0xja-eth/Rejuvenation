@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+using Random = UnityEngine.Random;
+
 using LitJson;
 
 using Core.Data;
@@ -19,6 +21,8 @@ using PlayerModule.Services;
 using MapModule.Data;
 
 using ItemModule.Data;
+
+using Event = MapModule.Data.Event;
 
 /// <summary>
 /// 战斗模块
@@ -208,6 +212,14 @@ namespace BattleModule.Data {
 		public Player player;
 
 		/// <summary>
+		/// ID是否可用
+		/// </summary>
+		/// <returns></returns>
+		protected override bool idEnable() {
+			return false;
+		}
+
+		/// <summary>
 		/// 切换控制
 		/// </summary>
 		public void switchControl() {
@@ -331,7 +343,7 @@ namespace BattleModule.Data {
 	/// <summary>
 	/// 运行时BUFF
 	/// </summary>
-	public class RuntimeBuff : BaseData {
+	public class RuntimeBuff : RuntimeData {
 
 		/// <summary>
 		/// 属性
@@ -381,6 +393,46 @@ namespace BattleModule.Data {
 	}
 
 	/// <summary>
+	/// 运行时技能
+	/// </summary>
+	public class RuntimeSkill : RuntimeData {
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		public float rate { get; protected set; }
+
+		/// <summary>
+		/// 技能
+		/// </summary>
+		public Skill skill { get; protected set; }
+
+		/// <summary>
+		/// 条件
+		/// </summary>
+		public Event.Condition condition { get; protected set; }
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public RuntimeSkill() { }
+		public RuntimeSkill(Skill skill, float rate, 
+			Event.Condition condition = null) {
+			this.skill = skill; this.rate = rate;
+			this.condition = condition;
+		}
+
+		/// <summary>
+		/// 是否满足条件
+		/// </summary>
+		/// <returns></returns>
+		public bool inCondition() {
+			return condition == null || condition.Invoke();
+		}
+	}
+
+	/// <summary>
 	/// 战斗者
 	/// </summary>
 	public abstract class RuntimeBattler : RuntimeCharacter {
@@ -421,16 +473,8 @@ namespace BattleModule.Data {
 		public float hitting { get; protected set; } = 0; // 受击时间
 		[AutoConvert]
 		public float freezing { get; protected set; } = 0; // 硬直时间
-		
-		#endregion
 
-		/// <summary>
-		/// ID是否可用
-		/// </summary>
-		/// <returns></returns>
-		protected override bool idEnable() {
-			return false;
-		}
+		#endregion
 
 		/// <summary>
 		/// 是否玩家
@@ -774,9 +818,39 @@ namespace BattleModule.Data {
 
 		#endregion
 
-		#region 速度控制
+		#region 技能控制
 
+		/// <summary>
+		/// 可用技能
+		/// </summary>
+		[AutoConvert]
+		public List<RuntimeSkill> runtimeSkills 
+			{ get; protected set; } = new List<RuntimeSkill>();
 
+		/// <summary>
+		/// 添加技能
+		/// </summary>
+		/// <param name="skill"></param>
+		public void addSkill(RuntimeSkill skill) {
+			runtimeSkills.Add(skill);
+		}
+
+		/// <summary>
+		/// 获取特定运行时技能
+		/// </summary>
+		/// <param name="skill"></param>
+		/// <returns></returns>
+		public RuntimeSkill getSkill(Skill skill) {
+			return runtimeSkills.Find(s => s.skill == skill);
+		}
+
+		/// <summary>
+		/// 获取可用的技能列表
+		/// </summary>
+		/// <returns></returns>
+		public List<RuntimeSkill> usableSkills() {
+			return runtimeSkills.FindAll(s => s.inCondition());
+		}
 
 		#endregion
 
@@ -1031,8 +1105,7 @@ namespace BattleModule.Data {
 		/// <returns></returns>
 		public virtual RuntimeAction currentAction() {
 			if (actions.Count <= 0) return null;
-			var action = actions.Dequeue();
-			return action;
+			return actions.Dequeue();
 		}
 
 		/// <summary>
@@ -1054,7 +1127,7 @@ namespace BattleModule.Data {
 		}
 
 		#endregion
-		
+
 		#region 结果控制
 
 		/// <summary>
@@ -1300,6 +1373,38 @@ namespace BattleModule.Data {
 		/// </summary>
 		public RuntimeEnemy() { }
 		public RuntimeEnemy(int enemyId) { this.enemyId = enemyId; }
+
+		/// <summary>
+		/// 更新空闲状态
+		/// </summary>
+		protected override void updateIdle() {
+			base.updateIdle();
+			updateSkill();
+		}
+
+		/// <summary>
+		/// 更新技能使用
+		/// </summary>
+		void updateSkill() {
+			var skill = randomSkill();
+			if (skill == null) return;
+			addAction(skill.skill);
+		}
+
+		/// <summary>
+		/// 随机技能
+		/// </summary>
+		/// <returns></returns>
+		RuntimeSkill randomSkill() {
+			var sum = 0f; // 总权重值
+			foreach (var p in usableSkills()) sum += p.rate;
+
+			var rand = Random.Range(0, sum);
+			foreach (var p in usableSkills())
+				if ((rand -= p.rate) <= 0) return p;
+
+			return null;
+		}
 	}
 
 	/// <summary>
