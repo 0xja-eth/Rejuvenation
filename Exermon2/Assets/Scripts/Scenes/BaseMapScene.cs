@@ -64,10 +64,12 @@ namespace UI.BaseMapScene {
                 switchToPresent();
             else if (type == SplitType.PastSingle)
                 switchToPast();
-            //map1.camera.targetTexture
             animator.SetTrigger(type.ToString());
 		}
 
+        /// <summary>
+        /// 切换至“现在”
+        /// </summary>
         void switchToPresent() {
             present = true;
             switching = true;
@@ -75,7 +77,9 @@ namespace UI.BaseMapScene {
             map2.camera.rect = new Rect(0, 0, 1, 1);
             map1.camera.targetTexture = renderTexture;
         }
-
+        /// <summary>
+        /// 切换至“过去”
+        /// </summary>
         void switchToPast() {
             present = false;
             switching = true;
@@ -83,9 +87,12 @@ namespace UI.BaseMapScene {
             map2.camera.rect = new Rect(0, 0, 1, 1);
             map2.camera.targetTexture = renderTexture;
         }
-
+        /// <summary>
+        /// 重设相机状态，取消renderTexture模式
+        /// </summary>
         public void resetCamera() {
             if (present) {
+                //此处设置视口有bug，动画update时会自动恢复，只能在动画中设置视口属性
                 map2.camera.rect = new Rect(0, 0, 0, 1);
                 map1.camera.rect = new Rect(0, 0, 1, 1);
                 map1.camera.targetTexture = null;

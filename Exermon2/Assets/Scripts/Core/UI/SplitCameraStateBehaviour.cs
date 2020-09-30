@@ -16,6 +16,10 @@ namespace Core.UI {
         bool finish = false;
 
         #region 初始化
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="go"></param>
         protected override void setup(GameObject go) {
             base.setup(go);
             mapScene = gameObject.GetComponent<BaseMapScene>();
@@ -36,14 +40,9 @@ namespace Core.UI {
         protected override void onStatusUpdate() {
             base.onStatusUpdate();
             if(!finish && stateInfo.normalizedTime > stateInfo.length + 0.5) {
-                Debug.Log(" normalizedTime: " + stateInfo.normalizedTime);
-                Debug.Log(" length: " + stateInfo.length);
-
                 finish = true;
                 mapScene.resetCamera();
-                Debug.Log("camera Rect1: " + mapScene.map2.camera.rect);
             }
-            //Debug.Log("camera Rect2: " + mapScene.map2.camera.rect);
         }
 
         /// <summary>
@@ -52,7 +51,6 @@ namespace Core.UI {
         protected override void onStatusExit() {
             base.onStatusExit();
             finish = false;
-            Debug.Log("camera Rect3: " + mapScene.map2.camera.rect);
         }
     }
 
