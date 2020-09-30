@@ -72,6 +72,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void start() {
 			setupBattlerDisplay();
+			setupSkills();
 			base.start();
 		}
 
@@ -79,6 +80,14 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 配置战斗者显示组件
 		/// </summary>
 		protected abstract void setupBattlerDisplay();
+
+		/// <summary>
+		/// 配置技能
+		/// </summary>
+		void setupSkills() {
+			foreach(var processor in skillProcessors)
+				runtimeBattler.addSkill(processor.runtimeSkill);
+		}
 
 		/// <summary>
 		/// 配置更新函数
@@ -241,10 +250,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="processor"></param>
 		public void addSkillProcessor(SkillProcessor processor) {
-			if (!skillProcessors.Contains(processor)) {
+			if (!skillProcessors.Contains(processor)) 
 				skillProcessors.Add(processor);
-				runtimeBattler.addSkill(processor.runtimeSkill);
-			}
 		}
 
 		/// <summary>
@@ -273,7 +280,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="skill"></param>
 		void onSkillHit(SkillProcessor skill) {
-			if (skill.battler == this) return;
+			if (!skill.isUsing || skill.battler == this) return;
 			skill.apply(this);
 		}
 

@@ -41,6 +41,11 @@ namespace UI.Common.Controls.MapSystem {
 		protected const string MovingAttrName = "moving";
 
 		/// <summary>
+		/// 外部组件设置
+		/// </summary>
+		public Transform directionController;
+
+		/// <summary>
 		/// 外部变量定义
 		/// </summary>
 		public float defaultMoveSpeed = 2; // 默认移动速度
@@ -132,6 +137,8 @@ namespace UI.Common.Controls.MapSystem {
 		protected override void update() {
 			base.update();
 			updateCharacter();
+			updatePosition();
+			updateDirection();
 			updateVelocity();
 		}
 
@@ -157,6 +164,16 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		void updateVelocity() {
 			rigidbody.velocity = velocity;
+		}
+
+		/// <summary>
+		/// 更新朝向
+		/// </summary>
+		void updateDirection() {
+			if (!directionController) return;
+			var rot = directionController.rotation;
+			rot.z = RuntimeCharacter.judgeAngle(direction);
+			directionController.rotation = rot;
 		}
 
 		///// <summary>

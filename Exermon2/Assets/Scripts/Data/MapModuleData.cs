@@ -120,6 +120,9 @@ namespace MapModule.Data {
 		public static readonly float[] dirY = new float[] {
 			-Sqrt2, -1, -Sqrt2, 0, 0, 0, Sqrt2, 1, Sqrt2
 		};
+		public static readonly float[] angles = new float[] {
+			45, 90, 135, 0, 0, 180, 315, 270, 225
+		};
 
 		/// <summary>
 		/// 朝向
@@ -156,6 +159,9 @@ namespace MapModule.Data {
 		public static Vector2 judgeVector(Direction d) {
 			var index = (int)d - 1;
 			return new Vector2(dirX[index], dirY[index]);
+		}
+		public static float judgeAngle(Direction d) {
+			return angles[(int)d - 1];
 		}
 
 		#endregion
@@ -353,7 +359,6 @@ namespace MapModule.Data {
 		/// </summary>
 		/// <param name="state"></param>
 		public void changeState(Enum state) {
-			Debug.Log(this + " changeState: " + this.state + " => " + state);
 			stateMachine.changeState(state);
 		}
 
@@ -402,6 +407,7 @@ namespace MapModule.Data {
 		/// 初次更新
 		/// </summary>
 		protected virtual void firstUpdate() {
+			Debug.Log(this + ": firstUpdate");
 			isFirstUpdate = false;
 		}
 
