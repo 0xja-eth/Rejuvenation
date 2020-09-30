@@ -64,7 +64,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void initializeCollFuncs() {
 			base.initializeCollFuncs();
-			registerOnEnterFunc<SkillProcessor>(onSkillHit);
+			registerOnStayFunc<SkillProcessor>(onSkillHit);
 		}
 
 		/// <summary>
@@ -96,28 +96,28 @@ namespace UI.Common.Controls.BattleSystem {
 			base.setupStateChanges();
 
 			runtimeBattler?.addStateDict(
-				RuntimeBattler.BattlerState.Idle, updateIdle);
+				RuntimeBattler.State.Idle, updateIdle);
 			runtimeBattler?.addStateDict(
-				RuntimeBattler.BattlerState.Using, updateUsing);
+				RuntimeBattler.State.Using, updateUsing);
 
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.BattlerState.Idle,
-				RuntimeBattler.BattlerState.Hitting,
+				RuntimeBattler.State.Idle,
+				RuntimeBattler.State.Hitting,
 				onFreezeStart);
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.BattlerState.Moving,
-				RuntimeBattler.BattlerState.Hitting,
+				RuntimeBattler.State.Moving,
+				RuntimeBattler.State.Hitting,
 				onFreezeStart);
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.BattlerState.Using,
-				RuntimeBattler.BattlerState.Hitting,
+				RuntimeBattler.State.Using,
+				RuntimeBattler.State.Hitting,
 				onFreezeStart);
 
 			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
 
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.BattlerState.Freezing,
-				RuntimeBattler.BattlerState.Idle,
+				RuntimeBattler.State.Freezing,
+				RuntimeBattler.State.Idle,
 				onFreezeEnd);
 		}
 
@@ -280,6 +280,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="skill"></param>
 		void onSkillHit(SkillProcessor skill) {
+			if (runtimeBattler.isHitting() || runtimeBattler.isDead()) return;
 			if (!skill.isUsing || skill.battler == this) return;
 			skill.apply(this);
 		}
@@ -316,7 +317,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="action"></param>
 		public void startAction(RuntimeAction action) {
-			if ((currentAction = action) == null) return;
+			if (action == null) return;
+			currentAction = action;
 			onActionStart(); processAction();
 		}
 
@@ -338,8 +340,10 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 行动开始
 		/// </summary>
 		protected virtual void onActionEnd() {
-  			runtimeBattler.onActionEnd(currentAction);
+			runtimeBattler.onActionEnd(currentAction);
 			currentProcessor?.onUseEnd();
+
+			currentAction = null;
 			currentProcessor = null;
 		}
 

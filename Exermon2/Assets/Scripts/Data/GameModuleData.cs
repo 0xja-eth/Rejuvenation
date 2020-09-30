@@ -4,6 +4,8 @@ using UnityEngine;
 
 using LitJson;
 
+using Config;
+
 using Core.Data;
 using Core.Data.Loaders;
 
@@ -28,8 +30,8 @@ namespace GameModule.Data {
 		/// 本地版本
 		/// </summary>
 		//public string localVersion = PlayerSettings.bundleVersion;
-		public const string LocalMainVersion = DeployConfig.LocalMainVersion; // "0.3.2";
-        public const string LocalSubVersion = DeployConfig.LocalSubVersion; // "20200527";
+		public const string LocalMainVersion = Deploy.LocalMainVersion; // "0.3.2";
+        public const string LocalSubVersion = Deploy.LocalSubVersion; // "20200527";
 
         /// <summary>
         /// 后台版本

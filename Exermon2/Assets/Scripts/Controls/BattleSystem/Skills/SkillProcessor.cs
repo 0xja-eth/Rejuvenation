@@ -164,7 +164,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <param name="battler"></param>
 		void applyRuntimeBattler(RuntimeBattler battler) {
-			var res = currentAction?.makeResult(battler);
+			var res = currentAction.makeResult(battler);
 			battler.applyResult(res);
 		}
 

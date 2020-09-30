@@ -5,6 +5,8 @@ using LitJson;
 
 using UnityEngine;
 
+using Config;
+
 using Core.Systems;
 using Core.UI.Utils;
 
@@ -80,7 +82,7 @@ namespace Core.UI {
         /// </summary>
         /// <returns></returns>
         public void checkFirstScene() {
-            var first = DeployConfig.FirstScene;
+            var first = Deploy.FirstScene;
             if (gameSys.isConnectable() && sceneIndex() != first)
                 sceneSys.gotoScene(first);
         }

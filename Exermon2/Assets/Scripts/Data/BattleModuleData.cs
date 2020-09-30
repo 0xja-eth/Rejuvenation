@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 
 using LitJson;
 
+using Config;
+
 using Core.Data;
 using Core.Data.Loaders;
 
@@ -49,19 +51,7 @@ namespace BattleModule.Data {
 			HurtPlus = 2, // 受到伤害加成
 			RecoverPlus = 3, // 回复加成
 
-			RestRecoverPlus = 4, // 回复加成（休息据点）
-
-			RoundEndRecover = 5, // 回合结束HP回复
-			RoundStartRecover = 6, // 回合开始HP回复
-			BattleEndRecover = 7, // 战斗结束HP回复
-			BattleStartRecover = 8, // 战斗开始HP回复
-
 			ParamAdd = 9, // 属性加成值
-			ParamRoundAdd = 10, // 回合属性加成值
-			ParamBattleAdd = 11, // 战斗属性加成值
-
-			RoundDrawCards = 12, // 回合开始抽牌数加成
-			BattleDrawCards = 13, // 战斗开始抽牌数加成
 		}
 
 		/// <summary>
@@ -130,6 +120,30 @@ namespace BattleModule.Data {
 		[SerializeField] float _defense = 0;
 		[AutoConvert] public float defense { get => _defense; set { _defense = value; } }
 
+		/// <summary>
+		/// 行走图属性
+		/// </summary>
+		[AutoConvert]
+		public int characterId { get; set; }
+
+		/// <summary>
+		/// Editor中赋值
+		/// </summary>
+		[SerializeField] Texture2D _character = null;
+
+		/// <summary>
+		/// 获取动画实例
+		/// </summary>
+		/// <returns></returns>
+		protected CacheAttr<Texture2D> character_ = null;
+		protected Texture2D _character_() {
+			return AssetLoader.loadAsset<Texture2D>(
+				Asset.Type.Character, characterId);
+		}
+		public Texture2D character() {
+			return _character ?? character_?.value();
+		}
+		
 	}
 
 	/// <summary>
@@ -300,21 +314,16 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 动画属性
 		/// </summary>
-		//[SerializeField] int _animationId;
 		[AutoConvert]
 		public int startAnimationId { get; set; }
 		[AutoConvert]
 		public int targetAnimationId { get; set; }
-		//{
-		//	get => _animationId;
-		//	set { _animationId = value; }
-		//}
 
 		/// <summary>
 		/// Editor中赋值
 		/// </summary>
-		[SerializeField] AnimationClip _startAnimation;
-		[SerializeField] AnimationClip _targetAnimation;
+		[SerializeField] AnimationClip _startAnimation = null;
+		[SerializeField] AnimationClip _targetAnimation = null;
 
 		/// <summary>
 		/// 获取动画实例
@@ -450,7 +459,7 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 状态
 		/// </summary>
-		public enum BattlerState {
+		public new enum State {
 			Idle, // 空闲
 			Moving, // 移动中
 			Using, // 使用物品/技能
@@ -463,7 +472,7 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		public int hp { get; protected set; }
+		public float hp { get; protected set; }
 		[AutoConvert]
 		public List<RuntimeBuff> buffs { get; protected set; } = new List<RuntimeBuff>();
 
@@ -494,6 +503,19 @@ namespace BattleModule.Data {
 		/// <returns></returns>
 		public abstract Battler battler { get; }
 
+		/// <summary>
+		/// 回调类型
+		/// </summary>
+		public new enum CbType {
+			BattleStart, ActionStart, ActionEnd,
+			BuffAdd, BuffRemove, Die
+		}
+
+		/// <summary>
+		/// 回调枚举类型
+		/// </summary>
+		protected override Type cbType => typeof(CbType);
+
 		#region 初始化
 
 		/// <summary>
@@ -502,12 +524,12 @@ namespace BattleModule.Data {
 		protected override void initializeStates() {
 			base.initializeStates();
 
-			//addStateDict(BattlerState.Idle, updateIdle);
-			//addStateDict(BattlerState.Moving, updateMoving);
-			addStateDict(BattlerState.Using, updateUsing);
-			addStateDict(BattlerState.Hitting, updateHitting);
-			addStateDict(BattlerState.Freezing, updateFreezing);
-			addStateDict(BattlerState.Dead, updateDead);
+			//addStateDict(State.Idle, updateIdle);
+			//addStateDict(State.Moving, updateMoving);
+			addStateDict(State.Using, updateUsing);
+			addStateDict(State.Hitting, updateHitting);
+			addStateDict(State.Freezing, updateFreezing);
+			addStateDict(State.Dead, updateDead);
 
 			//changeState(BattlerState.Idle);
 		}
@@ -569,7 +591,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		public class DeltaHP {
 
-			public int value = 0; // 值
+			public float value = 0; // 值
 
 			public bool critical = false; // 是否暴击
 			public bool miss = false; // 是否闪避
@@ -578,7 +600,7 @@ namespace BattleModule.Data {
 			/// 构造函数
 			/// </summary>
 			/// <param name="value"></param>
-			public DeltaHP(int value = 0, bool critical = false, bool miss = false) {
+			public DeltaHP(float value = 0, bool critical = false, bool miss = false) {
 				this.value = value; this.critical = critical; this.miss = miss;
 			}
 		}
@@ -614,7 +636,7 @@ namespace BattleModule.Data {
 		/// 设置值变化
 		/// </summary>
 		/// <param name="value"></param>
-		public void setHPChange(int value) {
+		public void setHPChange(float value) {
 			_deltaHP = _deltaHP ?? new DeltaHP();
 			_deltaHP.value += value;
 		}
@@ -626,11 +648,12 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="value">目标值</param>
 		/// <param name="show">是否显示</param>
-		public void changeHP(int value, bool show = true) {
+		public void changeHP(float value, bool show = true) {
 			var oriHp = hp;
+			Debug.Log("changeHP: " + value);
 			hp = Mathf.Clamp(value, 0, mhp);
 			if (show) setHPChange(hp - oriHp);
-			if (hp <= 0) onDie();
+			if (isDead()) onDie();
 		}
 
 		/// <summary>
@@ -638,7 +661,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="value">增加值</param>
 		/// <param name="show">是否显示</param>
-		public void addHP(int value, bool show = true) {
+		public void addHP(float value, bool show = true) {
 			changeHP(hp + value, show);
 		}
 
@@ -647,21 +670,8 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="rate">增加率</param>
 		/// <param name="show">是否显示</param>
-		public void addHP(double rate, bool show = true) {
+		public void addHPRate(double rate, bool show = true) {
 			changeHP((int)Math.Round(hp + mhp * rate), show);
-		}
-
-		/// <summary>
-		/// 增加HP
-		/// </summary>
-		/// <param name="rate">增加率</param>
-		/// <param name="show">是否显示</param>
-		public void addHPInRestNode(double rate, bool show = true) {
-			var traits = filterTraits(TraitData.Code.RestRecoverPlus);
-
-			int val = sumTraits(traits);
-			rate += sumTraits(traits, 1) / 100.0;
-			addHP((int)Math.Round(mhp * rate + val));
 		}
 
 		/// <summary>
@@ -677,7 +687,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <returns></returns>
 		public float hpRate() {
-			return Mathf.Clamp01(hp / mhp);
+			return Mathf.Clamp01(hp * 1f / mhp);
 		}
 
 		/// <summary>
@@ -869,7 +879,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="val"></param>
 		public void setHitting(float val) {
-			hitting = val; changeState(BattlerState.Hitting);
+			hitting = val; changeState(State.Hitting);
 		}
 
 		/// <summary>
@@ -992,7 +1002,7 @@ namespace BattleModule.Data {
 			return addBuff(new RuntimeBuff(paramId, value, rate, turns));
 		}
 		public RuntimeBuff addBuff(RuntimeBuff buff) {
-			buffs.Add(buff); onBuffAdded(buff);
+			buffs.Add(buff); onBuffAdd(buff);
 			_addedBuffs.Add(buff);
 
 			return buff;
@@ -1007,14 +1017,14 @@ namespace BattleModule.Data {
 			buffs.RemoveAt(index);
 			_addedBuffs.Remove(buff);
 
-			onBuffRemoved(buff, force);
+			onBuffRemove(buff, force);
 		}
 		/// <param name="buff">Buff对象</param>
 		public void removeBuff(RuntimeBuff buff, bool force = false) {
 			buffs.Remove(buff);
 			_addedBuffs.Remove(buff);
 
-			onBuffRemoved(buff, force);
+			onBuffRemove(buff, force);
 		}
 
 		/// <summary>
@@ -1175,11 +1185,36 @@ namespace BattleModule.Data {
 		#region 回调控制
 
 		/// <summary>
+		/// 回调
+		/// </summary>
+		/// <param name="type">回调类型枚举</param>
+		public void on(CbType type) {
+			callbackManager.on(type);
+		}
+		/// <summary>
+		/// 回调（内部调用）
+		/// </summary>
+		/// <param name="type">回调类型枚举</param>
+		protected void _on(CbType type) {
+			callbackManager.on(type, false);
+		}
+
+		/// <summary>
+		/// 判断回调
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public bool judge(CbType type) {
+			return callbackManager.judge(type);
+		}
+
+		/// <summary>
 		/// 战斗开始回调
 		/// </summary>
-		public virtual void onBattleStart() {
+		protected virtual void onBattleStart() {
 			clearBuffs();
-			changeState(BattlerState.Idle);
+			changeState(State.Idle);
+			_on(CbType.BattleStart);
 		}
 
 		/// <summary>
@@ -1187,14 +1222,14 @@ namespace BattleModule.Data {
 		/// </summary>
 		public virtual void onActionStart(RuntimeAction action) {
 			_addedBuffs.Clear();
-			changeState(BattlerState.Using);
+			_on(CbType.ActionStart);
 		}
 
 		/// <summary>
 		/// 当前行动结束回调
 		/// </summary>
 		public virtual void onActionEnd(RuntimeAction action) {
-			changeState(BattlerState.Idle);
+			_on(CbType.ActionEnd);
 		}
 
 		#region BUFF回调
@@ -1202,12 +1237,16 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// BUFF添加回调
 		/// </summary>
-		public virtual void onBuffAdded(RuntimeBuff buff) { }
+		protected virtual void onBuffAdd(RuntimeBuff buff) {
+			_on(CbType.BuffAdd);
+		}
 
 		/// <summary>
 		/// BUFF移除回调
 		/// </summary>
-		public virtual void onBuffRemoved(RuntimeBuff buff, bool force = false) { }
+		protected virtual void onBuffRemove(RuntimeBuff buff, bool force = false) {
+			_on(CbType.BuffRemove);
+		}
 
 		#endregion
 
@@ -1215,7 +1254,7 @@ namespace BattleModule.Data {
 		/// 死亡回调
 		/// </summary>
 		protected virtual void onDie() {
-			changeState(BattlerState.Dead);
+			_on(CbType.Die);
 		}
 
 		#endregion
@@ -1227,7 +1266,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <returns></returns>
 		public bool isActing() {
-			return isState(BattlerState.Using);
+			return isState(State.Using);
 		}
 
 		/// <summary>
@@ -1280,6 +1319,8 @@ namespace BattleModule.Data {
 		/// </summary>
 		protected override void updateIdle() {
 			base.updateIdle();
+			if (judge(CbType.ActionStart))
+				changeState(State.Using);
 		}
 
 		/// <summary>
@@ -1292,14 +1333,18 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 更新使用状态
 		/// </summary>
-		protected virtual void updateUsing() { }
+		protected virtual void updateUsing() {
+			if (judge(CbType.ActionEnd))
+				changeState(State.Idle);
+		}
 
 		/// <summary>
 		/// 更新受击状态
 		/// </summary>
 		protected virtual void updateHitting() {
 			hitting = Math.Max(0, hitting - Time.deltaTime);
-			if (!isHitting()) changeState(BattlerState.Freezing);
+			if (!isHitting()) changeState(State.Freezing);
+			if (isDead()) changeState(State.Dead);
 		}
 
 		/// <summary>
@@ -1307,13 +1352,15 @@ namespace BattleModule.Data {
 		/// </summary>
 		protected virtual void updateFreezing() {
 			freezing = Math.Max(0, freezing - Time.deltaTime);
-			if (!isFreezing()) changeState(BattlerState.Idle);
+			if (!isFreezing()) changeState(State.Idle);
 		}
 
 		/// <summary>
 		/// 更新死亡
 		/// </summary>
-		protected virtual void updateDead() { }
+		protected virtual void updateDead() {
+			if (!isDead()) changeState(State.Idle);
+		}
 
 		#endregion
 
@@ -1323,8 +1370,8 @@ namespace BattleModule.Data {
 		/// 每帧更新
 		/// </summary>
 		public override void update() {
-			base.update();
 			updateBuffs();
+			base.update();
 		}
 
 		/// <summary>

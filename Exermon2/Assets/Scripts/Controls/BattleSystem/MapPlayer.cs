@@ -225,7 +225,7 @@ namespace UI.Common.Controls.BattleSystem {
 			attack = Input.GetKeyUp(key);
 			attacking = Input.GetKey(key);
 
-			if (attack) useSkill(longRangeSkill);
+			if (attack) useSkill();
 			if (attacking) attackTime += Time.deltaTime;
 
 			return attack || attacking;
@@ -236,14 +236,13 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="skill"></param>
 		void useSkill(SkillProcessor skill) {
-			debugLog("useSkill: " + skill);
-			skill?.use();
+			debugLog("useSkill: " + skill + ", time: " + attackTime);
+			runtimeBattler.addAction(skill.skill);
 			attackTime = 0;
 		}
 		void useSkill() {
 			useSkill(attackTime >= LongRangeSkillTime ?
 				longRangeSkill : normalSkill);
-
 		}
 
 		#endregion

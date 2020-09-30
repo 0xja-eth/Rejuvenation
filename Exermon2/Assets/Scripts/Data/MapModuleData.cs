@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using LitJson;
 
 using Core.Data;
+using Core.Utils;
 using Core.Systems;
 using Core.Data.Loaders;
 
@@ -197,6 +198,21 @@ namespace MapModule.Data {
 		/// 状态机
 		/// </summary>
 		public StateMachine stateMachine { get; protected set; } = new StateMachine();
+		
+		/// <summary>
+		/// 回调类型
+		/// </summary>
+		public enum CbType { }
+
+		/// <summary>
+		/// 回调枚举类型
+		/// </summary>
+		protected virtual Type cbType => typeof(CbType);
+
+		/// <summary>
+		/// 回调管理器
+		/// </summary>
+		protected CallbackManager callbackManager;
 
 		#region 初始化
 
@@ -210,6 +226,7 @@ namespace MapModule.Data {
 		/// </summary>
 		void initialize() {
 			initializeStates();
+			initializeCallbacks();
 			initializeOthers();
 		}
 
@@ -221,6 +238,13 @@ namespace MapModule.Data {
 			addStateDict(State.Moving, updateMoving);
 
 			changeState(State.Idle);
+		}
+
+		/// <summary>
+		/// 初始化回调管理
+		/// </summary>
+		void initializeCallbacks() {
+			callbackManager = new CallbackManager(cbType, this);
 		}
 
 		/// <summary>
@@ -359,6 +383,8 @@ namespace MapModule.Data {
 		/// </summary>
 		/// <param name="state"></param>
 		public void changeState(Enum state) {
+			Debug.Log("changeState: " + this + ": " +
+				Enum.ToObject(state.GetType(), this.state) + " -> " + state);
 			stateMachine.changeState(state);
 		}
 
@@ -401,6 +427,8 @@ namespace MapModule.Data {
 
 			updateStateMachine();
 			updateDirection();
+
+			callbackManager?.reset();
 		}
 
 		/// <summary>

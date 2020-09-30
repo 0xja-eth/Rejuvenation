@@ -10,6 +10,7 @@ namespace UI.Common.Controls.BattleSystem {
 	/// <summary>
 	/// 战斗者状态显示
 	/// </summary>
+	[RequireComponent(typeof(SpriteRenderer))]
 	public class BattlerDisplay : ItemDisplay<RuntimeBattler> {
 
 		/// <summary>
@@ -19,8 +20,10 @@ namespace UI.Common.Controls.BattleSystem {
 		public AnimationExtend hpBar;
 
 		/// <summary>
-		/// 碰撞的玩家
+		/// 内部组件设置
 		/// </summary>
+		[RequireTarget]
+		SpriteRenderer sprite;
 
 		#region 初始化
 
@@ -40,6 +43,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
+			updateCharacter();
 			updateHP();
 		}
 
@@ -48,6 +52,13 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		void updateHP() {
 			if (!isNullItem(item)) drawHP(item);
+		}
+
+		/// <summary>
+		/// 更新行走图
+		/// </summary>
+		void updateCharacter() {
+			// TODO: 四方向切换以及行走更新
 		}
 
 		#endregion

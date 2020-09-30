@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-using ItemModule.Data;
+using Config;
 
 /// <summary>
 /// 核心框架代码
@@ -26,17 +26,17 @@ namespace Core.Data.Loaders {
 	/// </summary>
 	public class AssetSetting {
 
-		public string name; // 资源类型名
+		public Asset.Type name; // 资源类型名
 		public string path; // 资源路径
 		public string format; // 资源文件名格式
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public AssetSetting(string name, string path, string format) {
+		public AssetSetting(Asset.Type name, string path, string format) {
 			this.name = name; this.path = path; this.format = format;
 		}
-		public AssetSetting(string name, params string[] paths) {
+		public AssetSetting(Asset.Type name, params string[] paths) {
 			var last = paths.Length - 1;
 			format = paths[last];
 
@@ -244,7 +244,8 @@ namespace Core.Data.Loaders {
 			return loadAnimation(path, name + "_" + id);
 		}
 		public static AnimationClip loadAnimation(int id) {
-			return loadAsset<AnimationClip>(AnimationName, id);
+			return loadAsset<AnimationClip>(
+				Asset.Type.Animation, id);
 		}
 
 		#region 纹理资源处理
@@ -296,8 +297,8 @@ namespace Core.Data.Loaders {
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		static AssetSetting getAssetSetting(string name) {
-			var settings = CoreConfig.AssetSettings;
+		static AssetSetting getAssetSetting(Asset.Type name) {
+			var settings = Asset.Settings;
 			foreach (var setting in settings)
 				if (setting.name == name) return setting;
 			return null;
@@ -309,7 +310,9 @@ namespace Core.Data.Loaders {
 		/// <typeparam name="T"></typeparam>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public static T loadAsset<T>(string name, int id) where T : Object {
+		public static T loadAsset<T>(Asset.Type name, 
+			int id) where T : Object {
+
 			var setting = getAssetSetting(name);
 			var fileName = string.Format(setting.format, id);
 			return loadAsset<T>(setting.path, fileName);
