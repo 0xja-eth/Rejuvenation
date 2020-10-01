@@ -28,7 +28,7 @@ namespace Config {
 		public static AssetSetting[] Settings = new AssetSetting[] {
 			new AssetSetting(Type.Animation,
 				AssetLoader.SystemPath, "Animations", "Animation_{0}"),
-			new AssetSetting(Type.Character, "Characters", "Character_{0}")
+			new AssetSetting(Type.Character, "Characters/", "Character_{0}")
 		};
 
 	}

@@ -19,7 +19,7 @@ namespace UI.Common.Controls.MapSystem {
 	/// <summary>
 	/// 地图上的行走实体
 	/// </summary>
-	[RequireComponent(typeof(SpriteRenderer))]
+	//[RequireComponent(typeof(SpriteRenderer))]
 	[RequireComponent(typeof(Rigidbody2D))]
 	[RequireComponent(typeof(AnimatorExtend))]
 	[RequireComponent(typeof(AnimationExtend))]
@@ -55,8 +55,8 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		[RequireTarget] [HideInInspector]
 		public new Rigidbody2D rigidbody;
-		[RequireTarget] [HideInInspector]
-		public SpriteRenderer sprite;
+		//[RequireTarget] [HideInInspector]
+		//public SpriteRenderer sprite;
 
 		[RequireTarget] [HideInInspector]
 		public AnimatorExtend animator;
@@ -172,7 +172,7 @@ namespace UI.Common.Controls.MapSystem {
 		void updateDirection() {
 			if (!directionController) return;
 			var rot = directionController.rotation;
-			rot.z = RuntimeCharacter.judgeAngle(direction);
+			rot.z = RuntimeCharacter.dir82Angle(direction);
 			directionController.rotation = rot;
 		}
 
@@ -338,58 +338,58 @@ namespace UI.Common.Controls.MapSystem {
 
 		#region 朝向相关
 
-		/// <summary>
-		/// 获取当前朝向
-		/// </summary>
-		/// <returns></returns>
-		public RuntimeCharacter.Direction currentDirection() {
-			return RuntimeCharacter.judgeDirection(velocity);
-		}
+		///// <summary>
+		///// 获取当前朝向
+		///// </summary>
+		///// <returns></returns>
+		//public RuntimeCharacter.Direction currentDirection() {
+		//	return RuntimeCharacter.vec2Dir8(velocity);
+		//}
 
-		/// <summary>
-		/// 朝向判断
-		/// </summary>
-		/// <returns></returns>
-		public bool isFacingLeft() {
-			return isFacingLeft(velocity);
-		}
-		public bool isFacingLeft(Vector2 vec) {
-			return vec.x < 0;
-		}
-		public bool isFacingRight() {
-			return isFacingRight(velocity);
-		}
-		public bool isFacingRight(Vector2 vec) {
-			return vec.x > 0;
-		}
-		public bool isFacingUp() {
-			return isFacingUp(velocity);
-		}
-		public bool isFacingUp(Vector2 vec) {
-			return vec.y < 0;
-		}
-		public bool isFacingDown() {
-			return isFacingDown(velocity);
-		}
-		public bool isFacingDown(Vector2 vec) {
-			return vec.y > 0;
-		}
+		///// <summary>
+		///// 朝向判断
+		///// </summary>
+		///// <returns></returns>
+		//public bool isFacingLeft() {
+		//	return isFacingLeft(velocity);
+		//}
+		//public bool isFacingLeft(Vector2 vec) {
+		//	return vec.x < 0;
+		//}
+		//public bool isFacingRight() {
+		//	return isFacingRight(velocity);
+		//}
+		//public bool isFacingRight(Vector2 vec) {
+		//	return vec.x > 0;
+		//}
+		//public bool isFacingUp() {
+		//	return isFacingUp(velocity);
+		//}
+		//public bool isFacingUp(Vector2 vec) {
+		//	return vec.y < 0;
+		//}
+		//public bool isFacingDown() {
+		//	return isFacingDown(velocity);
+		//}
+		//public bool isFacingDown(Vector2 vec) {
+		//	return vec.y > 0;
+		//}
 
-		/// <summary>
-		/// 更新朝向
-		/// </summary>
-		public void refreshFacing() {
-			if (isFacingRight()) sprite.flipX = true;
-			else if (isFacingLeft()) sprite.flipX = false;
-		}
-		public void refreshFacing(Vector2 vec) {
-			if (isFacingRight(vec)) sprite.flipX = true;
-			else if (isFacingLeft(vec)) sprite.flipX = false;
-		}
-		public void refreshFacing(RuntimeCharacter.Direction d) {
-			var vec = RuntimeCharacter.judgeVector(d);
-			refreshFacing(vec);
-		}
+		///// <summary>
+		///// 更新朝向
+		///// </summary>
+		//public void refreshFacing() {
+		//	if (isFacingRight()) sprite.flipX = true;
+		//	else if (isFacingLeft()) sprite.flipX = false;
+		//}
+		//public void refreshFacing(Vector2 vec) {
+		//	if (isFacingRight(vec)) sprite.flipX = true;
+		//	else if (isFacingLeft(vec)) sprite.flipX = false;
+		//}
+		//public void refreshFacing(RuntimeCharacter.Direction d) {
+		//	var vec = RuntimeCharacter.dir82Vec(d);
+		//	refreshFacing(vec);
+		//}
 
 		#endregion
 
@@ -460,7 +460,7 @@ namespace UI.Common.Controls.MapSystem {
 		}
 		public void move(Vector2 vec, bool force = false) {
 			runtimeCharacter?.move(vec, force);
-			refreshFacing(vec);
+			//refreshFacing(vec);
 		}
 
 		/// <summary>
@@ -472,7 +472,7 @@ namespace UI.Common.Controls.MapSystem {
 			float speed = -1, bool force = false) {
 			if (speed < 0) speed = moveSpeed();
 			runtimeCharacter?.moveDirection(d, speed, force);
-			refreshFacing(d);
+			//refreshFacing(d);
 		}
 
 		/// <summary>
@@ -493,7 +493,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		protected override void refresh() {
 			base.refresh();
-			refreshFacing();
+			//refreshFacing();
 		}
 
 		#endregion

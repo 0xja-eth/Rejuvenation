@@ -129,21 +129,31 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// Editor中赋值
 		/// </summary>
-		[SerializeField] Texture2D _character = null;
+		[SerializeField] Sprite[] _character = null;
 
 		/// <summary>
 		/// 获取动画实例
 		/// </summary>
 		/// <returns></returns>
-		protected CacheAttr<Texture2D> character_ = null;
-		protected Texture2D _character_() {
-			return AssetLoader.loadAsset<Texture2D>(
+		protected CacheAttr<Sprite[]> character_ = null;
+		protected Sprite[] _character_() {
+			return AssetLoader.loadAssets<Sprite>(
 				Asset.Type.Character, characterId);
 		}
-		public Texture2D character() {
+		public Sprite[] character() {
 			return _character ?? character_?.value();
 		}
 		
+		/// <summary>
+		/// 获取指定行列的精灵
+		/// </summary>
+		/// <returns></returns>
+		public Sprite getSprite(int r, int c) {
+			var xCnt = RuntimeCharacter.XCnt;
+			return character()[r * xCnt + c];
+			//return AssetLoader.genSpriteByCnt(character(),
+			//	RuntimeCharacter.XCnt, RuntimeCharacter.YCnt, c, r);
+		}
 	}
 
 	/// <summary>
@@ -1229,6 +1239,7 @@ namespace BattleModule.Data {
 		/// 当前行动结束回调
 		/// </summary>
 		public virtual void onActionEnd(RuntimeAction action) {
+			Debug.Log("onActionEnd");
 			_on(CbType.ActionEnd);
 		}
 
@@ -1436,7 +1447,7 @@ namespace BattleModule.Data {
 		public RuntimeEnemy() { }
 		public RuntimeEnemy(int enemyId) { this.enemyId = enemyId; }
 		public RuntimeEnemy(int enemyId, Enemy customEnemy) : this(enemyId) {
-			this.customEnemy = customEnemy;
+			this.customEnemy = customEnemy; hp = mhp;
 		}
 
 		/// <summary>

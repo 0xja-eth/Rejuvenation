@@ -67,6 +67,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 初始化敌人显示组件
 		/// </summary>
 		protected override void setupBattlerDisplay() {
+			actor.characterId = 1;
 			display.setItem(playerSer.actor.runtimeActor);
 		}
 

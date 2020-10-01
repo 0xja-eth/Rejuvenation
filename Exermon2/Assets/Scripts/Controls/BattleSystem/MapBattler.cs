@@ -101,38 +101,25 @@ namespace UI.Common.Controls.BattleSystem {
 				RuntimeBattler.State.Using, updateUsing);
 
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Idle,
-				RuntimeBattler.State.Hitting,
-				onFreezeStart);
+				RuntimeBattler.State.Idle, 
+				RuntimeBattler.State.Hitting, onFreezeStart);
 			runtimeBattler?.addStateChange(
 				RuntimeBattler.State.Moving,
-				RuntimeBattler.State.Hitting,
-				onFreezeStart);
+				RuntimeBattler.State.Hitting, onFreezeStart);
 			runtimeBattler?.addStateChange(
 				RuntimeBattler.State.Using,
-				RuntimeBattler.State.Hitting,
-				onFreezeStart);
+				RuntimeBattler.State.Hitting, onFreezeStart);
 
 			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
 
 			runtimeBattler?.addStateChange(
 				RuntimeBattler.State.Freezing,
-				RuntimeBattler.State.Idle,
-				onFreezeEnd);
+				RuntimeBattler.State.Idle, onFreezeEnd);
 		}
 
 		#endregion
 
 		#region 更新
-
-		///// <summary>
-		///// 更新
-		///// </summary>
-		//protected override void update() {
-		//	base.update();
-		//	if (!isValid()) return;
-		//	updateBattler();
-		//}
 
 		/// <summary>
 		/// 更新具体状态
@@ -161,47 +148,6 @@ namespace UI.Common.Controls.BattleSystem {
 		protected virtual void onFreezeEnd() {
 			animator.setVar(FreezeAttrName, false);
 		}
-
-		#endregion
-
-		#region 碰撞处理
-
-		#endregion
-
-		#region 状态判断
-
-		/// <summary>
-		/// 是否可用
-		/// </summary>
-		/// <returns></returns>
-		public bool isValid() {
-			return runtimeBattler != null;
-		}
-
-		///// <summary>
-		///// 是否行动中
-		///// </summary>
-		///// <returns></returns>
-		//public bool isActing() {
-		//	return currentProcessor && currentProcessor.isUsing;
-		//}
-
-		///// <summary>
-		///// 能否移动
-		///// </summary>
-		///// <returns></returns>
-		//public override bool isMoveable() {
-		//	return base.isMoveable() && !isActing();
-		//}
-
-		///// <summary>
-		///// 是否空闲
-		///// </summary>
-		///// <returns></returns>
-		//public override bool isIdle() {
-		//	return base.isIdle() && !isActing() && 
-		//		!runtimeBattler.isFreezing();
-		//}
 
 		#endregion
 
@@ -271,6 +217,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="skill"></param>
 		void useSkill(Skill skill) {
+			debugLog("Use skill: " + skill);
 			currentProcessor = skillProcessor(skill);
 			currentProcessor?.use();
 		}

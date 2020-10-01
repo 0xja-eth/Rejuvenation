@@ -3,6 +3,7 @@
 using UI.Common.Controls.AnimationSystem;
 using UI.Common.Controls.ItemDisplays;
 
+using MapModule.Data;
 using BattleModule.Data;
 
 namespace UI.Common.Controls.BattleSystem {
@@ -25,6 +26,11 @@ namespace UI.Common.Controls.BattleSystem {
 		[RequireTarget]
 		SpriteRenderer sprite;
 
+		/// <summary>
+		/// 内部变量定义
+		/// </summary>
+		int lastDir = 0;
+
 		#region 初始化
 
 		/// <summary>
@@ -43,22 +49,40 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			updateCharacter();
-			updateHP();
+			debugLog("Direction: " + item.direction);
+			updateHPChange(); updateCharacter();
 		}
 
 		/// <summary>
-		/// 更新HP
+		/// 更新HP改变
 		/// </summary>
-		void updateHP() {
-			if (!isNullItem(item)) drawHP(item);
+		void updateHPChange() {
+			if (isNullItem(item)) return;
+
+			var deltaHP = item.deltaHP;
+			if (deltaHP == null) return;
+
+			drawHP(item, true);
 		}
 
 		/// <summary>
 		/// 更新行走图
 		/// </summary>
 		void updateCharacter() {
-			// TODO: 四方向切换以及行走更新
+			drawCharacter(item);
+		}
+
+		#endregion
+
+		#region 数据操作
+
+		/// <summary>
+		/// 是否为空
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public override bool isNullItem(RuntimeBattler item) {
+			return base.isNullItem(item) || item.battler == null;
 		}
 
 		#endregion
@@ -71,18 +95,39 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <param name="item"></param>
 		protected override void drawExactlyItem(RuntimeBattler item) {
 			base.drawExactlyItem(item);
-			drawHP(item);
+			drawHP(item); drawCharacter(item);
 		}
 
 		/// <summary>
 		/// 绘制HP
 		/// </summary>
-		void drawHP(RuntimeBattler item) {
-			if (hpDisplay) hpDisplay.SetActive(item.isDead());
+		void drawHP(RuntimeBattler item, bool ani = false) {
+			if (hpDisplay)
+				hpDisplay.SetActive(!item.isDead());
 			if (hpBar) {
 				var scale = new Vector3(item.hpRate(), 1, 1);
-				hpBar.scaleTo(scale, play: true);
+				if (ani) hpBar.scaleTo(scale, play: true);
+				else hpBar.transform.localScale = scale;
 			}
+		}
+
+		/// <summary>
+		/// 绘制角色
+		/// </summary>
+		/// <param name="item"></param>
+		void drawCharacter(RuntimeBattler item) {
+			var dir = item.direction;
+
+			if (RuntimeCharacter.isDir4(dir))
+				lastDir = RuntimeCharacter.dir2Index(dir);
+
+			if (RuntimeCharacter.isRightDir(dir))
+				sprite.flipX = true;
+			else if (RuntimeCharacter.isLeftDir(dir))
+				sprite.flipX = false;
+
+			sprite.sprite = item.battler.
+				getSprite(lastDir, item.pattern);
 		}
 
 		/// <summary>
@@ -91,6 +136,7 @@ namespace UI.Common.Controls.BattleSystem {
 		protected override void drawEmptyItem() {
 			base.drawEmptyItem();
 			if (hpDisplay) hpDisplay.SetActive(false);
+			sprite.sprite = null;
 		}
 
 		#endregion
