@@ -31,18 +31,53 @@ namespace UI.Common.Controls.MapSystem {
 		public GameObject bulletPerfab;
 
 		/// <summary>
+		/// 内部组件设置
+		/// </summary>
+		BulletProcessor bullet;
+
+		/// <summary>
 		/// 世界变换
 		/// </summary>
 		Transform world => battler.transform.parent;
 
+		#region	更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
+			base.update();
+			udpateBullet();
+		}
+
+		/// <summary>
+		/// 更新子弹
+		/// </summary>
+		void udpateBullet() {
+			if (!bullet) return;
+			if (bullet.destroyFlag) {
+				Destroy(bullet); bullet = null;
+			}
+		}
+
+		#endregion
+
 		#region 执行&使用
+
+		/// <summary>
+		/// 是否结束
+		/// </summary>
+		/// <returns></returns>
+		public override bool isTerminated() {
+			return !bullet && base.isTerminated();
+		}
 
 		/// <summary>
 		/// 使用技能
 		/// </summary>
 		protected override void onUse() {
 			base.onUse();
-			createBullet();
+			bullet = createBullet();
 		}
 
 		/// <summary>

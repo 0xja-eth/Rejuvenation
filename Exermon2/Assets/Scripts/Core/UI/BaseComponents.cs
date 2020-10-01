@@ -165,6 +165,11 @@ namespace Core.UI {
 		}
 
 		/// <summary>
+		/// 销毁标志
+		/// </summary>
+		public bool destroyFlag { get; protected set; } = false;
+
+		/// <summary>
 		/// 刷新请求
 		/// </summary>
 		List<StackTrace> refreshRequestedStacks = new List<StackTrace>();
@@ -485,6 +490,14 @@ namespace Core.UI {
 		}
 		public Component findParent(Type type) {
 			return SceneUtils.findParent(this, type);
+		}
+
+		/// <summary>
+		/// 销毁
+		/// </summary>
+		public void destroy(bool force = false) {
+			if (force) Destroy(this);
+			destroyFlag = true;
 		}
 
 		#endregion

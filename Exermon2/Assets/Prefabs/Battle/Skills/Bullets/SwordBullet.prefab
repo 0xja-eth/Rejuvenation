@@ -126,7 +126,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6344433871323983421}
   m_BodyType: 0
-  m_Simulated: 0
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -153,7 +153,7 @@ MonoBehaviour:
   showDebug: 0
   collider: {fileID: 506948187378267203}
   skillProcessor: {fileID: 0}
-  speed: 1
+  speed: 4
   range: 4
   throughEntities: 0
   throughWalls: 0

@@ -118,7 +118,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// 更新碰撞体
 		/// </summary>
 		void updateCollider() {
-			collider.enabled = skillProcessor.isStarted;
+			collider.enabled = !skillProcessor.isTerminated();
 		}
 		
 		/// <summary>
@@ -127,7 +127,7 @@ namespace UI.Common.Controls.MapSystem {
 		void updateRange() {
 			var deltaPos = (Vector2)transform.position - oriPos;
 			var dist = deltaPos.magnitude;
-			if (dist >= range) Destroy(this);
+			if (dist >= range) destroy();
 		}
 
 		#endregion
@@ -150,7 +150,7 @@ namespace UI.Common.Controls.MapSystem {
 
 			// 不可无限穿透同时穿透个数超出最大个数
 			if (throughWalls != -1 &&
-				wallCnt++ >= throughWalls) Destroy(this);
+				wallCnt++ >= throughWalls) destroy();
 			return true;
 		}
 		public virtual bool apply(MapEntity entity) {
@@ -158,7 +158,7 @@ namespace UI.Common.Controls.MapSystem {
 
 			// 不可无限穿透同时穿透个数超出最大个数
 			if (throughEntities != -1 &&
-				entityCnt++ >= throughEntities) Destroy(this);
+				entityCnt++ >= throughEntities) destroy();
 			return true;
 		}
 

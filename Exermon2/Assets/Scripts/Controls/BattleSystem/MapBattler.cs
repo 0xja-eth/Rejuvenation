@@ -272,6 +272,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		void checkActionEnd() {
+			if (currentProcessor == null) return;
 			if (currentProcessor.isTerminated()) onActionEnd();
 		}
 
