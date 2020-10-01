@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-using ItemModule.Data;
+using Config;
 
 /// <summary>
 /// 核心框架代码
@@ -26,17 +26,17 @@ namespace Core.Data.Loaders {
 	/// </summary>
 	public class AssetSetting {
 
-		public string name; // 资源类型名
+		public Asset.Type name; // 资源类型名
 		public string path; // 资源路径
 		public string format; // 资源文件名格式
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public AssetSetting(string name, string path, string format) {
+		public AssetSetting(Asset.Type name, string path, string format) {
 			this.name = name; this.path = path; this.format = format;
 		}
-		public AssetSetting(string name, params string[] paths) {
+		public AssetSetting(Asset.Type name, params string[] paths) {
 			var last = paths.Length - 1;
 			format = paths[last];
 
@@ -127,7 +127,7 @@ namespace Core.Data.Loaders {
 		/// 缓存池对象
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		public static class AssetCachePool<T> where T: Object {
+		public static class AssetCachePool<T> where T: class {
 
 			/// <summary>
 			/// 缓存池
@@ -177,11 +177,29 @@ namespace Core.Data.Loaders {
 			var key = path + fileName;
 			Debug.Log("LoadAsset<" + typeof(T) + "> from " + key);
 
-			if (AssetCachePool<T>.contains(key)) {
+			if (!AssetCachePool<T>.contains(key)) {
 				var obj = Resources.Load<T>(key);
 				return AssetCachePool<T>.set(key, obj);
 			}
 			return AssetCachePool<T>.get(key);
+		}
+
+		/// <summary>
+		/// 读取资源（多个，组合资源）
+		/// </summary>
+		/// <typeparam name="T">资源类型</typeparam>
+		/// <param name="path">路径</param>
+		/// <param name="fileName">文件名</param>
+		/// <returns></returns>
+		public static T[] loadAssets<T>(string path, string fileName) where T : Object {
+			var key = path + fileName;
+			Debug.Log("LoadAssets<" + typeof(T) + "> from " + key);
+
+			if (!AssetCachePool<T[]>.contains(key)) {
+				var obj = Resources.LoadAll<T>(key);
+				return AssetCachePool<T[]>.set(key, obj);
+			}
+			return AssetCachePool<T[]>.get(key);
 		}
 
 		/// <summary>
@@ -244,13 +262,14 @@ namespace Core.Data.Loaders {
 			return loadAnimation(path, name + "_" + id);
 		}
 		public static AnimationClip loadAnimation(int id) {
-			return loadAsset<AnimationClip>(AnimationName, id);
+			return loadAsset<AnimationClip>(
+				Asset.Type.Animation, id);
 		}
 
 		#region 纹理资源处理
 
 		/// <summary>
-		/// 计算纹理截取区域 
+		/// 根据尺寸获取纹理截取区域 
 		/// </summary>
 		/// <param name="texture">纹理</param>
 		/// <param name="xSize">单个图标宽度</param>
@@ -258,7 +277,7 @@ namespace Core.Data.Loaders {
 		/// <param name="xIndex">图标X索引</param>
 		/// <param name="yIndex">图标Y索引</param>
 		/// <returns>返回要截取的区域</returns>
-		public static Rect calcRect(Texture2D texture, 
+		public static Rect getRectBySize(Texture2D texture, 
             int xSize, int ySize, int xIndex, int yIndex) {
             int h = texture.height;
             int x = xIndex * xSize, y = h - (yIndex+1) * ySize;
@@ -266,23 +285,73 @@ namespace Core.Data.Loaders {
             return new Rect(x, y, xSize, ySize);
         }
         /// <param name="index">图标索引</param>
-        public static Rect calcRect(Texture2D texture, int xSize, int ySize, int index) {
+        public static Rect getRectBySize(Texture2D texture, 
+			int xSize, int ySize, int index) {
             int w = texture.width; int cols = w / xSize;
             int xIndex = index % cols, yIndex = index / cols;
 
-            return calcRect(texture, xSize, ySize, xIndex, yIndex);
+            return getRectBySize(texture, xSize, ySize, xIndex, yIndex);
         }
 
-        /// <summary>
-        /// 生成精灵
-        /// </summary>
-        /// <param name="texture">纹理</param>
-        /// <param name="rect">截取矩形</param>
-        /// <returns></returns>
-        public static Sprite generateSprite(Texture2D texture, Rect rect = default) {
-            if (rect == default)
-                rect = new Rect(0, 0, texture.width, texture.height);
-            return Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f));
+		/// <summary>
+		/// 根据个数获取纹理截取区域 
+		/// </summary>
+		/// <param name="texture">纹理</param>
+		/// <param name="xCnt">X坐标图标数</param>
+		/// <param name="yCnt">Y坐标图标数</param>
+		/// <param name="xIndex">图标X索引</param>
+		/// <param name="yIndex">图标Y索引</param>
+		/// <returns></returns>
+		public static Rect getRectByCnt(Texture2D texture,
+			int xCnt, int yCnt, int xIndex, int yIndex) {
+			int w = texture.width, h = texture.height;
+			float xSize = w * 1f / xCnt, ySize = h * 1f / yCnt;
+			float x = xIndex * xSize, y = h - (yIndex + 1) * ySize;
+
+			return new Rect(x, y, xSize, ySize);
+		}
+		/// <param name="index">图标索引</param>
+		public static Rect getRectByCnt(Texture2D texture,
+			int xCnt, int yCnt, int index) {
+			int xIndex = index % xCnt, yIndex = index / xCnt;
+
+			return getRectBySize(texture, xCnt, yCnt, xIndex, yIndex);
+		}
+
+		/// <summary>
+		/// 生成精灵
+		/// </summary>
+		/// <param name="texture">纹理</param>
+		/// <param name="rect">截取矩形</param>
+		/// <returns></returns>
+		public static Sprite genSprite(Texture2D texture, Rect rect = default) {
+			if (rect == default)
+				rect = new Rect(0, 0, texture.width, texture.height);
+			return Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f));
+		}
+		public static Sprite genSpriteBySize(Texture2D texture,
+			int xSize, int ySize, int xIndex, int yIndex) {
+
+			var rect = getRectBySize(texture, xSize, ySize, xIndex, yIndex);
+			return genSprite(texture, rect);
+		}
+		public static Sprite genSpriteBySize(Texture2D texture,
+			int xSize, int ySize, int index) {
+
+			var rect = getRectBySize(texture, xSize, ySize, index);
+			return genSprite(texture, rect);
+		}
+		public static Sprite genSpriteByCnt(Texture2D texture,
+			int xCnt, int yCnt, int xIndex, int yIndex) {
+
+			var rect = getRectByCnt(texture, xCnt, yCnt, xIndex, yIndex);
+			return genSprite(texture, rect);
+		}
+		public static Sprite genSpriteByCnt(Texture2D texture,
+			int xCnt, int yCnt, int index) {
+
+			var rect = getRectByCnt(texture, xCnt, yCnt, index);
+			return genSprite(texture, rect);
 		}
 
 		#endregion
@@ -296,8 +365,8 @@ namespace Core.Data.Loaders {
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		static AssetSetting getAssetSetting(string name) {
-			var settings = CoreConfig.AssetSettings;
+		static AssetSetting getAssetSetting(Asset.Type name) {
+			var settings = Asset.Settings;
 			foreach (var setting in settings)
 				if (setting.name == name) return setting;
 			return null;
@@ -309,12 +378,26 @@ namespace Core.Data.Loaders {
 		/// <typeparam name="T"></typeparam>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public static T loadAsset<T>(string name, int id) where T : Object {
+		public static T loadAsset<T>(Asset.Type name, int id) where T : Object {
+
 			var setting = getAssetSetting(name);
 			var fileName = string.Format(setting.format, id);
 			return loadAsset<T>(setting.path, fileName);
 		}
-		
+
+		/// <summary>
+		/// 读取资源（多个，组合资源）
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static T[] loadAssets<T>(Asset.Type name, int id) where T : Object {
+
+			var setting = getAssetSetting(name);
+			var fileName = string.Format(setting.format, id);
+			return loadAssets<T>(setting.path, fileName);
+		}
+
 		#endregion
 
 		#region 加载组合资源
@@ -330,7 +413,7 @@ namespace Core.Data.Loaders {
 		/// <returns>返回对应图标索引的矩形区域</returns>
 		public static Rect getGroupAssetsRect(int index, 
 			string path, string name, int xSize, int ySize) {
-			return calcRect(loadTexture2D(path, name), xSize, ySize, index);
+			return getRectBySize(loadTexture2D(path, name), xSize, ySize, index);
 		}
 
 		/// <summary>
@@ -345,8 +428,8 @@ namespace Core.Data.Loaders {
 		public static Sprite getGroupAssetsSprite(int index,
 			string path, string name, int xSize, int ySize) {
 			var texture = loadTexture2D(path, name);
-			var rect = calcRect(texture, xSize, ySize, index);
-			return generateSprite(texture, rect);
+			var rect = getRectBySize(texture, xSize, ySize, index);
+			return genSprite(texture, rect);
 		}
 
 		///// <summary>

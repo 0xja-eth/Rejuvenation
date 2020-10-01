@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using LitJson;
 
 using Core.Data;
+using Core.Utils;
 using Core.Systems;
 using Core.Data.Loaders;
 
@@ -112,6 +113,14 @@ namespace MapModule.Data {
 		static float DefaultMoveSpeed = 2;
 
 		/// <summary>
+		/// 行走图常量定义
+		/// </summary>
+		public const int XCnt = 3, YCnt = 3;
+
+		const int DefaultPattern = 1;
+		const float PatternFrequency = 0.1f;
+
+		/// <summary>
 		/// 方向位移
 		/// </summary>
 		public static readonly float[] dirX = new float[] {
@@ -119,6 +128,9 @@ namespace MapModule.Data {
 		};
 		public static readonly float[] dirY = new float[] {
 			-Sqrt2, -1, -Sqrt2, 0, 0, 0, Sqrt2, 1, Sqrt2
+		};
+		public static readonly float[] angles = new float[] {
+			45, 90, 135, 0, 0, 180, 315, 270, 225
 		};
 
 		/// <summary>
@@ -136,7 +148,7 @@ namespace MapModule.Data {
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <returns></returns>
-		public static Direction judgeDirection(float x, float y) {
+		public static Direction vec2Dir8(float x, float y) {
 			if (x == 0 && y > 0) return Direction.Up;
 			if (x == 0 && y < 0) return Direction.Down;
 
@@ -150,12 +162,34 @@ namespace MapModule.Data {
 
 			return Direction.None;
 		}
-		public static Direction judgeDirection(Vector2 vec) {
-			return judgeDirection(vec.x, vec.y);
+		public static Direction vec2Dir8(Vector2 vec) {
+			return vec2Dir8(vec.x, vec.y);
 		}
-		public static Vector2 judgeVector(Direction d) {
+		public static Vector2 dir82Vec(Direction d) {
 			var index = (int)d - 1;
 			return new Vector2(dirX[index], dirY[index]);
+		}
+		public static float dir82Angle(Direction d) {
+			return angles[(int)d - 1];
+		}
+		public static int dir2Index(Direction d) {
+			switch (d) {
+				case Direction.Down: return 0;
+				case Direction.Left:
+				case Direction.Right: return 1;
+				case Direction.Up: return 2;
+				default: return -1;
+			}
+		}
+		public static bool isDir4(Direction d) {
+			return d == Direction.Down || d == Direction.Up ||
+				d == Direction.Left || d == Direction.Right;
+		}
+		public static bool isRightDir(Direction d) {
+			return d == Direction.Right || d == Direction.RightUp || d == Direction.RightDown;
+		}
+		public static bool isLeftDir(Direction d) {
+			return d == Direction.Left || d == Direction.LeftUp || d == Direction.LeftDown;
 		}
 
 		#endregion
@@ -191,6 +225,21 @@ namespace MapModule.Data {
 		/// 状态机
 		/// </summary>
 		public StateMachine stateMachine { get; protected set; } = new StateMachine();
+		
+		/// <summary>
+		/// 回调类型
+		/// </summary>
+		public enum CbType { }
+
+		/// <summary>
+		/// 回调枚举类型
+		/// </summary>
+		protected virtual Type cbType => typeof(CbType);
+
+		/// <summary>
+		/// 回调管理器
+		/// </summary>
+		protected CallbackManager callbackManager;
 
 		#region 初始化
 
@@ -204,6 +253,7 @@ namespace MapModule.Data {
 		/// </summary>
 		void initialize() {
 			initializeStates();
+			initializeCallbacks();
 			initializeOthers();
 		}
 
@@ -215,6 +265,13 @@ namespace MapModule.Data {
 			addStateDict(State.Moving, updateMoving);
 
 			changeState(State.Idle);
+		}
+
+		/// <summary>
+		/// 初始化回调管理
+		/// </summary>
+		void initializeCallbacks() {
+			callbackManager = new CallbackManager(cbType, this);
 		}
 
 		/// <summary>
@@ -305,7 +362,7 @@ namespace MapModule.Data {
 		}
 		public void move(Vector2 vec, bool force = false) {
 			if (!force && !isMoveable()) return;
-			velocity = vec;
+			direction = vec2Dir8(velocity = vec);
 		}
 
 		/// <summary>
@@ -315,7 +372,9 @@ namespace MapModule.Data {
 		public void moveDirection(Direction d, 
 			float speed = -1, bool force = false) {
 			if (speed < 0) speed = moveSpeed();
-			var vec = judgeVector(d) * speed;
+			var vec = dir82Vec(d) * speed;
+			direction = d;
+
 			move(vec, force);
 		}
 
@@ -324,6 +383,28 @@ namespace MapModule.Data {
 		/// </summary>
 		public void stop() {
 			velocity = Vector2.zero;
+		}
+
+		#endregion
+
+		#region 图案控制
+
+		/// <summary>
+		/// 图案
+		/// </summary>
+		float patternTime = 0;
+		int _pattern = DefaultPattern;
+		public int pattern => _pattern >= XCnt ? 1 : _pattern;
+
+		/// <summary>
+		/// 更新图案
+		/// </summary>
+		void updatePattern() {
+			patternTime += Time.deltaTime;
+			if (patternTime > PatternFrequency) {
+				_pattern = (_pattern + 1) % (XCnt + 1);
+				patternTime = 0;
+			}
 		}
 
 		#endregion
@@ -353,7 +434,8 @@ namespace MapModule.Data {
 		/// </summary>
 		/// <param name="state"></param>
 		public void changeState(Enum state) {
-			Debug.Log(this + " changeState: " + this.state + " => " + state);
+			Debug.Log("changeState: " + this + ": " +
+				Enum.ToObject(state.GetType(), this.state) + " -> " + state);
 			stateMachine.changeState(state);
 		}
 
@@ -372,6 +454,7 @@ namespace MapModule.Data {
 		/// </summary>
 		protected virtual void updateIdle() {
 			if (isMoving()) changeState(State.Moving);
+			_pattern = DefaultPattern;
 		}
 
 		/// <summary>
@@ -379,6 +462,7 @@ namespace MapModule.Data {
 		/// </summary>
 		protected virtual void updateMoving() {
 			if (!isMoving()) changeState(State.Idle);
+			updatePattern();
 		}
 
 		#endregion
@@ -396,6 +480,8 @@ namespace MapModule.Data {
 
 			updateStateMachine();
 			updateDirection();
+
+			//callbackManager?.reset();
 		}
 
 		/// <summary>
@@ -416,7 +502,7 @@ namespace MapModule.Data {
 		/// 更新朝向
 		/// </summary>
 		void updateDirection() {
-			if (isMoving()) direction = judgeDirection(velocity);
+			if (isMoving()) direction = vec2Dir8(velocity);
 		}
 
 		#endregion

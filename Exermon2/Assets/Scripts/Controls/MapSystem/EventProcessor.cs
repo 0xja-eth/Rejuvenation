@@ -117,12 +117,7 @@ namespace UI.Common.Controls.MapSystem {
 		//#endregion
 
 		#region 事件控制
-
-		/// <summary>
-		/// 是否处于搜索状态
-		/// </summary>
-		public bool isSearching => Input.GetKeyDown(gameSer.keyboard.searchKey);
-
+			
 		#region 执行事件
 
 		/// <summary>

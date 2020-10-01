@@ -3,6 +3,7 @@ using UnityEngine;
 
 using BattleModule.Data;
 
+using GameModule.Services;
 using PlayerModule.Services;
 
 using Event = MapModule.Data.Event;
@@ -15,6 +16,16 @@ namespace UI.Common.Controls.BattleSystem {
 	/// 地图上的玩家实体
 	/// </summary>
 	public class MapPlayer : MapBattler {
+
+		/// <summary>
+		/// 远程攻击蓄力时间
+		/// </summary>
+		const float LongRangeSkillTime = 1;
+
+		/// <summary>
+		/// 外部组件设置
+		/// </summary>
+		public SkillProcessor normalSkill, longRangeSkill;
 
 		/// <summary>
 		/// 外部变量定义
@@ -37,6 +48,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
+		GameService gameSer;
 		PlayerService playerSer;
 
 		#region 初始化
@@ -55,6 +67,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 初始化敌人显示组件
 		/// </summary>
 		protected override void setupBattlerDisplay() {
+			actor.characterId = 1;
 			display.setItem(playerSer.actor.runtimeActor);
 		}
 
@@ -63,11 +76,31 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 更新
 
 		/// <summary>
-		/// 控制刚体刷新
+		/// 更新
+		/// </summary>
+		protected override void update() {
+			base.update();
+
+			//var key = gameSer.keyboard.searchKey;
+			//if (Input.GetKeyDown(key)) debugLog("update GetKeyDown: " + key);
+			//if (Input.GetKey(key)) debugLog("update GetKey: " + key);
+			//if (Input.GetKeyUp(key)) debugLog("update GetKeyUp: " + key);
+
+			updateInput();
+		}
+
+		/// <summary>
+		/// 固定更新
 		/// </summary>
 		protected override void fixedUpdate() {
 			base.fixedUpdate();
-            updateInput();
+
+			//var key = gameSer.keyboard.attackKey;
+			//if (Input.GetKeyDown(key)) debugLog("fixed GetKeyDown: " + key);
+			//if (Input.GetKey(key)) debugLog("fixed GetKey: " + key);
+			//if (Input.GetKeyUp(key)) debugLog("fixed GetKeyUp: " + key);
+
+			//updateInput();
         }
 
         /// <summary>
@@ -75,12 +108,59 @@ namespace UI.Common.Controls.BattleSystem {
         /// </summary>
         void updateInput() {
 			if (!isInputable()) return;
-			updateMovement(); updateSkill();
-        }
+			// 返回 True => 有输入
+			// 返回 False => 无输入
+			if (updateSearching() || updateSkill()) stop();
+			else updateMovement();
+		}
+
+		#endregion
+
+		#region 输入控制变量
+
+		/// <summary>
+		/// 搜索相关
+		/// </summary>
+		bool search = false, searching = false;
+
+		/// <summary>
+		/// 攻击相关
+		/// </summary>
+		float attackTime = 0;
+		bool attack = false, attacking = false;
+
+		/// <summary>
+		/// 能否输入
+		/// </summary>
+		/// <returns></returns>
+		public bool isInputable() {
+			return map.active && inputable;
+		}
 
 		#endregion
 
 		#region 事件处理
+
+		/// <summary>
+		/// 能否搜索
+		/// </summary>
+		/// <returns></returns>
+		bool isSearchable() {
+			return runtimeBattler.isIdle() || runtimeBattler.isMoving();
+		}
+
+		/// <summary>
+		/// 更新搜索状态
+		/// </summary>
+		bool updateSearching() {
+			if (!isSearchable()) return false;
+
+			var key = gameSer.keyboard.searchKey;
+			search = Input.GetKeyDown(key);
+			searching = Input.GetKey(key);
+
+			return search || searching;
+		}
 
 		/// <summary>
 		/// 事件碰撞开始
@@ -95,7 +175,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="player"></param>
 		void onEventCollStay(MapEvent event_) {
-			event_.processTrigger(this, event_.isSearching ?
+			event_.processTrigger(this, search ?
 				Event.TriggerType.CollSearch : Event.TriggerType.CollStay);
 		}
 
@@ -114,31 +194,56 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 更新移动
 		/// </summary>
-		void updateMovement() {
-			if (xDelta == 0 && yDelta == 0) stop();
-			else {
-				var speed = new Vector2(xDelta, yDelta);
-				move(speed * moveSpeed());
-			}
-		}
+		bool updateMovement() {
+			var speed = new Vector2(xDelta, yDelta);
+			var flag = speed.x == 0 && speed.y == 0;
 
-		/// <summary>
-		/// 能否输入
-		/// </summary>
-		/// <returns></returns>
-		public bool isInputable() {
-            return map.active && inputable;
-        }
+			if (flag) stop();
+			else move(speed * moveSpeed());
+
+			return !flag;
+		}
 
 		#endregion
 
 		#region 技能控制
 
 		/// <summary>
+		/// 能否使用技能
+		/// </summary>
+		/// <returns></returns>
+		bool isSkillUsable() {
+			return runtimeBattler.isIdle() || runtimeBattler.isMoving();
+		}
+
+		/// <summary>
 		/// 更新技能使用
 		/// </summary>
-		void updateSkill() {
-			// TODO: 人物技能
+		bool updateSkill() {
+			if (!isSkillUsable()) return false;
+
+			var key = gameSer.keyboard.attackKey;
+			attack = Input.GetKeyUp(key);
+			attacking = Input.GetKey(key);
+
+			if (attack) useSkill();
+			if (attacking) attackTime += Time.deltaTime;
+
+			return attack || attacking;
+		}
+
+		/// <summary>
+		/// 使用技能
+		/// </summary>
+		/// <param name="skill"></param>
+		void useSkill(SkillProcessor skill) {
+			debugLog("useSkill: " + skill + ", time: " + attackTime);
+			runtimeBattler.addAction(skill.skill);
+			attackTime = 0;
+		}
+		void useSkill() {
+			useSkill(attackTime >= LongRangeSkillTime ?
+				longRangeSkill : normalSkill);
 		}
 
 		#endregion

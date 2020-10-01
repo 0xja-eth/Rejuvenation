@@ -7,6 +7,8 @@ using UnityEngine.Events;
 using BestHTTP.WebSocket;
 using LitJson;
 
+using Config;
+
 using Core.Data.Loaders;
 using Core.Data.Exceptions;
 
@@ -23,7 +25,7 @@ namespace Core.Systems {
 		/// <summary>
 		/// 服务器地址
 		/// </summary>
-		public const string ServerURL = DeployConfig.ServerURL;// "ws://120.79.176.90:8001/game/";
+		public const string ServerURL = Deploy.ServerURL;// "ws://120.79.176.90:8001/game/";
 		
 		/// <summary>
 		/// 请求对象
