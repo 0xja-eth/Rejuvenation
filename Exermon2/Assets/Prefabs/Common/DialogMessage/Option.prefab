@@ -167,7 +167,7 @@ MonoBehaviour:
   selectedFlag: {fileID: 0}
   checkedFlag: {fileID: 0}
   highlightFlag: {fileID: 8603801924460008927}
-  actived: 1
+  actived: 0
   _enabled: 1
   selectable: 1
   checkable: 0

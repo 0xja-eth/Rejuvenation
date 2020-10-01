@@ -27,6 +27,7 @@ namespace UI.Common.Windows {
         public bool chosen = false;
         public int dialogSize = 4;
         public int optionSize = 3;
+
         /// <summary>
         /// 外部系统设置
         /// </summary>
@@ -47,19 +48,21 @@ namespace UI.Common.Windows {
 
         #region 初始化
 
+        /// <summary>
+        /// 激活
+        /// </summary>
         public override void activate() {
             base.activate();
-            beginDialog();
-        }
-
-        protected override void initializeEvery() {
-            base.initializeEvery();
+            beginDialogue();
         }
 
         #endregion
 
         #region 更新控制
 
+        /// <summary>
+        /// 更新
+        /// </summary>
         protected override void update() {
             base.update();
 
@@ -86,12 +89,20 @@ namespace UI.Common.Windows {
 
                     if (curMsgLen >= msgLen + offset) {
                         isInputing = false;
+                        //文字未完全展开时选项不激活
+                        foreach (var item in optionConDisplay.getItemDisplays())
+                            item.actived = true;
                     }
                 }
             }
         }
         #endregion
 
+        #region 消息事件
+
+        /// <summary>
+        /// 从队列获取消息
+        /// </summary>
         DialogMessage getDialogMessage() {
 
             DialogMessage dMsg = msgServices.getMessage();
@@ -107,6 +118,9 @@ namespace UI.Common.Windows {
             return dMsg;
         }
 
+        /// <summary>
+        /// 下一条消息或者快速展开文字
+        /// </summary>
         void nextOrRevealAll() {
             if (isInputing)
                 curMsgLen = msgLen - 1;
@@ -114,15 +128,19 @@ namespace UI.Common.Windows {
                 getNext = true;
         }
 
+        /// <summary>
+        /// 下一段文字
+        /// </summary>
         string nextText() {
             string text = curMsg.Substring(0, Mathf.Clamp(curMsgLen, 0, msgLen));
             curMsgLen += offset;
             return text;
         }
-
-        #region 消息事件
-
-        public void beginDialog() {
+        
+        /// <summary>
+        /// 开始对话
+        /// </summary>
+        public void beginDialogue() {
             msgServices.isDialogued = true;
             getNext = true;
             msgCnt = 0;
@@ -135,6 +153,13 @@ namespace UI.Common.Windows {
             scene.map2.player?.stop();
         }
 
+        #endregion
+
+
+        #region 测试
+        /// <summary>
+        /// 生成随机消息（测试）
+        /// </summary>
         DialogMessage genRandMsg() {
 
             DialogMessage dialogMessage = new DialogMessage();
@@ -152,6 +177,9 @@ namespace UI.Common.Windows {
             return dialogMessage;
         }
 
+        /// <summary>
+        /// 生成随机选项（测试）
+        /// </summary>
         DialogOption genRandOpt() {
             DialogOption dialogOption = new DialogOption();
             int rand = UnityEngine.Random.Range(1, 10);
@@ -164,7 +192,6 @@ namespace UI.Common.Windows {
 
             return dialogOption;
         }
-
 
         #endregion
     }

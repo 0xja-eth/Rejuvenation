@@ -43,13 +43,13 @@ namespace Core.UI {
         /// 参数储存
         /// </summary>
         Animator animator;
-        AnimatorStateInfo stateInfo;
+        protected AnimatorStateInfo stateInfo;
         AnimatorControllerPlayable controller;
 
         int layerIndex;
         int stateMachinePathHash;
 
-        GameObject gameObject;
+        protected GameObject gameObject;
 
         #region 初始化
 
