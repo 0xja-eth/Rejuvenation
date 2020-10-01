@@ -481,7 +481,7 @@ namespace MapModule.Data {
 			updateStateMachine();
 			updateDirection();
 
-			callbackManager?.reset();
+			//callbackManager?.reset();
 		}
 
 		/// <summary>

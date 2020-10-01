@@ -67,8 +67,10 @@ namespace Core.Utils {
 			return judge(type.GetHashCode());
 		}
 		public bool judge(int type) {
-			return callbacks.ContainsKey(type) &&
-				callbacks[type].flag;
+			if (!callbacks.ContainsKey(type)) return false;
+			var flag = callbacks[type].flag;
+			callbacks[type].flag = false;
+			return flag;
 		}
 
 		/// <summary>
@@ -84,7 +86,7 @@ namespace Core.Utils {
 		/// </summary>
 		public CallbackManager() { }
 		public CallbackManager(Type enumType, object obj) {
-
+			registerCallbacks(enumType, obj);
 		}
 	}
 
