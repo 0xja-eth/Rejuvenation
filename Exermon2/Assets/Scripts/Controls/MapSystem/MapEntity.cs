@@ -1,18 +1,39 @@
 ﻿
-using UnityEngine;
+using UnityEngine.Tilemaps;
 
 using Core.UI;
-using Core.UI.Utils;
 
 using GameModule.Services;
 
 namespace UI.Common.Controls.MapSystem {
 
+	using BattleSystem;
+	using SystemExtend.PhysicsExtend;
+
+	///// <summary>
+	///// 技能应用接口
+	///// </summary>
+	//public interface ISkillApplication : IBaseComponent {
+
+	//	/// <summary>
+	//	/// 作用到不同物体上
+	//	/// </summary>
+	//	/// <param name="batler"></param>
+	//	void applyBattler(MapBattler batler);
+	//	void applyEntity(MapEntity entity);
+	//	void applyMap(Tilemap map);
+
+	//	/// <summary>
+	//	/// 是否可应用
+	//	/// </summary>
+	//	/// <returns></returns>
+	//	bool isApplyValid();
+	//}
+
 	/// <summary>
 	/// 地图上的实体
 	/// </summary>
-	[RequireComponent(typeof(Collider2D))]
-	public class MapEntity : WorldComponent {
+	public class MapEntity : Collider2DExtend {
 
 		/// <summary>
 		/// YZ转换系数
@@ -28,8 +49,6 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 内部控件设置
 		/// </summary>
-		[RequireTarget]
-		protected new Collider2D collider;
 		protected Map map;
 
 		#region 初始化
@@ -49,6 +68,49 @@ namespace UI.Common.Controls.MapSystem {
 			map = findParent<Map>();
 			map?.addEntity(this);
 		}
+
+		/// <summary>
+		/// 初始化碰撞函数
+		/// </summary>
+		protected override void initializeCollFuncs() {
+			//registerOnStayFunc<ISkillApplication>(onSkillHit);
+		}
+
+		#endregion
+
+		#region 技能控制
+
+		///// <summary>
+		///// 技能命中回调
+		///// </summary>
+		///// <param name="skill"></param>
+		//void onSkillHit(ISkillApplication skill) {
+		//	if (isHittable() && isValidSkill(skill)) apply(skill);
+		//}
+
+		///// <summary>
+		///// 技能应用
+		///// </summary>
+		///// <param name="skill"></param>
+		//protected virtual void apply(ISkillApplication skill) {
+		//	skill.applyEntity(this);
+		//}
+
+		/// <summary>
+		/// 能否被击中
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool isApplyable() {
+			return true;
+		}
+
+		///// <summary>
+		///// 是否有效的技能
+		///// </summary>
+		///// <returns></returns>
+		//protected virtual bool isValidSkill(ISkillApplication skill) {
+		//	return skill.isApplyValid();
+		//}
 
 		#endregion
 

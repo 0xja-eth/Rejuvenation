@@ -29,6 +29,7 @@ Transform:
   m_Children:
   - {fileID: 3358975076376794188}
   - {fileID: 297768804548628413}
+  - {fileID: 8873003026317242237}
   m_Father: {fileID: 3358975077202514726}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -194,7 +195,7 @@ BoxCollider2D:
   m_Offset: {x: 0.056934178, y: 0.026066542}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.1}
+    pivot: {x: 0.5, y: 0.06}
     oldSize: {x: 1, y: 1.6666666}
     newSize: {x: 1, y: 1.5}
     adaptiveTilingThreshold: 0.5
@@ -246,10 +247,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 1
+  collider: {fileID: 0}
   directionController: {fileID: 6765399399855176504}
   defaultMoveSpeed: 20
   rigidbody: {fileID: 0}
-  sprite: {fileID: 0}
   animator: {fileID: 0}
   animation: {fileID: 0}
   skillProcessors: []
@@ -272,6 +273,36 @@ MonoBehaviour:
   showDebug: 0
   hpDisplay: {fileID: 0}
   hpBar: {fileID: 0}
+--- !u!1 &7210490151781120020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8873003026317242237}
+  m_Layer: 8
+  m_Name: ShotPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8873003026317242237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7210490151781120020}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.195, y: 0.43, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6765399399855176504}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1561193669400531189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -371,6 +402,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LongRangeAttack
       objectReference: {fileID: 0}
+    - target: {fileID: 5003244700024501808, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
+        type: 3}
+      propertyPath: shotPos
+      value: 
+      objectReference: {fileID: 8873003026317242237}
     - target: {fileID: 7891810647444413499, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
         type: 3}
       propertyPath: m_LocalPosition.x
