@@ -56,7 +56,7 @@ namespace UI.Common.Controls.MapSystem {
 		void udpateBullet() {
 			if (!bullet) return;
 			if (bullet.destroyFlag) {
-				Destroy(bullet); bullet = null;
+				bullet.destroy(true); bullet = null;
 			}
 		}
 

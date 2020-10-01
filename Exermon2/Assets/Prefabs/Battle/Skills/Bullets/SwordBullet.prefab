@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f95c15712f8b344af460ef05155ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 0
+  showDebug: 1
   collider: {fileID: 506948187378267203}
   skillProcessor: {fileID: 0}
   speed: 4

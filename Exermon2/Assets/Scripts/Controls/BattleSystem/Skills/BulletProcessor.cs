@@ -146,6 +146,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// 作用到不同物体
 		/// </summary>
 		public virtual bool apply(Tilemap map) {
+			if (map == null) return false;
 			if (!skillProcessor.apply(map)) return false;
 
 			// 不可无限穿透同时穿透个数超出最大个数
@@ -154,6 +155,7 @@ namespace UI.Common.Controls.MapSystem {
 			return true;
 		}
 		public virtual bool apply(MapEntity entity) {
+			if (entity == null) return false;
 			if (!skillProcessor.apply(entity)) return false;
 
 			// 不可无限穿透同时穿透个数超出最大个数

@@ -496,7 +496,7 @@ namespace Core.UI {
 		/// 销毁
 		/// </summary>
 		public void destroy(bool force = false) {
-			if (force) Destroy(this);
+			if (force) Destroy(gameObject);
 			destroyFlag = true;
 		}
 
