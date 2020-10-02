@@ -2,6 +2,7 @@
 
 using UnityEngine;
 
+using MapModule.Data;
 using BattleModule.Data;
 
 using GameModule.Services;
@@ -43,8 +44,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		public Actor actor => playerSer.actor;
 
-		protected float xDelta => Input.GetAxis("Horizontal");
-		protected float yDelta => Input.GetAxis("Vertical");
+		protected float xDelta => limitVal(Input.GetAxis("Horizontal"));
+		protected float yDelta => limitVal(Input.GetAxis("Vertical"));
 
 		/// <summary>
 		/// 外部系统设置
@@ -193,6 +194,15 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 移动控制
 
 		/// <summary>
+		/// 开关变量值
+		/// </summary>
+		/// <param name="val"></param>
+		/// <returns></returns>
+		float limitVal(float val) {
+			return val > 0.5f ? 1 : (val < -0.5f ? -1 : 0);
+		}
+
+		/// <summary>
 		/// 更新移动
 		/// </summary>
 		bool updateMovement() {
@@ -200,7 +210,7 @@ namespace UI.Common.Controls.BattleSystem {
 			var flag = speed.x == 0 && speed.y == 0;
 
 			if (flag) stop();
-			else move(speed * moveSpeed());
+			else moveDirection(RuntimeCharacter.vec2Dir8(speed));
 
 			return !flag;
 		}

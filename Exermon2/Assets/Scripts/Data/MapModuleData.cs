@@ -143,6 +143,8 @@ namespace MapModule.Data {
 		}
 		public const int DirectionCount = 9;
 
+		const float DirectionAngle = 45;
+
 		/// <summary>
 		/// 判断方向（静态）
 		/// </summary>
@@ -150,19 +152,44 @@ namespace MapModule.Data {
 		/// <param name="y"></param>
 		/// <returns></returns>
 		public static Direction vec2Dir8(float x, float y) {
+			if (x == 0 && y == 0) return Direction.None;
+
 			if (x == 0 && y > 0) return Direction.Up;
 			if (x == 0 && y < 0) return Direction.Down;
 
 			if (x > 0 && y == 0) return Direction.Right;
-			if (x > 0 && y > 0) return Direction.RightUp;
-			if (x > 0 && y < 0) return Direction.RightDown;
-
 			if (x < 0 && y == 0) return Direction.Left;
-			if (x < 0 && y > 0) return Direction.LeftUp;
-			if (x < 0 && y < 0) return Direction.LeftDown;
+
+			var angle = getAngle(x, y);
+
+			if (judgeAngle(angle, 0)) return Direction.Right;
+			if (judgeAngle(angle, 1)) return Direction.RightUp;
+			if (judgeAngle(angle, 2)) return Direction.Up;
+			if (judgeAngle(angle, 3)) return Direction.LeftUp;
+			if (judgeAngle(angle, 4)) return Direction.Left;
+			if (judgeAngle(angle, 5)) return Direction.LeftDown;
+			if (judgeAngle(angle, 6)) return Direction.Down;
+			if (judgeAngle(angle, 7)) return Direction.RightDown;
+
+			Debug.Log("vec2Dir => None: " + angle + "(" + x + "," + y + ")");
 
 			return Direction.None;
 		}
+		static float getAngle(float x, float y) {
+			var res = Mathf.Atan(y / x) / Mathf.PI * 180;
+
+			if (x > 0 && y < 0) res = 360 + res;
+			else if (x < 0) res = 180 + res;
+
+			return res;
+		}
+		static bool judgeAngle(float angle, int n) {
+			var stdA = DirectionAngle / 2; // 22.5
+			angle = angle - n * DirectionAngle; // 标准化
+
+			return -stdA < angle && angle <= stdA;
+		}
+
 		public static Direction vec2Dir8(Vector2 vec) {
 			return vec2Dir8(vec.x, vec.y);
 		}
