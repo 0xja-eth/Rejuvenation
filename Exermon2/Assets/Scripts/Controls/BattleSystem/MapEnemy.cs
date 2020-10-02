@@ -44,6 +44,11 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		public RuntimeEnemy runtimeEnemy => runtimeBattler as RuntimeEnemy;
 
+		/// <summary>
+		/// 玩家（敌人目标）
+		/// </summary>
+		MapPlayer player => map.player;
+
 		#region 初始化
 
 		/// <summary>
@@ -57,6 +62,26 @@ namespace UI.Common.Controls.BattleSystem {
 				enemy = new RuntimeEnemy(enemyId);
 
 			display.setItem(enemy);
+		}
+
+		#endregion
+
+		#region 技能控制
+
+		/// <summary>
+		/// 对手
+		/// </summary>
+		/// <returns></returns>
+		public override List<MapBattler> opponents() {
+			return map.battlers(Type.Player);
+		}
+
+		/// <summary>
+		/// 队友
+		/// </summary>
+		/// <returns></returns>
+		public override List<MapBattler> friends() {
+			return map.battlers(Type.Enemy);
 		}
 
 		#endregion

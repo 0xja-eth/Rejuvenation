@@ -191,6 +191,18 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 技能控制
 
 		/// <summary>
+		/// 对手
+		/// </summary>
+		/// <returns></returns>
+		public abstract List<MapBattler> opponents();
+
+		/// <summary>
+		/// 队友
+		/// </summary>
+		/// <returns></returns>
+		public abstract List<MapBattler> friends();
+
+		/// <summary>
 		/// 添加技能处理器
 		/// </summary>
 		/// <param name="processor"></param>

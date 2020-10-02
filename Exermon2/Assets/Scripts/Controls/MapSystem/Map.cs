@@ -75,6 +75,17 @@ namespace UI.Common.Controls.MapSystem {
 		}
 
 		/// <summary>
+		/// 地图上的所有战斗者
+		/// </summary>
+		/// <returns></returns>
+		public List<MapBattler> battlers() {
+			return filterEntities<MapBattler>();
+		}
+		public List<MapBattler> battlers(MapCharacter.Type type) {
+			return filterEntities<MapBattler>(b => b.type == type);
+		}
+
+		/// <summary>
 		/// 地图上的所有敌人
 		/// </summary>
 		/// <returns></returns>

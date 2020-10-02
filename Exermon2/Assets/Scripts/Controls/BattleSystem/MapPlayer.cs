@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
+
 using UnityEngine;
 
 using BattleModule.Data;
@@ -207,6 +208,22 @@ namespace UI.Common.Controls.BattleSystem {
 		#endregion
 
 		#region 技能控制
+
+		/// <summary>
+		/// 对手
+		/// </summary>
+		/// <returns></returns>
+		public override List<MapBattler> opponents() {
+			return map.battlers(Type.Enemy);
+		}
+
+		/// <summary>
+		/// 队友
+		/// </summary>
+		/// <returns></returns>
+		public override List<MapBattler> friends() {
+			return map.battlers(Type.Player);
+		}
 
 		/// <summary>
 		/// 能否使用技能
