@@ -150,7 +150,7 @@ namespace UI.Common.Controls.AnimationSystem {
 		/// 动画播放完毕回调
 		/// </summary>
 		void onAnimationPlayed(AnimationUtils.TempAnimation ani) {
-			Debug.Log(this.name + " onAnimationPlayed");
+			//Debug.Log(this.name + " onAnimationPlayed");
 
 			var name = ani.getName();
 			if (updateEvents.ContainsKey(""))

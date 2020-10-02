@@ -284,8 +284,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		void checkActionEnd() {
-			if (currentProcessor == null) return;
-			if (currentProcessor.isTerminated()) onActionEnd();
+			if (currentProcessor == null || 
+				currentProcessor.isTerminated()) onActionEnd();
 		}
 
 		/// <summary>
@@ -319,8 +319,8 @@ namespace UI.Common.Controls.BattleSystem {
 			runtimeBattler.onActionEnd(currentAction);
 			currentProcessor?.onUseEnd();
 
-			currentAction = null;
-			currentProcessor = null;
+			//currentAction = null;
+			//currentProcessor = null;
 		}
 
 		#endregion

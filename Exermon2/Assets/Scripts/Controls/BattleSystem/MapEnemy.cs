@@ -17,6 +17,11 @@ namespace UI.Common.Controls.BattleSystem {
 	public abstract class MapEnemy : MapBattler {
 
 		/// <summary>
+		/// 常量定义
+		/// </summary>
+		const float DeltaMoveTime = 0.5f;
+
+		/// <summary>
 		/// 外部变量设置
 		/// </summary>
 		public bool useCustomParams = false; // 是否使用自定义属性
@@ -26,7 +31,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
-		bool critical = false; // 警戒状态
+		float moveTime = 0; // 一次移动的时间
 
 		/// <summary>
 		/// 类型
@@ -41,9 +46,9 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <summary>
 		/// 敌人
 		/// </summary>
-		Enemy enemy_ = null;
-		public Enemy enemy => enemy_ = enemy_ ?? 
-			BaseData.poolGet<Enemy>(enemyId);
+		//Enemy enemy_ = null;
+		public Enemy enemy => runtimeEnemy?.enemy();//enemy_ = enemy_ ?? 
+			//BaseData.poolGet<Enemy>(enemyId);
 
 		/// <summary>
 		/// 运行时敌人
@@ -56,6 +61,16 @@ namespace UI.Common.Controls.BattleSystem {
 		MapPlayer player => map.player;
 
 		#region 初始化
+		/// <summary>
+		/// 配置更新函数
+		/// </summary>
+		protected override void setupStateChanges() {
+			base.setupStateChanges();
+
+			runtimeBattler?.addStateDict(
+				RuntimeBattler.State.Moving, updateMoveTime);
+		}
+
 
 		/// <summary>
 		/// 初始化敌人显示组件
@@ -86,8 +101,16 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 更新敌人行动
 		/// </summary>
 		void updateEnemyBehaviour() {
-			processBehaviour(isCritical() ? 
+			processBehaviour((runtimeEnemy.isCritical = isCritical()) ?
 				enemy.criticalBehaviour : enemy.generalBehaviour);
+		}
+
+		/// <summary>
+		/// 更新移动时间
+		/// </summary>
+		void updateMoveTime() {
+			if (moveTime > 0 && 
+				(moveTime -= Time.deltaTime) <= 0) stop();
 		}
 
 		#endregion
@@ -109,6 +132,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <param name="type"></param>
 		public void processBehaviour(Enemy.BehaviourType type) {
 			RuntimeCharacter.Direction d; // = RuntimeCharacter.Direction.None;
+			moveTime = DeltaMoveTime;
 			switch (type) {
 				case Enemy.BehaviourType.Random:
 					d = getRandomDirection(); break;
@@ -118,8 +142,9 @@ namespace UI.Common.Controls.BattleSystem {
 					d = getFarDirection(); break;
 				case Enemy.BehaviourType.Custom:
 					customBehaviour(); return;
-				default: return;
+				default: stop(); return;
 			}
+			debugLog("Move " + d);
 			moveDirection(d);
 		}
 

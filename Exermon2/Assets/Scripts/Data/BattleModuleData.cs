@@ -191,6 +191,9 @@ namespace BattleModule.Data {
 		[SerializeField] RefreshType _refreshType = RefreshType.OnDead;
 		[AutoConvert] public RefreshType refreshType { get => _refreshType; set { _refreshType = value; } }
 
+		[SerializeField] float _frequency = 1;
+		[AutoConvert] public float frequency { get => _frequency; set { _frequency = value; } }
+
 		[SerializeField] float _criticalRange;
 		[AutoConvert] public float criticalRange { get => _criticalRange; set { _criticalRange = value; } }
 
@@ -660,7 +663,6 @@ namespace BattleModule.Data {
 		/// <param name="show">是否显示</param>
 		public void changeHP(float value, bool show = true) {
 			var oriHp = hp;
-			Debug.Log("changeHP: " + value);
 			hp = Mathf.Clamp(value, 0, mhp);
 			if (show) setHPChange(hp - oriHp);
 			if (isDead()) onDie();
@@ -1420,6 +1422,16 @@ namespace BattleModule.Data {
 		public int enemyId { get; protected set; }
 
 		/// <summary>
+		/// 警戒状态
+		/// </summary>
+		public bool isCritical = false;
+
+		/// <summary>
+		/// 思考时间
+		/// </summary>
+		float idleTime = 0;
+
+		/// <summary>
 		/// 自定义敌人
 		/// </summary>
 		public Enemy customEnemy = null;
@@ -1438,7 +1450,7 @@ namespace BattleModule.Data {
 			return poolGet<Enemy>(enemyId);
 		}
 		public Enemy enemy() {
-			return enemy_?.value();
+			return customEnemy ?? enemy_?.value();
 		}
 
 		/// <summary>
@@ -1455,7 +1467,24 @@ namespace BattleModule.Data {
 		/// </summary>
 		protected override void updateIdle() {
 			base.updateIdle();
-			updateSkill();
+			if (idleTime > 0) idleTime -= Time.deltaTime;
+			if (idleTime <= 0) updateAction();
+		}
+
+		/// <summary>
+		/// 更新行动思考
+		/// </summary>
+		protected virtual void updateAction() {
+			if (isCritical) updateSkill();
+		}
+
+		/// <summary>
+		/// 行动开始回调
+		/// </summary>
+		/// <param name="action"></param>
+		public override void onActionStart(RuntimeAction action) {
+			base.onActionStart(action);
+			idleTime = enemy().frequency;
 		}
 
 		/// <summary>

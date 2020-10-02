@@ -435,8 +435,8 @@ namespace MapModule.Data {
 		/// </summary>
 		/// <param name="state"></param>
 		public void changeState(Enum state) {
-			Debug.Log("changeState: " + this + ": " +
-				Enum.ToObject(state.GetType(), this.state) + " -> " + state);
+			//Debug.Log("changeState: " + this + ": " +
+			//	Enum.ToObject(state.GetType(), this.state) + " -> " + state);
 			stateMachine.changeState(state);
 		}
 

@@ -225,8 +225,6 @@ namespace UI.Common.Controls.MapSystem {
 		protected virtual bool applyBattler(MapBattler battler) {
 			if (!isTarget(battler)) return false;
 
-			debugLog("Apply skill: " + skill + " -> " + battler);
-
 			applyRuntimeBattler(battler.runtimeBattler);
 			applyMapBattler(battler);
 
