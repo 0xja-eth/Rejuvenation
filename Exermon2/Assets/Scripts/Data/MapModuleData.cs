@@ -462,8 +462,8 @@ namespace MapModule.Data {
 		/// </summary>
 		/// <param name="state"></param>
 		public void changeState(Enum state) {
-			//Debug.Log("changeState: " + this + ": " +
-			//	Enum.ToObject(state.GetType(), this.state) + " -> " + state);
+			Debug.Log("changeState: " + this + ": " +
+				Enum.ToObject(state.GetType(), this.state) + " -> " + state);
 			stateMachine.changeState(state);
 		}
 
@@ -535,5 +535,17 @@ namespace MapModule.Data {
 
 		#endregion
 	}
+
+    public class DialogOption : BaseData {
+        public string description = "";
+        public UnityAction action;
+    }
+
+    public class DialogMessage : BaseData {
+        public string message = "";
+        public string name = "";
+        public Sprite sprite;
+        public List<DialogOption> options = new List<DialogOption>();
+    }
 }
 

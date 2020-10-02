@@ -11,8 +11,8 @@ using PlayerModule.Services;
 using Event = MapModule.Data.Event;
 
 namespace UI.Common.Controls.BattleSystem {
-
-	using MapSystem;
+    using GameModule.Services;
+    using MapSystem;
 
 	/// <summary>
 	/// 地图上的玩家实体
@@ -52,6 +52,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		GameService gameSer;
 		PlayerService playerSer;
+        MessageServices msgServices;
 
 		#region 初始化
 
@@ -73,9 +74,14 @@ namespace UI.Common.Controls.BattleSystem {
 			display.setItem(playerSer.actor.runtimeActor);
 		}
 
-		#endregion
+        protected override void initializeEvery() {
+            base.initializeEvery();
+            msgServices = MessageServices.Get();
+        }
 
-		#region 更新
+        #endregion
+
+        #region 更新
 
 		/// <summary>
 		/// 更新
@@ -136,8 +142,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isInputable() {
-			return map.active && inputable;
-		}
+            return map.active && inputable && !msgServices.isDialogued;
+        }
 
 		#endregion
 

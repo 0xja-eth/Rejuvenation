@@ -1241,7 +1241,7 @@ namespace BattleModule.Data {
 		/// 当前行动结束回调
 		/// </summary>
 		public virtual void onActionEnd(RuntimeAction action) {
-			Debug.Log("onActionEnd");
+			Debug.Log(this + " onActionEnd");
 			_on(CbType.ActionEnd);
 		}
 
