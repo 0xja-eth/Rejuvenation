@@ -21,11 +21,6 @@ namespace UI.Common.Controls.MapSystem {
 	public class ActorLongRangeAttack : SkillProcessor {// ItemDisplay<Skill> {
 
 		/// <summary>
-		/// 外部组件设置
-		/// </summary>
-		public Transform shotPos;
-
-		/// <summary>
 		/// 预制件设置
 		/// </summary>
 		public GameObject bulletPerfab;
@@ -87,18 +82,8 @@ namespace UI.Common.Controls.MapSystem {
 		BulletProcessor createBullet() {
 			var obj = Instantiate(bulletPerfab, world);
 			var bullet = SceneUtils.get<BulletProcessor>(obj);
-
-			setupTransform(obj.transform);
 			bullet.activate(this, battler.direction);
 			return bullet;
-		}
-
-		/// <summary>
-		/// 配置子弹初始变换
-		/// </summary>
-		/// <param name="bullet"></param>
-		void setupTransform(Transform bullet) {
-			bullet.position = shotPos.position;
 		}
 
 		#endregion

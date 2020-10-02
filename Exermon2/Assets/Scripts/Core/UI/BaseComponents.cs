@@ -497,6 +497,7 @@ namespace Core.UI {
 		/// </summary>
 		public void destroy(bool force = false) {
 			if (force) Destroy(gameObject);
+			else debugLog("destroyReq");
 			destroyFlag = true;
 		}
 

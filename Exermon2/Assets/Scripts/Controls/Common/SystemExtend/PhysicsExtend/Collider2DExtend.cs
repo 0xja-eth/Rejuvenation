@@ -73,6 +73,7 @@ namespace UI.Common.Controls.SystemExtend.PhysicsExtend {
 
 			CollFunc func_ = (coll) => {
 				var item = SceneUtils.get<T>(coll);
+				debugLog("onColl: " + coll + " => " + item);
 				if (item != null) func?.Invoke(item);
 			};
 			funcs.Add(func_);

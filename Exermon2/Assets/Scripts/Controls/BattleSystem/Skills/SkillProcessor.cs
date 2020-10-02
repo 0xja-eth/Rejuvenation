@@ -206,8 +206,10 @@ namespace UI.Common.Controls.MapSystem {
 			if (!entity.isApplyable() || !isApplyValid())
 				return false;
 
-			return applyBattler(entity as MapBattler) 
-				|| applyEntity(entity);
+			var battler = entity as MapBattler;
+			if (battler != null) return applyBattler(battler);
+
+			return applyEntity(entity);
 		}
 
 		/// <summary>
@@ -221,14 +223,13 @@ namespace UI.Common.Controls.MapSystem {
 		/// <param name="battler"></param>
 		/// <returns></returns>
 		protected virtual bool applyBattler(MapBattler battler) {
-			if (battler == null) return false;
+			if (!isTarget(battler)) return false;
 
-			if (isTarget(battler)) {
-				debugLog("Apply skill: " + skill + " -> " + battler);
+			debugLog("Apply skill: " + skill + " -> " + battler);
 
-				applyRuntimeBattler(battler.runtimeBattler);
-				applyMapBattler(battler);
-			}
+			applyRuntimeBattler(battler.runtimeBattler);
+			applyMapBattler(battler);
+
 			return true;
 		}
 

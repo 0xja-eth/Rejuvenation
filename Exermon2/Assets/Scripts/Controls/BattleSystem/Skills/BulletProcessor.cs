@@ -61,7 +61,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// 初始化碰撞函数
 		/// </summary>
 		protected override void initializeCollFuncs() {
-			registerOnEnterFunc<Tilemap>(t => apply(t));
+			//registerOnEnterFunc<Tilemap>(t => apply(t));
 			registerOnEnterFunc<MapEntity>(e => apply(e));
 		}
 
@@ -76,21 +76,31 @@ namespace UI.Common.Controls.MapSystem {
 		}
 		public void activate(SkillProcessor skill, 
 			RuntimeCharacter.Direction d) {
-			activate();
 			debugLog("activate: " + d);
 
 			skillProcessor = skill;
+
+			setupPosition();
 			setupRotation(d);
 			setupVelocity(d);
+
+			activate();
+		}
+
+		/// <summary>
+		/// 配置位置
+		/// </summary>
+		void setupPosition() {
+			transform.position = skillProcessor.transform.position;
 		}
 
 		/// <summary>
 		/// 配置旋转
 		/// </summary>
 		void setupRotation(RuntimeCharacter.Direction d) {
-			var rot = transform.rotation;
+			var rot = transform.localEulerAngles;
 			rot.z = RuntimeCharacter.dir82Angle(d);
-			transform.rotation = rot;
+			transform.localEulerAngles = rot;
 		}
 
 		/// <summary>

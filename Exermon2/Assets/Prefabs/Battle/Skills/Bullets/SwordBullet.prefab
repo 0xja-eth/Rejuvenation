@@ -109,14 +109,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.43622726, y: -0.7059884}
-      - {x: 0.048601955, y: -0.3055067}
+    - - {x: -0.21440974, y: -0.2316183}
+      - {x: 0.1946888, y: -0.5171493}
       - {x: -0.21472096, y: 0.23617983}
-      - {x: -0.09796098, y: 0.76700974}
-      - {x: -0.38700747, y: 0.74741554}
-      - {x: -0.6148487, y: 0.48438358}
-      - {x: -0.61231595, y: 0.1321497}
-      - {x: -0.18890148, y: -0.45151854}
+      - {x: -0.26923344, y: 0.59134555}
+      - {x: -0.43975872, y: 0.31649286}
 --- !u!50 &859271692558789895
 Rigidbody2D:
   serializedVersion: 4
@@ -153,7 +150,7 @@ MonoBehaviour:
   showDebug: 1
   collider: {fileID: 506948187378267203}
   skillProcessor: {fileID: 0}
-  speed: 4
+  speed: 5
   range: 4
-  throughEntities: 0
-  throughWalls: 0
+  throughEntities: -1
+  throughWalls: -1

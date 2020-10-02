@@ -886,6 +886,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1262557836}
     m_Modifications:
+    - target: {fileID: 2911615060274654776, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1.6666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 2911615060274654777, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2911615060274654777, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.6666666
+      objectReference: {fileID: 0}
     - target: {fileID: 2911615061225356793, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_Name
@@ -960,6 +975,21 @@ PrefabInstance:
         type: 3}
       propertyPath: showDebug
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6563678257400563240, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6563678257400563240, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6563678257400563240, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55f8fd873c22a3346a39c90495349635, type: 3}
