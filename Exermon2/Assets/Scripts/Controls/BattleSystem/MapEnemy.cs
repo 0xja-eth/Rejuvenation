@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Core.Data;
 
+using MapModule.Data;
 using BattleModule.Data;
 
 namespace UI.Common.Controls.BattleSystem {
@@ -21,7 +22,12 @@ namespace UI.Common.Controls.BattleSystem {
 		public bool useCustomParams = false; // 是否使用自定义属性
 
 		public Enemy customEnemy = null; // 自定义敌人数据
-		
+
+		/// <summary>
+		/// 内部变量定义
+		/// </summary>
+		bool critical = false; // 警戒状态
+
 		/// <summary>
 		/// 类型
 		/// </summary>
@@ -63,6 +69,91 @@ namespace UI.Common.Controls.BattleSystem {
 
 			display.setItem(enemy);
 		}
+
+		#endregion
+
+		#region 更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void updateIdle() {
+			base.updateIdle();
+			updateEnemyBehaviour();
+		}
+
+		/// <summary>
+		/// 更新敌人行动
+		/// </summary>
+		void updateEnemyBehaviour() {
+			processBehaviour(isCritical() ? 
+				enemy.criticalBehaviour : enemy.generalBehaviour);
+		}
+
+		#endregion
+
+		#region 敌人行为控制
+
+		/// <summary>
+		/// 是否警戒状态
+		/// </summary>
+		/// <returns></returns>
+		public bool isCritical() {
+			var dist = (pos - player.pos).magnitude;
+			return dist <= enemy.criticalRange;
+		}
+
+		/// <summary>
+		/// 处理行为
+		/// </summary>
+		/// <param name="type"></param>
+		public void processBehaviour(Enemy.BehaviourType type) {
+			RuntimeCharacter.Direction d; // = RuntimeCharacter.Direction.None;
+			switch (type) {
+				case Enemy.BehaviourType.Random:
+					d = getRandomDirection(); break;
+				case Enemy.BehaviourType.Close:
+					d = getCloseDirection(); break;
+				case Enemy.BehaviourType.Far:
+					d = getFarDirection(); break;
+				case Enemy.BehaviourType.Custom:
+					customBehaviour(); return;
+				default: return;
+			}
+			moveDirection(d);
+		}
+
+		/// <summary>
+		/// 获取随机方向
+		/// </summary>
+		/// <returns></returns>
+		RuntimeCharacter.Direction getRandomDirection() {
+			return (RuntimeCharacter.Direction)Random.Range(
+				1, RuntimeCharacter.DirectionCount + 1);
+		}
+
+		/// <summary>
+		/// 获取靠近角色方向
+		/// </summary>
+		/// <returns></returns>
+		RuntimeCharacter.Direction getCloseDirection() {
+			var delta = player.pos - pos;
+			return RuntimeCharacter.vec2Dir8(delta);
+		}
+
+		/// <summary>
+		/// 获取远离角色方向
+		/// </summary>
+		/// <returns></returns>
+		RuntimeCharacter.Direction getFarDirection() {
+			var delta = pos - player.pos;
+			return RuntimeCharacter.vec2Dir8(delta);
+		}
+
+		/// <summary>
+		/// 处理自定义行为
+		/// </summary>
+		protected virtual void customBehaviour() { }
 
 		#endregion
 

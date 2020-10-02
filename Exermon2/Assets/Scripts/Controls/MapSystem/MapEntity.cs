@@ -1,5 +1,5 @@
 ﻿
-using UnityEngine.Tilemaps;
+using UnityEngine;
 
 using Core.UI;
 
@@ -45,6 +45,8 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		public float x => transform.position.x;
 		public float y => transform.position.y;
+
+		public Vector2 pos => transform.position;
 
 		/// <summary>
 		/// 内部控件设置

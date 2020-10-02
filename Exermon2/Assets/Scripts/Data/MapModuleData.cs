@@ -141,6 +141,7 @@ namespace MapModule.Data {
 			Left = 4, None = 5, Right = 6,
 			LeftDown = 1, Down = 2, RightDown = 3
 		}
+		public const int DirectionCount = 9;
 
 		/// <summary>
 		/// 判断方向（静态）
