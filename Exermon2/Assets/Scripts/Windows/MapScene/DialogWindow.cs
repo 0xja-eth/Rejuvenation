@@ -9,43 +9,21 @@ using GameModule.Services;
 using MapModule.Services;
 using MapModule.Data;
 
-using UI.Common.Controls.ItemDisplays;
-
 namespace UI.MapSystem.Windows {
+
+	using Controls;
 
 	/// <summary>
 	/// 对话窗口层
 	/// </summary>
-	[RequireComponent(typeof(OptionConDisplay))]
+	[RequireComponent(typeof(MessageDisplay))]
 	public class DialogWindow : BaseWindow {
 
 		/// <summary>
-		/// 外部组件设置
+		/// 内部组件设置
 		/// </summary>
-		public Text dialogText;
-		public Text nameText;
-		public Image entityImage;
-		//public Sprite entitySprite1;
-		//public Sprite entitySprite2;
-		public OptionConDisplay optionsDisplay;
-
-		/// <summary>
-		/// 外部变量设置
-		/// </summary>
-        public int offset = 5;
-        public int msgLen;
-        public int curMsgLen = 0;
-        public string curMsg;
-        public int msgCnt = 0;
-        public bool chosen = false;
-        public int dialogSize = 4;
-        public int optionSize = 3;
-
-		/// <summary>
-		/// 内部变量定义
-		/// </summary>
-		bool isInputing = false;
-		bool getNext = false;
+		[RequireTarget]
+		MessageDisplay display;
 
 		/// <summary>
 		/// 外部系统设置
@@ -65,19 +43,15 @@ namespace UI.MapSystem.Windows {
 		/// </summary>
 		public override void activate() {
             base.activate();
-			messageSer.isDialogued = true;
-			getNext = true;
-			msgCnt = 0;
-
+			var msg = messageSer.getMessage();
+			display.setItem(msg);
+			
 			// 用于测试
-			for (int i = 0; i < dialogSize; i++) {
-				DialogMessage dialogMessage = genRandMsg();
+			//for (int i = 0; i < dialogSize; i++) {
+			//	DialogMessage dialogMessage = genRandMsg();
 
-				messageSer.addMessage(dialogMessage);
-			}
-
-			scene.map1.player?.stop();
-			scene.map2.player?.stop();
+			//	messageSer.addMessage(dialogMessage);
+			//}
 		}
 
         #endregion
@@ -89,32 +63,33 @@ namespace UI.MapSystem.Windows {
         /// </summary>
         protected override void update() {
             base.update();
-			
-            if (messageSer.isDialogued) {
-                if (getNext) {
-                    if (messageSer.messageCount() == 0) {
-                        messageSer.isDialogued = false;
-                        base.deactivate();
-                    }
-                    else {
-                        DialogMessage dMsg = getDialogMessage();
-                        optionsDisplay.setItems(dMsg.options);
-                        getNext = false;
-                        isInputing = true;
-                    }
-                }
-                else if (!getNext && isInputing) {
 
-                    dialogText.text = nextText();
+			updateInput();
 
-                    if (curMsgLen >= msgLen + offset) {
-                        isInputing = false;
-                        //文字未完全展开时选项不激活
-                        foreach (var item in optionsDisplay.getItemDisplays())
-                            item.actived = true;
-                    }
-                }
-            }
+			//if (messageSer.isDialogued) {
+   //             if (getNext) {
+   //                 if (messageSer.messageCount() == 0) {
+   //                     messageSer.isDialogued = false;
+   //                     base.deactivate();
+   //                 }
+   //                 else {
+   //                     DialogMessage dMsg = getDialogMessage();
+   //                     getNext = false;
+   //                     isInputing = true;
+   //                 }
+   //             }
+   //             else if (!getNext && isInputing) {
+
+   //                 dialogText.text = nextText();
+
+   //                 if (curMsgLen >= msgLen + offset) {
+   //                     isInputing = false;
+   //                     //文字未完全展开时选项不激活
+   //                     foreach (var item in optionsDisplay.getItemDisplays())
+   //                         item.actived = true;
+   //                 }
+   //             }
+   //         }
         }
 
 		/// <summary>
@@ -129,64 +104,15 @@ namespace UI.MapSystem.Windows {
 
 		#region 消息事件
 
-		/// <summary>
-		/// 从队列获取消息
-		/// </summary>
-		DialogMessage getDialogMessage() {
-
-            DialogMessage dMsg = messageSer.getMessage();
-
-
-
-            dialogText.text = dMsg.message;
-            nameText.text = dMsg.name;
-            entityImage.sprite = dMsg.bust();
-
-            curMsg = dMsg.message;
-            curMsgLen = 0;
-            msgLen = curMsg.Length;
-            offset = 1;
-            msgCnt++;
-            return dMsg;
-        }
-
         /// <summary>
         /// 下一条消息或者快速展开文字
         /// </summary>
         void nextOrRevealAll() {
-            if (isInputing)
-                curMsgLen = msgLen - 1;
-            else if (optionsDisplay.itemsCount() == 0)
-                getNext = true;
-        }
-
-        /// <summary>
-        /// 下一段文字
-        /// </summary>
-        string nextText() {
-            string text = curMsg.Substring(0, Mathf.Clamp(curMsgLen, 0, msgLen));
-            curMsgLen += offset;
-            return text;
-        }
-        
-        /// <summary>
-        /// 开始对话
-        /// </summary>
-        public void beginDialogue() {
-            messageSer.isDialogued = true;
-            getNext = true;
-            msgCnt = 0;
-            for (int i = 0; i < dialogSize; i++) {
-                DialogMessage dialogMessage = genRandMsg();
-
-                messageSer.addMessage(dialogMessage);
-            }
-            scene.map1.player?.stop();
-            scene.map2.player?.stop();
+            if (display.printing) display.stopPrint();
+            else if (display.optionCount() <= 0) deactivate();
         }
 
         #endregion
-
 
         #region 测试
         /// <summary>

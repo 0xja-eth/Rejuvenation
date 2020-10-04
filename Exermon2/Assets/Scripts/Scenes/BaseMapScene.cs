@@ -59,7 +59,7 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
-		public MessageService messageSer;
+		MessageService messageSer;
 
 		#region 更新
 
@@ -68,7 +68,17 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
+			updateDialog();
+
 			updateForTest();
+		}
+
+		/// <summary>
+		/// 更新对话框
+		/// </summary>
+		void updateDialog() {
+			if (messageSer.messageCount() > 0 && !isBusy())
+				dialogWindow.activate();
 		}
 
 		#endregion

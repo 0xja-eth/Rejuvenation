@@ -18,18 +18,6 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         public Text text;
 
-        #region 激活和关闭
-
-        /// <summary>
-        /// 激活
-        /// </summary>
-        public override void activate() {
-            base.activate();
-            actived = false;
-        }
-
-        #endregion
-
         #region 界面控制
 
         /// <summary>
@@ -40,18 +28,26 @@ namespace UI.MapSystem.Controls {
             text.text = item.description;
         }
 
-        #endregion
+		/// <summary>
+		/// 绘制空物品
+		/// </summary>
+		protected override void drawEmptyItem() {
+			base.drawEmptyItem();
+			text.text = "";
+		}
 
-        #region 状态控制
+		#endregion
 
-        /// <summary>
-        /// 选择
-        /// </summary>
-        public override void select() {
-            base.select();
-            item.actions?.Invoke();
-        }
+		#region 回调控制
 
-        #endregion
-    }
+		/// <summary>
+		/// 点击回调
+		/// </summary>
+		public override void onClick() {
+			base.onClick();
+			item?.invoke();
+		}
+
+		#endregion
+	}
 }
