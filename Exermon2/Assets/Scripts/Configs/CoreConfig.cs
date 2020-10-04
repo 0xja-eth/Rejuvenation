@@ -6,20 +6,31 @@ using Core.Systems;
 using Core.Data.Loaders;
 
 /// <summary>
-/// 核心配置
+/// 配置
 /// </summary>
-public static class CoreConfig {
-
-	#region 资源相关
+namespace Config {
 
 	/// <summary>
-	/// 资源类型
+	/// 资源相关
 	/// </summary>
-	public static AssetSetting[] AssetSettings = new AssetSetting[] {
-		new AssetSetting(AssetLoader.AnimationName, 
-			AssetLoader.SystemPath, "Animations", "Animation_{0}")
-	};
+	public class Asset {
 
-	#endregion
+		/// <summary>
+		/// 资源类型枚举
+		/// </summary>
+		public enum Type {
+			Animation, Character
+		}
+
+		/// <summary>
+		/// 资源类型
+		/// </summary>
+		public static AssetSetting[] Settings = new AssetSetting[] {
+			new AssetSetting(Type.Animation,
+				AssetLoader.SystemPath, "Animations", "Animation_{0}"),
+			new AssetSetting(Type.Character, "Characters/", "Character_{0}")
+		};
+
+	}
 
 }

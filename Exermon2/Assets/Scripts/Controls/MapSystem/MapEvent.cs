@@ -69,11 +69,6 @@ namespace UI.Common.Controls.MapSystem {
 		#region 事件控制
 
 		/// <summary>
-		/// 是否处于搜索状态
-		/// </summary>
-		public bool isSearching => Input.GetKeyDown(gameSer.keyboard.searchKey);
-
-		/// <summary>
 		/// 当前事件
 		/// </summary>
 		/// <returns></returns>

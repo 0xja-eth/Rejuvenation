@@ -231,7 +231,6 @@ namespace Core.UI {
 			var reqs = new List<Type>();
 			ReflectionUtils.processClassAttribute<RequireComponent>(
 				GetType(), (a) => {
-					debugLog(a.m_Type0);
 					if (a.m_Type0 != null) reqs.Add(a.m_Type0);
 					if (a.m_Type1 != null) reqs.Add(a.m_Type1);
 					if (a.m_Type2 != null) reqs.Add(a.m_Type2);

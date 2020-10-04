@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UI.Common.Controls.ItemDisplays;
 using UnityEngine;
 using UnityEngine.UI;
+using static MapModule.Data.RuntimeCharacter;
 /// <summary>
 /// 通用窗口
 /// </summary>

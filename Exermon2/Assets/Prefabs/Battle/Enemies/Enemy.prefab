@@ -198,7 +198,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!95 &5194098965410796466
@@ -324,9 +324,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
+  directionController: {fileID: 0}
   defaultMoveSpeed: 20
   rigidbody: {fileID: 0}
-  sprite: {fileID: 0}
   animator: {fileID: 0}
   animation: {fileID: 0}
   skillProcessors: []
@@ -339,6 +339,16 @@ MonoBehaviour:
     _speed: 1
     _attack: 0
     _defense: 0
+    _character:
+    - {fileID: -3199294949871373731, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    - {fileID: -345094371469603222, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    - {fileID: -2644719746594264722, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    - {fileID: 5798040017267913814, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    - {fileID: -7094179202080397849, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    - {fileID: 2174448747083212310, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    - {fileID: 3272042489672545647, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    - {fileID: 7261550511007689227, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    - {fileID: 5720438816908009035, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
     _description: 
     _refreshType: 1
     _criticalRange: 4

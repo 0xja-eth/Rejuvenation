@@ -64,7 +64,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void initializeCollFuncs() {
 			base.initializeCollFuncs();
-			registerOnEnterFunc<SkillProcessor>(onSkillHit);
+			registerOnStayFunc<SkillProcessor>(onSkillHit);
 		}
 
 		/// <summary>
@@ -72,6 +72,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void start() {
 			setupBattlerDisplay();
+			setupSkills();
 			base.start();
 		}
 
@@ -81,49 +82,44 @@ namespace UI.Common.Controls.BattleSystem {
 		protected abstract void setupBattlerDisplay();
 
 		/// <summary>
+		/// 配置技能
+		/// </summary>
+		void setupSkills() {
+			foreach(var processor in skillProcessors)
+				runtimeBattler.addSkill(processor.runtimeSkill);
+		}
+
+		/// <summary>
 		/// 配置更新函数
 		/// </summary>
 		protected override void setupStateChanges() {
 			base.setupStateChanges();
 
 			runtimeBattler?.addStateDict(
-				RuntimeBattler.BattlerState.Idle, updateIdle);
+				RuntimeBattler.State.Idle, updateIdle);
 			runtimeBattler?.addStateDict(
-				RuntimeBattler.BattlerState.Using, updateUsing);
+				RuntimeBattler.State.Using, updateUsing);
 
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.BattlerState.Idle,
-				RuntimeBattler.BattlerState.Hitting,
-				onFreezeStart);
+				RuntimeBattler.State.Idle, 
+				RuntimeBattler.State.Hitting, onFreezeStart);
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.BattlerState.Moving,
-				RuntimeBattler.BattlerState.Hitting,
-				onFreezeStart);
+				RuntimeBattler.State.Moving,
+				RuntimeBattler.State.Hitting, onFreezeStart);
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.BattlerState.Using,
-				RuntimeBattler.BattlerState.Hitting,
-				onFreezeStart);
+				RuntimeBattler.State.Using,
+				RuntimeBattler.State.Hitting, onFreezeStart);
 
 			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
 
 			runtimeBattler?.addStateChange(
-				RuntimeBattler.BattlerState.Freezing,
-				RuntimeBattler.BattlerState.Idle,
-				onFreezeEnd);
+				RuntimeBattler.State.Freezing,
+				RuntimeBattler.State.Idle, onFreezeEnd);
 		}
 
 		#endregion
 
 		#region 更新
-
-		///// <summary>
-		///// 更新
-		///// </summary>
-		//protected override void update() {
-		//	base.update();
-		//	if (!isValid()) return;
-		//	updateBattler();
-		//}
 
 		/// <summary>
 		/// 更新具体状态
@@ -152,47 +148,6 @@ namespace UI.Common.Controls.BattleSystem {
 		protected virtual void onFreezeEnd() {
 			animator.setVar(FreezeAttrName, false);
 		}
-
-		#endregion
-
-		#region 碰撞处理
-
-		#endregion
-
-		#region 状态判断
-
-		/// <summary>
-		/// 是否可用
-		/// </summary>
-		/// <returns></returns>
-		public bool isValid() {
-			return runtimeBattler != null;
-		}
-
-		///// <summary>
-		///// 是否行动中
-		///// </summary>
-		///// <returns></returns>
-		//public bool isActing() {
-		//	return currentProcessor && currentProcessor.isUsing;
-		//}
-
-		///// <summary>
-		///// 能否移动
-		///// </summary>
-		///// <returns></returns>
-		//public override bool isMoveable() {
-		//	return base.isMoveable() && !isActing();
-		//}
-
-		///// <summary>
-		///// 是否空闲
-		///// </summary>
-		///// <returns></returns>
-		//public override bool isIdle() {
-		//	return base.isIdle() && !isActing() && 
-		//		!runtimeBattler.isFreezing();
-		//}
 
 		#endregion
 
@@ -241,10 +196,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="processor"></param>
 		public void addSkillProcessor(SkillProcessor processor) {
-			if (!skillProcessors.Contains(processor)) {
+			if (!skillProcessors.Contains(processor)) 
 				skillProcessors.Add(processor);
-				runtimeBattler.addSkill(processor.runtimeSkill);
-			}
 		}
 
 		/// <summary>
@@ -264,6 +217,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="skill"></param>
 		void useSkill(Skill skill) {
+			debugLog("Use skill: " + skill);
 			currentProcessor = skillProcessor(skill);
 			currentProcessor?.use();
 		}
@@ -273,7 +227,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="skill"></param>
 		void onSkillHit(SkillProcessor skill) {
-			if (skill.battler == this) return;
+			if (runtimeBattler.isHitting() || runtimeBattler.isDead()) return;
+			if (!skill.isUsing || skill.battler == this) return;
 			skill.apply(this);
 		}
 
@@ -309,7 +264,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <param name="action"></param>
 		public void startAction(RuntimeAction action) {
-			if ((currentAction = action) == null) return;
+			if (action == null) return;
+			currentAction = action;
 			onActionStart(); processAction();
 		}
 
@@ -331,8 +287,10 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 行动开始
 		/// </summary>
 		protected virtual void onActionEnd() {
-  			runtimeBattler.onActionEnd(currentAction);
+			runtimeBattler.onActionEnd(currentAction);
 			currentProcessor?.onUseEnd();
+
+			currentAction = null;
 			currentProcessor = null;
 		}
 

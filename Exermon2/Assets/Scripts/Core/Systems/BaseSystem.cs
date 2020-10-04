@@ -133,7 +133,7 @@ namespace Core.Systems {
 		/// </summary>
 		/// <param name="state">新状态</param>
 		public void changeState(int state, bool force = false) {
-			Debug.Log("changeState: " + GetType() + ": " + this.state + " -> " + state);
+			//Debug.Log("changeState: " + GetType() + ": " + this.state + " -> " + state);
 			if ((force || hasState(state)) && this.state != state)
 				this.state = state;
 		}

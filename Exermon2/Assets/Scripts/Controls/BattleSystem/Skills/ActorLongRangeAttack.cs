@@ -15,9 +15,9 @@ namespace UI.Common.Controls.MapSystem {
 	using BattleSystem;
 
 	/// <summary>
-	/// 主角近战攻击
+	/// 主角远程攻击
 	/// </summary>
-	public class ActorNormalAttack : SkillProcessor {// ItemDisplay<Skill> {
+	public class ActorLongRangeAttack : SkillProcessor {// ItemDisplay<Skill> {
 
 		#region 执行&使用
 		

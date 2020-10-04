@@ -165,7 +165,7 @@ namespace GameModule.Services {
 			public static void apply(RuntimeBattler battler, RuntimeActionResult result) {
 				var calc = new ResultApplyCalc(battler, result);
 				calc.processHP();
-
+				calc.processHitFreeze();
 				calc.processAddBuffs();
 			}
 
