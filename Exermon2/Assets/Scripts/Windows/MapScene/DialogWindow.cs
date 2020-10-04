@@ -45,23 +45,17 @@ namespace UI.MapSystem.Windows {
             base.activate();
 			var msg = messageSer.getMessage();
 			display.setItem(msg);
-			
-			// 用于测试
-			//for (int i = 0; i < dialogSize; i++) {
-			//	DialogMessage dialogMessage = genRandMsg();
 
-			//	messageSer.addMessage(dialogMessage);
-			//}
 		}
 
-        #endregion
+		#endregion
 
-        #region 更新控制
+		#region 更新控制
 
-        /// <summary>
-        /// 更新
-        /// </summary>
-        protected override void update() {
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
             base.update();
 
 			updateInput();
@@ -113,44 +107,6 @@ namespace UI.MapSystem.Windows {
         }
 
         #endregion
-
-        #region 测试
-        /// <summary>
-        /// 生成随机消息（测试）
-        /// </summary>
-        DialogMessage genRandMsg() {
-
-            DialogMessage dialogMessage = new DialogMessage();
-            //int rand = UnityEngine.Random.Range(1, 10);
-            //dialogMessage.message = new string('哈', UnityEngine.Random.Range(50, 100));
-            //dialogMessage.name = rand % 2 == 0 ? "墨文" : "墨文？";
-            //dialogMessage._bust = rand % 2 == 0 ? entitySprite1 : entitySprite2;
-
-            //List<DialogOption> options = new List<DialogOption>();
-            //for (int i = 0; i < Mathf.Clamp(optionSize, 0, 4); i++) {
-            //    options.Add(genRandOpt());
-            //}
-            //dialogMessage.options = options;
-
-            return dialogMessage;
-        }
-
-        /// <summary>
-        /// 生成随机选项（测试）
-        /// </summary>
-        DialogOption genRandOpt() {
-            DialogOption dialogOption = new DialogOption();
-
-            //dialogOption.description = new string('嚯', UnityEngine.Random.Range(5, 10));
-            //dialogOption.actions = () =>
-            //{
-            //    getNext = true;
-            //    Debug.Log(dialogOption.description);
-            //};
-
-            return dialogOption;
-        }
-
-        #endregion
+		
     }
 }

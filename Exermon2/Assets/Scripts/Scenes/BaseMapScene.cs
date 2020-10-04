@@ -12,6 +12,8 @@ using Core.UI.Utils;
 using GameModule.Services;
 using MapModule.Services;
 
+using MapModule.Data;
+
 using UI.Common.Controls.AnimationSystem;
 
 namespace UI.MapSystem {
@@ -179,8 +181,9 @@ namespace UI.MapSystem {
                 splitCamera(SplitType.PastMain);
             else if (Input.GetKeyDown(KeyCode.R))
                 splitCamera(SplitType.PresentMain);
-            else if (Input.GetKeyDown(KeyCode.Y) && !isDialogued()) {
-                dialogWindow.activate();
+            else if (Input.GetKeyDown(KeyCode.Y)) {
+				messageSer.addMessage(DialogMessage.testData());
+				messageSer.addMessage(DialogMessage.testData());
             }
         }
 

@@ -8,6 +8,8 @@ using UI.Common.Controls.ItemDisplays;
 
 namespace UI.MapSystem.Controls {
 
+	using Windows;
+
 	/// <summary>
 	/// 选项显示
 	/// </summary>
@@ -18,14 +20,23 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         public Text text;
 
-        #region 界面控制
+		#region 数据控制
 
-        /// <summary>
-        /// 绘制确切物品
-        /// </summary>
-        protected override void drawExactlyItem(DialogOption item) {
+		/// <summary>
+		/// 对话框窗口
+		/// </summary>
+		DialogWindow dialogWindow => (container as OptionContainer).messageDisplay.window;
+
+		#endregion
+
+		#region 界面控制
+
+		/// <summary>
+		/// 绘制确切物品
+		/// </summary>
+		protected override void drawExactlyItem(DialogOption item) {
             base.drawExactlyItem(item);
-            text.text = item.description;
+            text.text = item.text;
         }
 
 		/// <summary>
@@ -45,6 +56,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		public override void onClick() {
 			base.onClick();
+			dialogWindow.deactivate();
 			item?.invoke();
 		}
 

@@ -11,9 +11,12 @@ using MapModule.Data;
 
 namespace UI.MapSystem.Controls {
 
+	using Windows;
+
 	/// <summary>
 	/// 对话框显示
 	/// </summary>
+	[RequireComponent(typeof(DialogWindow))]
 	[RequireComponent(typeof(OptionContainer))]
 	public class MessageDisplay : ItemDisplay<DialogMessage>{
 
@@ -32,6 +35,9 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
+		[RequireTarget]
+		[HideInInspector]
+		public DialogWindow window;
 		[RequireTarget]
 		[HideInInspector]
 		public OptionContainer optionContainer;

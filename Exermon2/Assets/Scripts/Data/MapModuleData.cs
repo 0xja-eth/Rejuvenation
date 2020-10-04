@@ -547,7 +547,7 @@ namespace MapModule.Data {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		public string description { get; protected set; } = "";
+		public string text { get; protected set; } = "";
 
 		/// <summary>
 		/// 动作
@@ -568,12 +568,24 @@ namespace MapModule.Data {
 		public void invoke() {
 			foreach (var action in actions) action?.Invoke();
 		}
-    }
+
+		/// <summary>
+		/// 获取测试数据
+		/// </summary>
+		/// <returns></returns>
+		public static DialogOption testData(int index) {
+			var opt = new DialogOption();
+			opt.text = "选项" + index;
+			opt.actions.Add(() => Debug.Log("You selected: " + index));
+
+			return opt;
+		}
+	}
 
 	/// <summary>
 	/// 对话框信息
 	/// </summary>
-    public class DialogMessage : BaseData {
+	public class DialogMessage : BaseData {
 
 		/// <summary>
 		/// 属性
@@ -607,6 +619,24 @@ namespace MapModule.Data {
 		}
 		public Sprite bust() {
 			return _bust ?? bust_?.value();
+		}
+
+		/// <summary>
+		/// 获取测试数据
+		/// </summary>
+		/// <returns></returns>
+		public static DialogMessage testData() {
+			var msg = new DialogMessage();
+			msg.message = "测试测试测试测试测试测试测试测试测试测试测试测试";
+			msg.name = "富文";
+
+			msg.options.Add(DialogOption.testData(1));
+			msg.options.Add(DialogOption.testData(2));
+			msg.options.Add(DialogOption.testData(3));
+			msg.options.Add(DialogOption.testData(4));
+			msg.options.Add(DialogOption.testData(5));
+
+			return msg;
 		}
 	}
 }
