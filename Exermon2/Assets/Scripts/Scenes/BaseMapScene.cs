@@ -70,6 +70,8 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
+			if (messageSer == null)
+				messageSer = MessageService.Get();
 			updateDialog();
 
 			updateForTest();
@@ -184,6 +186,7 @@ namespace UI.MapSystem {
             else if (Input.GetKeyDown(KeyCode.Y)) {
 				messageSer.addMessage(DialogMessage.testData());
 				messageSer.addMessage(DialogMessage.testData());
+				Debug.Log("K " + messageSer.messageCount());
             }
         }
 

@@ -352,7 +352,7 @@ namespace UI.Common.Controls.ItemDisplays {
         /// </summary>
         /// <param name="eventData">事件数据</param>
         public virtual void OnPointerEnter(PointerEventData eventData) {
-			Debug.Log(name + ": OnPointerEnter: " + eventData);
+			debugLog(name + ": OnPointerEnter: " + eventData);
             if (isHighlightable()) highlighting = true;
             refreshStatus();
         }
@@ -362,7 +362,7 @@ namespace UI.Common.Controls.ItemDisplays {
         /// </summary>
         /// <param name="eventData">事件数据</param>
         public virtual void OnPointerExit(PointerEventData eventData) {
-			Debug.Log(name + ": OnPointerExit: " + eventData);
+			debugLog(name + ": OnPointerExit: " + eventData);
 			highlighting = false;
             refreshStatus();
         }
@@ -372,7 +372,7 @@ namespace UI.Common.Controls.ItemDisplays {
         /// </summary>
         /// <param name="eventData">事件数据</param>
         public virtual void OnPointerClick(PointerEventData eventData) {
-			Debug.Log(name + ": OnPointerClick: " + eventData);
+			debugLog(name + ": OnPointerClick: " + eventData);
 			// 取消选择：当已经选择，同时没有选中的时候，可取消选择
 			if (isDeselectable() && isSelected() && !isChecked()) deselect();
             else {
