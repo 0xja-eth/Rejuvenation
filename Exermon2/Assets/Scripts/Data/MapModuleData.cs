@@ -7,6 +7,8 @@ using UnityEngine.Events;
 
 using LitJson;
 
+using Config;
+
 using Core.Data;
 using Core.Utils;
 using Core.Systems;
@@ -536,16 +538,76 @@ namespace MapModule.Data {
 		#endregion
 	}
 
+	/// <summary>
+	/// 对话框选项
+	/// </summary>
     public class DialogOption : BaseData {
-        public string description = "";
-        public UnityAction action;
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		public string description { get; protected set; } = "";
+
+		/// <summary>
+		/// 动作
+		/// </summary>
+		public List<UnityAction> actions = new List<UnityAction>();
+
+		/// <summary>
+		/// 添加动作
+		/// </summary>
+		/// <param name="action"></param>
+		public void addAction(UnityAction action) {
+			actions.Add(action);
+		}
+
+		/// <summary>
+		/// 执行
+		/// </summary>
+		public void invoke() {
+			foreach (var action in actions) action?.Invoke();
+		}
     }
 
+	/// <summary>
+	/// 对话框信息
+	/// </summary>
     public class DialogMessage : BaseData {
-        public string message = "";
-        public string name = "";
-        public Sprite sprite;
-        public List<DialogOption> options = new List<DialogOption>();
-    }
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		public string message { get; protected set; } = "";
+		[AutoConvert]
+		public string name { get; protected set; } = "";
+		[AutoConvert]
+		public List<DialogOption> options { get; protected set; } = new List<DialogOption>();
+
+		/// <summary>
+		/// 立绘
+		/// </summary>
+		[AutoConvert]
+		public int bustId { get; protected set; } // 立绘ID
+
+		/// <summary>
+		/// Editor中赋值
+		/// </summary>
+		[SerializeField] Sprite _bust = null;
+
+		/// <summary>
+		/// 获取立绘实例
+		/// </summary>
+		/// <returns></returns>
+		protected CacheAttr<Sprite> bust_ = null;
+		protected Sprite _bust_() {
+			return AssetLoader.loadAsset<Sprite>(
+				Asset.Type.Character, bustId);
+		}
+		public Sprite bust() {
+			return _bust ?? bust_?.value();
+		}
+	}
 }
 

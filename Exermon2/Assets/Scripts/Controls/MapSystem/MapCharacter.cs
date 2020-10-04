@@ -7,7 +7,7 @@ using Core.UI.Utils;
 
 using MapModule.Data;
 
-namespace UI.Common.Controls.MapSystem {
+namespace UI.MapSystem.Controls {
 
 	using Common.Controls.AnimationSystem;
 

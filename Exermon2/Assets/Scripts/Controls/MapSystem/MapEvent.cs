@@ -10,9 +10,9 @@ using GameModule.Services;
 
 using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.MapSystem {
+namespace UI.MapSystem.Controls {
 
-	using BattleSystem;
+	using BattleSystem.Controls;
 
 	/// <summary>
 	/// 地图上的事件

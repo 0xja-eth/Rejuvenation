@@ -1,14 +1,17 @@
-﻿using MapModule.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UI.Common.Controls.ItemDisplays;
+﻿using System;
+
 using UnityEngine.UI;
 
-namespace UI.Common.Controls.ItemDisplays {
-    public class OptionDisplay :SelectableItemDisplay<DialogOption>{
+using MapModule.Data;
+
+using UI.Common.Controls.ItemDisplays;
+
+namespace UI.MapSystem.Controls {
+
+	/// <summary>
+	/// 选项显示
+	/// </summary>
+	public class OptionDisplay : SelectableItemDisplay<DialogOption>{
 
         /// <summary>
         /// 外部组件设置
@@ -46,7 +49,7 @@ namespace UI.Common.Controls.ItemDisplays {
         /// </summary>
         public override void select() {
             base.select();
-            item.action?.Invoke();
+            item.actions?.Invoke();
         }
 
         #endregion

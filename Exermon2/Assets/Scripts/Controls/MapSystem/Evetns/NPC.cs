@@ -10,7 +10,7 @@ using GameModule.Services;
 
 using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.MapSystem.Events {
+namespace UI.MapSystem.Controls.Events {
 
 	/// <summary>
 	/// 地图上的事件

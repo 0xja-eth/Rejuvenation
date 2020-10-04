@@ -10,9 +10,9 @@ using PlayerModule.Services;
 
 using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.BattleSystem {
-    using GameModule.Services;
-    using MapSystem;
+namespace UI.BattleSystem.Controls {
+
+    using MapSystem.Controls;
 
 	/// <summary>
 	/// 地图上的玩家实体
@@ -52,7 +52,6 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		GameService gameSer;
 		PlayerService playerSer;
-        MessageServices msgServices;
 
 		#region 初始化
 
@@ -74,11 +73,6 @@ namespace UI.Common.Controls.BattleSystem {
 			display.setItem(playerSer.actor.runtimeActor);
 		}
 
-        protected override void initializeEvery() {
-            base.initializeEvery();
-            msgServices = MessageServices.Get();
-        }
-
         #endregion
 
         #region 更新
@@ -88,40 +82,21 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
-
-			//var key = gameSer.keyboard.searchKey;
-			//if (Input.GetKeyDown(key)) debugLog("update GetKeyDown: " + key);
-			//if (Input.GetKey(key)) debugLog("update GetKey: " + key);
-			//if (Input.GetKeyUp(key)) debugLog("update GetKeyUp: " + key);
-
 			updateInput();
 		}
-
-		/// <summary>
-		/// 固定更新
-		/// </summary>
-		protected override void fixedUpdate() {
-			base.fixedUpdate();
-
-			//var key = gameSer.keyboard.attackKey;
-			//if (Input.GetKeyDown(key)) debugLog("fixed GetKeyDown: " + key);
-			//if (Input.GetKey(key)) debugLog("fixed GetKey: " + key);
-			//if (Input.GetKeyUp(key)) debugLog("fixed GetKeyUp: " + key);
-
-			//updateInput();
-        }
 
         /// <summary>
         /// 更新玩家输入事件
         /// </summary>
         void updateInput() {
-			if (!isInputable()) return;
-			// 返回 True => 有输入
-			// 返回 False => 无输入
+			if (!isInputable()) {
+				stop(); return;
+			}
+			// 返回 True => 有输入  返回 False => 无输入
 			if (updateSearching() || updateSkill()) stop();
 			else updateMovement();
 		}
-
+		
 		#endregion
 
 		#region 输入控制变量
@@ -142,7 +117,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isInputable() {
-            return map.active && inputable && !msgServices.isDialogued;
+            return map.isActive() && inputable;
         }
 
 		#endregion

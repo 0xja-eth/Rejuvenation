@@ -6,7 +6,7 @@ using UI.Common.Controls.ItemDisplays;
 using MapModule.Data;
 using BattleModule.Data;
 
-namespace UI.Common.Controls.BattleSystem {
+namespace UI.BattleSystem.Controls {
 
 	/// <summary>
 	/// 战斗者状态显示

@@ -19,7 +19,7 @@ namespace Config {
 		/// 资源类型枚举
 		/// </summary>
 		public enum Type {
-			Animation, Character
+			Animation, Character, Bust
 		}
 
 		/// <summary>
@@ -28,7 +28,8 @@ namespace Config {
 		public static AssetSetting[] Settings = new AssetSetting[] {
 			new AssetSetting(Type.Animation,
 				AssetLoader.SystemPath, "Animations", "Animation_{0}"),
-			new AssetSetting(Type.Character, "Characters/", "Character_{0}")
+			new AssetSetting(Type.Character, "Characters/", "Character_{0}"),
+			new AssetSetting(Type.Bust, "Busts/", "Bust_{0}"),
 		};
 
 	}

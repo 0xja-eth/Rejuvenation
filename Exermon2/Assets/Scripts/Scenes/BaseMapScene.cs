@@ -6,24 +6,23 @@ using LitJson;
 
 using UnityEngine;
 
-using Core.Systems;
-
 using Core.UI;
 using Core.UI.Utils;
 
-using UI.Common.Windows;
-using UI.Common.Controls.AnimationSystem;
-using UI.Common.Controls.MapSystem;
-using UnityEngine.UI;
 using GameModule.Services;
-using static GameModule.Services.MessageServices;
+using MapModule.Services;
 
-namespace UI.BaseMapScene {
+using UI.Common.Controls.AnimationSystem;
 
-    /// <summary>
-    /// 地图场景基类
-    /// </summary>
-    [RequireComponent(typeof(AnimationExtend), typeof(Animator))]
+namespace UI.MapSystem {
+
+	using Controls;
+	using Windows;
+
+	/// <summary>
+	/// 地图场景基类
+	/// </summary>
+	[RequireComponent(typeof(AnimationExtend), typeof(Animator))]
     public abstract class BaseMapScene : BaseScene {
 
         /// <summary>
@@ -36,29 +35,74 @@ namespace UI.BaseMapScene {
             PastMain, // 左屏为主
             PresentMain, // 右屏为主
         }
-        public RenderTexture renderTexture;
-        public Canvas splitCanvas;
-
-        /// <summary>
-        /// 外部系统设置
-        /// </summary>
-        public MessageServices msgServices;
-        [RequireTarget]
-        protected Animator animator;
 
         /// <summary>
         /// 外部组件设置
         /// </summary>
         public Map map1, map2;
-        public DialogWindow dialogWindow;
-        bool present = false;
-        bool switching = false;
-        #region 分屏控制
+		public DialogWindow dialogWindow;
+		public RenderTexture renderTexture;
+		public Canvas splitCanvas;
 
-        /// <summary>
-        /// 分屏
-        /// </summary>
-        public void splitCamera(SplitType type) {
+		/// <summary>
+		/// 内部组件设置
+		/// </summary>
+		[RequireTarget]
+		protected Animator animator;
+
+		/// <summary>
+		/// 内部变量定义
+		/// </summary>
+		bool present = false;
+        bool switching = false;
+
+		/// <summary>
+		/// 外部系统设置
+		/// </summary>
+		public MessageService messageSer;
+
+		#region 更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
+			base.update();
+			updateForTest();
+		}
+
+		#endregion
+
+		#region 状态判断
+
+		/// <summary>
+		/// 繁忙
+		/// </summary>
+		/// <returns></returns>
+		public bool isBusy() {
+			return dialogWindow.shown;
+		}
+
+		/// <summary>
+		/// 处于对话框状态
+		/// </summary>
+		/// <returns></returns>
+		public bool isDialogued() {
+			return dialogWindow.shown;
+		}
+
+		#endregion
+
+		#region 地图控制
+
+		#endregion
+
+		#region 分屏控制
+
+		/// <summary>
+		/// 分屏
+		/// </summary>
+		public void splitCamera(SplitType type) {
             if (switching)
                 return;
             if (type == SplitType.PresentSingle)
@@ -88,6 +132,7 @@ namespace UI.BaseMapScene {
             map2.camera.rect = new Rect(0, 0, 1, 1);
             map2.camera.targetTexture = renderTexture;
         }
+
         /// <summary>
         /// 重设相机状态，取消renderTexture模式
         /// </summary>
@@ -105,11 +150,15 @@ namespace UI.BaseMapScene {
             }
             switching = false;
         }
-        #endregion
 
-        #region 测试
-        protected override void update() {
-            base.update();
+		#endregion
+
+		#region 测试
+
+		/// <summary>
+		/// 测试
+		/// </summary>
+		void updateForTest() {
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 splitCamera(SplitType.PresentSingle);
             else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -120,10 +169,11 @@ namespace UI.BaseMapScene {
                 splitCamera(SplitType.PastMain);
             else if (Input.GetKeyDown(KeyCode.R))
                 splitCamera(SplitType.PresentMain);
-            else if (Input.GetKeyDown(KeyCode.Y) && !msgServices.isDialogued) {
+            else if (Input.GetKeyDown(KeyCode.Y) && !isDialogued()) {
                 dialogWindow.activate();
             }
         }
+
         #endregion
     }
 }

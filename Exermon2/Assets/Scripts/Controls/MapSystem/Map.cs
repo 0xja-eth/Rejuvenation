@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 
 using Core.UI;
+using Core.UI.Utils;
+
+using UI.MapSystem;
 
 using UnityEngine;
 
-namespace UI.Common.Controls.MapSystem {
+namespace UI.MapSystem.Controls {
 
-	using BattleSystem;
+	using BattleSystem.Controls;
 
 	/// <summary>
 	/// 地图类
@@ -35,6 +38,31 @@ namespace UI.Common.Controls.MapSystem {
 		/// 属性
 		/// </summary>
 		public new Camera camera => cameraController.camera;
+
+		/// <summary>
+		/// 场景组件
+		/// </summary>
+		BaseMapScene scene => SceneUtils.getCurrentScene<MapSystem.BaseMapScene>();
+
+		#region	状态判断
+
+		/// <summary>
+		/// 是否繁忙
+		/// </summary>
+		/// <returns></returns>
+		public bool isBusy() {
+			return scene.isBusy();
+		}
+
+		/// <summary>
+		/// 是否激活
+		/// </summary>
+		/// <returns></returns>
+		public bool isActive() {
+			return active && !isBusy();
+		}
+
+		#endregion
 
 		#region 实体管理
 

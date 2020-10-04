@@ -7,9 +7,9 @@ using Core.Data;
 using MapModule.Data;
 using BattleModule.Data;
 
-namespace UI.Common.Controls.BattleSystem {
+namespace UI.BattleSystem.Controls {
 
-	using MapSystem;
+	using MapSystem.Controls;
 
 	/// <summary>
 	/// 地图上的敌人实体

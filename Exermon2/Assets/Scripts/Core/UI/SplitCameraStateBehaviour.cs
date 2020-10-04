@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
-using UI.BaseMapScene;
+using UI.MapSystem;
 
 namespace Core.UI {
     /// <summary>

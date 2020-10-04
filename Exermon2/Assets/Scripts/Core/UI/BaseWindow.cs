@@ -34,7 +34,7 @@ namespace Core.UI {
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
-		BaseScene scene;
+		protected BaseScene scene => SceneUtils.getCurrentScene();
 
 		/// <summary>
 		/// 显示状态
@@ -59,7 +59,6 @@ namespace Core.UI {
         protected override void initializeOnce() {
             base.initializeOnce();
 			animator = animator ?? SceneUtils.get<AnimatorExtend>(transform);
-			scene = SceneUtils.getCurrentScene();
 
 			initializeStates();
 		}

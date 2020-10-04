@@ -8,10 +8,11 @@ using Core.UI;
 using MapModule.Data;
 using BattleModule.Data;
 
-namespace UI.Common.Controls.MapSystem {
+using UI.Common.Controls.SystemExtend.PhysicsExtend;
 
-	using BattleSystem;
-	using SystemExtend.PhysicsExtend;
+namespace UI.MapSystem.Controls {
+
+	using BattleSystem.Controls;
 
 	/// <summary>
 	/// 技能处理器
