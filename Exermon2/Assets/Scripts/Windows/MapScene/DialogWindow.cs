@@ -35,21 +35,7 @@ namespace UI.MapSystem.Windows {
 		/// 场景组件
 		/// </summary>
 		new BaseMapScene scene => base.scene as BaseMapScene;
-
-		#region 初始化
-
-		/// <summary>
-		/// 激活
-		/// </summary>
-		public override void activate() {
-            base.activate();
-			var msg = messageSer.getMessage();
-			display.setItem(msg);
-
-		}
-
-		#endregion
-
+		
 		#region 更新控制
 
 		/// <summary>
@@ -96,12 +82,25 @@ namespace UI.MapSystem.Windows {
 
 		#endregion
 
+		#region 内容绘制
+
+		/// <summary>
+		/// 刷新
+		/// </summary>
+		protected override void refresh() {
+			base.refresh();
+			var msg = messageSer.getMessage();
+			display.setItem(msg);
+		}
+
+		#endregion
+
 		#region 消息事件
 
-        /// <summary>
-        /// 下一条消息或者快速展开文字
-        /// </summary>
-        void nextOrRevealAll() {
+		/// <summary>
+		/// 下一条消息或者快速展开文字
+		/// </summary>
+		void nextOrRevealAll() {
             if (display.printing) display.stopPrint();
             else if (display.optionCount() <= 0) deactivate();
         }

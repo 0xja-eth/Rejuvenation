@@ -166,14 +166,23 @@ namespace UI.Common.Controls.AnimationSystem {
             //machine = layer.stateMachine;
         }
 
-        #endregion
+		/// <summary>
+		/// 状态结束
+		/// </summary>
+		public void onStateEnd(AnimatorStateInfo stateInfo) {
+			foreach(var item in endEvents) 
+				if (stateInfo.IsName(item.Key))
+					item.Value?.Invoke();
+		}
 
-        #region 更新控制
+		#endregion
 
-        /// <summary>
-        /// 更新
-        /// </summary>
-        protected override void update() {
+		#region 更新控制
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
             base.update();
             updateAnimatorState();
         }

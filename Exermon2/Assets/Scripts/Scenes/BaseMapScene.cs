@@ -61,7 +61,7 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
-		MessageService messageSer;
+		protected MessageService messageSer;
 
 		#region 更新
 
@@ -70,8 +70,6 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			if (messageSer == null)
-				messageSer = MessageService.Get();
 			updateDialog();
 
 			updateForTest();
@@ -94,7 +92,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isBusy() {
-			return dialogWindow.shown;
+			return isDialogued();
 		}
 
 		/// <summary>

@@ -17,7 +17,6 @@ namespace UI.MapSystem.Controls {
 	/// 对话框显示
 	/// </summary>
 	[RequireComponent(typeof(DialogWindow))]
-	[RequireComponent(typeof(OptionContainer))]
 	public class MessageDisplay : ItemDisplay<DialogMessage>{
 
 		/// <summary>
@@ -32,15 +31,14 @@ namespace UI.MapSystem.Controls {
 		public Text nameText;
 		public Image bust;
 
+		public OptionContainer optionContainer;
+
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
 		[HideInInspector]
 		public DialogWindow window;
-		[RequireTarget]
-		[HideInInspector]
-		public OptionContainer optionContainer;
 
 		/// <summary>
 		/// 内部变量定义

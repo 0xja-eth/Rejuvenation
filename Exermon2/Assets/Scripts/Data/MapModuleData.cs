@@ -120,7 +120,7 @@ namespace MapModule.Data {
 		public const int XCnt = 3, YCnt = 3;
 
 		const int DefaultPattern = 1;
-		const float PatternFrequency = 0.1f;
+		const float PatternFrequency = 0.2f;
 
 		/// <summary>
 		/// 方向位移
@@ -615,7 +615,7 @@ namespace MapModule.Data {
 		protected CacheAttr<Sprite> bust_ = null;
 		protected Sprite _bust_() {
 			return AssetLoader.loadAsset<Sprite>(
-				Asset.Type.Character, bustId);
+				Asset.Type.Bust, bustId);
 		}
 		public Sprite bust() {
 			return _bust ?? bust_?.value();
@@ -629,6 +629,8 @@ namespace MapModule.Data {
 			var msg = new DialogMessage();
 			msg.message = "测试测试测试测试测试测试测试测试测试测试测试测试";
 			msg.name = "富文";
+
+			msg.bustId = 1;
 
 			msg.options.Add(DialogOption.testData(1));
 			msg.options.Add(DialogOption.testData(2));
