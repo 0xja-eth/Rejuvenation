@@ -51,8 +51,13 @@ namespace UI.BaseMapScene {
         /// </summary>
         public Map map1, map2;
         public DialogWindow dialogWindow;
+
+        /// <summary>
+        /// 内部变量
+        /// </summary>
         bool present = false;
         bool switching = false;
+
         #region 分屏控制
 
         /// <summary>
@@ -120,6 +125,8 @@ namespace UI.BaseMapScene {
                 splitCamera(SplitType.PastMain);
             else if (Input.GetKeyDown(KeyCode.R))
                 splitCamera(SplitType.PresentMain);
+            else if (Input.GetKeyDown(KeyCode.N))
+                GameService.Get().switchCheckPoint();
             else if (Input.GetKeyDown(KeyCode.Y) && !msgServices.isDialogued) {
                 dialogWindow.activate();
             }
