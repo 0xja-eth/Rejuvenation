@@ -64,7 +64,6 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void initializeCollFuncs() {
 			base.initializeCollFuncs();
-			registerOnStayFunc<SkillProcessor>(onSkillHit);
 		}
 
 		/// <summary>
@@ -192,6 +191,18 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 技能控制
 
 		/// <summary>
+		/// 对手
+		/// </summary>
+		/// <returns></returns>
+		public abstract List<MapBattler> opponents();
+
+		/// <summary>
+		/// 队友
+		/// </summary>
+		/// <returns></returns>
+		public abstract List<MapBattler> friends();
+
+		/// <summary>
 		/// 添加技能处理器
 		/// </summary>
 		/// <param name="processor"></param>
@@ -222,15 +233,33 @@ namespace UI.Common.Controls.BattleSystem {
 			currentProcessor?.use();
 		}
 
-		/// <summary>
-		/// 技能命中回调
-		/// </summary>
-		/// <param name="skill"></param>
-		void onSkillHit(SkillProcessor skill) {
-			if (runtimeBattler.isHitting() || runtimeBattler.isDead()) return;
-			if (!skill.isUsing || skill.battler == this) return;
-			skill.apply(this);
-		}
+		///// <summary>
+		///// 技能命中回调
+		///// </summary>
+		///// <param name="skill"></param>
+		//protected override void apply(ISkillApplication skill) {
+		//	skill.applyBattler(this);
+		//}
+
+		///// <summary>
+		///// 能否被击中
+		///// </summary>
+		///// <returns></returns>
+		//public override bool isApplyable() {
+		//	return runtimeBattler.isHitting() || runtimeBattler.isDead();
+		//}
+
+		///// <summary>
+		///// 是否有效的技能
+		///// </summary>
+		///// <param name="skill"></param>
+		///// <returns></returns>
+		//protected override bool isValidSkill(ISkillApplication skill) {
+		//	if (!base.isValidSkill(skill)) return false;
+		//	var skillProcessor = skill as SkillProcessor;
+		//	if (skillProcessor == null) return true;
+		//	return skillProcessor.battler != this;
+		//}
 
 		#endregion
 
@@ -255,8 +284,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		void checkActionEnd() {
-			if (!isPlayingSkillAnimation()
-				&& runtimeBattler.isActing()) onActionEnd();
+			if (currentProcessor == null || 
+				currentProcessor.isTerminated()) onActionEnd();
 		}
 
 		/// <summary>
@@ -290,8 +319,8 @@ namespace UI.Common.Controls.BattleSystem {
 			runtimeBattler.onActionEnd(currentAction);
 			currentProcessor?.onUseEnd();
 
-			currentAction = null;
-			currentProcessor = null;
+			//currentAction = null;
+			//currentProcessor = null;
 		}
 
 		#endregion

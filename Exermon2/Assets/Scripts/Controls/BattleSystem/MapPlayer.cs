@@ -1,6 +1,8 @@
-﻿
+﻿using System.Collections.Generic;
+
 using UnityEngine;
 
+using MapModule.Data;
 using BattleModule.Data;
 
 using GameModule.Services;
@@ -9,8 +11,8 @@ using PlayerModule.Services;
 using Event = MapModule.Data.Event;
 
 namespace UI.Common.Controls.BattleSystem {
-
-	using MapSystem;
+    using GameModule.Services;
+    using MapSystem;
 
 	/// <summary>
 	/// 地图上的玩家实体
@@ -42,14 +44,15 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		public Actor actor => playerSer.actor;
 
-		protected float xDelta => Input.GetAxis("Horizontal");
-		protected float yDelta => Input.GetAxis("Vertical");
+		protected float xDelta => limitVal(Input.GetAxis("Horizontal"));
+		protected float yDelta => limitVal(Input.GetAxis("Vertical"));
 
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
 		GameService gameSer;
 		PlayerService playerSer;
+        MessageServices msgServices;
 
 		#region 初始化
 
@@ -71,9 +74,14 @@ namespace UI.Common.Controls.BattleSystem {
 			display.setItem(playerSer.actor.runtimeActor);
 		}
 
-		#endregion
+        protected override void initializeEvery() {
+            base.initializeEvery();
+            msgServices = MessageServices.Get();
+        }
 
-		#region 更新
+        #endregion
+
+        #region 更新
 
 		/// <summary>
 		/// 更新
@@ -134,8 +142,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isInputable() {
-			return map.active && inputable;
-		}
+            return map.active && inputable && !msgServices.isDialogued;
+        }
 
 		#endregion
 
@@ -192,6 +200,15 @@ namespace UI.Common.Controls.BattleSystem {
 		#region 移动控制
 
 		/// <summary>
+		/// 开关变量值
+		/// </summary>
+		/// <param name="val"></param>
+		/// <returns></returns>
+		float limitVal(float val) {
+			return val > 0.5f ? 1 : (val < -0.5f ? -1 : 0);
+		}
+
+		/// <summary>
 		/// 更新移动
 		/// </summary>
 		bool updateMovement() {
@@ -199,7 +216,7 @@ namespace UI.Common.Controls.BattleSystem {
 			var flag = speed.x == 0 && speed.y == 0;
 
 			if (flag) stop();
-			else move(speed * moveSpeed());
+			else moveDirection(RuntimeCharacter.vec2Dir8(speed));
 
 			return !flag;
 		}
@@ -207,6 +224,22 @@ namespace UI.Common.Controls.BattleSystem {
 		#endregion
 
 		#region 技能控制
+
+		/// <summary>
+		/// 对手
+		/// </summary>
+		/// <returns></returns>
+		public override List<MapBattler> opponents() {
+			return map.battlers(Type.Enemy);
+		}
+
+		/// <summary>
+		/// 队友
+		/// </summary>
+		/// <returns></returns>
+		public override List<MapBattler> friends() {
+			return map.battlers(Type.Player);
+		}
 
 		/// <summary>
 		/// 能否使用技能

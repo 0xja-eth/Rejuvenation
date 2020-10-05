@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using Core.UI.Utils;
 
 namespace UnityEngine.UI {
+
     #region 源码部分
 
     /// <summary>
@@ -62,7 +63,9 @@ namespace UnityEngine.UI {
     }
 
     #endregion
+
 }
+
 namespace UI.Common.Controls.SystemExtend.PaintableImage {
 
     using UnityEngine;

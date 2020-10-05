@@ -1,28 +1,22 @@
 ﻿using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 using Core.Data;
 using Core.UI;
-
-using UI.Common.Controls.ItemDisplays;
-using UI.Common.Controls.AnimationSystem;
 
 using BattleModule.Data;
 
 namespace UI.Common.Controls.MapSystem {
 
 	using BattleSystem;
+	using SystemExtend.PhysicsExtend;
 
 	/// <summary>
 	/// 技能处理器
 	/// </summary>
-	public abstract class SkillProcessor : WorldComponent { // ItemDisplay<Skill> {
-		
-		/// <summary>
-		/// 外部组件设置
-		/// </summary>
-		public new Collider2D collider;
+	public abstract class SkillProcessor : Collider2DExtend {//, ISkillApplication { 
 
 		/// <summary>
 		/// 外部变量设置
@@ -39,7 +33,7 @@ namespace UI.Common.Controls.MapSystem {
 		public virtual int skillId => 0;
 
 		/// <summary>
-		/// 敌人
+		/// 技能
 		/// </summary>
 		Skill skill_ = null;
 		public Skill skill => useCustomParams && customSkill != null ? 
@@ -64,7 +58,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public bool isUsing { get; protected set; } = false;
+		public bool isStarted { get; protected set; } = false;
 
 		#region 初始化
 
@@ -75,6 +69,14 @@ namespace UI.Common.Controls.MapSystem {
 			base.initializeOnce();
 			initializeRuntimeSkill();
 			initializeBattler();
+		}
+
+		/// <summary>
+		/// 初始化碰撞函数
+		/// </summary>
+		protected override void initializeCollFuncs() {
+			registerOnStayFunc<Tilemap>(t => apply(t));
+			registerOnStayFunc<MapEntity>(e => apply(e));
 		}
 
 		/// <summary>
@@ -94,14 +96,41 @@ namespace UI.Common.Controls.MapSystem {
 
 		#endregion
 
+		#region 更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
+			base.update();
+			updateCollider();
+		}
+
+		/// <summary>
+		/// 更新碰撞体
+		/// </summary>
+		void updateCollider() {
+			if (collider) collider.enabled = isStarted;
+		}
+
+		#endregion
+
 		#region 使用
-		
+
 		/// <summary>
 		/// 当前状态能否使用
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isUsable() {
-			return !isUsing;
+			return !isStarted;
+		}
+
+		/// <summary>
+		/// 是否已结束
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool isTerminated() {
+			return isStarted && !battler.isPlayingSkillAnimation();
 		}
 
 		/// <summary>
@@ -119,7 +148,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		protected virtual void onUseStart() {
 			debugLog("On skill start: " + skill);
-			isUsing = true;
+			isStarted = true;
 		}
 
 		/// <summary>
@@ -142,7 +171,8 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		public virtual void onUseEnd() {
 			debugLog("On skill end: " + skill);
-			isUsing = false;
+			if (collider) collider.enabled = true;
+			isStarted = false;
 		}
 
 		#endregion
@@ -150,13 +180,55 @@ namespace UI.Common.Controls.MapSystem {
 		#region 作用
 
 		/// <summary>
-		/// 作用到指定Battler
+		/// 是否有效
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool isApplyValid() {
+			return isStarted;
+		}
+
+		/// <summary>
+		/// 是否为技能目标
+		/// </summary>
+		protected virtual bool isTarget(MapBattler battler) {
+			return this.battler.opponents().Contains(battler);
+		}
+
+		/// <summary>
+		/// 作用到TileMap
+		/// </summary>
+		public virtual bool apply(Tilemap map) { return true; }
+
+		/// <summary>
+		/// 作用到MapEntity
+		/// </summary>
+		public virtual bool apply(MapEntity entity) {
+			if (!entity.isApplyable() || !isApplyValid())
+				return false;
+
+			var battler = entity as MapBattler;
+			if (battler != null) return applyBattler(battler);
+
+			return applyEntity(entity);
+		}
+
+		/// <summary>
+		/// 作用到MapEntity（实际）
+		/// </summary>
+		protected virtual bool applyEntity(MapEntity entity) { return true; }
+
+		/// <summary>
+		/// 作用到MapBattler
 		/// </summary>
 		/// <param name="battler"></param>
-		public virtual void apply(MapBattler battler) {
-			debugLog("Apply skill: " + skill + " -> " + battler);
+		/// <returns></returns>
+		protected virtual bool applyBattler(MapBattler battler) {
+			if (!isTarget(battler)) return false;
+
 			applyRuntimeBattler(battler.runtimeBattler);
 			applyMapBattler(battler);
+
+			return true;
 		}
 
 		/// <summary>
@@ -173,7 +245,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <param name="battler"></param>
 		protected virtual void applyMapBattler(MapBattler battler) {
-			battler.playSkillAnimation(skill.targetAnimation());
+			battler.playTargetAnimation(skill.targetAnimation());
 		}
 
 		#endregion
