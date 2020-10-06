@@ -625,18 +625,15 @@ namespace MapModule.Data {
 		/// 获取测试数据
 		/// </summary>
 		/// <returns></returns>
-		public static DialogMessage testData() {
+		public static DialogMessage testData(string message, string name, int bustId = 0) {
 			var msg = new DialogMessage();
-			msg.message = "测试测试测试测试测试测试测试测试测试测试测试测试";
-			msg.name = "富文";
+			msg.message = message;
+			msg.name = name;
 
-			msg.bustId = 1;
+			msg.bustId = bustId;
 
-			msg.options.Add(DialogOption.testData(1));
-			msg.options.Add(DialogOption.testData(2));
-			msg.options.Add(DialogOption.testData(3));
-			msg.options.Add(DialogOption.testData(4));
-			msg.options.Add(DialogOption.testData(5));
+			for(int i=0;i<UnityEngine.Random.Range(0, 4); ++i) 
+				msg.options.Add(DialogOption.testData(i));
 
 			return msg;
 		}

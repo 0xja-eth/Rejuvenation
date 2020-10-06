@@ -15,7 +15,6 @@ namespace UI.MapSystem.Controls {
         /// 内部变量
         /// </summary>
         BaseMapScene mapScene;
-        bool finish = false;
 
         #region 初始化
   
@@ -25,7 +24,7 @@ namespace UI.MapSystem.Controls {
         /// <param name="go"></param>
         protected override void setup(GameObject go) {
             base.setup(go);
-            mapScene = gameObject.GetComponent<BaseMapScene>();
+            mapScene = SceneUtils.get<BaseMapScene>(go);
         }
 
         #endregion
@@ -50,8 +49,16 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         protected override void onStateExit() {
             base.onStateExit();
-            finish = false;
         }
-    }
+
+		/// <summary>
+		/// 状态结束回调
+		/// </summary>
+		protected override void onStateFinished() {
+			base.onStateFinished();
+			mapScene.resetCamera();
+		}
+
+	}
 
 }

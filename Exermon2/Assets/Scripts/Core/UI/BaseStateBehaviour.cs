@@ -101,7 +101,6 @@ namespace Core.UI {
         /// 状态进入
         /// </summary>
         protected virtual void onStateEnter() {
-			Debug.Log(animatorExtend + "." + stateInfo + ".onStateEnter");
 			finished = false;
 		}
 
@@ -131,7 +130,6 @@ namespace Core.UI {
 		/// 状态结束回调
 		/// </summary>
 		protected virtual void onStateFinished() {
-			Debug.Log(animatorExtend + "." + stateInfo + ".onStateFinished");
 			finished = true;
 			animatorExtend?.onStateEnd(stateInfo);
 		}
@@ -153,9 +151,7 @@ namespace Core.UI {
         /// 状态结束
         /// </summary>
         protected virtual void onStateExit() {
-			Debug.Log(animatorExtend + "." + stateInfo + ".onStateExit");
-			finished = true;
-			animatorExtend?.onStateEnd(stateInfo);
+			onStateFinished();
 		}
 
 	}
