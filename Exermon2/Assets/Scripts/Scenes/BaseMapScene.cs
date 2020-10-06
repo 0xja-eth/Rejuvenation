@@ -187,7 +187,7 @@ namespace UI.MapSystem {
 				messageSer.addMessage(DialogMessage.testData("@利大佬的程序小小弟 @利大佬的程序小弟 任务怎么样了",
 					"俪菌俺", 0));
 				messageSer.addMessage(DialogMessage.testData("就往面向的方向闪烁好了\n"+
-					"不需要轨迹吧", "富文"));
+					"不需要轨迹吧"));
 				Debug.Log("K " + messageSer.messageCount());
             }
         }

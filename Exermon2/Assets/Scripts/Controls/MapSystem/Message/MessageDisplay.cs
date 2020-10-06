@@ -27,8 +27,11 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 外部组件设置
 		/// </summary>
-		public Text dialogText;
-		public Text nameText;
+		public Text message;
+
+		public new Text name; 
+		public GameObject nameFrame; 
+
 		public Image bust;
 
 		public OptionContainer optionContainer;
@@ -88,7 +91,7 @@ namespace UI.MapSystem.Controls {
 		/// <param name="item"></param>
 		protected override void drawExactlyItem(DialogMessage item) {
 			base.drawExactlyItem(item);
-			drawMessage(item); drawBust(item);
+			drawMessage(item); drawName(item); drawBust(item);
 		}
 
 		/// <summary>
@@ -96,9 +99,16 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="item"></param>
 		void drawMessage(DialogMessage item) {
-			nameText.text = item.name;
-
 			doRoutine(printMessage(item.message));
+		}
+
+		/// <summary>
+		/// 绘制名称
+		/// </summary>
+		/// <param name="item"></param>
+		void drawName(DialogMessage item) {
+			nameFrame.SetActive(!string.IsNullOrEmpty(item.name));
+			name.text = item.name;
 		}
 
 		/// <summary>
@@ -107,7 +117,7 @@ namespace UI.MapSystem.Controls {
 		/// <param name="item"></param>
 		void drawBust(DialogMessage item) {
 			var bust = item.bust();
-
+			
 			this.bust.gameObject.SetActive(bust != null);
 			this.bust.overrideSprite = bust;
 		}
@@ -117,7 +127,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void drawEmptyItem() {
 			base.drawEmptyItem();
-			dialogText.text = nameText.text = "";
+			message.text = name.text = "";
 			bust.gameObject.SetActive(false);
 			bust.overrideSprite = null;
 		}
@@ -137,9 +147,9 @@ namespace UI.MapSystem.Controls {
 			onPrintStart();
 
 			foreach (var c in message) {
-				dialogText.text += c;
+				this.message.text += c;
 				if (stopPrintReq) {
-					dialogText.text = message;
+					this.message.text = message;
 					break;
 				}
 				yield return new WaitForSeconds(CharPrintDeltaTime);
@@ -153,7 +163,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		void onPrintStart() {
 			printing = true;
-			dialogText.text = "";
+			message.text = "";
 			optionContainer.deactivate();
 		}
 

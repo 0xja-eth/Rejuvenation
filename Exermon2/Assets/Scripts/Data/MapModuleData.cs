@@ -625,7 +625,8 @@ namespace MapModule.Data {
 		/// 获取测试数据
 		/// </summary>
 		/// <returns></returns>
-		public static DialogMessage testData(string message, string name, int bustId = 0) {
+		public static DialogMessage testData(
+			string message, string name = "", int bustId = 0) {
 			var msg = new DialogMessage();
 			msg.message = message;
 			msg.name = name;
