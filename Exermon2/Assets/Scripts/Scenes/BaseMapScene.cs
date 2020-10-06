@@ -185,7 +185,7 @@ namespace UI.MapSystem {
 				messageSer.addMessage(DialogMessage.testData("先公示国家奖学金和企业奖学金。要申请澳门、清远的直接交材料。有疑问的同学汇总到班委，明天下午2点前发给辅导员，没有疑问就按照这个交材料。注意国家奖学金和企业奖学金的材料提交日期是10月8日！",
 					"班长", 2));
 				messageSer.addMessage(DialogMessage.testData("@利大佬的程序小小弟 @利大佬的程序小弟 任务怎么样了",
-					"俪菌俺", 0));
+					"俪菌俺", 1));
 				messageSer.addMessage(DialogMessage.testData("就往面向的方向闪烁好了\n"+
 					"不需要轨迹吧"));
 				Debug.Log("K " + messageSer.messageCount());

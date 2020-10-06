@@ -20,11 +20,6 @@ namespace UI.MapSystem.Controls {
 	public class MessageDisplay : ItemDisplay<DialogMessage>{
 
 		/// <summary>
-		/// 文本打印间隔时间
-		/// </summary>
-		const float CharPrintDeltaTime = 0.1f;
-
-		/// <summary>
 		/// 外部组件设置
 		/// </summary>
 		public Text message;
@@ -35,6 +30,11 @@ namespace UI.MapSystem.Controls {
 		public Image bust;
 
 		public OptionContainer optionContainer;
+
+		/// <summary>
+		/// 外部变量设置
+		/// </summary>
+		public float printDeltaTime = 0.05f; // 文本打印间隔时间
 
 		/// <summary>
 		/// 内部组件设置
@@ -128,6 +128,7 @@ namespace UI.MapSystem.Controls {
 		protected override void drawEmptyItem() {
 			base.drawEmptyItem();
 			message.text = name.text = "";
+			nameFrame.SetActive(false);
 			bust.gameObject.SetActive(false);
 			bust.overrideSprite = null;
 		}
@@ -152,7 +153,7 @@ namespace UI.MapSystem.Controls {
 					this.message.text = message;
 					break;
 				}
-				yield return new WaitForSeconds(CharPrintDeltaTime);
+				yield return new WaitForSeconds(printDeltaTime);
 			}
 
 			onPrintEnd();
