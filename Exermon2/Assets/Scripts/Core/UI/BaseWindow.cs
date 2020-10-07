@@ -26,25 +26,26 @@ namespace Core.UI {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
-		public string shownState = "Shown"; // 显示状态名称
-        public string hiddenState = "Hidden"; // 隐藏状态名称
+		public string showingState = "Show"; // 显示动画状态名称
+        public string hidingState = "Hide"; // 隐藏动画状态名称
+		public string hiddenState = "Hidden"; // 隐藏状态名称
 
-        public string shownAttr = "shown"; // 显示状态属性
+		public string shownAttr = "shown"; // 显示状态属性
 
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
-		BaseScene scene;
+		protected BaseScene scene => SceneUtils.getCurrentScene();
 
 		/// <summary>
 		/// 显示状态
 		/// </summary>
-		public override bool shown {
-            get {
-				if (animator == null) return base.shown;
-                return base.shown && !animator.isState(hiddenState);
-            }
-        }
+		//public override bool shown {
+  //          get {
+		//		if (animator == null) return base.shown;
+		//		return base.shown; && !animator.isState(hiddenState);
+  //          }
+  //      }
 
         /// <summary>
         /// 动画过渡
@@ -59,7 +60,6 @@ namespace Core.UI {
         protected override void initializeOnce() {
             base.initializeOnce();
 			animator = animator ?? SceneUtils.get<AnimatorExtend>(transform);
-			scene = SceneUtils.getCurrentScene();
 
 			initializeStates();
 		}
@@ -68,8 +68,8 @@ namespace Core.UI {
         /// 初始化状态
         /// </summary>
         protected virtual void initializeStates() {
-            animator.addChangeEvent(shownState, onWindowShown);
-			animator.addChangeEvent(hiddenState, onWindowHidden);
+            animator.addEndEvent(showingState, onWindowShown);
+			animator.addEndEvent(hidingState, onWindowHidden);
         }
 
         #endregion

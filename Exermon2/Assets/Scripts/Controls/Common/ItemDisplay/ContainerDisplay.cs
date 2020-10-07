@@ -611,7 +611,7 @@ namespace UI.Common.Controls.ItemDisplays {
 		protected override void clear() {
 			base.clear();
 			clearCount();
-			clearItems();
+			//clearItems();
 		}
 
 		#endregion

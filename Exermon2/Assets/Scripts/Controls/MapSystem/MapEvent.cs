@@ -10,9 +10,9 @@ using GameModule.Services;
 
 using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.MapSystem {
-
-	using BattleSystem;
+namespace UI.MapSystem.Controls {
+    using Assets.Scripts.Controls.MapSystem.Message;
+    using BattleSystem.Controls;
 
 	/// <summary>
 	/// 地图上的事件
@@ -36,12 +36,15 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		protected GameService gameSer;
 
-		#region 初始化
 
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		protected override void initializeOnce() {
+        public MessageSender msgSender;
+
+        #region 初始化
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        protected override void initializeOnce() {
 			base.initializeOnce();
 			initializeActions();
 		}
@@ -91,7 +94,7 @@ namespace UI.Common.Controls.MapSystem {
 		}
 
 		/// <summary>
-		/// 添加事件
+		/// 移除事件
 		/// </summary>
 		/// <param name="action">事件</param>
 		/// <param name="cond">条件</param>

@@ -1,54 +1,65 @@
-﻿using MapModule.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UI.Common.Controls.ItemDisplays;
+﻿using System;
+
 using UnityEngine.UI;
 
-namespace UI.Common.Controls.ItemDisplays {
-    public class OptionDisplay :SelectableItemDisplay<DialogOption>{
+using MapModule.Data;
+
+using UI.Common.Controls.ItemDisplays;
+
+namespace UI.MapSystem.Controls {
+
+	using Windows;
+
+	/// <summary>
+	/// 选项显示
+	/// </summary>
+	public class OptionDisplay : SelectableItemDisplay<DialogOption>{
 
         /// <summary>
         /// 外部组件设置
         /// </summary>
         public Text text;
 
-        #region 激活和关闭
+		#region 数据控制
 
-        /// <summary>
-        /// 激活
-        /// </summary>
-        public override void activate() {
-            base.activate();
-            actived = false;
-        }
+		/// <summary>
+		/// 对话框窗口
+		/// </summary>
+		DialogWindow dialogWindow => (container as OptionContainer).messageDisplay.window;
 
-        #endregion
+		#endregion
 
-        #region 界面控制
+		#region 界面控制
 
-        /// <summary>
-        /// 绘制确切物品
-        /// </summary>
-        protected override void drawExactlyItem(DialogOption item) {
+		/// <summary>
+		/// 绘制确切物品
+		/// </summary>
+		protected override void drawExactlyItem(DialogOption item) {
             base.drawExactlyItem(item);
-            text.text = item.description;
+            text.text = item.text;
         }
 
-        #endregion
+		/// <summary>
+		/// 绘制空物品
+		/// </summary>
+		protected override void drawEmptyItem() {
+			base.drawEmptyItem();
+			text.text = "";
+		}
 
-        #region 状态控制
+		#endregion
 
-        /// <summary>
-        /// 选择
-        /// </summary>
-        public override void select() {
-            base.select();
-            item.action?.Invoke();
-        }
+		#region 回调控制
 
-        #endregion
-    }
+		/// <summary>
+		/// 点击回调
+		/// </summary>
+		public override void onClick() {
+			base.onClick();
+			dialogWindow.deactivate();
+			item?.invoke();
+		}
+
+		#endregion
+	}
 }

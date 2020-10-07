@@ -10,9 +10,9 @@ using UI.Common.Controls.AnimationSystem;
 
 using BattleModule.Data;
 
-namespace UI.Common.Controls.MapSystem {
+namespace UI.MapSystem.Controls {
 
-	using BattleSystem;
+	using BattleSystem.Controls;
 
 	/// <summary>
 	/// 主角近战攻击

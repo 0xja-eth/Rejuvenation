@@ -7,6 +7,8 @@ using UnityEngine.Events;
 
 using LitJson;
 
+using Config;
+
 using Core.Data;
 using Core.Utils;
 using Core.Systems;
@@ -118,7 +120,7 @@ namespace MapModule.Data {
         public const int XCnt = 3, YCnt = 3;
 
         const int DefaultPattern = 1;
-        const float PatternFrequency = 0.1f;
+        const float PatternFrequency = 0.2f;
 
         /// <summary>
         /// 方向位移
@@ -141,6 +143,9 @@ namespace MapModule.Data {
             Left = 4, None = 5, Right = 6,
             LeftDown = 1, Down = 2, RightDown = 3
         }
+        public const int DirectionCount = 9;
+
+        const float DirectionAngle = 45;
 
         /// <summary>
         /// 判断方向（静态）
@@ -149,19 +154,44 @@ namespace MapModule.Data {
         /// <param name="y"></param>
         /// <returns></returns>
         public static Direction vec2Dir8(float x, float y) {
+            if (x == 0 && y == 0) return Direction.None;
+
             if (x == 0 && y > 0) return Direction.Up;
             if (x == 0 && y < 0) return Direction.Down;
 
             if (x > 0 && y == 0) return Direction.Right;
-            if (x > 0 && y > 0) return Direction.RightUp;
-            if (x > 0 && y < 0) return Direction.RightDown;
-
             if (x < 0 && y == 0) return Direction.Left;
-            if (x < 0 && y > 0) return Direction.LeftUp;
-            if (x < 0 && y < 0) return Direction.LeftDown;
+
+            var angle = getAngle(x, y);
+
+            if (judgeAngle(angle, 0)) return Direction.Right;
+            if (judgeAngle(angle, 1)) return Direction.RightUp;
+            if (judgeAngle(angle, 2)) return Direction.Up;
+            if (judgeAngle(angle, 3)) return Direction.LeftUp;
+            if (judgeAngle(angle, 4)) return Direction.Left;
+            if (judgeAngle(angle, 5)) return Direction.LeftDown;
+            if (judgeAngle(angle, 6)) return Direction.Down;
+            if (judgeAngle(angle, 7)) return Direction.RightDown;
+
+            Debug.Log("vec2Dir => None: " + angle + "(" + x + "," + y + ")");
 
             return Direction.None;
         }
+        static float getAngle(float x, float y) {
+            var res = Mathf.Atan(y / x) / Mathf.PI * 180;
+
+            if (x > 0 && y < 0) res = 360 + res;
+            else if (x < 0) res = 180 + res;
+
+            return res;
+        }
+        static bool judgeAngle(float angle, int n) {
+            var stdA = DirectionAngle / 2; // 22.5
+            angle = angle - n * DirectionAngle; // 标准化
+
+            return -stdA < angle && angle <= stdA;
+        }
+
         public static Direction vec2Dir8(Vector2 vec) {
             return vec2Dir8(vec.x, vec.y);
         }
@@ -506,19 +536,113 @@ namespace MapModule.Data {
         }
 
         #endregion
-
-
     }
+
+    /// <summary>
+    /// 对话框选项
+    /// </summary>
+    [Serializable]
     public class DialogOption : BaseData {
-        public string description = "";
-        public UnityAction action;
+
+        /// <summary>
+        /// 属性
+        /// </summary>
+        public string text = "";
+
+        /// <summary>
+        /// 动作
+        /// </summary>
+        public List<UnityAction> actions = new List<UnityAction>();
+
+        /// <summary>
+        /// 添加动作
+        /// </summary>
+        /// <param name="action"></param>
+        public void addAction(UnityAction action) {
+            actions.Add(action);
+        }
+
+        /// <summary>
+        /// 执行
+        /// </summary>
+        public void invoke() {
+            foreach (var action in actions) action?.Invoke();
+        }
+
+        /// <summary>
+        /// 获取测试数据
+        /// </summary>
+        /// <returns></returns>
+        public static DialogOption testData(int index) {
+            var opt = new DialogOption();
+            opt.text = "选项" + index;
+            opt.actions.Add(() => Debug.Log("You selected: " + index));
+
+            return opt;
+        }
     }
 
+    /// <summary>
+    /// 对话框信息
+    /// </summary>
+    [Serializable]
     public class DialogMessage : BaseData {
+
+        /// <summary>
+        /// 属性
+        /// </summary>
         public string message = "";
         public string name = "";
-        public Sprite sprite;
         public List<DialogOption> options = new List<DialogOption>();
+
+        /// <summary>
+        /// 立绘
+        /// </summary>
+        [AutoConvert]
+        public int bustId { get; protected set; } // 立绘ID
+
+        /// <summary>
+        /// Editor中赋值
+        /// </summary>
+        [SerializeField] Sprite _bust = null;
+
+        /// <summary>
+        /// 获取立绘实例
+        /// </summary>
+        /// <returns></returns>
+        protected CacheAttr<Sprite> bust_ = null;
+        protected Sprite _bust_() {
+            return AssetLoader.loadAsset<Sprite>(
+                Asset.Type.Bust, bustId);
+        }
+        public Sprite bust() {
+            return _bust ?? bust_?.value();
+        }
+
+        /// <summary>
+        /// 获取测试数据
+        /// </summary>
+        /// <returns></returns>
+        public static DialogMessage testData(
+            string message, string name = "", int bustId = 0) {
+            var msg = new DialogMessage();
+            msg.message = message;
+            msg.name = name;
+
+            msg.bustId = bustId;
+
+            for (int i = 0; i < UnityEngine.Random.Range(0, 4); ++i)
+                msg.options.Add(DialogOption.testData(i));
+
+            return msg;
+        }
+    }
+
+    /// <summary>
+    /// 对话框信息们
+    /// </summary>
+    [Serializable]
+    public class DialogMsgs : BaseData {
+        public List<DialogMessage> msgs = new List<DialogMessage>();
     }
 }
-
