@@ -1052,7 +1052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f64363b1980ad04ab22407ce6f1ee54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 0
+  showDebug: 1
   msgsList:
   - cacheable: 0
     msgs:
@@ -1067,6 +1067,42 @@ MonoBehaviour:
       options:
       - cacheable: 0
         text: "\u7B2C\u4E00\u6B21\u5BF9\u8BDD\u7B2C\u4E8C\u6761\u4FE1\u606F\u7B2C\u4E00\u4E2A\u9009\u9879"
+        _event:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1815702170}
+              m_MethodName: A
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+            - m_Target: {fileID: 1815702170}
+              m_MethodName: B
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+            - m_Target: {fileID: 1815702170}
+              m_MethodName: C
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
       _bust: {fileID: 21300000, guid: ab72c8d0bb535ab4f960aadbcfa7864f, type: 3}
   - cacheable: 0
     msgs:
@@ -1259,12 +1295,12 @@ PrefabInstance:
     - target: {fileID: 2911615060274654774, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.49
+      value: -2.47
       objectReference: {fileID: 0}
     - target: {fileID: 2911615060274654774, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.85
+      value: -4.43
       objectReference: {fileID: 0}
     - target: {fileID: 2911615060274654774, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
@@ -1280,6 +1316,11 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultMoveSpeed
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2911615060304103683, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2911615060320482394, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
@@ -1386,10 +1427,20 @@ PrefabInstance:
       propertyPath: showDebug
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3857578746779199588, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4258885537423261042, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: showDebug
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5836860170270212381, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6563678257400563240, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
@@ -1404,6 +1455,16 @@ PrefabInstance:
     - target: {fileID: 6563678257400563240, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293764154527842221, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: showDebug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8576885044974312455, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

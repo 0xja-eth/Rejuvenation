@@ -20,6 +20,7 @@ namespace UI.BattleSystem.Controls {
 		/// 常量定义
 		/// </summary>
 		const float DeltaMoveTime = 0.5f;
+        const float deteAngle = 90.0f;
 
 		/// <summary>
 		/// 外部变量设置
@@ -94,7 +95,7 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected override void updateIdle() {
 			base.updateIdle();
-			updateEnemyBehaviour();
+            updateEnemyBehaviour();
 		}
 
 		/// <summary>
@@ -123,7 +124,11 @@ namespace UI.BattleSystem.Controls {
 		/// <returns></returns>
 		public bool isCritical() {
 			var dist = (pos - player.pos).magnitude;
-			return dist <= enemy.criticalRange;
+            Vector2 targetDirection = player.transform.position - transform.position;
+            Vector2 towardDirection = RuntimeCharacter.dir82Vec(direction);
+            float angle = Vector2.Angle(targetDirection, towardDirection);
+
+            return dist <= enemy.criticalRange && angle <= deteAngle;
 		}
 
 		/// <summary>
