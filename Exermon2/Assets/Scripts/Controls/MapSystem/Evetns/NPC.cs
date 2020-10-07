@@ -19,13 +19,10 @@ namespace UI.MapSystem.Controls.Events {
 	/// </summary>
 	public class NPC : MapEvent {
 
-        private void Start() {
-            debugLog("start");
-        }
-        /// <summary>
-        /// 初始化事件
-        /// </summary>
-        protected override void initializeActions() {
+		/// <summary>
+		/// 初始化事件
+		/// </summary>
+		protected override void initializeActions() {
 			base.initializeActions();
 			addTestAction();
 		}

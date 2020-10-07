@@ -553,6 +553,7 @@ namespace MapModule.Data {
         /// 动作
         /// </summary>
         public List<UnityAction> actions = new List<UnityAction>();
+        public UnityEvent _event = new UnityEvent();
 
         /// <summary>
         /// 添加动作
@@ -566,7 +567,8 @@ namespace MapModule.Data {
         /// 执行
         /// </summary>
         public void invoke() {
-            foreach (var action in actions) action?.Invoke();
+            _event?.Invoke();
+            //foreach (var action in actions) action?.Invoke();
         }
 
         /// <summary>

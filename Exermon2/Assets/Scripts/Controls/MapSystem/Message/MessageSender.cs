@@ -18,5 +18,15 @@ namespace Assets.Scripts.Controls.MapSystem.Message {
             msgsList.RemoveAt(0);
             return msgs;
         }
+
+        public void A() {
+            debugLog("AAA");
+        }
+        public void B() {
+            debugLog("BBB");
+        }
+        public void C() {
+            debugLog("CCC");
+        }
     }
 }
