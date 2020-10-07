@@ -96,7 +96,19 @@ namespace UI.BattleSystem.Controls {
 			if (updateSearching() || updateSkill()) stop();
 			else updateMovement();
 		}
-		
+
+		#endregion
+
+		#region 状态判断
+
+		/// <summary>
+		/// 能否移动
+		/// </summary>
+		/// <returns></returns>
+		public bool isMovable() {
+			return runtimeBattler.isMoveable();
+		}
+
 		#endregion
 
 		#region 输入控制变量

@@ -27,8 +27,11 @@ namespace UI.BattleSystem.Controls {
 		protected const string TargetStateName = "Target";
 		protected const string TargetAttrName = "target";
 
-		protected const string FreezeStateName = "Freeze";
+		protected const string FreezeStateName = "Frozen";
 		protected const string FreezeAttrName = "freezing";
+
+		protected const string DeadStateName = "Dead";
+		protected const string DeadAttrName = "dead";
 
 		/// <summary>
 		/// 外部组件设置
@@ -114,6 +117,13 @@ namespace UI.BattleSystem.Controls {
 			runtimeBattler?.addStateChange(
 				RuntimeBattler.State.Freezing,
 				RuntimeBattler.State.Idle, onFreezeEnd);
+
+			runtimeBattler?.addStateChange(
+				RuntimeBattler.State.Hitting,
+				RuntimeBattler.State.Dead, onDie);
+			runtimeBattler?.addStateChange(
+				RuntimeBattler.State.Freezing,
+				RuntimeBattler.State.Dead, onDie);
 		}
 
 		#endregion
@@ -133,29 +143,39 @@ namespace UI.BattleSystem.Controls {
 		protected virtual void updateUsing() {
 			updateActing();
 		}
-		
+
 		/// <summary>
 		/// 开始硬直回调
 		/// </summary>
 		protected virtual void onFreezeStart() {
 			animator?.setVar(FreezeAttrName, true);
+			stop();
 		}
 
 		/// <summary>
 		/// 结束硬直回调
 		/// </summary>
 		protected virtual void onFreezeEnd() {
-			animator.setVar(FreezeAttrName, false);
+			animator?.setVar(FreezeAttrName, false);
+		}
+
+		/// <summary>
+		/// 死亡回调
+		/// </summary>
+		protected virtual void onDie() {
+			animator?.setVar(FreezeAttrName, false);
+			animator?.setVar(DeadAttrName);
+			stop();
 		}
 
 		#endregion
 
-		#region 移动控制
+			#region 移动控制
 
-		/// <summary>
-		/// 移动速度
-		/// </summary>
-		/// <returns></returns>
+			/// <summary>
+			/// 移动速度
+			/// </summary>
+			/// <returns></returns>
 		public override float moveSpeed() {
             return runtimeBattler.speed;
 		}

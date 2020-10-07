@@ -1156,6 +1156,14 @@ namespace BattleModule.Data {
 			actions.Clear();
 		}
 
+		/// <summary>
+		/// 能否作为目标
+		/// </summary>
+		/// <returns></returns>
+		public bool isTargetEnable() {
+			return !isDead();
+		}
+
 		#endregion
 
 		#region 结果控制
@@ -1311,7 +1319,8 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <returns></returns>
 		public override bool isMoveable() {
-			return base.isMoveable() && !isActing();
+			return base.isMoveable() && 
+				!isActing() && !isHittingOrFreezing();
 		}
 
 		/// <summary>

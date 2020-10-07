@@ -192,7 +192,8 @@ namespace UI.MapSystem.Controls {
 		/// 是否为技能目标
 		/// </summary>
 		protected virtual bool isTarget(MapBattler battler) {
-			return this.battler.opponents().Contains(battler);
+			return battler.runtimeBattler.isTargetEnable() && 
+				this.battler.opponents().Contains(battler);
 		}
 
 		/// <summary>
