@@ -124,11 +124,22 @@ namespace UI.BattleSystem.Controls {
 		/// <returns></returns>
 		public bool isCritical() {
 			var dist = (pos - player.pos).magnitude;
+
             Vector2 targetDirection = player.transform.position - transform.position;
             Vector2 towardDirection = RuntimeCharacter.dir82Vec(direction);
             float angle = Vector2.Angle(targetDirection, towardDirection);
+            bool canSeePlayer = false;
+            Ray2D ray2D = new Ray2D(pos, player.pos);
+            Debug.DrawLine(pos, player.pos, Color.red, 1);
+            RaycastHit2D hit = Physics2D.Raycast(pos, player.pos - pos , 100, (1 << 11 | 1 << 10));
+            if (hit) {
+                Debug.Log(hit.collider.name);
+                if(hit.collider.name == "Player") {
+                    canSeePlayer = true;
+                }
+            }
 
-            return dist <= enemy.criticalRange && angle <= deteAngle;
+            return dist <= enemy.criticalRange && angle <= deteAngle && canSeePlayer;
 		}
 
 		/// <summary>
