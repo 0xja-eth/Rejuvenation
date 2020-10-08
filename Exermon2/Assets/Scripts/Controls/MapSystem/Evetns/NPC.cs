@@ -9,6 +9,8 @@ using Core.UI.Utils;
 using GameModule.Services;
 
 using Event = MapModule.Data.Event;
+using MapModule.Services;
+using MapModule.Data;
 
 namespace UI.MapSystem.Controls.Events {
 
@@ -30,9 +32,20 @@ namespace UI.MapSystem.Controls.Events {
 		/// </summary>
 		void addTestAction() {
 			var event_ = new Event(Event.TriggerType.CollSearch);
-			event_.actions.Add(() => debugLog("Searching."));
+            MessageService msgSer = MessageService.Get();
 
-			addEvent(event_);
+            event_.actions.Add(() => {
+                debugLog("Searching.");
+                if (SceneUtils.getCurrentScene<BaseMapScene>().isDialogued())
+                    return;
+                List<DialogMessage> msgs = msgSender.getMsgs();
+                if (msgs == null) return;
+                foreach(DialogMessage msg in msgs) {
+                    msgSer.addMessage(msg);
+                }
+                    
+            });
+            addEvent(event_);
 		}
 
 	}
