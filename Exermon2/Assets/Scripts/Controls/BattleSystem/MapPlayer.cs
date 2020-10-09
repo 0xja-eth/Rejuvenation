@@ -115,13 +115,25 @@ namespace UI.BattleSystem.Controls {
         /// 更新玩家输入事件
         /// </summary>
         void updateInput() {
-            if (!isInputable()) {
-                stop(); return;
-            }
-            // 返回 True => 有输入  返回 False => 无输入
-            if (updateSearching() || updateSkill()) stop();
-            else updateMovement();
-        }
+			if (!isInputable()) {
+				stop(); return;
+			}
+			// 返回 True => 有输入  返回 False => 无输入
+			if (updateSearching() || updateSkill()) stop();
+			else updateMovement();
+		}
+
+		#endregion
+
+		#region 状态判断
+
+		/// <summary>
+		/// 能否移动
+		/// </summary>
+		/// <returns></returns>
+		public bool isMovable() {
+			return runtimeBattler.isMoveable();
+		}
 
         #endregion
 
