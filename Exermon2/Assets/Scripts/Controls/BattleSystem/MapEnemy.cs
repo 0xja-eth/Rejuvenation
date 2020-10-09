@@ -130,10 +130,9 @@ namespace UI.BattleSystem.Controls {
             float angle = Vector2.Angle(targetDirection, towardDirection);
             bool canSeePlayer = false;
             Ray2D ray2D = new Ray2D(pos, player.pos);
-            Debug.DrawLine(pos, player.pos, Color.red, 1);
+            Debug.DrawLine(pos, player.pos, Color.red);
             RaycastHit2D hit = Physics2D.Raycast(pos, player.pos - pos , 100, (1 << 11 | 1 << 10));
             if (hit) {
-                Debug.Log(hit.collider.name);
                 if(hit.collider.name == "Player") {
                     canSeePlayer = true;
                 }
