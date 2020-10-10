@@ -34,8 +34,6 @@ namespace UI.BattleSystem.Controls {
         /// 外部变量定义
         /// </summary>
         public bool inputable = true;
-        public float dissolveAnt = 0f;
-        public Vector3 flashPos;
 
         /// <summary>
         /// 类型
@@ -50,10 +48,18 @@ namespace UI.BattleSystem.Controls {
         protected float xDelta => Input.GetAxisRaw("Horizontal");
         protected float yDelta => Input.GetAxisRaw("Vertical");
 
-        float lastXDelta;
-        float lastYDelta;
-        float flashCoolTime = 1f;
-        bool flashCanBeUserd = true;
+        Vector2 collCenter => pos + new Vector2(0f, collider.bounds.size.y / 2);//碰撞盒中心
+
+        const float flashCoolTime = 1f;//闪烁冷却时间
+        float flashCoolTimeRemain = flashCoolTime;//闪烁冷却计时
+        const float dissolveSpeed = 3f;//角色消失/出现速度
+        const float flashDistance = 2f;//闪烁距离
+        public float dissolveAnt = 0f;//据色出现/消失参数
+        public Vector2 flashPos;//闪烁最终落点
+
+        bool flashIsCooling = false;//闪烁是否冷却
+        bool flashBegin = false;//角色是否开始消失
+        bool flashEnd = false;//角色是否开始出现
 
         /// <summary>
         /// 外部系统设置
@@ -92,48 +98,31 @@ namespace UI.BattleSystem.Controls {
             base.update();
             updateInput();
 
-            if (!flashCanBeUserd) {
-                flashCoolTime -= Time.deltaTime * 3;
-                dissolveAnt += Time.deltaTime * 3;
-                dissolveAnt = Mathf.Clamp01(dissolveAnt);
-                material.SetFloat("_DissolveAmount", dissolveAnt);
-            }
-            if (flashCoolTime <= 0) {
-                flashCoolTime = 1f;
-                transform.position = flashPos;
-                flashCanBeUserd = true;
-            }
-            if (dissolveAnt > 0f && flashCoolTime >= 1f) {
-                inputable = true;
-                dissolveAnt -= Time.deltaTime * 3;
-                dissolveAnt = Mathf.Clamp01(dissolveAnt);
-                material.SetFloat("_DissolveAmount", dissolveAnt);
-            }
         }
 
         /// <summary>
         /// 更新玩家输入事件
         /// </summary>
         void updateInput() {
-			if (!isInputable()) {
-				stop(); return;
-			}
-			// 返回 True => 有输入  返回 False => 无输入
-			if (updateSearching() || updateSkill()) stop();
-			else updateMovement();
-		}
+            if (!isInputable()) {
+                stop(); return;
+            }
+            // 返回 True => 有输入  返回 False => 无输入
+            if (updateSearching() || updateSkill()) stop();
+            else updateMovement();
+        }
 
-		#endregion
+        #endregion
 
-		#region 状态判断
+        #region 状态判断
 
-		/// <summary>
-		/// 能否移动
-		/// </summary>
-		/// <returns></returns>
-		public bool isMovable() {
-			return runtimeBattler.isMoveable();
-		}
+        /// <summary>
+        /// 能否移动
+        /// </summary>
+        /// <returns></returns>
+        public bool isMovable() {
+            return runtimeBattler.isMoveable();
+        }
 
         #endregion
 
@@ -218,10 +207,6 @@ namespace UI.BattleSystem.Controls {
         /// <param name="val"></param>
         /// <returns></returns>
         float limitVal(float val) {
-            if (val != 0f) {
-                debugLog(val);
-                debugLog(Input.GetAxis("Horizontal"));
-            }
             return val > 0.5f ? 1 : (val < -0.5f ? -1 : 0);
         }
 
@@ -272,6 +257,7 @@ namespace UI.BattleSystem.Controls {
         bool updateSkill() {
             if (!isSkillUsable()) return false;
 
+            stop();
             var key = gameSer.keyboard.attackKey;
             attack = Input.GetKeyUp(key);
             attacking = Input.GetKey(key);
@@ -279,45 +265,88 @@ namespace UI.BattleSystem.Controls {
             if (attack) useSkill();
             if (attacking) attackTime += Time.deltaTime;
 
-            var keyflash = KeyCode.Space;
-            bool flash = Input.GetKey(keyflash);
-            Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);
-            if (flash && flashCanBeUserd) {
-                debugLog(base.collider.bounds.size);
-                Vector2 target = RuntimeCharacter.dir82Vec(direction);
-                Vector2 dropPos = pos + new Vector2(flashVec.x, flashVec.y) * 3f;
-                Collider2D collider = Physics2D.OverlapCircle(dropPos, 0.01f, 1 << 11);//碰撞检测信息存储
-                RaycastHit2D hit1 = Physics2D.Raycast(pos, target, 100, 1 << 11);//碰撞检测信息存储
-                float backDistance = 0.01f;
-                float flashDist = 0.0f;
-                Debug.DrawLine(pos, transform.position + new Vector3(flashVec.x, flashVec.y, 0) * 3f, Color.red, 10);//画线显示
-                if (collider) {
-                    Debug.Log(hit1.collider.name);//打印检测到的碰撞体名称
-                    while (backDistance <= 3f) {
-                        collider = Physics2D.OverlapCircle(pos + flashVec * backDistance, 0.01f, 1 << 11);//碰撞检测信息存储
-                        if (!collider) flashDist = backDistance;
-                        backDistance += 0.01f;
-                    }
-                    //if(backDistance > 3f) {
-                    //    flashPos = hit1.point;
-                    //    debugLog(flashVec);
-                    if (Mathf.Abs(flashVec.x) > 0f)
-                        flashPos = pos + new Vector2(flashVec.x * (flashDist - 0.3f), flashVec.y);
-                    else
-                        //}
-                        //else {
-                        flashPos = pos + flashVec * flashDist;
-                    //}
-                }
-                else {
-                    flashPos = transform.position + new Vector3(flashVec.x, flashVec.y, 0) * 3f;
-                }
-                inputable = false;
-                flashCanBeUserd = false;
-                flashCoolTime = 1f;
-            }
+            updateSkillFlash();
 
-            return attack || attacking;
+            var keyflash = gameSer.keyboard.rushKey;
+            bool flash = Input.GetKeyDown(keyflash);
+
+            if (flash && !flashIsCooling)
+                useSkillFlash();
+
+            return attack || attacking || (flashBegin && !flashEnd);
+        }
+
+
+        /// <summary>
+        /// 更新闪烁技能使用
+        /// </summary>
+        void updateSkillFlash() {
+            //闪烁冷却倒计时
+            if (flashIsCooling) {
+                flashCoolTimeRemain -= Time.deltaTime;
+            }
+            //闪烁冷却完成
+            if (flashCoolTimeRemain <= 0f) {
+                flashCoolTimeRemain = flashCoolTime;
+                flashIsCooling = false;
+                debugLog("cool end");
+            }
+            //闪烁开始，角色逐渐消失
+            if (flashBegin) {
+                dissolveAnt += Time.deltaTime * dissolveSpeed;
+                dissolveAnt = Mathf.Clamp01(dissolveAnt);
+                material.SetFloat("_DissolveAmount", dissolveAnt);
+            }
+            //角色完全消失，位置改变
+            if (flashBegin && dissolveAnt >= 1f) {
+                transform.position = flashPos;
+                flashBegin = false;
+                flashEnd = true;
+            }
+            //角色逐渐出现
+            if (!flashBegin && flashEnd) {
+                dissolveAnt -= Time.deltaTime * dissolveSpeed;
+                dissolveAnt = Mathf.Clamp01(dissolveAnt);
+                material.SetFloat("_DissolveAmount", dissolveAnt);
+            }
+            //闪烁结束
+            if (flashEnd && dissolveAnt <= 0f) {
+                flashEnd = false;
+            }
+        }
+
+
+        /// <summary>
+        /// 使用闪烁技能
+        /// </summary>
+        /// <param name="skill"></param>
+        void useSkillFlash() {
+            Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
+            Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
+            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.2f, collider.bounds.size.y - 0.2f);//微调碰撞盒
+            Collider2D collTemp = Physics2D.OverlapBox(dropPos,
+                colliderSize, 0f, 1 << 11);//落点碰撞判断
+
+            float flashDistStep = 0.05f;
+            float flashDistRes = 0.0f;
+
+            if (collTemp) {
+                //寻找最远落点
+                while (flashDistStep <= flashDistance) {
+                    collTemp = Physics2D.OverlapBox(collCenter + flashVec * flashDistStep, colliderSize, 0f, 1 << 11);
+                    if (!collTemp)
+                        flashDistRes = flashDistStep;
+                    flashDistStep += 0.05f;
+                }
+                Vector2 offset = flashVec * flashDistRes;
+                flashPos = pos + offset;
+            }
+            //直接闪烁到最远距离
+            else {
+                flashPos = pos + flashVec * flashDistance;
+            }
+            flashIsCooling = true;
+            flashBegin = true;
         }
 
         /// <summary>
