@@ -164,7 +164,7 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected virtual void onDie() {
 			animator?.setVar(FreezeAttrName, false);
-			animator?.setVar(DeadAttrName);
+			animator?.setVar(DeadAttrName, true);
 			stop();
 		}
 
