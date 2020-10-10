@@ -202,15 +202,7 @@ namespace UI.BattleSystem.Controls {
         #region 移动控制
 
         /// <summary>
-        /// 开关变量值
-        /// </summary>
-        /// <param name="val"></param>
-        /// <returns></returns>
-        float limitVal(float val) {
-            return val > 0.5f ? 1 : (val < -0.5f ? -1 : 0);
-        }
 
-        /// <summary>
         /// 更新移动
         /// </summary>
         bool updateMovement() {

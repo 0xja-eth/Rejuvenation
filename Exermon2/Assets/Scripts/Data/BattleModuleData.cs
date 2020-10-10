@@ -1161,7 +1161,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <returns></returns>
 		public bool isTargetEnable() {
-			return !isDead();
+			return !isDead() && !isHitting();
 		}
 
 		#endregion
