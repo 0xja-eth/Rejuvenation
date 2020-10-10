@@ -47,8 +47,11 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         public Actor actor => playerSer.actor;
 
-        protected float xDelta => limitVal(Input.GetAxis("Horizontal"));
-        protected float yDelta => limitVal(Input.GetAxis("Vertical"));
+        protected float xDelta => Input.GetAxisRaw("Horizontal");
+        protected float yDelta => Input.GetAxisRaw("Vertical");
+
+        float lastXDelta;
+        float lastYDelta;
         float flashCoolTime = 1f;
         bool flashCanBeUserd = true;
 
@@ -215,6 +218,10 @@ namespace UI.BattleSystem.Controls {
         /// <param name="val"></param>
         /// <returns></returns>
         float limitVal(float val) {
+            if (val != 0f) {
+                debugLog(val);
+                debugLog(Input.GetAxis("Horizontal"));
+            }
             return val > 0.5f ? 1 : (val < -0.5f ? -1 : 0);
         }
 
@@ -223,7 +230,7 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         bool updateMovement() {
             var speed = new Vector2(xDelta, yDelta);
-            var flag = speed.x == 0 && speed.y == 0;
+            var flag = (speed.x == 0 && speed.y == 0);
 
             if (flag) stop();
             else moveDirection(RuntimeCharacter.vec2Dir8(speed));
@@ -281,21 +288,21 @@ namespace UI.BattleSystem.Controls {
                 Vector2 dropPos = pos + new Vector2(flashVec.x, flashVec.y) * 3f;
                 Collider2D collider = Physics2D.OverlapCircle(dropPos, 0.01f, 1 << 11);//碰撞检测信息存储
                 RaycastHit2D hit1 = Physics2D.Raycast(pos, target, 100, 1 << 11);//碰撞检测信息存储
-                float backDistance = 0.1f;
+                float backDistance = 0.01f;
                 float flashDist = 0.0f;
-                Debug.DrawLine(pos, transform.position + new Vector3(flashVec.x, flashVec.y, 0) * 3f, Color.red, 1);//画线显示
+                Debug.DrawLine(pos, transform.position + new Vector3(flashVec.x, flashVec.y, 0) * 3f, Color.red, 10);//画线显示
                 if (collider) {
                     Debug.Log(hit1.collider.name);//打印检测到的碰撞体名称
                     while (backDistance <= 3f) {
-                        collider = Physics2D.OverlapCircle(pos + flashVec * backDistance, 0.1f, 1 << 11);//碰撞检测信息存储
+                        collider = Physics2D.OverlapCircle(pos + flashVec * backDistance, 0.01f, 1 << 11);//碰撞检测信息存储
                         if (!collider) flashDist = backDistance;
-                        backDistance += 0.1f;
+                        backDistance += 0.01f;
                     }
                     //if(backDistance > 3f) {
                     //    flashPos = hit1.point;
                     //    debugLog(flashVec);
                     if (Mathf.Abs(flashVec.x) > 0f)
-                        flashPos = pos + new Vector2(flashVec.x * (flashDist - 0.2f), flashVec.y);
+                        flashPos = pos + new Vector2(flashVec.x * (flashDist - 0.3f), flashVec.y);
                     else
                         //}
                         //else {
