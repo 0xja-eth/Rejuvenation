@@ -32,20 +32,20 @@ namespace UI.MapSystem.Controls.Events {
 		/// </summary>
 		void addTestAction() {
 			var event_ = new Event(Event.TriggerType.CollSearch);
-            MessageService msgSer = MessageService.Get();
+            //MessageService msgSer = MessageService.Get();
 
-            event_.actions.Add(() => {
-                debugLog("Searching.");
-                if (SceneUtils.getCurrentScene<BaseMapScene>().isDialogued())
-                    return;
-                List<DialogMessage> msgs = msgSender.getMsgs();
-                if (msgs == null) return;
-                foreach(DialogMessage msg in msgs) {
-                    msgSer.addMessage(msg);
-                }
+            //event_.actions.Add(() => {
+            //    debugLog("Searching.");
+            //    if (SceneUtils.getCurrentScene<BaseMapScene>().isDialogued())
+            //        return;
+            //    List<DialogMessage> msgs = msgSender.getMsgs();
+            //    if (msgs == null) return;
+            //    foreach(DialogMessage msg in msgs) {
+            //        msgSer.addMessage(msg);
+            //    }
                     
-            });
-            addEvent(event_);
+            //});
+            //addEvent(event_);
 		}
 
 	}

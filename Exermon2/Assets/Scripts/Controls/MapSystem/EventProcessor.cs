@@ -146,7 +146,7 @@ namespace UI.MapSystem.Controls {
 		/// 处理事件
 		/// </summary>
 		void processAction() {
-			item?.process();
+			item?.invoke();
 		}
 
 		#endregion

@@ -24,10 +24,11 @@ namespace MapModule { }
 /// </summary>
 namespace MapModule.Data {
 
-    /// <summary>
-    /// 事件
-    /// </summary>
-    public class Event : BaseData {
+	/// <summary>
+	/// 事件
+	/// </summary>
+	[Serializable]
+	public class Event : BaseData {
 
         /// <summary>
         /// 触发类型
@@ -60,32 +61,45 @@ namespace MapModule.Data {
         /// </summary>
         public List<Condition> conditions { get; protected set; } = new List<Condition>();
 
-        /// <summary>
-        /// 事件
-        /// </summary>
-        public List<UnityAction> actions { get; protected set; } = new List<UnityAction>();
+		/// <summary>
+		/// 事件
+		/// </summary>
+		public UnityEvent actions { get; protected set; } = new UnityEvent();
 
-        /// <summary>
-        /// 显示的图片
-        /// </summary>
-        public Sprite picture { get; protected set; }
+		/// <summary>
+		/// 显示的图片
+		/// </summary>
+		public Sprite picture { get; protected set; }
 
         /// <summary>
         /// 构造函数
         /// </summary>
         public Event() { }
-        public Event(TriggerType triggerType,
-            List<Condition> conditions = null, List<UnityAction> actions = null) {
-            this.triggerType = triggerType;
-            if (conditions != null) this.conditions = conditions;
-            if (actions != null) this.actions = actions;
-        }
+		public Event(TriggerType triggerType) {
+			this.triggerType = triggerType;
+		}
 
-        /// <summary>
-        /// 是否在条件内
-        /// </summary>
-        /// <returns></returns>
-        public bool isValid() {
+		/// <summary>
+		/// 添加条件
+		/// </summary>
+		/// <param name="cond"></param>
+		public void addCondition(Condition cond) {
+			conditions.Add(cond);
+		}
+
+		/// <summary>
+		/// 添加行动
+		/// </summary>
+		/// <param name="action"></param>
+		public void addAction(UnityAction action) {
+			actions.AddListener(action);
+		}
+
+		/// <summary>
+		/// 是否在条件内
+		/// </summary>
+		/// <returns></returns>
+		public bool isValid() {
             foreach (var cond in conditions)
                 if (cond != null && !cond.Invoke()) return false;
             return true;
@@ -94,8 +108,9 @@ namespace MapModule.Data {
         /// <summary>
         /// 处理行动事件
         /// </summary>
-        public void process() {
-            foreach (var action in actions) action?.Invoke();
+        public void invoke() {
+			actions.Invoke();
+            //foreach (var action in actions) action?.Invoke();
         }
     }
 
@@ -559,11 +574,11 @@ namespace MapModule.Data {
         #endregion
     }
 
-    /// <summary>
-    /// 对话框选项
-    /// </summary>
-    [Serializable]
-    public class DialogOption : BaseData {
+	/// <summary>
+	/// 对话框选项
+	/// </summary>
+	[Serializable]
+	public class DialogOption : BaseData {
 
         /// <summary>
         /// 属性
@@ -573,22 +588,22 @@ namespace MapModule.Data {
         /// <summary>
         /// 动作
         /// </summary>
-        public List<UnityAction> actions = new List<UnityAction>();
-        public UnityEvent _event = new UnityEvent();
+        //public List<UnityAction> actions = new List<UnityAction>();
+        public UnityEvent actions = new UnityEvent();
 
         /// <summary>
         /// 添加动作
         /// </summary>
         /// <param name="action"></param>
         public void addAction(UnityAction action) {
-            actions.Add(action);
+            actions.AddListener(action);
         }
 
         /// <summary>
         /// 执行
         /// </summary>
         public void invoke() {
-            _event?.Invoke();
+            actions?.Invoke();
             //foreach (var action in actions) action?.Invoke();
         }
 
@@ -599,24 +614,25 @@ namespace MapModule.Data {
         public static DialogOption testData(int index) {
             var opt = new DialogOption();
             opt.text = "选项" + index;
-            opt.actions.Add(() => Debug.Log("You selected: " + index));
+            opt.addAction(() => Debug.Log("You selected: " + index));
 
             return opt;
         }
     }
 
-    /// <summary>
-    /// 对话框信息
-    /// </summary>
-    [Serializable]
-    public class DialogMessage : BaseData {
+	/// <summary>
+	/// 对话框信息
+	/// </summary>
+	[Serializable]
+	public class DialogMessage : BaseData {
 
         /// <summary>
         /// 属性
         /// </summary>
         public string message = "";
         public string name = "";
-        public List<DialogOption> options = new List<DialogOption>();
+		[SerializeField]
+		public List<DialogOption> options = new List<DialogOption>();
 
         /// <summary>
         /// 立绘
@@ -661,11 +677,16 @@ namespace MapModule.Data {
         }
     }
 
-    /// <summary>
-    /// 对话框信息们
-    /// </summary>
-    [Serializable]
-    public class DialogMsgs : BaseData {
-        public List<DialogMessage> msgs = new List<DialogMessage>();
+	/// <summary>
+	/// 对话框信息集合
+	/// </summary>
+	[Serializable]
+	public class DialogMessageGroup : BaseData {
+
+		/// <summary>
+		/// 消息集合
+		/// </summary>
+		[SerializeField]
+		public List<DialogMessage> group = new List<DialogMessage>();
     }
 }
