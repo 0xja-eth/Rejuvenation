@@ -172,8 +172,9 @@ namespace MapModule.Data {
             if (judgeAngle(angle, 5)) return Direction.LeftDown;
             if (judgeAngle(angle, 6)) return Direction.Down;
             if (judgeAngle(angle, 7)) return Direction.RightDown;
+			if (judgeAngle(angle, 8)) return Direction.Right;
 
-            Debug.Log("vec2Dir => None: " + angle + "(" + x + "," + y + ")");
+			Debug.Log("vec2Dir => None: " + angle + "(" + x + "," + y + ")");
 
             return Direction.None;
         }
@@ -450,23 +451,43 @@ namespace MapModule.Data {
             stateMachine.addStateDict(state, action);
         }
 
-        /// <summary>
-        /// 注册状态更新函数
-        /// </summary>
-        /// <param name="state">状态</param>
-        /// <param name="action">行动</param>
-        public void addStateChange(Enum from, Enum to, UnityAction action) {
-            stateMachine.addStateChange(from, to, action);
-        }
+		/// <summary>
+		/// 注册状态切换函数
+		/// </summary>
+		/// <param name="state">状态</param>
+		/// <param name="action">行动</param>
+		public void addStateChange(Enum from, Enum to, UnityAction action) {
+			stateMachine.addStateChange(from, to, action);
+		}
 
-        /// <summary>
-        /// 更换状态
-        /// </summary>
-        /// <param name="state"></param>
-        public void changeState(Enum state) {
-            //Debug.Log("changeState: " + this + ": " +
-                //Enum.ToObject(state.GetType(), this.state) + " -> " + state);
-            stateMachine.changeState(state);
+		/// <summary>
+		/// 注册状态进入函数
+		/// </summary>
+		/// <param name="enumType">类型</param>
+		/// <param name="to">初状态</param>
+		/// <param name="action">动作</param>
+		public void addStateEnter(Enum to, UnityAction action) {
+			stateMachine.addStateEnter(to, action);
+		}
+
+		/// <summary>
+		/// 注册状态退出函数
+		/// </summary>
+		/// <param name="enumType">类型</param>
+		/// <param name="from">初状态</param>
+		/// <param name="action">动作</param>
+		public void addStateExit(Enum from, UnityAction action) {
+			stateMachine.addStateExit(from, action);
+		}
+
+		/// <summary>
+		/// 更换状态
+		/// </summary>
+		/// <param name="state"></param>
+		public void changeState(Enum state) {
+			Debug.Log("changeState: " + this + ": " +
+				Enum.ToObject(state.GetType(), this.state) + " -> " + state);
+			stateMachine.changeState(state);
         }
 
         /// <summary>
