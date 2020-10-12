@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1361,41 +1361,15 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 2911615060221607326, guid: 55f8fd873c22a3346a39c90495349635,
-        type: 3}
-      propertyPath: m_Tiles.Array.data[163].second.m_TileSpriteIndex
-      value: 740
-      objectReference: {fileID: 0}
-    - target: {fileID: 2911615060221607326, guid: 55f8fd873c22a3346a39c90495349635,
-        type: 3}
-      propertyPath: m_TileSpriteArray.Array.data[739].m_RefCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2911615060221607326, guid: 55f8fd873c22a3346a39c90495349635,
-        type: 3}
-      propertyPath: m_TileSpriteArray.Array.data[739].m_Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2911615060221607326, guid: 55f8fd873c22a3346a39c90495349635,
-        type: 3}
-      propertyPath: m_TileSpriteArray.Array.data[740].m_RefCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2911615060221607326, guid: 55f8fd873c22a3346a39c90495349635,
-        type: 3}
-      propertyPath: m_TileSpriteArray.Array.data[740].m_Data
-      value: 
-      objectReference: {fileID: -8762737429155719642, guid: 298594f7a255c684ca35df6b5074ee61,
-        type: 3}
     - target: {fileID: 2911615060274654774, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.56
+      value: -2.81
       objectReference: {fileID: 0}
     - target: {fileID: 2911615060274654774, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.79
+      value: -3.94
       objectReference: {fileID: 0}
     - target: {fileID: 2911615060274654774, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}

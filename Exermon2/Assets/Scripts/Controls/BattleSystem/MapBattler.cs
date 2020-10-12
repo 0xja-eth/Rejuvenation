@@ -102,27 +102,15 @@ namespace UI.BattleSystem.Controls {
 			runtimeBattler?.addStateDict(
 				RuntimeBattler.State.Using, updateUsing);
 
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Idle, 
-				RuntimeBattler.State.Hitting, onFreezeStart);
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Moving,
-				RuntimeBattler.State.Hitting, onFreezeStart);
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Using,
+			runtimeBattler?.addStateEnter(
 				RuntimeBattler.State.Hitting, onFreezeStart);
 
 			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
 
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Freezing,
-				RuntimeBattler.State.Idle, onFreezeEnd);
+			runtimeBattler?.addStateExit(
+				RuntimeBattler.State.Freezing, onFreezeEnd);
 
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Hitting,
-				RuntimeBattler.State.Dead, onDie);
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Freezing,
+			runtimeBattler?.addStateEnter( 
 				RuntimeBattler.State.Dead, onDie);
 		}
 
@@ -170,7 +158,7 @@ namespace UI.BattleSystem.Controls {
 
 		#endregion
 
-			#region 移动控制
+		#region 移动控制
 
 			/// <summary>
 			/// 移动速度

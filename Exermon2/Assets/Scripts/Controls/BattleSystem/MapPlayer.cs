@@ -22,7 +22,7 @@ namespace UI.BattleSystem.Controls {
         /// <summary>
         /// 远程攻击蓄力时间
         /// </summary>
-        const float LongRangeSkillTime = 1;
+        const float LongRangeSkillTime = 0.5f;
 
         /// <summary>
         /// 外部组件设置
@@ -255,8 +255,11 @@ namespace UI.BattleSystem.Controls {
             attacking = Input.GetKey(key);
 
             if (attack) useSkill();
-            if (attacking) attackTime += Time.deltaTime;
-
+            if (attacking) {
+                attackTime += Time.deltaTime;
+                debugLog(attackTime);
+            }
+            
             updateSkillFlash();
 
             var keyflash = gameSer.keyboard.rushKey;

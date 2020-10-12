@@ -99,12 +99,12 @@ namespace UI.MapSystem.Controls {
 		/// 配置运行时角色
 		/// </summary>
 		protected virtual void setupStateChanges() {
-			runtimeCharacter?.addStateChange(
-				RuntimeCharacter.State.Idle,
+
+			runtimeCharacter?.addStateEnter(
 				RuntimeCharacter.State.Moving, onMoveStart);
-			runtimeCharacter?.addStateChange(
-				RuntimeCharacter.State.Moving,
-				RuntimeCharacter.State.Idle, onMoveEnd);
+			runtimeCharacter?.addStateExit(
+				RuntimeCharacter.State.Moving, onMoveEnd);
+
 			runtimeCharacter?.addStateDict(
 				RuntimeCharacter.State.Moving, onMove);
 		}
