@@ -1,9 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Scripting;
 
 using LitJson;
 
@@ -13,6 +15,33 @@ using Core.Data;
 using Core.Utils;
 using Core.Systems;
 using Core.Data.Loaders;
+
+///// <summary>
+///// Unity拓展
+///// </summary>
+//namespace UnityEngine.Events {
+
+//	/// <summary>
+//	/// 条件
+//	/// </summary>
+//	[RequiredByNativeCode]
+//	public class UnityCondition : UnityEventBase {
+
+//		public UnityCondition() { }
+
+//		public void AddListener(UnityAction call) { }
+
+//		public void Invoke() { }
+
+//		public void RemoveListener(UnityAction call) { }
+//		protected override MethodInfo FindMethod_Impl(string name, object targetObj) { }
+
+//		internal override BaseInvokableCall GetDelegate(object target, MethodInfo theFunction) {
+//			throw new NotImplementedException();
+//		}
+//	}
+
+//}
 
 /// <summary>
 /// 地图模块
@@ -30,26 +59,26 @@ namespace MapModule.Data {
 	[Serializable]
 	public class Event : BaseData {
 
-        /// <summary>
-        /// 触发类型
-        /// </summary>
-        public enum TriggerType {
+		/// <summary>
+		/// 触发类型
+		/// </summary>
+		public enum TriggerType {
 
-            Never, // 不会触发
+			Never, // 不会触发
 
-            CollEnter, // 碰撞开始
-            CollStay, // 碰撞盒内持续
-            CollSearch, // 碰撞盒内按下搜索键
-            CollExit, // 碰撞结束
+			CollEnter, // 碰撞开始
+			CollStay, // 碰撞盒内持续
+			CollSearch, // 碰撞盒内按下搜索键
+			CollExit, // 碰撞结束
 
-            Always, // 总是执行
-        }
+			Always, // 总是执行
+		}
 
-        /// <summary>
-        /// 条件函数
-        /// </summary>
-        /// <returns></returns>
-        public delegate bool Condition();
+		/// <summary>
+		/// 条件函数
+		/// </summary>
+		/// <returns></returns>
+		public delegate bool Condition();
 
         /// <summary>
         /// 触发类型
@@ -677,16 +706,4 @@ namespace MapModule.Data {
         }
     }
 
-	/// <summary>
-	/// 对话框信息集合
-	/// </summary>
-	[Serializable]
-	public class DialogMessageGroup : BaseData {
-
-		/// <summary>
-		/// 消息集合
-		/// </summary>
-		[SerializeField]
-		public List<DialogMessage> group = new List<DialogMessage>();
-    }
 }

@@ -5,37 +5,45 @@ using UnityEngine;
 
 using Core.UI;
 
+using MapModule.Services;
+
 using MapModule.Data;
 
-namespace Assets.Scripts.Controls.MapSystem.Message {
+namespace UI.MapSystem.Controls {
 
 	/// <summary>
 	/// 消息发送组件
+	/// 实际使用还需要继承该类，用于添加触发条件
 	/// </summary>
-	public class MessageSender : GeneralComponent {
+	public class MessageSender : MapEventPage {
 
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
 		[SerializeField]
-		public List<DialogMessageGroup> messages = new List<DialogMessageGroup>();
-        
+		public List<DialogMessage> messages = new List<DialogMessage>();
+
 		/// <summary>
-		/// 获取消息
+		/// 外部系统设置
 		/// </summary>
-		/// <returns></returns>
-        public List<DialogMessage> getMsgs() {
-            if (messages.Count == 0)
-                return null;
-            List<DialogMessage> msgs = messages[0].group;
-            messages.RemoveAt(0);
-            return msgs;
-        }
+		protected MessageService messageSer;
+
+		#region 事件调用
+
+		/// <summary>
+		/// 自定义调用
+		/// </summary>
+		protected override void invokeCustom() {
+			base.invokeCustom();
+			messageSer.addMessages(messages);
+		}
+
+		#endregion
 
 		/// <summary>
 		/// 测试事件
 		/// </summary>
-        public void A() {
+		public void A() {
             debugLog("AAA");
         }
         public void B() {

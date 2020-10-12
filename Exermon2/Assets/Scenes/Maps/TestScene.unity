@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1069,91 +1069,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 1
-  msgsList:
-  - cacheable: 0
-    msgs:
-    - cacheable: 0
-      message: "\u7B2C\u4E00\u6B21\u5BF9\u8BDD\u7B2C\u4E00\u6761\u4FE1\u606F"
-      name: "\u673A\u5668\u4EBA"
-      options: []
-      _bust: {fileID: 21300000, guid: e41ed3f362aa2f642a2cc9c9f057b490, type: 3}
-    - cacheable: 0
-      message: "\u7B2C\u4E00\u6B21\u5BF9\u8BDD\u7B2C\u4E8C\u6761\u4FE1\u606F"
-      name: "\u72FC"
-      options:
-      - cacheable: 0
-        text: "\u7B2C\u4E00\u6B21\u5BF9\u8BDD\u7B2C\u4E8C\u6761\u4FE1\u606F\u7B2C\u4E00\u4E2A\u9009\u9879"
-        _event:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1815702170}
-              m_MethodName: A
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
-            - m_Target: {fileID: 1815702170}
-              m_MethodName: B
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
-            - m_Target: {fileID: 1815702170}
-              m_MethodName: C
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
-      _bust: {fileID: 21300000, guid: ab72c8d0bb535ab4f960aadbcfa7864f, type: 3}
-  - cacheable: 0
-    msgs:
-    - cacheable: 0
-      message: "\u7B2C\u4E8C\u6B21\u5BF9\u8BDD\u7B2C\u4E00\u6761\u4FE1\u606F"
-      name: "\u673A\u5668\u4EBA"
-      options: []
-      _bust: {fileID: 21300000, guid: e41ed3f362aa2f642a2cc9c9f057b490, type: 3}
-    - cacheable: 0
-      message: "\u7B2C\u4E8C\u6B21\u5BF9\u8BDD\u7B2C\u4E8C\u6761\u4FE1\u606F"
-      name: "\u72FC"
-      options: []
-      _bust: {fileID: 21300000, guid: ab72c8d0bb535ab4f960aadbcfa7864f, type: 3}
-    - cacheable: 0
-      message: "\u7B2C\u4E8C\u6B21\u5BF9\u8BDD\u7B2C\u4E09\u6761\u4FE1\u606F"
-      name: "\u673A\u5668\u4EBA"
-      options: []
-      _bust: {fileID: 21300000, guid: e41ed3f362aa2f642a2cc9c9f057b490, type: 3}
-  - cacheable: 0
-    msgs:
-    - cacheable: 0
-      message: "\u7B2C\u4E09\u6B21\u5BF9\u8BDD\u7B2C\u4E00\u6761\u4FE1\u606F"
-      name: "\u673A\u5668\u4EBA"
-      options: []
-      _bust: {fileID: 21300000, guid: e41ed3f362aa2f642a2cc9c9f057b490, type: 3}
-    - cacheable: 0
-      message: "\u7B2C\u4E8C\u6B21\u5BF9\u8BDD\u7B2C\u4E8C\u6761\u4FE1\u606F"
-      name: "\u72FC"
-      options: []
-      _bust: {fileID: 21300000, guid: ab72c8d0bb535ab4f960aadbcfa7864f, type: 3}
-    - cacheable: 0
-      message: "\u7B2C\u4E09\u6B21\u5BF9\u8BDD\u7B2C\u4E09\u6761\u4FE1\u606F"
-      name: "\u673A\u5668\u4EBA"
-      options: []
-      _bust: {fileID: 21300000, guid: e41ed3f362aa2f642a2cc9c9f057b490, type: 3}
+  triggerType: 0
+  actions:
+    m_PersistentCalls:
+      m_Calls: []
+  picture: {fileID: 0}
+  invokeOnce: 0
+  messages: []
 --- !u!224 &1902667770 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7037944107178182160, guid: 40fb4fcca0f42944e9ee74f953ab8e63,
@@ -1508,11 +1430,6 @@ PrefabInstance:
       propertyPath: showDebug
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3523165676537283723, guid: 55f8fd873c22a3346a39c90495349635,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 3857578746779199588, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_IsActive
