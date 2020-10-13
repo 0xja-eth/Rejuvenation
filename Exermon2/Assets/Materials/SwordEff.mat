@@ -21,4 +21,5 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats: []
-    m_Colors: []
+    m_Colors:
+    - Color_34D594C2: {r: 0, g: 4, b: 4, a: 1}
