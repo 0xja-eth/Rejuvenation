@@ -8,8 +8,6 @@ using BattleModule.Data;
 using GameModule.Services;
 using PlayerModule.Services;
 
-using Event = MapModule.Data.Event;
-
 namespace UI.BattleSystem.Controls {
 
     using MapSystem.Controls;
