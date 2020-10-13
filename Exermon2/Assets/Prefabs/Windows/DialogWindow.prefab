@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 36, y: -48}
-  m_SizeDelta: {x: 48, y: 48}
+  m_AnchoredPosition: {x: 52, y: -64}
+  m_SizeDelta: {x: 72, y: 64}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7037944105701318924
 CanvasRenderer:
@@ -65,11 +65,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_Font: {fileID: 12800000, guid: 7fc01cb73294f0640b4f3a5c0b91948f, type: 3}
+    m_FontSize: 36
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 69
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -130,7 +130,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 72, y: 48}
+  m_SizeDelta: {x: 104, y: 64}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &7037944105968620975
 CanvasRenderer:
@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 12
-    m_Right: 12
+    m_Left: 16
+    m_Right: 16
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
@@ -427,8 +427,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -12}
-  m_SizeDelta: {x: -24, y: -66}
+  m_AnchoredPosition: {x: 0, y: -16}
+  m_SizeDelta: {x: -32, y: -70}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7037944106746631957
 CanvasRenderer:
@@ -457,8 +457,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 16
+    m_Font: {fileID: 12800000, guid: 7fc01cb73294f0640b4f3a5c0b91948f, type: 3}
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -603,6 +603,7 @@ MonoBehaviour:
   nameFrame: {fileID: 7037944105968620970}
   bust: {fileID: 7037944106000128902}
   optionContainer: {fileID: 8889563049566589706}
+  printDeltaTime: 0.05
   window: {fileID: 0}
 --- !u!1001 &7037944106814084876
 PrefabInstance:

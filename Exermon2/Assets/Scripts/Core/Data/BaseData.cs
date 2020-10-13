@@ -354,6 +354,7 @@ namespace Core.Data {
 		/// <summary>
 		/// 能否缓存标记
 		/// </summary>
+		[HideInInspector]
 		public bool cacheable = true;
 
 		/// <summary>

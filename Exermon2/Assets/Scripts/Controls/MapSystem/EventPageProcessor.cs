@@ -18,7 +18,7 @@ namespace UI.MapSystem.Controls {
 	/// 地图上的事件
 	/// </summary>
 	[RequireComponent(typeof(Collider2D))]
-	public class EventProcessor : ItemDisplay<Event> {
+	public class EventPageProcessor : ItemDisplay<MapEventPage> {
 
 		/// <summary>
 		/// 外部组件设置
@@ -55,7 +55,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			processTrigger(Event.TriggerType.Always);
+			processTrigger(MapEventPage.TriggerType.Always);
 		}
 
 		#endregion
@@ -126,10 +126,10 @@ namespace UI.MapSystem.Controls {
 		/// <param name="player">触发相关的玩家</param>
 		/// <param name="type">触发类型</param>
 		/// <returns></returns>
-		public void processTrigger(MapPlayer player, Event.TriggerType type) {
+		public void processTrigger(MapPlayer player, MapEventPage.TriggerType type) {
 			eventPlayer = player; processTrigger(type);
 		}
-		public void processTrigger(Event.TriggerType type) {
+		public void processTrigger(MapEventPage.TriggerType type) {
 			if (judgeTrigger(type)) processAction();
 		}
 
@@ -138,7 +138,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		bool judgeTrigger(Event.TriggerType type) {
+		bool judgeTrigger(MapEventPage.TriggerType type) {
 			return item?.triggerType == type;
 		}
 
@@ -146,7 +146,7 @@ namespace UI.MapSystem.Controls {
 		/// 处理事件
 		/// </summary>
 		void processAction() {
-			item?.process();
+			item?.invoke();
 		}
 
 		#endregion
@@ -159,7 +159,7 @@ namespace UI.MapSystem.Controls {
 		/// 绘制物品
 		/// </summary>
 		/// <param name="item"></param>
-		protected override void drawExactlyItem(Event item) {
+		protected override void drawExactlyItem(MapEventPage item) {
 			base.drawExactlyItem(item);
 			if (sprite) sprite.sprite = item.picture;
 		}

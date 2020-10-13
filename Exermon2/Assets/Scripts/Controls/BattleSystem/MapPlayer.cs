@@ -177,7 +177,7 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         /// <param name="player"></param>
         void onEventCollEnter(MapEvent event_) {
-            event_.processTrigger(this, Event.TriggerType.CollEnter);
+            event_.processTrigger(this, MapEventPage.TriggerType.CollEnter);
         }
 
         /// <summary>
@@ -186,7 +186,8 @@ namespace UI.BattleSystem.Controls {
         /// <param name="player"></param>
         void onEventCollStay(MapEvent event_) {
             event_.processTrigger(this, search ?
-                Event.TriggerType.CollSearch : Event.TriggerType.CollStay);
+				MapEventPage.TriggerType.CollSearch :
+				MapEventPage.TriggerType.CollStay);
         }
 
         /// <summary>
@@ -194,7 +195,7 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         /// <param name="player"></param>
         void onEventCollExit(MapEvent event_) {
-            event_.processTrigger(this, Event.TriggerType.CollExit);
+            event_.processTrigger(this, MapEventPage.TriggerType.CollExit);
         }
 
         #endregion
