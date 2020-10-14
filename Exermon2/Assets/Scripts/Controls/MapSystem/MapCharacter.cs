@@ -12,7 +12,7 @@ namespace UI.MapSystem.Controls {
 	using Common.Controls.AnimationSystem;
 
 	/// <summary>
-	/// 地图上的行走实体
+	/// 地图上的行走实体（可移动的实体，拥有刚体组件）
 	/// </summary>
 	//[RequireComponent(typeof(SpriteRenderer))]
 	[RequireComponent(typeof(Rigidbody2D))]
@@ -59,11 +59,6 @@ namespace UI.MapSystem.Controls {
 		public new AnimationExtend animation;
 
 		/// <summary>
-		/// 内部变量定义
-		/// </summary>
-		//protected bool moving = false;
-
-		/// <summary>
 		/// 类型
 		/// </summary>
 		public virtual Type type => Type.NPC;
@@ -85,8 +80,13 @@ namespace UI.MapSystem.Controls {
 		public RuntimeCharacter.Direction direction 
 			=> runtimeCharacter.direction;
 
+		/// <summary>
+		/// 载具
+		/// </summary>
+		public MapVehicle vehicle { get; set; } // 对外不能用 set
+
 		#region 初始化
-		
+
 		/// <summary>
 		/// 启动
 		/// </summary>

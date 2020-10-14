@@ -64,7 +64,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public override bool isTerminated() {
-			return !bullet && base.isTerminated();
+			return base.isTerminated();
+			//return !bullet && base.isTerminated();
 		}
 
 		/// <summary>

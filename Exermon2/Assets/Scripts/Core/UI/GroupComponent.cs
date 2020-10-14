@@ -32,10 +32,11 @@ namespace Core.UI {
         /// </summary>
         public GameObject subViewPrefab; // 子预制件
 
-        /// <summary>
-        /// 内部变量声明
-        /// </summary>
-        protected List<T> subViews = new List<T>(); // 子视图
+		/// <summary>
+		/// 内部变量声明
+		/// </summary>
+		protected List<T> subViews = new List<T>(); // 子视图
+		protected List<Transform> oriParents = new List<Transform>(); // 原始父亲
 
 		/// <summary>
 		/// RectTransform 容器
@@ -152,6 +153,47 @@ namespace Core.UI {
 		#region 界面控制
 
 		/// <summary>
+		/// 添加子视图
+		/// </summary>
+		/// <param name="subView"></param>
+		public bool addSubView(T sub) {
+			// 判断是否存在
+			var index = subViews.IndexOf(sub);
+			if (index >= 0) return false;
+
+			// 数组添加
+			subViews.Add(sub);
+			oriParents.Add(sub.transform.parent);
+
+			// Transform改变
+			sub.transform.parent = container;
+			sub.transform.SetAsLastSibling();
+
+			return true;
+		}
+
+		/// <summary>
+		/// 移除子视图
+		/// </summary>
+		/// <param name="subView"></param>
+		public bool removeSubView(T sub) {
+			return removeSubView(subViews.IndexOf(sub));
+		}
+		public bool removeSubView(int index) {
+			// 判断是否不存在
+			if (index < 0) return false;
+
+			// 重置Transform
+			subViews[index].transform.parent = oriParents[index];
+
+			// 数组删除
+			subViews.RemoveAt(index);
+			oriParents.RemoveAt(index);
+
+			return true;
+		}
+
+		/// <summary>
 		/// 获取预制件
 		/// </summary>
 		/// <param name="index">索引</param>
@@ -200,22 +242,21 @@ namespace Core.UI {
         /// <param name="sub">子视图</param>
         /// <param name="index">索引</param>
         protected virtual void onSubViewCreated(T sub, int index) {
-            subViews.Add(sub);
-            sub.transform.SetAsLastSibling();
-        }
+			addSubView(sub);
+		}
 
-        /// <summary>
-        /// 子视图销毁回调
-        /// </summary>
-        /// <param name="index">索引</param>
-        protected virtual void onSubViewDestroyed(int index) {
-            subViews.RemoveAt(index);
-        }
+		/// <summary>
+		/// 子视图销毁回调
+		/// </summary>
+		/// <param name="index">索引</param>
+		protected virtual void onSubViewDestroyed(int index) {
+			removeSubView(subViews[index]);
+		}
 
-        /// <summary>
-        /// 刷新所有子视图
-        /// </summary>
-        void refreshSubViews() {
+		/// <summary>
+		/// 刷新所有子视图
+		/// </summary>
+		void refreshSubViews() {
             for (int i = 0; i < subViews.Count; ++i)
                 refreshSubView(subViews[i], i);
         }

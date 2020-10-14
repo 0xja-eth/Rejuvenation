@@ -10,28 +10,7 @@ using UI.Common.Controls.SystemExtend.PhysicsExtend;
 namespace UI.MapSystem.Controls {
 
 	using BattleSystem.Controls;
-
-
-	///// <summary>
-	///// 技能应用接口
-	///// </summary>
-	//public interface ISkillApplication : IBaseComponent {
-
-	//	/// <summary>
-	//	/// 作用到不同物体上
-	//	/// </summary>
-	//	/// <param name="batler"></param>
-	//	void applyBattler(MapBattler batler);
-	//	void applyEntity(MapEntity entity);
-	//	void applyMap(Tilemap map);
-
-	//	/// <summary>
-	//	/// 是否可应用
-	//	/// </summary>
-	//	/// <returns></returns>
-	//	bool isApplyValid();
-	//}
-
+	
 	/// <summary>
 	/// 地图上的实体
 	/// </summary>
@@ -43,12 +22,15 @@ namespace UI.MapSystem.Controls {
 		const float YZConvert = 0.0001f;
 
 		/// <summary>
-		/// 属性
+		/// 位置
 		/// </summary>
 		public float x => transform.position.x;
 		public float y => transform.position.y;
 
-		public Vector2 pos => transform.position;
+		public Vector2 pos {
+			get => transform.position;
+			set { transform.position = value; }
+		}
 
 		/// <summary>
 		/// 内部控件设置
@@ -100,13 +82,13 @@ namespace UI.MapSystem.Controls {
 		//	skill.applyEntity(this);
 		//}
 
-		/// <summary>
-		/// 能否被击中
-		/// </summary>
-		/// <returns></returns>
-		public virtual bool isApplyable() {
-			return true;
-		}
+		///// <summary>
+		///// 能否被击中
+		///// </summary>
+		///// <returns></returns>
+		//public virtual bool isApplyable() {
+		//	return true;
+		//}
 
 		///// <summary>
 		///// 是否有效的技能

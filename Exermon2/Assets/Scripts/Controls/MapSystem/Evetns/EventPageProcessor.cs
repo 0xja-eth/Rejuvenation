@@ -15,7 +15,6 @@ namespace UI.MapSystem.Controls {
 	/// <summary>
 	/// 地图上的事件
 	/// </summary>
-	[RequireComponent(typeof(Collider2D))]
 	public class EventPageProcessor : ItemDisplay<MapEventPage> {
 
 		/// <summary>

@@ -205,8 +205,8 @@ namespace UI.MapSystem.Controls {
 		/// 作用到MapEntity
 		/// </summary>
 		public virtual bool apply(MapEntity entity) {
-			if (!entity.isApplyable() || !isApplyValid())
-				return false;
+			//if (!entity.isApplyable() || !isApplyValid())
+			if (!isApplyValid()) return false;
 
 			var battler = entity as MapBattler;
 			if (battler != null) return applyBattler(battler);
