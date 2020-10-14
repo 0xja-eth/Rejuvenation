@@ -10,7 +10,7 @@ using Core.Systems;
 
 using PlayerModule.Services;
 
-namespace UI.BaseMapScene {
+namespace UI.MapSystem {
 
 	/// <summary>
 	/// 测试地图场景

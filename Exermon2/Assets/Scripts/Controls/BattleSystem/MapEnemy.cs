@@ -7,9 +7,9 @@ using Core.Data;
 using MapModule.Data;
 using BattleModule.Data;
 
-namespace UI.Common.Controls.BattleSystem {
+namespace UI.BattleSystem.Controls {
 
-	using MapSystem;
+	using MapSystem.Controls;
 
 	/// <summary>
 	/// 地图上的敌人实体
@@ -20,6 +20,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// 常量定义
 		/// </summary>
 		const float DeltaMoveTime = 0.5f;
+        const float deteAngle = 90.0f;
 
 		/// <summary>
 		/// 外部变量设置
@@ -94,7 +95,7 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		protected override void updateIdle() {
 			base.updateIdle();
-			updateEnemyBehaviour();
+            updateEnemyBehaviour();
 		}
 
 		/// <summary>
@@ -123,7 +124,21 @@ namespace UI.Common.Controls.BattleSystem {
 		/// <returns></returns>
 		public bool isCritical() {
 			var dist = (pos - player.pos).magnitude;
-			return dist <= enemy.criticalRange;
+
+            Vector2 targetDirection = player.transform.position - transform.position;
+            Vector2 towardDirection = RuntimeCharacter.dir82Vec(direction);
+            float angle = Vector2.Angle(targetDirection, towardDirection);
+            bool canSeePlayer = false;
+            Ray2D ray2D = new Ray2D(pos, player.pos);
+            Debug.DrawLine(pos, player.pos, Color.red);
+            RaycastHit2D hit = Physics2D.Raycast(pos, player.pos - pos , 100, (1 << 11 | 1 << 10));
+            if (hit) {
+                if(hit.collider.name == "Player") {
+                    canSeePlayer = true;
+                }
+            }
+
+            return dist <= enemy.criticalRange && angle <= deteAngle && canSeePlayer;
 		}
 
 		/// <summary>

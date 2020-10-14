@@ -5,10 +5,12 @@ using Core.UI;
 
 using GameModule.Services;
 
-namespace UI.Common.Controls.MapSystem {
+using UI.Common.Controls.SystemExtend.PhysicsExtend;
 
-	using BattleSystem;
-	using SystemExtend.PhysicsExtend;
+namespace UI.MapSystem.Controls {
+
+	using BattleSystem.Controls;
+
 
 	///// <summary>
 	///// 技能应用接口

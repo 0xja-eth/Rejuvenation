@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.Events;
+
+using Core.Data;
 
 using Core.UI;
 using Core.UI.Utils;
@@ -10,48 +13,31 @@ using GameModule.Services;
 
 using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.MapSystem {
+namespace UI.MapSystem.Controls {
 
-	using BattleSystem;
+    using BattleSystem.Controls;
 
 	/// <summary>
 	/// 地图上的事件
 	/// </summary>
-	[RequireComponent(typeof(EventProcessor))]
+	[RequireComponent(typeof(EventPageProcessor))]
 	public class MapEvent : MapEntity {
+
+		/// <summary>
+		/// 外部组件设置
+		/// </summary>
+		public List<MapEventPage> eventPages = new List<MapEventPage>();
 
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
-		protected EventProcessor processor;
-
-		/// <summary>
-		/// 事件列表
-		/// </summary>
-		protected List<Event> events = new List<Event>();
-
+		protected EventPageProcessor processor;
+		
 		/// <summary>
 		/// 外部系统
 		/// </summary>
 		protected GameService gameSer;
-
-		#region 初始化
-
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		protected override void initializeOnce() {
-			base.initializeOnce();
-			initializeActions();
-		}
-
-		/// <summary>
-		/// 初始化事件行动
-		/// </summary>
-		protected virtual void initializeActions() { }
-
-		#endregion
 
 		#region 更新
 
@@ -60,8 +46,20 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			currentEvent_ = null;
-			processor.setItem(currentEvent());
+			currentPage_ = null;
+			processor.setItem(currentPage());
+		}
+
+		#endregion
+
+		#region 事件页
+
+		/// <summary>
+		/// 添加事件页
+		/// </summary>
+		/// <param name="page"></param>
+		public void addEventPage(MapEventPage page) {
+			if (!eventPages.Contains(page)) eventPages.Add(page);
 		}
 
 		#endregion
@@ -72,13 +70,13 @@ namespace UI.Common.Controls.MapSystem {
 		/// 当前事件
 		/// </summary>
 		/// <returns></returns>
-		Event currentEvent_ = null;
-		public Event currentEvent() {
-			if (currentEvent_ == null) 
-				foreach (var event_ in events)
-					if (event_.isValid()) currentEvent_ = event_;
+		MapEventPage currentPage_ = null;
+		public MapEventPage currentPage() {
+			if (currentPage_ == null) 
+				foreach (var event_ in eventPages)
+					if (event_.isValid()) currentPage_ = event_;
 
-			return currentEvent_;
+			return currentPage_;
 		}
 
 		/// <summary>
@@ -86,17 +84,17 @@ namespace UI.Common.Controls.MapSystem {
 		/// </summary>
 		/// <param name="action">事件</param>
 		/// <param name="cond">条件</param>
-		public void addEvent(Event event_) {
-			events.Add(event_);
+		public void addEvent(MapEventPage event_) {
+			eventPages.Add(event_);
 		}
 
 		/// <summary>
-		/// 添加事件
+		/// 移除事件
 		/// </summary>
 		/// <param name="action">事件</param>
 		/// <param name="cond">条件</param>
-		public void removeEvent(Event event_) {
-			events.Remove(event_);
+		public void removeEvent(MapEventPage event_) {
+			eventPages.Remove(event_);
 		}
 
 		/// <summary>
@@ -105,7 +103,7 @@ namespace UI.Common.Controls.MapSystem {
 		/// <param name="player">触发相关的玩家</param>
 		/// <param name="type">触发类型</param>
 		/// <returns></returns>
-		public void processTrigger(MapPlayer player, Event.TriggerType type) {
+		public void processTrigger(MapPlayer player, MapEventPage.TriggerType type) {
 			processor.processTrigger(player, type);
 		}
 		

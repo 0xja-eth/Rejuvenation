@@ -8,10 +8,11 @@ using Core.UI;
 
 using BattleModule.Data;
 
-namespace UI.Common.Controls.MapSystem {
+using UI.Common.Controls.SystemExtend.PhysicsExtend;
 
-	using BattleSystem;
-	using SystemExtend.PhysicsExtend;
+namespace UI.MapSystem.Controls {
+
+	using BattleSystem.Controls;
 
 	/// <summary>
 	/// 技能处理器
@@ -191,7 +192,8 @@ namespace UI.Common.Controls.MapSystem {
 		/// 是否为技能目标
 		/// </summary>
 		protected virtual bool isTarget(MapBattler battler) {
-			return this.battler.opponents().Contains(battler);
+			return battler.runtimeBattler.isTargetEnable() && 
+				this.battler.opponents().Contains(battler);
 		}
 
 		/// <summary>

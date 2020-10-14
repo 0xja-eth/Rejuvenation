@@ -125,27 +125,38 @@ namespace UI.Common.Controls.ItemDisplays {
         /// <returns>物品</returns>
         public T getItem() { return item; }
 
-        /// <summary>
-        /// 值改变回调
-        /// </summary>
-        /// <param name="force">强制刷新</param>
-        protected sealed override void onValueChanged(bool force = false) {
-            onItemChanged(); base.onValueChanged(force);
-        }
+		/// <summary>
+		/// 值改变回调
+		/// </summary>
+		protected sealed override void onValueChanged() {
+			base.onValueChanged(); onItemChanged();
+		}
 
-        /// <summary>
-        /// 物品变更回调
-        /// </summary>
-        protected virtual void onItemChanged() { }
+		/// <summary>
+		/// 物品改变回调
+		/// </summary>
+		protected virtual void onItemChanged() { }
 
-        #endregion
+		/// <summary>
+		/// 值清除回调
+		/// </summary>
+		protected sealed override void onValueClear() {
+			base.onValueClear(); onItemClear();
+		}
 
-        #region 界面控制
+		/// <summary>
+		/// 物品清除回调
+		/// </summary>
+		protected virtual void onItemClear() { }
 
-        /// <summary>
-        /// 刷新值
-        /// </summary>
-        protected sealed override void refreshValue() {
+		#endregion
+
+		#region 界面控制
+
+		/// <summary>
+		/// 刷新值
+		/// </summary>
+		protected sealed override void refreshValue() {
             base.refreshValue(); refreshItem();
         }
 

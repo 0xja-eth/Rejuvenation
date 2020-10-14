@@ -32,7 +32,7 @@ namespace Core.Data {
 	public class KeyboardConfig : BaseData {
 
 		/// <summary>
-		/// 按键项
+		/// 动作按键
 		/// </summary>
 		[AutoConvert]
 		public KeyCode attackKey { get; set; } = KeyCode.J; // 攻击键
@@ -42,6 +42,12 @@ namespace Core.Data {
 		public KeyCode switchKey { get; set; } = KeyCode.LeftShift; // 切换人物键
 		[AutoConvert]
 		public KeyCode searchKey { get; set; } = KeyCode.E; // 搜索键
+
+		/// <summary>
+		/// 对话框按键
+		/// </summary>
+		[AutoConvert]
+		public KeyCode nextKey { get; set; } = KeyCode.Return; // 下一步
 
 		/// <summary>
 		/// 是否需要ID

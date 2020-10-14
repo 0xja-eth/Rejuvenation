@@ -22,6 +22,10 @@ namespace Core.Systems {
 		/// </summary>
 		protected Dictionary<int, List<UnityAction>> stateDict =
 			new Dictionary<int, List<UnityAction>>();
+		protected Dictionary<int, List<UnityAction>> stateEnters =
+			new Dictionary<int, List<UnityAction>>();
+		protected Dictionary<int, List<UnityAction>> stateExits =
+			new Dictionary<int, List<UnityAction>>();
 
 		/// <summary>
 		/// 状态改变字典 (<state, state>, action)
@@ -65,12 +69,41 @@ namespace Core.Systems {
 			if (isStateChanged()) {
 				onStateChanged?.Invoke();
 
-				var actions = getStateChange(lastState, state);
-				if (actions != null)
-					foreach (var action in actions) action?.Invoke();
+				processStateExit(lastState);
+				processStateChange(lastState, state);
+				processStateEnter(state);
 			}
 
 			lastState = state;
+		}
+
+		/// <summary>
+		/// 处理状态变化
+		/// </summary>
+		void processStateChange(int from, int to) {
+			var actions = getStateChange(from, to);
+			if (actions != null)
+				foreach (var action in actions) action?.Invoke();
+		}
+
+		/// <summary>
+		/// 处理状态进入
+		/// </summary>
+		/// <param name="to"></param>
+		void processStateEnter(int to) {
+			var actions = getStateEnter(to);
+			if (actions != null)
+				foreach (var action in actions) action?.Invoke();
+		}
+
+		/// <summary>
+		/// 处理状态退出
+		/// </summary>
+		/// <param name="from"></param>
+		void processStateExit(int from) {
+			var actions = getStateExit(from);
+			if (actions != null)
+				foreach (var action in actions) action?.Invoke();
 		}
 
 		#endregion
@@ -146,12 +179,13 @@ namespace Core.Systems {
 		#region 状态改变字典
 
 		/// <summary>
-		/// 添加状态切换字典
+		/// 注册状态切换函数
 		/// </summary>
 		/// <param name="from">始状态</param>
 		/// <param name="to">末状态</param>
 		/// <param name="action">动作</param>
 		public void addStateChange(int from, int to, UnityAction action) {
+			if (from == to) return;
 			addListDict(stateChanges, new Tuple<int, int>(from, to), action);
 		}
 		public void addStateChange(Enum from, Enum to, UnityAction action) {
@@ -159,10 +193,34 @@ namespace Core.Systems {
 		}
 
 		/// <summary>
-		/// 是否存在状态
+		/// 注册状态进入函数
 		/// </summary>
-		/// <param name="state">状态名</param>
-		/// <returns>是否存在</returns>
+		/// <param name="enumType">类型</param>
+		/// <param name="to">初状态</param>
+		/// <param name="action">动作</param>
+		public void addStateEnter(int to, UnityAction action) {
+			addListDict(stateEnters, to, action);
+		}
+		public void addStateEnter(Enum to, UnityAction action) {
+			addStateEnter(to.GetHashCode(), action);
+		}
+
+		/// <summary>
+		/// 注册状态退出函数
+		/// </summary>
+		/// <param name="enumType">类型</param>
+		/// <param name="from">初状态</param>
+		/// <param name="action">动作</param>
+		public void addStateExit(int from, UnityAction action) {
+			addListDict(stateExits, from, action);
+		}
+		public void addStateExit(Enum from, UnityAction action) {
+			addStateExit(from.GetHashCode(), action);
+		}
+		
+		/// <summary>
+		/// 是否存在状态变更
+		/// </summary>
 		public bool hasStateChange(int from, int to) {
 			var key = new Tuple<int, int>(from, to);
 			return hasListDict(stateChanges, key);
@@ -170,18 +228,36 @@ namespace Core.Systems {
 		public bool hasStateChange(Enum from, Enum to) {
 			return hasStateChange(from.GetHashCode(), to.GetHashCode());
 		}
-		
+
 		/// <summary>
-		/// 是否存在状态
+		/// 是否存在状态变更
 		/// </summary>
-		/// <param name="state">状态名</param>
-		/// <returns>是否存在</returns>
 		public List<UnityAction> getStateChange(int from, int to) {
 			var key = new Tuple<int, int>(from, to);
 			return getListDict(stateChanges, key);
 		}
 		public List<UnityAction> getStateChange(Enum from, Enum to) {
 			return getStateChange(from.GetHashCode(), to.GetHashCode());
+		}
+
+		/// <summary>
+		/// 是否存在状态进入
+		/// </summary>
+		public List<UnityAction> getStateEnter(int to) {
+			return getListDict(stateEnters, to);
+		}
+		public List<UnityAction> getStateEnter(Enum to) {
+			return getStateEnter(to.GetHashCode());
+		}
+
+		/// <summary>
+		/// 是否存在状态退出
+		/// </summary>
+		public List<UnityAction> getStateExit(int to) {
+			return getListDict(stateExits, to);
+		}
+		public List<UnityAction> getStateExit(Enum to) {
+			return getStateExit(to.GetHashCode());
 		}
 
 		#endregion

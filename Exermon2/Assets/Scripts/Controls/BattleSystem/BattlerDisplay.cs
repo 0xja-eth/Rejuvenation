@@ -6,7 +6,7 @@ using UI.Common.Controls.ItemDisplays;
 using MapModule.Data;
 using BattleModule.Data;
 
-namespace UI.Common.Controls.BattleSystem {
+namespace UI.BattleSystem.Controls {
 
 	/// <summary>
 	/// 战斗者状态显示
@@ -19,6 +19,8 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		public GameObject hpDisplay;
 		public AnimationExtend hpBar;
+
+		public TextMesh stateText;
 
 		/// <summary>
 		/// 内部组件设置
@@ -50,15 +52,16 @@ namespace UI.Common.Controls.BattleSystem {
 		protected override void update() {
 			base.update();
 			debugLog("Direction: " + item.direction);
+
+			if (isNullItem(item)) return;
 			updateHPChange(); updateCharacter();
+			updateState();
 		}
 
 		/// <summary>
 		/// 更新HP改变
 		/// </summary>
 		void updateHPChange() {
-			if (isNullItem(item)) return;
-
 			var deltaHP = item.deltaHP;
 			if (deltaHP == null) return;
 
@@ -70,6 +73,13 @@ namespace UI.Common.Controls.BattleSystem {
 		/// </summary>
 		void updateCharacter() {
 			drawCharacter(item);
+		}
+
+		/// <summary>
+		/// 更新状态
+		/// </summary>
+		void updateState() {
+			drawState(item);
 		}
 
 		#endregion
@@ -96,6 +106,7 @@ namespace UI.Common.Controls.BattleSystem {
 		protected override void drawExactlyItem(RuntimeBattler item) {
 			base.drawExactlyItem(item);
 			drawHP(item); drawCharacter(item);
+			drawState(item);
 		}
 
 		/// <summary>
@@ -131,12 +142,22 @@ namespace UI.Common.Controls.BattleSystem {
 		}
 
 		/// <summary>
+		/// 绘制状态
+		/// </summary>
+		/// <param name="item"></param>
+		void drawState(RuntimeBattler item) {
+			if (stateText) stateText.text = ((RuntimeBattler.State)item.state).ToString();
+		}
+
+		/// <summary>
 		/// 绘制空物品
 		/// </summary>
 		protected override void drawEmptyItem() {
 			base.drawEmptyItem();
 			if (hpDisplay) hpDisplay.SetActive(false);
 			sprite.sprite = null;
+
+			if (stateText) stateText.text = "";
 		}
 
 		#endregion

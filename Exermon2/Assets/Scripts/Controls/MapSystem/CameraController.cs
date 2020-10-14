@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace UI.Common.Controls.MapSystem {
+namespace UI.MapSystem.Controls {
 
     /// <summary>
     /// 镜头挂载脚本，控制镜头状态

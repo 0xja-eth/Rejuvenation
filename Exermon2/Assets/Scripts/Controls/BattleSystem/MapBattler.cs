@@ -8,9 +8,9 @@ using MapModule.Data;
 
 using BattleModule.Data;
 
-namespace UI.Common.Controls.BattleSystem {
+namespace UI.BattleSystem.Controls {
 
-	using MapSystem;
+	using MapSystem.Controls;
 
 	/// <summary>
 	/// 地图上的战斗者实体
@@ -27,8 +27,11 @@ namespace UI.Common.Controls.BattleSystem {
 		protected const string TargetStateName = "Target";
 		protected const string TargetAttrName = "target";
 
-		protected const string FreezeStateName = "Freeze";
+		protected const string FreezeStateName = "Frozen";
 		protected const string FreezeAttrName = "freezing";
+
+		protected const string DeadStateName = "Dead";
+		protected const string DeadAttrName = "dead";
 
 		/// <summary>
 		/// 外部组件设置
@@ -99,21 +102,16 @@ namespace UI.Common.Controls.BattleSystem {
 			runtimeBattler?.addStateDict(
 				RuntimeBattler.State.Using, updateUsing);
 
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Idle, 
-				RuntimeBattler.State.Hitting, onFreezeStart);
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Moving,
-				RuntimeBattler.State.Hitting, onFreezeStart);
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Using,
+			runtimeBattler?.addStateEnter(
 				RuntimeBattler.State.Hitting, onFreezeStart);
 
 			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
 
-			runtimeBattler?.addStateChange(
-				RuntimeBattler.State.Freezing,
-				RuntimeBattler.State.Idle, onFreezeEnd);
+			runtimeBattler?.addStateExit(
+				RuntimeBattler.State.Freezing, onFreezeEnd);
+
+			runtimeBattler?.addStateEnter( 
+				RuntimeBattler.State.Dead, onDie);
 		}
 
 		#endregion
@@ -133,29 +131,39 @@ namespace UI.Common.Controls.BattleSystem {
 		protected virtual void updateUsing() {
 			updateActing();
 		}
-		
+
 		/// <summary>
 		/// 开始硬直回调
 		/// </summary>
 		protected virtual void onFreezeStart() {
 			animator?.setVar(FreezeAttrName, true);
+			stop();
 		}
 
 		/// <summary>
 		/// 结束硬直回调
 		/// </summary>
 		protected virtual void onFreezeEnd() {
-			animator.setVar(FreezeAttrName, false);
+			animator?.setVar(FreezeAttrName, false);
+		}
+
+		/// <summary>
+		/// 死亡回调
+		/// </summary>
+		protected virtual void onDie() {
+			animator?.setVar(FreezeAttrName, false);
+			animator?.setVar(DeadAttrName, true);
+			stop();
 		}
 
 		#endregion
 
 		#region 移动控制
 
-		/// <summary>
-		/// 移动速度
-		/// </summary>
-		/// <returns></returns>
+			/// <summary>
+			/// 移动速度
+			/// </summary>
+			/// <returns></returns>
 		public override float moveSpeed() {
             return runtimeBattler.speed;
 		}

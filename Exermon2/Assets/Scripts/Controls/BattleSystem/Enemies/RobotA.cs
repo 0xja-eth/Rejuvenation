@@ -10,7 +10,7 @@ using GameModule.Services;
 
 using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.BattleSystem.Enemies {
+namespace UI.BattleSystem.Controls.Enemies {
 
 	/// <summary>
 	/// 地图上的事件

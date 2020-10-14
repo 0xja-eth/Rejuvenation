@@ -7,7 +7,7 @@ using Core.UI.Utils;
 
 using MapModule.Data;
 
-namespace UI.Common.Controls.MapSystem {
+namespace UI.MapSystem.Controls {
 
 	using Common.Controls.AnimationSystem;
 
@@ -99,12 +99,12 @@ namespace UI.Common.Controls.MapSystem {
 		/// 配置运行时角色
 		/// </summary>
 		protected virtual void setupStateChanges() {
-			runtimeCharacter?.addStateChange(
-				RuntimeCharacter.State.Idle,
+
+			runtimeCharacter?.addStateEnter(
 				RuntimeCharacter.State.Moving, onMoveStart);
-			runtimeCharacter?.addStateChange(
-				RuntimeCharacter.State.Moving,
-				RuntimeCharacter.State.Idle, onMoveEnd);
+			runtimeCharacter?.addStateExit(
+				RuntimeCharacter.State.Moving, onMoveEnd);
+
 			runtimeCharacter?.addStateDict(
 				RuntimeCharacter.State.Moving, onMove);
 		}

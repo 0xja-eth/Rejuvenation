@@ -96,7 +96,7 @@ namespace UI.Common.Controls.ParamDisplays {
         /// <param name="value">值</param>
         public virtual void setValue(T value) {
             debugLog("setValue: " + name + ": " + value);
-            data = value; onValueChanged();
+            data = value; onValueSet();
         }
 
         /// <summary>
@@ -107,12 +107,24 @@ namespace UI.Common.Controls.ParamDisplays {
         }
 
         /// <summary>
-        /// 值改变回调
+        /// 值设置回调
         /// </summary>
         /// <param name="force">强制刷新</param>
-        protected virtual void onValueChanged(bool force = false) {
+        void onValueSet(bool force = false) {
             requestRefresh(force);
+			if (isEmptyValue(data)) onValueClear();
+			else onValueChanged();
         }
+
+		/// <summary>
+		/// 值改变回调
+		/// </summary>
+		protected virtual void onValueChanged() { }
+
+		/// <summary>
+		/// 值清除回调
+		/// </summary>
+		protected virtual void onValueClear() { }
 
         #endregion
 

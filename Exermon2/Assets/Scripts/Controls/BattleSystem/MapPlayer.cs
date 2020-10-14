@@ -10,275 +10,318 @@ using PlayerModule.Services;
 
 using Event = MapModule.Data.Event;
 
-namespace UI.Common.Controls.BattleSystem {
-    using GameModule.Services;
-    using MapSystem;
+namespace UI.BattleSystem.Controls {
 
-	/// <summary>
-	/// 地图上的玩家实体
-	/// </summary>
-	public class MapPlayer : MapBattler {
+    using MapSystem.Controls;
 
-		/// <summary>
-		/// 远程攻击蓄力时间
-		/// </summary>
-		const float LongRangeSkillTime = 1;
+    /// <summary>
+    /// 地图上的玩家实体
+    /// </summary>
+    public class MapPlayer : MapBattler {
 
-		/// <summary>
-		/// 外部组件设置
-		/// </summary>
-		public SkillProcessor normalSkill, longRangeSkill;
+        /// <summary>
+        /// 远程攻击蓄力时间
+        /// </summary>
+        const float LongRangeSkillTime = 1;
 
-		/// <summary>
-		/// 外部变量定义
-		/// </summary>
-		public bool inputable = true;
+        /// <summary>
+        /// 外部组件设置
+        /// </summary>
+        public SkillProcessor normalSkill, longRangeSkill;
+        public Material material;
 
-		/// <summary>
-		/// 类型
-		/// </summary>
-		public override Type type => Type.Player;
+        /// <summary>
+        /// 外部变量定义
+        /// </summary>
+        public bool inputable = true;
+        public float dissolveAnt = 0f;
+        public Vector3 flashPos;
 
-		/// <summary>
-		/// 属性
-		/// </summary>
-		public Actor actor => playerSer.actor;
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public override Type type => Type.Player;
 
-		protected float xDelta => limitVal(Input.GetAxis("Horizontal"));
-		protected float yDelta => limitVal(Input.GetAxis("Vertical"));
+        /// <summary>
+        /// 属性
+        /// </summary>
+        public Actor actor => playerSer.actor;
 
-		/// <summary>
-		/// 外部系统设置
-		/// </summary>
-		GameService gameSer;
-		PlayerService playerSer;
-        MessageServices msgServices;
+        protected float xDelta => Input.GetAxisRaw("Horizontal");
+        protected float yDelta => Input.GetAxisRaw("Vertical");
 
-		#region 初始化
+        float lastXDelta;
+        float lastYDelta;
+        float flashCoolTime = 1f;
+        bool flashCanBeUserd = true;
 
-		/// <summary>
-		/// 初始化碰撞函数
-		/// </summary>
-		protected override void initializeCollFuncs() {
-			base.initializeCollFuncs();
-			registerOnEnterFunc<MapEvent>(onEventCollEnter);
-			registerOnStayFunc<MapEvent>(onEventCollStay);
-			registerOnExitFunc<MapEvent>(onEventCollExit);
-		}
+        /// <summary>
+        /// 外部系统设置
+        /// </summary>
+        GameService gameSer;
+        PlayerService playerSer;
 
-		/// <summary>
-		/// 初始化敌人显示组件
-		/// </summary>
-		protected override void setupBattlerDisplay() {
-			actor.characterId = 1;
-			display.setItem(playerSer.actor.runtimeActor);
-		}
+        #region 初始化
 
-        protected override void initializeEvery() {
-            base.initializeEvery();
-            msgServices = MessageServices.Get();
+        /// <summary>
+        /// 初始化碰撞函数
+        /// </summary>
+        protected override void initializeCollFuncs() {
+            base.initializeCollFuncs();
+            registerOnEnterFunc<MapEvent>(onEventCollEnter);
+            registerOnStayFunc<MapEvent>(onEventCollStay);
+            registerOnExitFunc<MapEvent>(onEventCollExit);
+        }
+
+        /// <summary>
+        /// 初始化敌人显示组件
+        /// </summary>
+        protected override void setupBattlerDisplay() {
+            actor.characterId = 1;
+            display.setItem(playerSer.actor.runtimeActor);
         }
 
         #endregion
 
         #region 更新
 
-		/// <summary>
-		/// 更新
-		/// </summary>
-		protected override void update() {
-			base.update();
+        /// <summary>
+        /// 更新
+        /// </summary>
+        protected override void update() {
+            base.update();
+            updateInput();
 
-			//var key = gameSer.keyboard.searchKey;
-			//if (Input.GetKeyDown(key)) debugLog("update GetKeyDown: " + key);
-			//if (Input.GetKey(key)) debugLog("update GetKey: " + key);
-			//if (Input.GetKeyUp(key)) debugLog("update GetKeyUp: " + key);
-
-			updateInput();
-		}
-
-		/// <summary>
-		/// 固定更新
-		/// </summary>
-		protected override void fixedUpdate() {
-			base.fixedUpdate();
-
-			//var key = gameSer.keyboard.attackKey;
-			//if (Input.GetKeyDown(key)) debugLog("fixed GetKeyDown: " + key);
-			//if (Input.GetKey(key)) debugLog("fixed GetKey: " + key);
-			//if (Input.GetKeyUp(key)) debugLog("fixed GetKeyUp: " + key);
-
-			//updateInput();
+            if (!flashCanBeUserd) {
+                flashCoolTime -= Time.deltaTime * 3;
+                dissolveAnt += Time.deltaTime * 3;
+                dissolveAnt = Mathf.Clamp01(dissolveAnt);
+                material.SetFloat("_DissolveAmount", dissolveAnt);
+            }
+            if (flashCoolTime <= 0) {
+                flashCoolTime = 1f;
+                transform.position = flashPos;
+                flashCanBeUserd = true;
+            }
+            if (dissolveAnt > 0f && flashCoolTime >= 1f) {
+                inputable = true;
+                dissolveAnt -= Time.deltaTime * 3;
+                dissolveAnt = Mathf.Clamp01(dissolveAnt);
+                material.SetFloat("_DissolveAmount", dissolveAnt);
+            }
         }
 
         /// <summary>
         /// 更新玩家输入事件
         /// </summary>
         void updateInput() {
-			if (!isInputable()) return;
-			// 返回 True => 有输入
-			// 返回 False => 无输入
+			if (!isInputable()) {
+				stop(); return;
+			}
+			// 返回 True => 有输入  返回 False => 无输入
 			if (updateSearching() || updateSkill()) stop();
 			else updateMovement();
 		}
 
 		#endregion
 
-		#region 输入控制变量
+		#region 状态判断
 
 		/// <summary>
-		/// 搜索相关
-		/// </summary>
-		bool search = false, searching = false;
-
-		/// <summary>
-		/// 攻击相关
-		/// </summary>
-		float attackTime = 0;
-		bool attack = false, attacking = false;
-
-		/// <summary>
-		/// 能否输入
+		/// 能否移动
 		/// </summary>
 		/// <returns></returns>
-		public bool isInputable() {
-            return map.active && inputable && !msgServices.isDialogued;
+		public bool isMovable() {
+			return runtimeBattler.isMoveable();
+		}
+
+        #endregion
+
+        #region 输入控制变量
+
+        /// <summary>
+        /// 搜索相关
+        /// </summary>
+        bool search = false, searching = false;
+
+        /// <summary>
+        /// 攻击相关
+        /// </summary>
+        float attackTime = 0;
+        bool attack = false, attacking = false;
+
+        /// <summary>
+        /// 能否输入
+        /// </summary>
+        /// <returns></returns>
+        public bool isInputable() {
+            return map.isActive() && inputable;
         }
 
-		#endregion
+        #endregion
 
-		#region 事件处理
+        #region 事件处理
 
-		/// <summary>
-		/// 能否搜索
-		/// </summary>
-		/// <returns></returns>
-		bool isSearchable() {
-			return runtimeBattler.isIdle() || runtimeBattler.isMoving();
-		}
+        /// <summary>
+        /// 能否搜索
+        /// </summary>
+        /// <returns></returns>
+        bool isSearchable() {
+            return runtimeBattler.isIdle() || runtimeBattler.isMoving();
+        }
 
-		/// <summary>
-		/// 更新搜索状态
-		/// </summary>
-		bool updateSearching() {
-			if (!isSearchable()) return false;
+        /// <summary>
+        /// 更新搜索状态
+        /// </summary>
+        bool updateSearching() {
+            if (!isSearchable()) return false;
 
-			var key = gameSer.keyboard.searchKey;
-			search = Input.GetKeyDown(key);
-			searching = Input.GetKey(key);
+            var key = gameSer.keyboard.searchKey;
+            search = Input.GetKeyDown(key);
+            searching = Input.GetKey(key);
 
-			return search || searching;
-		}
+            return search || searching;
+        }
 
-		/// <summary>
-		/// 事件碰撞开始
-		/// </summary>
-		/// <param name="player"></param>
-		void onEventCollEnter(MapEvent event_) {
-			event_.processTrigger(this, Event.TriggerType.CollEnter);
-		}
+        /// <summary>
+        /// 事件碰撞开始
+        /// </summary>
+        /// <param name="player"></param>
+        void onEventCollEnter(MapEvent event_) {
+            event_.processTrigger(this, MapEventPage.TriggerType.CollEnter);
+        }
 
-		/// <summary>
-		/// 事件碰撞持续
-		/// </summary>
-		/// <param name="player"></param>
-		void onEventCollStay(MapEvent event_) {
-			event_.processTrigger(this, search ?
-				Event.TriggerType.CollSearch : Event.TriggerType.CollStay);
-		}
+        /// <summary>
+        /// 事件碰撞持续
+        /// </summary>
+        /// <param name="player"></param>
+        void onEventCollStay(MapEvent event_) {
+            event_.processTrigger(this, search ?
+				MapEventPage.TriggerType.CollSearch :
+				MapEventPage.TriggerType.CollStay);
+        }
 
-		/// <summary>
-		/// 事件碰撞结束
-		/// </summary>
-		/// <param name="player"></param>
-		void onEventCollExit(MapEvent event_) {
-			event_.processTrigger(this, Event.TriggerType.CollExit);
-		}
+        /// <summary>
+        /// 事件碰撞结束
+        /// </summary>
+        /// <param name="player"></param>
+        void onEventCollExit(MapEvent event_) {
+            event_.processTrigger(this, MapEventPage.TriggerType.CollExit);
+        }
 
-		#endregion
+        #endregion
 
-		#region 移动控制
+        #region 移动控制
 
-		/// <summary>
-		/// 开关变量值
-		/// </summary>
-		/// <param name="val"></param>
-		/// <returns></returns>
-		float limitVal(float val) {
-			return val > 0.5f ? 1 : (val < -0.5f ? -1 : 0);
-		}
+        /// <summary>
+        /// 更新移动
+        /// </summary>
+        bool updateMovement() {
+            var speed = new Vector2(xDelta, yDelta);
+            var flag = (speed.x == 0 && speed.y == 0);
 
-		/// <summary>
-		/// 更新移动
-		/// </summary>
-		bool updateMovement() {
-			var speed = new Vector2(xDelta, yDelta);
-			var flag = speed.x == 0 && speed.y == 0;
+            if (flag) stop();
+            else moveDirection(RuntimeCharacter.vec2Dir8(speed));
 
-			if (flag) stop();
-			else moveDirection(RuntimeCharacter.vec2Dir8(speed));
+            return !flag;
+        }
 
-			return !flag;
-		}
+        #endregion
 
-		#endregion
+        #region 技能控制
 
-		#region 技能控制
+        /// <summary>
+        /// 对手
+        /// </summary>
+        /// <returns></returns>
+        public override List<MapBattler> opponents() {
+            return map.battlers(Type.Enemy);
+        }
 
-		/// <summary>
-		/// 对手
-		/// </summary>
-		/// <returns></returns>
-		public override List<MapBattler> opponents() {
-			return map.battlers(Type.Enemy);
-		}
+        /// <summary>
+        /// 队友
+        /// </summary>
+        /// <returns></returns>
+        public override List<MapBattler> friends() {
+            return map.battlers(Type.Player);
+        }
 
-		/// <summary>
-		/// 队友
-		/// </summary>
-		/// <returns></returns>
-		public override List<MapBattler> friends() {
-			return map.battlers(Type.Player);
-		}
+        /// <summary>
+        /// 能否使用技能
+        /// </summary>
+        /// <returns></returns>
+        bool isSkillUsable() {
+            return runtimeBattler.isIdle() || runtimeBattler.isMoving();
+        }
 
-		/// <summary>
-		/// 能否使用技能
-		/// </summary>
-		/// <returns></returns>
-		bool isSkillUsable() {
-			return runtimeBattler.isIdle() || runtimeBattler.isMoving();
-		}
+        /// <summary>
+        /// 更新技能使用
+        /// </summary>
+        bool updateSkill() {
+            if (!isSkillUsable()) return false;
 
-		/// <summary>
-		/// 更新技能使用
-		/// </summary>
-		bool updateSkill() {
-			if (!isSkillUsable()) return false;
+            var key = gameSer.keyboard.attackKey;
+            attack = Input.GetKeyUp(key);
+            attacking = Input.GetKey(key);
 
-			var key = gameSer.keyboard.attackKey;
-			attack = Input.GetKeyUp(key);
-			attacking = Input.GetKey(key);
+            if (attack) useSkill();
+            if (attacking) attackTime += Time.deltaTime;
 
-			if (attack) useSkill();
-			if (attacking) attackTime += Time.deltaTime;
+            var keyflash = KeyCode.Space;
+            bool flash = Input.GetKey(keyflash);
+            Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);
+            if (flash && flashCanBeUserd) {
+                debugLog(base.collider.bounds.size);
+                Vector2 target = RuntimeCharacter.dir82Vec(direction);
+                Vector2 dropPos = pos + new Vector2(flashVec.x, flashVec.y) * 3f;
+                Collider2D collider = Physics2D.OverlapCircle(dropPos, 0.01f, 1 << 11);//碰撞检测信息存储
+                RaycastHit2D hit1 = Physics2D.Raycast(pos, target, 100, 1 << 11);//碰撞检测信息存储
+                float backDistance = 0.01f;
+                float flashDist = 0.0f;
+                Debug.DrawLine(pos, transform.position + new Vector3(flashVec.x, flashVec.y, 0) * 3f, Color.red, 10);//画线显示
+                if (collider) {
+                    Debug.Log(hit1.collider.name);//打印检测到的碰撞体名称
+                    while (backDistance <= 3f) {
+                        collider = Physics2D.OverlapCircle(pos + flashVec * backDistance, 0.01f, 1 << 11);//碰撞检测信息存储
+                        if (!collider) flashDist = backDistance;
+                        backDistance += 0.01f;
+                    }
+                    //if(backDistance > 3f) {
+                    //    flashPos = hit1.point;
+                    //    debugLog(flashVec);
+                    if (Mathf.Abs(flashVec.x) > 0f)
+                        flashPos = pos + new Vector2(flashVec.x * (flashDist - 0.3f), flashVec.y);
+                    else
+                        //}
+                        //else {
+                        flashPos = pos + flashVec * flashDist;
+                    //}
+                }
+                else {
+                    flashPos = transform.position + new Vector3(flashVec.x, flashVec.y, 0) * 3f;
+                }
+                inputable = false;
+                flashCanBeUserd = false;
+                flashCoolTime = 1f;
+            }
 
-			return attack || attacking;
-		}
+            return attack || attacking;
+        }
 
-		/// <summary>
-		/// 使用技能
-		/// </summary>
-		/// <param name="skill"></param>
-		void useSkill(SkillProcessor skill) {
-			debugLog("useSkill: " + skill + ", time: " + attackTime);
-			runtimeBattler.addAction(skill.skill);
-			attackTime = 0;
-		}
-		void useSkill() {
-			useSkill(attackTime >= LongRangeSkillTime ?
-				longRangeSkill : normalSkill);
-		}
+        /// <summary>
+        /// 使用技能
+        /// </summary>
+        /// <param name="skill"></param>
+        void useSkill(SkillProcessor skill) {
+            debugLog("useSkill: " + skill + ", time: " + attackTime);
+            runtimeBattler.addAction(skill.skill);
+            attackTime = 0;
+        }
+        void useSkill() {
+            useSkill(attackTime >= LongRangeSkillTime ?
+                longRangeSkill : normalSkill);
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -290,9 +290,9 @@ namespace Core.UI {
 		/// 显示
 		/// </summary>
 		public virtual void show() {
-			debugLog("show");
 			requestRefresh();
 			shown = true;
+			debugLog("show: " + shown);
 		}
 
 		/// <summary>
