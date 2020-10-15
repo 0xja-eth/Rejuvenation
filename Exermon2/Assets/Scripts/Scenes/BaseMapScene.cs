@@ -177,8 +177,8 @@ namespace UI.MapSystem {
                 splitCamera(SplitType.PastSingle);
             else if (Input.GetKeyDown(KeyCode.B))
                 splitCamera(SplitType.Both);
-            else if (Input.GetKeyDown(KeyCode.L))
-                splitCamera(SplitType.PastMain);
+            //else if (Input.GetKeyDown(KeyCode.L))
+            //    splitCamera(SplitType.PastMain);
             else if (Input.GetKeyDown(KeyCode.R))
                 splitCamera(SplitType.PresentMain);
             else if (Input.GetKeyDown(KeyCode.Y)) {

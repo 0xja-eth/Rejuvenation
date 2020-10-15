@@ -28,6 +28,8 @@ namespace UI.MapSystem.Controls {
 
 		public Vector2 offset = new Vector2(); // 座位偏移
 
+		public float freezeTime = 1; // 上下车冷却时间
+
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
@@ -38,6 +40,7 @@ namespace UI.MapSystem.Controls {
 		/// 内部变量定义
 		/// </summary>
 		Vector2? landPoint = null; // 着陆点
+		float freezing = 0; // 冷却
 
 		#region 初始化
 
@@ -47,11 +50,49 @@ namespace UI.MapSystem.Controls {
 		protected override void initializeOnce() {
 			base.initializeOnce();
 			boardingRegion = boardingRegion ?? get<MapRegion>();
+
+			runtimeCharacter.addStateDict(
+				RuntimeCharacter.State.Moving, updateMoving);
+		}
+
+		#endregion
+
+		#region 更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
+			base.update();
+			if (isFreezing()) freezing -= Time.deltaTime;
+		}
+
+		/// <summary>
+		/// 更新移动
+		/// </summary>
+		void updateMoving() {
+			updatePassengers();
+		}
+
+		/// <summary>
+		/// 更新乘客（位置同步）
+		/// </summary>
+		void updatePassengers() {
+			foreach(var passenger in passengers.getSubViews())
+				passenger.transform.localPosition = offset;
 		}
 
 		#endregion
 
 		#region 乘客控制
+
+		/// <summary>
+		/// 是否冷却状态
+		/// </summary>
+		/// <returns></returns>
+		public bool isFreezing() {
+			return freezing > 0;
+		}
 
 		/// <summary>
 		/// 是否存在指定乘客
@@ -108,7 +149,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isBoardingValid(MapCharacter character) {
-			return !isFull() && isInBoardingRegions(character);
+			return !isFreezing() && !isFull() && isInBoardingRegions(character);
 		}
 
 		/// <summary>
@@ -132,7 +173,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isLandingValid() {
-			return isInLandingRegions();
+			return !isFreezing() && isInLandingRegions();
 		}
 
 		/// <summary>
@@ -155,8 +196,13 @@ namespace UI.MapSystem.Controls {
 			if (hidePassengers) character.deactivate();
 
 			character.vehicle = this;
+			character.collider.enabled = false;
 			character.transform.localPosition = offset;
 			character.stop();
+
+			//updatePassengers();
+
+			freezing = freezeTime;
 		}
 
 		/// <summary>
@@ -167,9 +213,13 @@ namespace UI.MapSystem.Controls {
 			if (hidePassengers) character.activate();
 
 			character.vehicle = null;
+			character.collider.enabled = true;
 			character.pos = (Vector2)landPoint;
+			stop();
 
 			landPoint = null;
+
+			freezing = freezeTime;
 		}
 
 		/// <summary>
