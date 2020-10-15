@@ -308,6 +308,18 @@ namespace UI.BattleSystem.Controls {
             //闪烁结束
             if (flashEnd && dissolveAnt <= 0f) {
                 flashEnd = false;
+                //debugLog("tutorialFlash x:" + gameSer.tutorialFlash);
+                //debugLog("wall x:" + gameSer.tutorialFlashPosX);
+                //debugLog("flash x:" + flashPos.x);
+                //新手教程
+                if (gameSer.tutorialFlash) {
+                    if (flashPos.x > gameSer.tutorialFlashPosX) {
+                        gameSer.tutorialFlashPosX = -1;
+                        gameSer.tutorialFlash = false;
+                    }
+                    else
+                        gameSer.onTutorialFlashFail();         
+                }
             }
         }
 
