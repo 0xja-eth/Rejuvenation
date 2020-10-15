@@ -400,8 +400,8 @@ BoxCollider2D:
   m_Offset: {x: 0.056934178, y: 0.06547165}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.06}
-    oldSize: {x: 1, y: 1.6666666}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.6875, y: 1.5}
     newSize: {x: 2.42, y: 1.05}
     adaptiveTilingThreshold: 0
     drawMode: 0
@@ -462,7 +462,10 @@ MonoBehaviour:
   currentProcessor: {fileID: 0}
   normalSkill: {fileID: 4462998671729590370}
   longRangeSkill: {fileID: 3227863039324808630}
+  material: {fileID: 0}
   inputable: 1
+  dissolveAnt: 0
+  flashPos: {x: 0, y: 0}
 --- !u!114 &3358975077202514737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,6 +481,7 @@ MonoBehaviour:
   showDebug: 0
   hpDisplay: {fileID: 4214867100585478214}
   hpBar: {fileID: 4031193178851629648}
+  stateText: {fileID: 0}
 --- !u!1 &4214867100585478214
 GameObject:
   m_ObjectHideFlags: 0
