@@ -182,4 +182,14 @@ namespace GameModule.Data {
 	public class GameDatabase : BaseData {
 
     }
+
+    /// <summary>
+    /// 游戏关卡切换数据
+    /// </summary>
+    public class GameSwitchData : TypeData {
+        /// <summary>
+        /// 需传递的数据
+        /// </summary>
+    }
+
 }

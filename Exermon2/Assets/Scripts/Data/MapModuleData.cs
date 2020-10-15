@@ -283,7 +283,7 @@ namespace MapModule.Data {
         [AutoConvert]
         public Vector2 velocity { get; protected set; } = new Vector2();
         [AutoConvert]
-        public Direction direction { get; protected set; } = Direction.Down;
+        public Direction direction { get; set; } = Direction.Down;
 
         [AutoConvert]
         public int state {

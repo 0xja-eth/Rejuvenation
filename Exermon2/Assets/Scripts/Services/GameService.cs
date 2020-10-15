@@ -122,6 +122,12 @@ namespace GameModule.Services {
             if (playerSer.isPlaying()) logoutGame();
         }
 
+        /// <summary>
+        /// 关卡切换
+        /// </summary>
+        public void switchCheckPoint() {
+            sceneSys.pushScene(SceneSystem.Scene.SwitchScene);
+        }
         #endregion
 
         #region 回调控制
@@ -132,6 +138,45 @@ namespace GameModule.Services {
         void onReconnected() {
             //Debug.Log("onReconnected: " + playerSer.isPlaying());
             //if (playerSer.isLogined()) playerSer.reconnect();
+        }
+
+        bool _tutorialRobotDie = false;
+        /// <summary>
+        /// 新手教程死亡回调
+        /// 自动重置
+        /// </summary>
+        public bool tutorialRobotDie {
+            get {
+                var res = _tutorialRobotDie;
+                _tutorialRobotDie = false;
+                return res; }
+        }
+        /// <summary>
+        /// 新手教程机器人死亡回调
+        /// </summary>
+        public void onTutorialRobotDie() {
+            _tutorialRobotDie = true;
+        }
+
+        /// <summary>
+        /// 新手教程闪烁教程状态判定
+        /// </summary>
+        public bool tutorialFlash { get; set; } = false;
+        public float tutorialFlashPosX { get; set; } = -1;
+        bool _tutorialFlashFail = false;
+        /// <summary>
+        /// 新手教程死亡回调
+        /// 自动重置
+        /// </summary>
+        public bool tutorialFlashFail {
+            get {
+                var res = _tutorialFlashFail;
+                _tutorialFlashFail = false;
+                return res;
+            }
+        }
+        public void onTutorialFlashFail() {
+            _tutorialFlashFail = true;
         }
 
         #endregion
