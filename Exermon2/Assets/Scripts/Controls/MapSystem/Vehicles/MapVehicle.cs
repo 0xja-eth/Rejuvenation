@@ -32,7 +32,7 @@ namespace UI.MapSystem.Controls {
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
-		MapCharacterGroup passengers; // “乘客”集
+		protected MapCharacterGroup passengers; // “乘客”集
 
 		/// <summary>
 		/// 内部变量定义
@@ -54,10 +54,19 @@ namespace UI.MapSystem.Controls {
 		#region 乘客控制
 
 		/// <summary>
+		/// 是否存在指定乘客
+		/// </summary>
+		/// <param name="character"></param>
+		/// <returns></returns>
+		public bool hasPassenger(MapCharacter character) {
+			return passengers.hasSubView(character);
+		}
+
+		/// <summary>
 		/// 添加乘客
 		/// </summary>
-		public bool addPassenger(MapCharacter character) {
-			return isBoardingValid(character) &&
+		public bool addPassenger(MapCharacter character, bool force = false) {
+			return (force || isBoardingValid(character)) &&
 				_addPassenger(character);
 		}
 		bool _addPassenger(MapCharacter character) {
@@ -72,8 +81,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="entity"></param>
 		public bool removePassenger(MapCharacter character) {
-			return isLandingValid() && 
-				_removePassenger(character);
+			return isLandingValid() && _removePassenger(character);
 		}
 		bool _removePassenger(MapCharacter character) {
 			if (passengers.removeSubView(character)) {
@@ -85,7 +93,6 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 移除所有乘客
 		/// </summary>
-		/// <param name="entity"></param>
 		public bool removeAllPassengers() {
 			if (!isLandingValid()) return false;
 
@@ -125,7 +132,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isLandingValid() {
-			return landPoint != null && isInLandingRegions();
+			return isInLandingRegions();
 		}
 
 		/// <summary>
@@ -149,6 +156,7 @@ namespace UI.MapSystem.Controls {
 
 			character.vehicle = this;
 			character.transform.localPosition = offset;
+			character.stop();
 		}
 
 		/// <summary>

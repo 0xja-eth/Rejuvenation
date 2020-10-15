@@ -160,12 +160,12 @@ namespace UI.BattleSystem.Controls {
 
 		#region 移动控制
 
-			/// <summary>
-			/// 移动速度
-			/// </summary>
-			/// <returns></returns>
+		/// <summary>
+		/// 移动速度
+		/// </summary>
+		/// <returns></returns>
 		public override float moveSpeed() {
-            return runtimeBattler.speed;
+            return vehicle ? 0 : runtimeBattler.moveSpeed();
 		}
 
 		#endregion

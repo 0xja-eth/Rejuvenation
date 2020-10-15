@@ -13,14 +13,14 @@ TagManager:
   - UI
   - 
   - 
-  - Map1
-  - Map2
+  - Object
+  - Ship
   - Player
-  - Map1Wall
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Enemy
+  - Ground
+  - Ice
+  - Empty
   - 
   - 
   - 

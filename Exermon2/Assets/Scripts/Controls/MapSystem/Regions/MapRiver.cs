@@ -19,6 +19,13 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
+		public int emptyLayer = 0;
+		public int waterLayer = 0;
+		public int iceLayer = 0;
+
+		/// <summary>
+		/// 外部变量设置
+		/// </summary>
 		[SerializeField]
 		bool _active = false;
 		public bool active {
@@ -36,6 +43,20 @@ namespace UI.MapSystem.Controls {
 		public bool isWater => active && map.type == Map.MapType.Past;
 		public bool isIce => active && map.type == Map.MapType.Current;
 
+		#region 更新
+
+		/// <summary>
+		/// 更新所属层
+		/// </summary>
+		protected override void updateLayer() {
+			base.updateLayer();
+			if (isWater) switchLayer(waterLayer);
+			else if (isIce) switchLayer(iceLayer);
+			else switchLayer(emptyLayer);
+		}
+
+		#endregion
+
 		#region 通行性
 
 		/// <summary>
@@ -45,35 +66,37 @@ namespace UI.MapSystem.Controls {
 			return base.isGlobalPassable() && !active;
 		}
 
-		/// <summary>
-		/// 敌人能否通行
-		/// </summary>
-		protected override bool isBattlerPassable(MapBattler battler) {
-			return base.isBattlerPassable(battler) && isIce;
-		}
-
-		/// <summary>
-		/// 其他实体能否通行
-		/// </summary>
-		protected override bool isOthersPassable(MapCharacter character) {
-			if (!base.isOthersPassable(character)) return false;
-
-			var ship = character as MapShip;
-			if (ship != null) return isShipPassable(ship);
-
-			return false;
-		}
-
-		/// <summary>
-		/// 船能否通行
-		/// </summary>
-		/// <param name="ship"></param>
-		/// <returns></returns>
-		bool isShipPassable(MapShip ship) {
-			return isWater;
-		}
-
 		#endregion
+
+		///// <summary>
+		///// 敌人能否通行
+		///// </summary>
+		//protected override bool isBattlerPassable(MapBattler battler) {
+		//	return base.isBattlerPassable(battler) && isIce;
+		//}
+
+		///// <summary>
+		///// 其他实体能否通行
+		///// </summary>
+		//protected override bool isOthersPassable(MapCharacter character) {
+		//	if (!base.isOthersPassable(character)) return false;
+
+		//	var ship = character as MapShip;
+		//	if (ship != null) return isShipPassable(ship);
+
+		//	return false;
+		//}
+
+		///// <summary>
+		///// 船能否通行
+		///// </summary>
+		///// <param name="ship"></param>
+		///// <returns></returns>
+		//bool isShipPassable(MapShip ship) {
+		//	return isWater;
+		//}
+
+		//#endregion
 
 		#region 界面控制
 

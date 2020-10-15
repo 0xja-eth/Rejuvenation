@@ -448,9 +448,9 @@ namespace MapModule.Data {
             float speed = -1, bool force = false) {
             if (speed < 0) speed = moveSpeed();
             var vec = dir82Vec(d) * speed;
-            direction = d;
 
             move(vec, force);
+            direction = d;
         }
 
         /// <summary>

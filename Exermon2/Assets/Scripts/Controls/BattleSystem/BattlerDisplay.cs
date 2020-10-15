@@ -11,22 +11,18 @@ namespace UI.BattleSystem.Controls {
 	/// <summary>
 	/// 战斗者状态显示
 	/// </summary>
-	[RequireComponent(typeof(SpriteRenderer))]
+	//[RequireComponent(typeof(SpriteRenderer))]
 	public class BattlerDisplay : ItemDisplay<RuntimeBattler> {
 
 		/// <summary>
 		/// 外部组件设置
 		/// </summary>
+		public SpriteRenderer sprite;
+
 		public GameObject hpDisplay;
 		public AnimationExtend hpBar;
 
 		public TextMesh stateText;
-
-		/// <summary>
-		/// 内部组件设置
-		/// </summary>
-		[RequireTarget]
-		SpriteRenderer sprite;
 
 		/// <summary>
 		/// 内部变量定义

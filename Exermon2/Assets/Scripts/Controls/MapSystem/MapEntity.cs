@@ -22,6 +22,11 @@ namespace UI.MapSystem.Controls {
 		const float YZConvert = 0.0001f;
 
 		/// <summary>
+		/// 外部变量设置
+		/// </summary>
+		public bool autoZ = true; // 自动调整Z坐标
+
+		/// <summary>
 		/// 位置
 		/// </summary>
 		public float x => transform.position.x;
@@ -114,11 +119,18 @@ namespace UI.MapSystem.Controls {
 		/// 更新Z坐标
 		/// </summary>
 		void updateZCoord() {
-			var cz = map.camera.transform.position.z;
+			if (!autoZ) return;
 			var pos = transform.position;
-
-			pos.z = mapY2Z(pos.y, cz);
+			pos.z = calcZCoord(pos);
 			transform.position = pos;
+		}
+
+		/// <summary>
+		/// 计算新坐标
+		/// </summary>
+		protected virtual float calcZCoord(Vector3 pos) {
+			var cz = map.camera.transform.position.z;
+			return mapY2Z(pos.y, cz);
 		}
 
 		/// <summary>

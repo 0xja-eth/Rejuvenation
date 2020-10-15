@@ -18,13 +18,18 @@ namespace UI.MapSystem.Controls {
     public class MapShip : MapVehicle {
 
 		/// <summary>
+		/// 内部变量定义
+		/// </summary>
+		bool boardFlag = false;
+
+		/// <summary>
 		/// 初始化碰撞回调
 		/// </summary>
 		protected override void initializeCollFuncs() {
 			base.initializeCollFuncs();
 
 			registerOnEnterFunc<MapPlayer>(tryBoard);
-			registerOnEnterFunc<MapRegion>(tryLand);
+			boardingRegion.registerOnEnterFunc<MapRegion>(tryLand);
 		}
 
 		/// <summary>
@@ -32,7 +37,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="player"></param>
 		void tryBoard(MapPlayer player) {
-			addPassenger(player);
+			if (!boardFlag && addPassenger(player, true))
+				boardFlag = true;
 		}
 
 		/// <summary>
@@ -40,8 +46,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="region"></param>
 		void tryLand(MapRegion region) {
-			if (landingRegions.Contains(region)) 
-				removeAllPassengers();
+			if (boardFlag && landingRegions.Contains(region)
+				&& removeAllPassengers()) boardFlag = false;
 		}
 
 	}

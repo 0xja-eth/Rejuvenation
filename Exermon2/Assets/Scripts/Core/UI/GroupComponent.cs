@@ -16,6 +16,42 @@ namespace Core.UI {
     /// <typeparam name="T">一个 Unity 中的任意组件</typeparam>
     public class GroupComponent<T> : GeneralComponent where T : MonoBehaviour {
 
+		/// <summary>
+		/// 原始信息
+		/// </summary>
+		protected class OriginInfo {
+
+			/// <summary>
+			/// 属性
+			/// </summary>
+			T component;
+
+			Transform parent;
+			string tag; int layer;
+
+			/// <summary>
+			/// 初始化
+			/// </summary>
+			public OriginInfo(T component) {
+				var obj = component.gameObject;
+				this.component = component;
+
+				parent = obj.transform.parent;
+				layer = obj.layer; tag = obj.tag;
+			}
+
+			/// <summary>
+			/// 重置
+			/// </summary>
+			/// <param name="obj"></param>
+			public void reset() {
+				var obj = component.gameObject;
+
+				obj.transform.parent = parent;
+				obj.layer = layer; obj.tag = tag;
+			}
+		}
+
         /// <summary>
         /// 外部组件设置
         /// </summary>
@@ -36,7 +72,8 @@ namespace Core.UI {
 		/// 内部变量声明
 		/// </summary>
 		protected List<T> subViews = new List<T>(); // 子视图
-		protected List<Transform> oriParents = new List<Transform>(); // 原始父亲
+		protected Dictionary<T, OriginInfo> oriInfos = 
+			new Dictionary<T, OriginInfo>(); // 原始数据
 
 		/// <summary>
 		/// RectTransform 容器
@@ -133,6 +170,14 @@ namespace Core.UI {
 		/// 获取子视图数组
 		/// </summary>
 		/// <returns>子视图数组</returns>
+		public bool hasSubView(T sub) {
+			return subViews.Contains(sub);
+		}
+
+		/// <summary>
+		/// 获取子视图数组
+		/// </summary>
+		/// <returns>子视图数组</returns>
 		public T getSubView(int index) {
 			if (index >= 0 && index < subViews.Count)
 				return subViews[index];
@@ -157,19 +202,28 @@ namespace Core.UI {
 		/// </summary>
 		/// <param name="subView"></param>
 		public bool addSubView(T sub) {
-			// 判断是否存在
-			var index = subViews.IndexOf(sub);
-			if (index >= 0) return false;
+			// 是否存在
+			if (subViews.Contains(sub)) return false;
 
 			// 数组添加
 			subViews.Add(sub);
-			oriParents.Add(sub.transform.parent);
+			oriInfos.Add(sub, new OriginInfo(sub));
 
-			// Transform改变
-			sub.transform.parent = container;
-			sub.transform.SetAsLastSibling();
+			// 调整
+			adjustNewSubView(sub);
 
 			return true;
+		}
+
+		/// <summary>
+		/// 调整新加入的子视图
+		/// </summary>
+		/// <param name="sub"></param>
+		protected virtual void adjustNewSubView(T sub) {
+			sub.transform.parent = container;
+			sub.transform.SetAsLastSibling();
+			sub.gameObject.layer = gameObject.layer;
+			sub.gameObject.tag = gameObject.tag;
 		}
 
 		/// <summary>
@@ -177,20 +231,23 @@ namespace Core.UI {
 		/// </summary>
 		/// <param name="subView"></param>
 		public bool removeSubView(T sub) {
-			return removeSubView(subViews.IndexOf(sub));
+			// 是否不存在
+			if (!subViews.Contains(sub)) return false;
+
+			// 重置
+			if (oriInfos.ContainsKey(sub))
+				oriInfos[sub]?.reset();
+
+			// 数组删除
+			subViews.Remove(sub);
+			oriInfos.Remove(sub);
+
+			return true;
 		}
 		public bool removeSubView(int index) {
 			// 判断是否不存在
-			if (index < 0) return false;
-
-			// 重置Transform
-			subViews[index].transform.parent = oriParents[index];
-
-			// 数组删除
-			subViews.RemoveAt(index);
-			oriParents.RemoveAt(index);
-
-			return true;
+			if (index < 0 || index >= subViews.Count) return false;
+			return removeSubView(subViews[index]);
 		}
 
 		/// <summary>
