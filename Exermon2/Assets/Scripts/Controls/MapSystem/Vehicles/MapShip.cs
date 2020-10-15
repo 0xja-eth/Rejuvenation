@@ -48,7 +48,6 @@ namespace UI.MapSystem.Controls {
 			base.initializeCollFuncs();
 
 			registerOnEnterFunc<WaterColumn>(onColumnColl);
-
 			registerOnEnterFunc<MapPlayer>(tryBoard);
 			boardingRegion.registerOnEnterFunc<MapRegion>(tryLand);
 		}
