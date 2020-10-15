@@ -95,7 +95,6 @@ namespace UI.BattleSystem.Controls {
         protected override void update() {
             base.update();
             updateInput();
-			updateVehicle();
         }
 
         /// <summary>
@@ -109,13 +108,6 @@ namespace UI.BattleSystem.Controls {
             if (updateSearching() || updateSkill()) stop();
             else updateMovement();
         }
-
-		/// <summary>
-		/// 更新载具（位置同步）
-		/// </summary>
-		void updateVehicle() {
-
-		}
 
 		#endregion
 
