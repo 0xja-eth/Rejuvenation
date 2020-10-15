@@ -54,6 +54,7 @@ namespace UI.MapSystem {
         #endregion
 
         #region 更新
+
         /// <summary>
         /// 更新
         /// </summary>
@@ -100,6 +101,7 @@ namespace UI.MapSystem {
             base.onTerminated();
             gameSer.switchCheckPoint();
         }
+
         #endregion
     }
 }
