@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+using GameModule.Services;
 namespace UI.BattleSystem.Controls.Enemies {
 
 	/// <summary>
