@@ -191,7 +191,8 @@ namespace UI.Common.Controls.AnimationSystem {
         /// 更新窗口背景
         /// </summary>
         void updateAnimatorState() {
-            if (animator == null) return;
+            if (animator == null || animator.runtimeAnimatorController == null) return;
+
 			var state = animator.GetCurrentAnimatorStateInfo(layerIndex);
 			/*
 			if (eventState != null && !state.IsName(eventState) &&

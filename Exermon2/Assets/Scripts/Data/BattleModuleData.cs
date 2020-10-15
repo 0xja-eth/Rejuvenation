@@ -24,8 +24,6 @@ using MapModule.Data;
 
 using ItemModule.Data;
 
-using Event = MapModule.Data.Event;
-
 /// <summary>
 /// 战斗模块
 /// </summary>
@@ -420,6 +418,12 @@ namespace BattleModule.Data {
 	public class RuntimeSkill : RuntimeData {
 
 		/// <summary>
+		/// 条件函数
+		/// </summary>
+		/// <returns></returns>
+		public delegate bool Condition();
+
+		/// <summary>
 		/// 属性
 		/// </summary>
 		[AutoConvert]
@@ -433,14 +437,14 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 条件
 		/// </summary>
-		public Event.Condition condition { get; protected set; }
+		public Condition condition { get; protected set; }
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public RuntimeSkill() { }
 		public RuntimeSkill(Skill skill, float rate, 
-			Event.Condition condition = null) {
+			Condition condition = null) {
 			this.skill = skill; this.rate = rate;
 			this.condition = condition;
 		}

@@ -10,28 +10,7 @@ using UI.Common.Controls.SystemExtend.PhysicsExtend;
 namespace UI.MapSystem.Controls {
 
 	using BattleSystem.Controls;
-
-
-	///// <summary>
-	///// 技能应用接口
-	///// </summary>
-	//public interface ISkillApplication : IBaseComponent {
-
-	//	/// <summary>
-	//	/// 作用到不同物体上
-	//	/// </summary>
-	//	/// <param name="batler"></param>
-	//	void applyBattler(MapBattler batler);
-	//	void applyEntity(MapEntity entity);
-	//	void applyMap(Tilemap map);
-
-	//	/// <summary>
-	//	/// 是否可应用
-	//	/// </summary>
-	//	/// <returns></returns>
-	//	bool isApplyValid();
-	//}
-
+	
 	/// <summary>
 	/// 地图上的实体
 	/// </summary>
@@ -43,12 +22,20 @@ namespace UI.MapSystem.Controls {
 		const float YZConvert = 0.0001f;
 
 		/// <summary>
-		/// 属性
+		/// 外部变量设置
+		/// </summary>
+		public bool autoZ = true; // 自动调整Z坐标
+
+		/// <summary>
+		/// 位置
 		/// </summary>
 		public float x => transform.position.x;
 		public float y => transform.position.y;
 
-		public Vector2 pos => transform.position;
+		public Vector2 pos {
+			get => transform.position;
+			set { transform.position = value; }
+		}
 
 		/// <summary>
 		/// 内部控件设置
@@ -100,13 +87,13 @@ namespace UI.MapSystem.Controls {
 		//	skill.applyEntity(this);
 		//}
 
-		/// <summary>
-		/// 能否被击中
-		/// </summary>
-		/// <returns></returns>
-		public virtual bool isApplyable() {
-			return true;
-		}
+		///// <summary>
+		///// 能否被击中
+		///// </summary>
+		///// <returns></returns>
+		//public virtual bool isApplyable() {
+		//	return true;
+		//}
 
 		///// <summary>
 		///// 是否有效的技能
@@ -132,11 +119,18 @@ namespace UI.MapSystem.Controls {
 		/// 更新Z坐标
 		/// </summary>
 		void updateZCoord() {
-			var cz = map.camera.transform.position.z;
+			if (!autoZ) return;
 			var pos = transform.position;
-
-			pos.z = mapY2Z(pos.y, cz);
+			pos.z = calcZCoord(pos);
 			transform.position = pos;
+		}
+
+		/// <summary>
+		/// 计算新坐标
+		/// </summary>
+		protected virtual float calcZCoord(Vector3 pos) {
+			var cz = map.camera.transform.position.z;
+			return mapY2Z(pos.y, cz);
 		}
 
 		/// <summary>

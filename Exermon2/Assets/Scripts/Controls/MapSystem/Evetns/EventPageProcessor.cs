@@ -8,8 +8,6 @@ using GameModule.Services;
 
 using UI.Common.Controls.ItemDisplays;
 
-using Event = MapModule.Data.Event;
-
 namespace UI.MapSystem.Controls {
 
 	using BattleSystem.Controls;
@@ -17,7 +15,6 @@ namespace UI.MapSystem.Controls {
 	/// <summary>
 	/// 地图上的事件
 	/// </summary>
-	[RequireComponent(typeof(Collider2D))]
 	public class EventPageProcessor : ItemDisplay<MapEventPage> {
 
 		/// <summary>

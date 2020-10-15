@@ -82,25 +82,49 @@ namespace UI.Common.Controls.SystemExtend.PhysicsExtend {
 		/// <summary>
 		/// 碰撞开始
 		/// </summary>
+		/// <param name="collider"></param>
+		void OnTriggerEnter2D(Collider2D collider) {
+			onTrigger(collider, onEnterFuncs);
+		}
+
+		/// <summary>
+		/// 碰撞持续
+		/// </summary>
+		/// <param name="collider"></param>
+		void OnTriggerStay2D(Collider2D collider) {
+			onTrigger(collider, onStayFuncs);
+		}
+
+		/// <summary>
+		/// 碰撞结束
+		/// </summary>
+		/// <param name="collider"></param>
+		void OnTriggerExit2D(Collider2D collider) {
+			onTrigger(collider, onExitFuncs);
+		}
+
+		/// <summary>
+		/// 碰撞开始
+		/// </summary>
 		/// <param name="collision"></param>
-		void OnTriggerEnter2D(Collider2D collision) {
-			onTrigger(collision, onEnterFuncs);
+		void OnCollisionEnter2D(Collision2D collision) {
+			onTrigger(collision.collider, onEnterFuncs);
 		}
 
 		/// <summary>
 		/// 碰撞持续
 		/// </summary>
 		/// <param name="collision"></param>
-		void OnTriggerStay2D(Collider2D collision) {
-			onTrigger(collision, onStayFuncs);
+		void OnCollisionStay2D(Collision2D collision) {
+			onTrigger(collision.collider, onStayFuncs);
 		}
 
 		/// <summary>
 		/// 碰撞结束
 		/// </summary>
 		/// <param name="collision"></param>
-		void OnTriggerExit2D(Collider2D collision) {
-			onTrigger(collision, onExitFuncs);
+		void OnCollisionExit2D(Collision2D collision) {
+			onTrigger(collision.collider, onExitFuncs);
 		}
 
 		/// <summary>
