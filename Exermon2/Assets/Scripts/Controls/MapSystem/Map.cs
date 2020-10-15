@@ -19,9 +19,17 @@ namespace UI.MapSystem.Controls {
 	public class Map : WorldComponent {
 
 		/// <summary>
-		/// 内部变量定义
+		/// 地图类型
+		/// </summary>
+		public enum MapType {
+			Current, Past
+		}
+
+		/// <summary>
+		/// 外部变量定义
 		/// </summary>
 		public bool active = true;
+		public MapType type = MapType.Current;
 
 		/// <summary>
 		/// 内部组件设置

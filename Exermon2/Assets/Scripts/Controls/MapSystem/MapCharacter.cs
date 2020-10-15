@@ -12,7 +12,7 @@ namespace UI.MapSystem.Controls {
 	using Common.Controls.AnimationSystem;
 
 	/// <summary>
-	/// 地图上的行走实体
+	/// 地图上的行走实体（可移动的实体，拥有刚体组件）
 	/// </summary>
 	//[RequireComponent(typeof(SpriteRenderer))]
 	[RequireComponent(typeof(Rigidbody2D))]
@@ -59,11 +59,6 @@ namespace UI.MapSystem.Controls {
 		public new AnimationExtend animation;
 
 		/// <summary>
-		/// 内部变量定义
-		/// </summary>
-		//protected bool moving = false;
-
-		/// <summary>
 		/// 类型
 		/// </summary>
 		public virtual Type type => Type.NPC;
@@ -85,8 +80,13 @@ namespace UI.MapSystem.Controls {
 		public RuntimeCharacter.Direction direction 
 			=> runtimeCharacter.direction;
 
+		/// <summary>
+		/// 载具
+		/// </summary>
+		public MapVehicle vehicle { get; set; } // 对外不能用 set
+
 		#region 初始化
-		
+
 		/// <summary>
 		/// 启动
 		/// </summary>
@@ -239,62 +239,12 @@ namespace UI.MapSystem.Controls {
 
 		#region 移动控制
 
-		#region 朝向相关
-
-		///// <summary>
-		///// 获取当前朝向
-		///// </summary>
-		///// <returns></returns>
-		//public RuntimeCharacter.Direction currentDirection() {
-		//	return RuntimeCharacter.vec2Dir8(velocity);
-		//}
-
-		///// <summary>
-		///// 朝向判断
-		///// </summary>
-		///// <returns></returns>
-		//public bool isFacingLeft() {
-		//	return isFacingLeft(velocity);
-		//}
-		//public bool isFacingLeft(Vector2 vec) {
-		//	return vec.x < 0;
-		//}
-		//public bool isFacingRight() {
-		//	return isFacingRight(velocity);
-		//}
-		//public bool isFacingRight(Vector2 vec) {
-		//	return vec.x > 0;
-		//}
-		//public bool isFacingUp() {
-		//	return isFacingUp(velocity);
-		//}
-		//public bool isFacingUp(Vector2 vec) {
-		//	return vec.y < 0;
-		//}
-		//public bool isFacingDown() {
-		//	return isFacingDown(velocity);
-		//}
-		//public bool isFacingDown(Vector2 vec) {
-		//	return vec.y > 0;
-		//}
-
-		///// <summary>
-		///// 更新朝向
-		///// </summary>
-		//public void refreshFacing() {
-		//	if (isFacingRight()) sprite.flipX = true;
-		//	else if (isFacingLeft()) sprite.flipX = false;
-		//}
-		//public void refreshFacing(Vector2 vec) {
-		//	if (isFacingRight(vec)) sprite.flipX = true;
-		//	else if (isFacingLeft(vec)) sprite.flipX = false;
-		//}
-		//public void refreshFacing(RuntimeCharacter.Direction d) {
-		//	var vec = RuntimeCharacter.dir82Vec(d);
-		//	refreshFacing(vec);
-		//}
-
-		#endregion
+		/// <summary>
+		/// 计算新坐标
+		/// </summary>
+		protected override float calcZCoord(Vector3 pos) {
+			return vehicle ? vehicle.transform.position.z : base.calcZCoord(pos);
+		}
 
 		#region 状态判断
 
@@ -316,22 +266,6 @@ namespace UI.MapSystem.Controls {
 			runtimeCharacter.changeState(state);
 		}
 
-		///// <summary>
-		///// 是否移动中
-		///// </summary>
-		///// <returns></returns>
-		//public virtual bool isMoving() {
-		//	return 
-		//}
-
-		///// <summary>
-		///// 是否空闲
-		///// </summary>
-		///// <returns></returns>
-		//public virtual bool isIdle() {
-		//	return !isMoving();
-		//}
-
 		#endregion
 
 		#region 移动操作
@@ -341,7 +275,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public virtual float moveSpeed() {
-			return defaultMoveSpeed;
+			return vehicle ? 0 : defaultMoveSpeed;
 		}
 
 		/// <summary>

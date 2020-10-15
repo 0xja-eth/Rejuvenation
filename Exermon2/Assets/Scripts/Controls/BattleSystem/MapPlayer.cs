@@ -8,8 +8,6 @@ using BattleModule.Data;
 using GameModule.Services;
 using PlayerModule.Services;
 
-using Event = MapModule.Data.Event;
-
 namespace UI.BattleSystem.Controls {
 
     using MapSystem.Controls;
@@ -97,7 +95,7 @@ namespace UI.BattleSystem.Controls {
         protected override void update() {
             base.update();
             updateInput();
-
+			updateVehicle();
         }
 
         /// <summary>
@@ -112,15 +110,22 @@ namespace UI.BattleSystem.Controls {
             else updateMovement();
         }
 
-        #endregion
+		/// <summary>
+		/// 更新载具（位置同步）
+		/// </summary>
+		void updateVehicle() {
 
-        #region 状态判断
+		}
 
-        /// <summary>
-        /// 能否移动
-        /// </summary>
-        /// <returns></returns>
-        public bool isMovable() {
+		#endregion
+
+		#region 状态判断
+
+		/// <summary>
+		/// 能否移动
+		/// </summary>
+		/// <returns></returns>
+		public bool isMovable() {
             return runtimeBattler.isMoveable();
         }
 
@@ -198,15 +203,14 @@ namespace UI.BattleSystem.Controls {
             event_.processTrigger(this, MapEventPage.TriggerType.CollExit);
         }
 
-        #endregion
+		#endregion
 
-        #region 移动控制
+		#region 移动控制
 
-        /// <summary>
-
-        /// 更新移动
-        /// </summary>
-        bool updateMovement() {
+		/// <summary>
+		/// 更新移动
+		/// </summary>
+		bool updateMovement() {
             var speed = new Vector2(xDelta, yDelta);
             var flag = (speed.x == 0 && speed.y == 0);
 
@@ -271,8 +275,7 @@ namespace UI.BattleSystem.Controls {
 
             return attack || attacking || (flashBegin && !flashEnd);
         }
-
-
+		
         /// <summary>
         /// 更新闪烁技能使用
         /// </summary>
@@ -322,8 +325,7 @@ namespace UI.BattleSystem.Controls {
                 }
             }
         }
-
-
+		
         /// <summary>
         /// 使用闪烁技能
         /// </summary>

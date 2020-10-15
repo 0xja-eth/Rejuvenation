@@ -8,7 +8,6 @@ using Core.UI.Utils;
 
 using GameModule.Services;
 
-using Event = MapModule.Data.Event;
 using MapModule.Services;
 using MapModule.Data;
 

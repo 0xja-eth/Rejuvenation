@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1058599575628867247}
   - component: {fileID: 5323425619040689252}
   - component: {fileID: 7071688587378960410}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hibernation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 18
+  m_SortingOrder: 20
   m_Sprite: {fileID: -8931714214777382208, guid: 51c0bb071223eaa4b8c96816d3ce8148,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,11 +127,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2304898454909394042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b101ed1ce74a0ab4f89ddbda3be7fa70, type: 3}
+  m_Script: {fileID: 11500000, guid: 50741199ad3e212498eae33041ea0aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
   collider: {fileID: 7071688587378960410}
+  autoZ: 1
   eventPages: []
 --- !u!70 &7071688587378960410
 CapsuleCollider2D:
@@ -159,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8620396987203957983}
   - component: {fileID: 93129127615806488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MessageSender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
