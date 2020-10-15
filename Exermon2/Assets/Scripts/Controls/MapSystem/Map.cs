@@ -59,7 +59,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public bool isBusy() {
-			return scene.isBusy();
+			return scene && scene.isBusy();
 		}
 
 		/// <summary>
