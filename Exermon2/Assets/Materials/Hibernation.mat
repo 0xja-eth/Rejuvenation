@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shine
-  m_Shader: {fileID: -6465566751694194690, guid: 53379691f1ec98c4884885800d50dc0d,
+  m_Name: Hibernation
+  m_Shader: {fileID: -6465566751694194690, guid: 3709df0d75f67f04ba946dba4235f80e,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
@@ -25,6 +25,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_4B3300F2: 0.56
+    - Vector1_48F22867: 5
+    - Vector1_D4A8145: 0.72
     m_Colors:
-    - Color_991BE1DA: {r: 1, g: 0.44124767, b: 0.41037738, a: 1}
+    - Color_8BBA6254: {r: 0.07450981, g: 0.14901961, b: 1, a: 1}

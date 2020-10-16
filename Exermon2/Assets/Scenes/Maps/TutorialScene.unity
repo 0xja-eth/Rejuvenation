@@ -1062,31 +1062,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal
       objectReference: {fileID: 0}
-    - target: {fileID: 8138486234631692565, guid: e7e4bb651afcba2408b69598621819ff,
-        type: 3}
-      propertyPath: NoiseModule.frequency
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8138486234631692565, guid: e7e4bb651afcba2408b69598621819ff,
-        type: 3}
-      propertyPath: NoiseModule.octaves
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8138486234631692565, guid: e7e4bb651afcba2408b69598621819ff,
-        type: 3}
-      propertyPath: NoiseModule.damping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8138486234631692565, guid: e7e4bb651afcba2408b69598621819ff,
-        type: 3}
-      propertyPath: NoiseModule.strengthZ.scalar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8138486234631692565, guid: e7e4bb651afcba2408b69598621819ff,
-        type: 3}
-      propertyPath: NoiseModule.positionAmount.scalar
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e4bb651afcba2408b69598621819ff, type: 3}
 --- !u!114 &709974546
@@ -30082,6 +30057,11 @@ PrefabInstance:
       propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 298741143}
+    - target: {fileID: 3422880219951470297, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad2293e510923fe41914545cd15fb842, type: 2}
     - target: {fileID: 3422880220427809496, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -30255,12 +30235,12 @@ PrefabInstance:
     - target: {fileID: 3422880220770158976, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.1
+      value: -4.33
       objectReference: {fileID: 0}
     - target: {fileID: 3422880220770158976, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -37.41
+      value: -56.92
       objectReference: {fileID: 0}
     - target: {fileID: 3422880220770158979, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Flash
-  m_Shader: {fileID: -6465566751694194690, guid: f55d604ce52fee645b70a8747a14071e,
+  m_Name: ShineGem
+  m_Shader: {fileID: -6465566751694194690, guid: 53379691f1ec98c4884885800d50dc0d,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
@@ -21,15 +21,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: fbc0245b4e294de459eff141de9fb1e2, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_50F79ADC: 1
-    - Vector1_9587FEAB: 3
-    - Vector1_97DB15B8: 0.331
-    - Vector1_C475DFD: 0.696
-    - _DissolveAmount: 0
+    - Vector1_10BFF080: 3
+    - Vector1_4B3300F2: 3.82
     m_Colors:
-    - Color_E9B912F9: {r: 0.2551389, g: 0.19607842, b: 0.7490196, a: 1}
-    - _DissolveColor: {r: 0.9882353, g: 0.4862745, b: 2.9960785, a: 1}
+    - Color_991BE1DA: {r: 1, g: 0.44124767, b: 0.41037738, a: 1}
