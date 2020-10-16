@@ -153,9 +153,9 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		void updateDirection() {
 			if (!directionController) return;
-			var rot = directionController.rotation;
+			var rot = directionController.localEulerAngles;
 			rot.z = RuntimeCharacter.dir82Angle(direction);
-			directionController.rotation = rot;
+			directionController.localEulerAngles = rot;
 		}
 
 		#endregion
