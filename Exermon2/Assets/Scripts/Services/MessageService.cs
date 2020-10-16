@@ -15,7 +15,7 @@ namespace MapModule.Services {
 		/// <summary>
 		/// 消息队列
 		/// </summary>
-        Queue<DialogMessage> messages = new Queue<DialogMessage>();
+        public Queue<DialogMessage> messages = new Queue<DialogMessage>();
 
 		/// <summary>
 		/// 添加消息

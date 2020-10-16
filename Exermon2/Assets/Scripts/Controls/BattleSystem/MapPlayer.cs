@@ -26,6 +26,7 @@ namespace UI.BattleSystem.Controls {
         /// 外部组件设置
         /// </summary>
         public SkillProcessor normalSkill, longRangeSkill;
+        public List<Material> materials = new List<Material>();
         public Material material;
 
         /// <summary>
@@ -68,6 +69,13 @@ namespace UI.BattleSystem.Controls {
         #region 初始化
 
         /// <summary>
+        /// 初始化
+        /// </summary>
+        protected override void start() {
+            base.start();
+        }
+
+        /// <summary>
         /// 初始化碰撞函数
         /// </summary>
         protected override void initializeCollFuncs() {
@@ -95,6 +103,11 @@ namespace UI.BattleSystem.Controls {
         protected override void update() {
             base.update();
             updateInput();
+
+            //测试用，跳过对话
+            if (Input.GetKey(KeyCode.T)) {
+                MapModule.Services.MessageService.Get().messages.Clear();
+            }
         }
 
         /// <summary>
@@ -109,15 +122,15 @@ namespace UI.BattleSystem.Controls {
             else updateMovement();
         }
 
-		#endregion
+        #endregion
 
-		#region 状态判断
+        #region 状态判断
 
-		/// <summary>
-		/// 能否移动
-		/// </summary>
-		/// <returns></returns>
-		public bool isMovable() {
+        /// <summary>
+        /// 能否移动
+        /// </summary>
+        /// <returns></returns>
+        public bool isMovable() {
             return runtimeBattler.isMoveable();
         }
 
@@ -183,8 +196,8 @@ namespace UI.BattleSystem.Controls {
         /// <param name="player"></param>
         void onEventCollStay(MapEvent event_) {
             event_.processTrigger(this, search ?
-				MapEventPage.TriggerType.CollSearch :
-				MapEventPage.TriggerType.CollStay);
+                MapEventPage.TriggerType.CollSearch :
+                MapEventPage.TriggerType.CollStay);
         }
 
         /// <summary>
@@ -195,14 +208,14 @@ namespace UI.BattleSystem.Controls {
             event_.processTrigger(this, MapEventPage.TriggerType.CollExit);
         }
 
-		#endregion
+        #endregion
 
-		#region 移动控制
+        #region 移动控制
 
-		/// <summary>
-		/// 更新移动
-		/// </summary>
-		bool updateMovement() {
+        /// <summary>
+        /// 更新移动
+        /// </summary>
+        bool updateMovement() {
             var speed = new Vector2(xDelta, yDelta);
             var flag = (speed.x == 0 && speed.y == 0);
 
@@ -256,7 +269,7 @@ namespace UI.BattleSystem.Controls {
                 attackTime += Time.deltaTime;
                 debugLog(attackTime);
             }
-            
+
             updateSkillFlash();
 
             var keyflash = gameSer.keyboard.rushKey;
@@ -267,7 +280,7 @@ namespace UI.BattleSystem.Controls {
 
             return attack || attacking || (flashBegin && !flashEnd);
         }
-		
+
         /// <summary>
         /// 更新闪烁技能使用
         /// </summary>
@@ -313,16 +326,17 @@ namespace UI.BattleSystem.Controls {
                         gameSer.tutorialFlash = false;
                     }
                     else
-                        gameSer.onTutorialFlashFail();         
+                        gameSer.onTutorialFlashFail();
                 }
             }
         }
-		
+
         /// <summary>
         /// 使用闪烁技能
         /// </summary>
         /// <param name="skill"></param>
         void useSkillFlash() {
+
             Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
             Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
             Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.2f, collider.bounds.size.y - 0.2f);//微调碰撞盒
@@ -350,6 +364,16 @@ namespace UI.BattleSystem.Controls {
             flashIsCooling = true;
             flashBegin = true;
         }
+
+
+        /// <summary>
+        /// 材质切换
+        /// </summary>
+        /// <param name="index"></param>
+        void switchMaterial(int index) {
+            material = materials[index];
+        }
+
 
         /// <summary>
         /// 使用技能
