@@ -25,8 +25,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_C475DFD: 0.999
+    - Vector1_97DB15B8: 0.331
+    - Vector1_C475DFD: 0.915
     - _DissolveAmount: 0
     m_Colors:
-    - Color_E9B912F9: {r: 0, g: 1.4980392, b: 1.4980392, a: 1}
-    - _DissolveColor: {r: 0, g: 1.6627451, b: 2.9960785, a: 1}
+    - Color_E9B912F9: {r: 0.6861943, g: 0.81299525, b: 2.6449668, a: 1}
+    - _DissolveColor: {r: 0.9882353, g: 0.4862745, b: 2.9960785, a: 1}

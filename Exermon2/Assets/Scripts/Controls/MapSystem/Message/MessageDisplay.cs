@@ -120,6 +120,7 @@ namespace UI.MapSystem.Controls {
 			
 			this.bust.gameObject.SetActive(bust != null);
 			this.bust.overrideSprite = bust;
+			this.bust.SetNativeSize();
 		}
 
 		/// <summary>
@@ -131,6 +132,7 @@ namespace UI.MapSystem.Controls {
 			nameFrame.SetActive(false);
 			bust.gameObject.SetActive(false);
 			bust.overrideSprite = null;
+			this.bust.SetNativeSize();
 		}
 
 		/// <summary>
