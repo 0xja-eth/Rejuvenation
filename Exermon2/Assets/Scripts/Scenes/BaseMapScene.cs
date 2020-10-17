@@ -167,7 +167,8 @@ namespace UI.MapSystem {
         /// </summary>
         void switchScene() {
             //以镜子为中心进行扭曲
-            switchSceneMaterial.SetVector("_CenterPos", getPortalScreenPostion(player.transform.position));
+            var center = getPortalScreenPostion(player.transform.position);
+            switchSceneMaterial.SetVector("_CenterPos", center);
             switching = true;
             //TODO状态切换
             if (present) {
