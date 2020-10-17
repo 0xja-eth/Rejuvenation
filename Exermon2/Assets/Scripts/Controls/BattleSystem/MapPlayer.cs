@@ -7,9 +7,10 @@ using BattleModule.Data;
 
 using GameModule.Services;
 using PlayerModule.Services;
+using UI.MapSystem;
 
 namespace UI.BattleSystem.Controls {
-
+    using Core.UI.Utils;
     using MapSystem.Controls;
 
     /// <summary>
@@ -59,6 +60,16 @@ namespace UI.BattleSystem.Controls {
         bool flashIsCooling = false;//闪烁是否冷却
         bool flashBegin = false;//角色是否开始消失
         bool flashEnd = false;//角色是否开始出现
+
+        /// <summary>
+        /// 场景组件
+        /// </summary>
+        BaseMapScene scene => SceneUtils.getCurrentScene<MapSystem.BaseMapScene>();
+
+        protected override Map map { get {
+                return scene?.curMap;
+            }
+        }
 
         /// <summary>
         /// 外部系统设置

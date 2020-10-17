@@ -38,7 +38,7 @@ namespace UI.MapSystem.Controls {
 		CameraController cameraController;
 
 		[HideInInspector]
-		public MapPlayer player;
+        public MapPlayer player => scene.player;
 
 		List<MapEntity> entities = new List<MapEntity>();
 
@@ -80,10 +80,7 @@ namespace UI.MapSystem.Controls {
 		/// <param name="entity"></param>
 		public void addEntity(MapEntity entity) {
 			var player = entity as MapPlayer;
-			if (player) {
-				if (this.player) return;
-				this.player = player;
-			}
+            if (player) return;
 
 			entities.Add(entity);
 		}
