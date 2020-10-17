@@ -15,7 +15,7 @@ using MapModule.Services;
 using MapModule.Data;
 
 using UI.Common.Controls.AnimationSystem;
-
+using UI.BattleSystem.Controls;
 namespace UI.MapSystem {
 
 	using Controls;
@@ -28,23 +28,31 @@ namespace UI.MapSystem {
     public abstract class BaseMapScene : BaseScene {
 
         /// <summary>
-        /// 分屏类型
+        /// 时空穿越类型
         /// </summary>
-        public enum SplitType {
+        public enum ThroughType {
             PresentSingle, // 现在单屏
             PastSingle, //过去单屏
-            Both, // 双屏（左屏为过去，右屏为现在）
-            PastMain, // 左屏为主
-            PresentMain, // 右屏为主
+            //Both, // 双屏（左屏为过去，右屏为现在）
+            //PastMain, // 左屏为主
+            //PresentMain, // 右屏为主
         }
 
         /// <summary>
         /// 外部组件设置
         /// </summary>
         public Map map1, map2;
-		public DialogWindow dialogWindow;
-		public RenderTexture renderTexture;
+        public MapPlayer player;
+        [HideInInspector]
+        public Map curMap;
+
+        public DialogWindow dialogWindow;
+
+        public RenderTexture renderTexture;
 		public Canvas splitCanvas;
+        public Material switchSceneMaterial;
+        [HideInInspector]
+        public float switchStrength = 0;
 
 		/// <summary>
 		/// 内部组件设置
@@ -57,23 +65,35 @@ namespace UI.MapSystem {
 		/// </summary>
 		bool present = false;
         bool switching = false;
+        ThroughType splitType;
 
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
 		protected MessageService messageSer;
 
-		#region 更新
+        #region  初始化
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        protected override void initializeOnce() {
+            base.initializeOnce();
+            curMap = map1;
+        }
+        #endregion
 
-		/// <summary>
-		/// 更新
-		/// </summary>
-		protected override void update() {
+        #region 更新
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        protected override void update() {
 			base.update();
 			updateDialog();
 
 			updateForTest();
-		}
+            updateSwitchStrength();
+        }
 
 		/// <summary>
 		/// 更新对话框
@@ -82,6 +102,16 @@ namespace UI.MapSystem {
 			if (messageSer.messageCount() > 0 && !isBusy())
 				dialogWindow.activate();
 		}
+
+        /// <summary>
+        /// 更新镜头扭曲强度
+        /// </summary>
+        void updateSwitchStrength() {
+            if (switching) {
+                //debugLog("switch strength:" + switchStrength);
+                switchSceneMaterial.SetFloat("_Strength", switchStrength);
+            }
+        }
 
 		#endregion
 
@@ -109,19 +139,56 @@ namespace UI.MapSystem {
 
 		#endregion
 
-		#region 分屏控制
+		#region 时空穿越控制
 
 		/// <summary>
-		/// 分屏
+		/// 时空穿越
 		/// </summary>
-		public void splitCamera(SplitType type) {
+		public void TravelThrough(ThroughType type) {
             if (switching)
                 return;
-            if (type == SplitType.PresentSingle)
+            splitType = type;
+            if (type == ThroughType.PresentSingle) {
+                if (curMap == map1)
+                    return;
                 switchToPresent();
-            else if (type == SplitType.PastSingle)
+            }
+            else if (type == ThroughType.PastSingle) {
+                if (curMap == map2)
+                    return;
                 switchToPast();
+            }
+            switchScene();
             animator.SetTrigger(type.ToString());
+        }
+
+        /// <summary>
+        /// 地图场景切换
+        /// </summary>
+        void switchScene() {
+            //以镜子为中心进行扭曲
+            var center = getPortalScreenPostion(player.transform.position);
+            switchSceneMaterial.SetVector("_CenterPos", center);
+            switching = true;
+            //TODO状态切换
+            if (present) {
+                player.transform.position -= map2.transform.position - map1.transform.position;
+                curMap = map1;
+            }
+            else {
+                player.transform.position += map2.transform.position - map1.transform.position;
+                curMap = map2;
+            }
+        }
+
+        /// <summary>
+        /// 将当前扭曲位置转化为屏幕坐标百分比
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        Vector2 getPortalScreenPostion(Vector3 position) {
+            var screenPos = map1.camera.WorldToScreenPoint(position);
+            return new Vector2(screenPos.x / Screen.width, screenPos.y / Screen.height);
         }
 
         /// <summary>
@@ -129,58 +196,49 @@ namespace UI.MapSystem {
         /// </summary>
         void switchToPresent() {
             present = true;
-            switching = true;
-            map1.camera.rect = new Rect(0, 0, 1, 1);
-            map2.camera.rect = new Rect(0, 0, 1, 1);
-            map1.camera.targetTexture = renderTexture;
+            map2.camera.targetTexture = renderTexture;
         }
         /// <summary>
         /// 切换至“过去”
         /// </summary>
         void switchToPast() {
             present = false;
-            switching = true;
-            map1.camera.rect = new Rect(0, 0, 1, 1);
-            map2.camera.rect = new Rect(0, 0, 1, 1);
-            map2.camera.targetTexture = renderTexture;
+            map1.camera.targetTexture = renderTexture;
         }
 
         /// <summary>
         /// 重设相机状态，取消renderTexture模式
         /// </summary>
         public void resetCamera() {
+            //debugLog("reset switch:");
             if (present) {
-                //此处设置视口有bug，动画update时会自动恢复，只能在动画中设置视口属性
-                map2.camera.rect = new Rect(0, 0, 0, 1);
-                map1.camera.rect = new Rect(0, 0, 1, 1);
                 map1.camera.targetTexture = null;
             }
             else {
-                map1.camera.rect = new Rect(0, 0, 0, 1);
-                map2.camera.rect = new Rect(0, 0, 1, 1);
                 map2.camera.targetTexture = null;
             }
+
             switching = false;
         }
 
-		#endregion
+        #endregion
 
-		#region 测试
+        #region 测试
 
-		/// <summary>
-		/// 测试
-		/// </summary>
-		void updateForTest() {
+        /// <summary>
+        /// 测试
+        /// </summary>
+        void updateForTest() {
             if (Input.GetKeyDown(KeyCode.Alpha1))
-                splitCamera(SplitType.PresentSingle);
+                TravelThrough(ThroughType.PresentSingle);
             else if (Input.GetKeyDown(KeyCode.Alpha2))
-                splitCamera(SplitType.PastSingle);
-            else if (Input.GetKeyDown(KeyCode.B))
-                splitCamera(SplitType.Both);
+                TravelThrough(ThroughType.PastSingle);
+            //else if (Input.GetKeyDown(KeyCode.B))
+            //    splitCamera(SplitType.Both);
             //else if (Input.GetKeyDown(KeyCode.L))
             //    splitCamera(SplitType.PastMain);
-            else if (Input.GetKeyDown(KeyCode.R))
-                splitCamera(SplitType.PresentMain);
+            //else if (Input.GetKeyDown(KeyCode.R))
+            //    splitCamera(SplitType.PresentMain);
             else if (Input.GetKeyDown(KeyCode.Y)) {
 				Debug.Log("K " + messageSer.messageCount());
             }

@@ -40,7 +40,7 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 内部控件设置
 		/// </summary>
-		protected Map map;
+		protected virtual Map map { get; set; }
 
 		#region 初始化
 
@@ -57,7 +57,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		void initializeMap() {
 			map = findParent<Map>();
-			map?.addEntity(this);
+            // if (map != null) this.map = map;
+            map?.addEntity(this);
 		}
 
 		/// <summary>
