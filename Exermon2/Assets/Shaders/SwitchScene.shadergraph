@@ -10,7 +10,7 @@
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty"
             },
-            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"764116cf-5e63-4210-9803-dea0a5dbae1f\"\n    },\n    \"m_Name\": \"Strength\",\n    \"m_DefaultReferenceName\": \"Vector1_F8A6676C\",\n    \"m_OverrideReferenceName\": \"_Strength\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": 0.0,\n    \"m_FloatType\": 1,\n    \"m_RangeValues\": {\n        \"x\": 0.0,\n        \"y\": 20.0\n    }\n}"
+            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"764116cf-5e63-4210-9803-dea0a5dbae1f\"\n    },\n    \"m_Name\": \"Strength\",\n    \"m_DefaultReferenceName\": \"Vector1_F8A6676C\",\n    \"m_OverrideReferenceName\": \"_Strength\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": 0.0,\n    \"m_FloatType\": 1,\n    \"m_RangeValues\": {\n        \"x\": 0.0,\n        \"y\": 100.0\n    }\n}"
         },
         {
             "typeInfo": {
