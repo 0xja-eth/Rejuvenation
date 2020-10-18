@@ -351,8 +351,8 @@ namespace UI.BattleSystem.Controls {
             Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
             Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
             Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.2f, collider.bounds.size.y - 0.2f);//微调碰撞盒
-            Collider2D collTemp = Physics2D.OverlapBox(dropPos,
-                colliderSize, 0f, 1 << 11);//落点碰撞判断
+            Collider2D collTemp = Physics2D.OverlapCapsule(dropPos,
+                colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);//落点碰撞判断
 
             float flashDistStep = 0.05f;
             float flashDistRes = 0.0f;
@@ -360,7 +360,9 @@ namespace UI.BattleSystem.Controls {
             if (collTemp) {
                 //寻找最远落点
                 while (flashDistStep <= flashDistance) {
-                    collTemp = Physics2D.OverlapBox(collCenter + flashVec * flashDistStep, colliderSize, 0f, 1 << 11);
+                    collTemp = Physics2D.OverlapCapsule(collCenter + flashVec * flashDistStep, 
+                        colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);
+                    debugLog(collTemp?.name);
                     if (!collTemp)
                         flashDistRes = flashDistStep;
                     flashDistStep += 0.05f;
