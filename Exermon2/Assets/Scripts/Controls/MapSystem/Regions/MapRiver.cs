@@ -41,7 +41,7 @@ namespace UI.MapSystem.Controls {
 		/// 状态判断
 		/// </summary>
 		public bool isWater => active && map.type == Map.MapType.Past;
-		public bool isIce => active && map.type == Map.MapType.Current;
+		public bool isIce => active && map.type == Map.MapType.Present;
 
 		#region 更新
 

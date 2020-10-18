@@ -212,6 +212,14 @@ namespace UI.BattleSystem.Controls {
             return !flag;
         }
 
+		/// <summary>
+		/// 同步角色
+		/// </summary>
+		/// <param name="player"></param>
+		public void syncPlayer(MapPlayer player) {
+			transform.localPosition = player.transform.localPosition;
+		}
+
         #endregion
 
         #region 技能控制

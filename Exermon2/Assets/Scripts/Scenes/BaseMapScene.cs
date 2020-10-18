@@ -43,6 +43,7 @@ namespace UI.MapSystem {
         /// </summary>
         public Map map1, map2;
 		public DialogWindow dialogWindow;
+
 		public RenderTexture renderTexture;
 		public Canvas splitCanvas;
 
@@ -62,6 +63,10 @@ namespace UI.MapSystem {
 		/// 外部系统设置
 		/// </summary>
 		protected MessageService messageSer;
+
+		#region 初始化
+
+		#endregion
 
 		#region 更新
 
@@ -115,8 +120,7 @@ namespace UI.MapSystem {
 		/// 分屏
 		/// </summary>
 		public void splitCamera(SplitType type) {
-            if (switching)
-                return;
+            if (switching) return;
             if (type == SplitType.PresentSingle)
                 switchToPresent();
             else if (type == SplitType.PastSingle)
@@ -154,8 +158,7 @@ namespace UI.MapSystem {
                 map2.camera.rect = new Rect(0, 0, 0, 1);
                 map1.camera.rect = new Rect(0, 0, 1, 1);
                 map1.camera.targetTexture = null;
-            }
-            else {
+            } else {
                 map1.camera.rect = new Rect(0, 0, 0, 1);
                 map2.camera.rect = new Rect(0, 0, 1, 1);
                 map2.camera.targetTexture = null;
@@ -175,15 +178,12 @@ namespace UI.MapSystem {
                 splitCamera(SplitType.PresentSingle);
             else if (Input.GetKeyDown(KeyCode.Alpha2))
                 splitCamera(SplitType.PastSingle);
-            else if (Input.GetKeyDown(KeyCode.B))
-                splitCamera(SplitType.Both);
+            //else if (Input.GetKeyDown(KeyCode.B))
+            //    splitCamera(SplitType.Both);
             //else if (Input.GetKeyDown(KeyCode.L))
             //    splitCamera(SplitType.PastMain);
-            else if (Input.GetKeyDown(KeyCode.R))
-                splitCamera(SplitType.PresentMain);
-            else if (Input.GetKeyDown(KeyCode.Y)) {
-				Debug.Log("K " + messageSer.messageCount());
-            }
+            //else if (Input.GetKeyDown(KeyCode.R))
+            //    splitCamera(SplitType.PresentMain);
         }
 
         #endregion
