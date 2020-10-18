@@ -7,11 +7,11 @@ using BattleModule.Data;
 
 using GameModule.Services;
 using PlayerModule.Services;
-using UI.MapSystem;
 
 namespace UI.BattleSystem.Controls {
     using Core.UI.Utils;
     using MapSystem.Controls;
+    using UI.MapSystem;
 
     /// <summary>
     /// 地图上的玩家实体
@@ -52,7 +52,7 @@ namespace UI.BattleSystem.Controls {
 
         const float flashCoolTime = 1f;//闪烁冷却时间
         float flashCoolTimeRemain = flashCoolTime;//闪烁冷却计时
-        const float dissolveSpeed = 3f;//角色消失/出现速度
+        const float dissolveSpeed = 3f;//角色消失/出现    速度
         const float flashDistance = 2f;//闪烁距离
         public float dissolveAnt = 0f;//据色出现/消失参数
         public Vector2 flashPos;//闪烁最终落点
@@ -66,7 +66,8 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         BaseMapScene scene => SceneUtils.getCurrentScene<MapSystem.BaseMapScene>();
 
-        protected override Map map { get {
+        protected override Map map {
+            get {
                 return scene?.curMap;
             }
         }

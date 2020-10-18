@@ -50,7 +50,7 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 场景组件
 		/// </summary>
-		BaseMapScene scene => SceneUtils.getCurrentScene<MapSystem.BaseMapScene>();
+		BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
 		#region	状态判断
 

@@ -339,7 +339,7 @@ PrefabInstance:
     - target: {fileID: 2911615061225356795, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2911615061225356795, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
@@ -8786,10 +8786,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 875993866}
     m_Modifications:
+    - target: {fileID: 1791301585, guid: e7e4bb651afcba2408b69598621819ff, type: 3}
+      propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1262557837}
     - target: {fileID: 704038675803228752, guid: e7e4bb651afcba2408b69598621819ff,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.93
+      value: 3.58
       objectReference: {fileID: 0}
     - target: {fileID: 704038675803228752, guid: e7e4bb651afcba2408b69598621819ff,
         type: 3}
@@ -8845,11 +8849,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Portal
-      objectReference: {fileID: 0}
-    - target: {fileID: 704038675803228755, guid: e7e4bb651afcba2408b69598621819ff,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e4bb651afcba2408b69598621819ff, type: 3}
@@ -9206,9 +9205,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 647793076}
+  - {fileID: 3358975077986196488}
   - {fileID: 875993866}
   - {fileID: 1947542050}
-  - {fileID: 3358975077986196488}
   - {fileID: 1420542967}
   - {fileID: 573148350}
   m_Father: {fileID: 0}
@@ -9381,6 +9380,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1947542050}
     m_Modifications:
+    - target: {fileID: 1791301585, guid: e7e4bb651afcba2408b69598621819ff, type: 3}
+      propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1262557837}
+    - target: {fileID: 1791301585, guid: e7e4bb651afcba2408b69598621819ff, type: 3}
+      propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: travel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791301585, guid: e7e4bb651afcba2408b69598621819ff, type: 3}
+      propertyPath: triggerType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 704038675803228752, guid: e7e4bb651afcba2408b69598621819ff,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9440,11 +9451,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Portal
-      objectReference: {fileID: 0}
-    - target: {fileID: 704038675803228755, guid: e7e4bb651afcba2408b69598621819ff,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e4bb651afcba2408b69598621819ff, type: 3}
@@ -10107,7 +10113,7 @@ PrefabInstance:
     - target: {fileID: 2911615061225356795, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2911615061225356795, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
@@ -18349,7 +18355,7 @@ Transform:
   - {fileID: 6765399398559527958}
   - {fileID: 1712985680842012391}
   m_Father: {fileID: 1262557836}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3358975077986196489
 GameObject:

@@ -688,9 +688,13 @@ MonoBehaviour:
   bgmClip: {fileID: 0}
   map1: {fileID: 537545458}
   map2: {fileID: 0}
+  player: {fileID: 0}
+  curMap: {fileID: 0}
   dialogWindow: {fileID: 203126814}
   renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
   splitCanvas: {fileID: 0}
+  switchSceneMaterial: {fileID: 0}
+  switchStrength: 0
   attackEndTrigger: {fileID: 613381939}
   flashFailTrigger: {fileID: 714100109}
   flashWall: {fileID: 1620949017}
@@ -1002,10 +1006,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1835881276}
     m_Modifications:
+    - target: {fileID: 1791301585, guid: e7e4bb651afcba2408b69598621819ff, type: 3}
+      propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 298741143}
     - target: {fileID: 704038675803228752, guid: e7e4bb651afcba2408b69598621819ff,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34
+      value: -33
       objectReference: {fileID: 0}
     - target: {fileID: 704038675803228752, guid: e7e4bb651afcba2408b69598621819ff,
         type: 3}
