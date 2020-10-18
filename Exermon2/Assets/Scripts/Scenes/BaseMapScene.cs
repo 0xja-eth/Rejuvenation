@@ -173,11 +173,9 @@ namespace UI.MapSystem {
             //TODO状态切换
             if (present) {
                 player.transform.position -= map2.transform.position - map1.transform.position;
-                curMap = map1;
             }
             else {
                 player.transform.position += map2.transform.position - map1.transform.position;
-                curMap = map2;
             }
         }
 
@@ -213,9 +211,11 @@ namespace UI.MapSystem {
             //debugLog("reset switch:");
             if (present) {
                 map1.camera.targetTexture = null;
+                curMap = map1;
             }
             else {
                 map2.camera.targetTexture = null;
+                curMap = map2;
             }
 
             switching = false;

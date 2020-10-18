@@ -124,11 +124,6 @@ namespace Core.UI {
         protected virtual void onStateUpdate() {
             if (!finished && stateInfo.normalizedTime >
                 stateInfo.length + deltaTime) {
-
-                Debug.Log("switch state IsNamePresent:" + stateInfo.IsName("Present"));
-                Debug.Log("switch state IsNamePast:" + stateInfo.IsName("Past"));
-                Debug.Log("switch state normal:" + stateInfo.normalizedTime);
-                Debug.Log("switch state length:" + (stateInfo.length + deltaTime));
                 onStateFinished(); }
 		}
 
@@ -157,9 +152,6 @@ namespace Core.UI {
         /// 状态结束
         /// </summary>
         protected virtual void onStateExit() {
-            Debug.Log("switch exit IsNamePresent:" + stateInfo.IsName("Present"));
-            Debug.Log("switch exit IsNamePast:" + stateInfo.IsName("Past"));
-            Debug.Log("switch state exit");
 			if (!finished) onStateFinished();
 		}
 
