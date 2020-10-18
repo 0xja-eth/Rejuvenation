@@ -22,14 +22,14 @@ namespace UI.MapSystem.Controls {
 		/// 地图类型
 		/// </summary>
 		public enum MapType {
-			Current, Past
+			Present, Past
 		}
 
 		/// <summary>
 		/// 外部变量定义
 		/// </summary>
 		public bool active = true;
-		public MapType type = MapType.Current;
+		public MapType type = MapType.Present;
 
 		/// <summary>
 		/// 内部组件设置
@@ -144,6 +144,26 @@ namespace UI.MapSystem.Controls {
 		/// <returns></returns>
 		public List<MapCharacter> npcs() {
 			return characters(MapCharacter.Type.NPC);
+		}
+
+		#endregion
+
+		#region 传送操作
+
+		/// <summary>
+		/// 同步角色
+		/// </summary>
+		/// <param name="player"></param>
+		public void syncPlayer(MapPlayer player) {
+			this.player.syncPlayer(player);
+		}
+
+		/// <summary>
+		/// 切换地图
+		/// </summary>
+		/// <param name="player"></param>
+		public void switchMap(Map map, bool syncPlayer = true) {
+			if (syncPlayer) map.syncPlayer(player);
 		}
 
 		#endregion

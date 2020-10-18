@@ -237,6 +237,14 @@ namespace UI.BattleSystem.Controls {
             return !flag;
         }
 
+		/// <summary>
+		/// 同步角色
+		/// </summary>
+		/// <param name="player"></param>
+		public void syncPlayer(MapPlayer player) {
+			transform.localPosition = player.transform.localPosition;
+		}
+
         #endregion
 
         #region 技能控制
@@ -351,7 +359,7 @@ namespace UI.BattleSystem.Controls {
 
             Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
             Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
-            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.2f, collider.bounds.size.y - 0.2f);//微调碰撞盒
+            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.01f, collider.bounds.size.y - 0.01f);//微调碰撞盒
             Collider2D collTemp = Physics2D.OverlapCapsule(dropPos,
                 colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);//落点碰撞判断
 

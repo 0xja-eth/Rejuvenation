@@ -10073,7 +10073,7 @@ PrefabInstance:
     - target: {fileID: 2911615061225356794, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
       propertyPath: type
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2911615061225356795, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
@@ -18215,6 +18215,11 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[2].Array.data[9].Y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8831999969085857018, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_GeometryType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55f8fd873c22a3346a39c90495349635, type: 3}
 --- !u!222 &3116973974149908979
@@ -18411,7 +18416,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.1}
+  m_Offset: {x: 0, y: 0.2}
   m_Size: {x: 0.6, y: 0.4}
   m_Direction: 1
 --- !u!111 &3772234260944205636
