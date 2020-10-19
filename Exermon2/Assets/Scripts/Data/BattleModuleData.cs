@@ -525,7 +525,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		public new enum CbType {
 			BattleStart, ActionStart, ActionEnd,
-			BuffAdd, BuffRemove, Die
+			BuffAdd, BuffRemove, Hit, Die
 		}
 
 		/// <summary>
@@ -895,7 +895,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="val"></param>
 		public void setHitting(float val) {
-			hitting = val; changeState(State.Hitting);
+			hitting = val; onHit();
 		}
 
 		/// <summary>
@@ -1274,6 +1274,14 @@ namespace BattleModule.Data {
 		}
 
 		#endregion
+
+		/// <summary>
+		/// 受击回调
+		/// </summary>
+		protected virtual void onHit() {
+			changeState(State.Hitting);
+			_on(CbType.Hit);
+		}
 
 		/// <summary>
 		/// 死亡回调
