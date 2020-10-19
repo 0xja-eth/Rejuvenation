@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 1
-  triggerType: 1
+  triggerType: 5
   actions:
     m_PersistentCalls:
       m_Calls:

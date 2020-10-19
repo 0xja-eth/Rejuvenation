@@ -24,8 +24,10 @@ namespace UI.MapSystem {
 	/// <summary>
 	/// 地图场景基类
 	/// </summary>
-	[RequireComponent(typeof(AnimationExtend), typeof(Animator))]
-    public abstract class BaseMapScene : BaseScene {
+	[RequireComponent(typeof(Animator))]
+	[RequireComponent(typeof(AnimationExtend))]
+	[RequireComponent(typeof(TimeTravelEffect))]
+	public abstract class BaseMapScene : BaseScene {
 
         /// <summary>
         /// 时空穿越类型
@@ -43,22 +45,26 @@ namespace UI.MapSystem {
         /// </summary>
         public Map map1, map2;
         public MapPlayer player;
-        [HideInInspector]
-        public Map curMap;
 
         public DialogWindow dialogWindow;
 
-        public RenderTexture renderTexture;
 		public Canvas splitCanvas;
-        public Material switchSceneMaterial;
-        [HideInInspector]
-        public float switchStrength = 0;
 
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
+		[HideInInspector]
+		public Map curMap;
+		[RequireTarget]
+		protected TimeTravelEffect timeTravelEffect;
 		[RequireTarget]
 		protected Animator animator;
+
+		/// <summary>
+		/// 外部变量设置
+		/// </summary>
+		public RenderTexture renderTexture;
+		public Material switchSceneMaterial;
 
 		/// <summary>
 		/// 内部变量定义
@@ -66,6 +72,11 @@ namespace UI.MapSystem {
 		bool present = true;
         bool switching = false;
         ThroughType splitType;
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		float switchStrength => timeTravelEffect.switchStrength;
 
 		/// <summary>
 		/// 外部系统设置

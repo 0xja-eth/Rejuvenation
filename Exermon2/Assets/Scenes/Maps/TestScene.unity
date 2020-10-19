@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -766,6 +766,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[22].Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831999969085857018, guid: 55f8fd873c22a3346a39c90495349635,
+        type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8831999969085857018, guid: 55f8fd873c22a3346a39c90495349635,
         type: 3}
@@ -9184,6 +9189,7 @@ GameObject:
   - component: {fileID: 1262557835}
   - component: {fileID: 1262557838}
   - component: {fileID: 1262557837}
+  - component: {fileID: 1262557840}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -9248,12 +9254,11 @@ MonoBehaviour:
   map1: {fileID: 875993867}
   map2: {fileID: 1947542047}
   player: {fileID: 3358975077986196483}
-  curMap: {fileID: 0}
   dialogWindow: {fileID: 1902667773}
-  renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
   splitCanvas: {fileID: 0}
+  curMap: {fileID: 0}
+  renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
   switchSceneMaterial: {fileID: 2100000, guid: a42fecf3122942844b17e38ca84b6863, type: 2}
-  switchStrength: 0
 --- !u!114 &1262557838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9289,6 +9294,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1262557840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262557834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c53129ca52a5b94e908b400c4a8e8fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebug: 0
+  switchStrength: 0
 --- !u!1 &1420542966
 GameObject:
   m_ObjectHideFlags: 0

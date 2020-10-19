@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7303080691172550986}
   - component: {fileID: 3079383941394528477}
   m_Layer: 0
-  m_Name: Hibernation2
+  m_Name: Hibernation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 12
+  m_SortingOrder: 20
   m_Sprite: {fileID: 1621715274273039615, guid: 33577b5d85e03d94cb0e9a1431666987,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
