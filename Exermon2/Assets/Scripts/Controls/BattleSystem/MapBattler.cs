@@ -103,7 +103,7 @@ namespace UI.BattleSystem.Controls {
 				RuntimeBattler.State.Using, updateUsing);
 
 			runtimeBattler?.addStateEnter(
-				RuntimeBattler.State.Hitting, onFreezeStart);
+				RuntimeBattler.State.Hitting, onHit);
 
 			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
 
@@ -130,6 +130,13 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected virtual void updateUsing() {
 			updateActing();
+		}
+
+		/// <summary>
+		/// 受击回调
+		/// </summary>
+		protected virtual void onHit() {
+			onFreezeStart();
 		}
 
 		/// <summary>

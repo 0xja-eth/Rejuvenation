@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: flash
+  m_Name: Flash
   m_Shader: {fileID: -6465566751694194690, guid: f55d604ce52fee645b70a8747a14071e,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA

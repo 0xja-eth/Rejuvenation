@@ -68,6 +68,8 @@ namespace UI.MapSystem.Controls {
             float y = Mathf.Clamp(pos.y, minRange.y + visibleHeight, maxRange.y - visibleHeight);
 
 			cTransform.position = new Vector3(x, y, cTransform.position.z);
+            debugLog(cTransform.position);
+            debugLog(camera.transform.position);
         }
 
         #endregion
