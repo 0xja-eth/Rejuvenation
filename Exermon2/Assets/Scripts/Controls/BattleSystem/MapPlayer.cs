@@ -7,11 +7,11 @@ using BattleModule.Data;
 
 using GameModule.Services;
 using PlayerModule.Services;
-using UI.MapSystem;
 
 namespace UI.BattleSystem.Controls {
     using Core.UI.Utils;
     using MapSystem.Controls;
+    using UI.MapSystem;
 
     /// <summary>
     /// 地图上的玩家实体
@@ -52,7 +52,7 @@ namespace UI.BattleSystem.Controls {
 
         const float flashCoolTime = 1f;//闪烁冷却时间
         float flashCoolTimeRemain = flashCoolTime;//闪烁冷却计时
-        const float dissolveSpeed = 3f;//角色消失/出现速度
+        const float dissolveSpeed = 3f;//角色消失/出现    速度
         const float flashDistance = 2f;//闪烁距离
         public float dissolveAnt = 0f;//据色出现/消失参数
         public Vector2 flashPos;//闪烁最终落点
@@ -66,7 +66,8 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         BaseMapScene scene => SceneUtils.getCurrentScene<MapSystem.BaseMapScene>();
 
-        protected override Map map { get {
+        protected override Map map {
+            get {
                 return scene?.curMap;
             }
         }
@@ -236,6 +237,14 @@ namespace UI.BattleSystem.Controls {
             return !flag;
         }
 
+		/// <summary>
+		/// 同步角色
+		/// </summary>
+		/// <param name="player"></param>
+		public void syncPlayer(MapPlayer player) {
+			transform.localPosition = player.transform.localPosition;
+		}
+
         #endregion
 
         #region 技能控制
@@ -350,7 +359,7 @@ namespace UI.BattleSystem.Controls {
 
             Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
             Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
-            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.2f, collider.bounds.size.y - 0.2f);//微调碰撞盒
+            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.01f, collider.bounds.size.y - 0.01f);//微调碰撞盒
             Collider2D collTemp = Physics2D.OverlapCapsule(dropPos,
                 colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);//落点碰撞判断
 

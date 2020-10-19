@@ -63,7 +63,7 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
-		bool present = false;
+		bool present = true;
         bool switching = false;
         ThroughType splitType;
 
@@ -141,10 +141,17 @@ namespace UI.MapSystem {
 
 		#region 时空穿越控制
 
-		/// <summary>
-		/// 时空穿越
-		/// </summary>
-		public void TravelThrough(ThroughType type) {
+        public void travel() {
+            if (present)
+                TravelThrough(ThroughType.PastSingle);
+            else
+                TravelThrough(ThroughType.PresentSingle);
+        }
+
+        /// <summary>
+        /// 时空穿越
+        /// </summary>
+        public void TravelThrough(ThroughType type) {
             if (switching)
                 return;
             splitType = type;
@@ -230,9 +237,11 @@ namespace UI.MapSystem {
         /// </summary>
         void updateForTest() {
             if (Input.GetKeyDown(KeyCode.Alpha1))
-                TravelThrough(ThroughType.PresentSingle);
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-                TravelThrough(ThroughType.PastSingle);
+                //TravelThrough(ThroughType.PresentSingle);
+                travel();
+            //else if (Input.GetKeyDown(KeyCode.Alpha2))
+            //    //TravelThrough(ThroughType.PastSingle);
+            //    travelToPast();
             //else if (Input.GetKeyDown(KeyCode.B))
             //    splitCamera(SplitType.Both);
             //else if (Input.GetKeyDown(KeyCode.L))
@@ -240,7 +249,7 @@ namespace UI.MapSystem {
             //else if (Input.GetKeyDown(KeyCode.R))
             //    splitCamera(SplitType.PresentMain);
             else if (Input.GetKeyDown(KeyCode.Y)) {
-				Debug.Log("K " + messageSer.messageCount());
+                Debug.Log("K " + messageSer.messageCount());
             }
         }
 
