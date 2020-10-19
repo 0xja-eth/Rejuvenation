@@ -1488,7 +1488,8 @@ namespace BattleModule.Data {
 		/// </summary>
 		protected override void updateIdle() {
 			base.updateIdle();
-			if (idleTime > 0) idleTime -= Time.deltaTime;
+
+            if (idleTime > 0) idleTime -= Time.deltaTime;
 			if (idleTime <= 0) updateAction();
 		}
 

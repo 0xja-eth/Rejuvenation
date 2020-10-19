@@ -18531,6 +18531,8 @@ MonoBehaviour:
   normalSkill: {fileID: 1448757447}
   longRangeSkill: {fileID: 680057002}
   material: {fileID: 2100000, guid: d66e7d64619faef46a0f2cd26dab7892, type: 2}
+  seperationPrefab: {fileID: 7804021619844875069, guid: 8ab6dfadabb0f144bb1aa8dd7cf4434b,
+    type: 3}
   inputable: 1
   dissolveAnt: 0
   flashPos: {x: 0, y: 0}

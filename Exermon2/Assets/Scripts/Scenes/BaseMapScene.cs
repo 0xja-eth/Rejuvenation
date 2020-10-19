@@ -184,6 +184,7 @@ namespace UI.MapSystem {
             else {
                 player.transform.position += map2.transform.position - map1.transform.position;
             }
+            player.clearSeperation();
         }
 
         /// <summary>
@@ -250,6 +251,12 @@ namespace UI.MapSystem {
             //    splitCamera(SplitType.PresentMain);
             else if (Input.GetKeyDown(KeyCode.Y)) {
                 Debug.Log("K " + messageSer.messageCount());
+            }
+            else if (Input.GetKeyDown(KeyCode.F)) {
+                player.addSeperation();
+            }
+            else if (Input.GetKeyDown(KeyCode.G)) {
+                player.clearSeperation();
             }
         }
 

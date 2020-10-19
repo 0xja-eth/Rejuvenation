@@ -52,13 +52,23 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
-		#region	状态判断
+        #region 初始化
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        protected override void start() {
+            base.start();
+            entities.Add(player);
+        }
+        #endregion
 
-		/// <summary>
-		/// 是否繁忙
-		/// </summary>
-		/// <returns></returns>
-		public bool isBusy() {
+        #region	状态判断
+
+        /// <summary>
+        /// 是否繁忙
+        /// </summary>
+        /// <returns></returns>
+        public bool isBusy() {
 			return scene && scene.isBusy();
 		}
 

@@ -92,21 +92,29 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void start() {
 			base.start();
-			setupStateChanges();
+			configureStateChanges();
 		}
 
 		/// <summary>
 		/// 配置运行时角色
 		/// </summary>
-		protected virtual void setupStateChanges() {
-
-			runtimeCharacter?.addStateEnter(
-				RuntimeCharacter.State.Moving, onMoveStart);
-			runtimeCharacter?.addStateExit(
-				RuntimeCharacter.State.Moving, onMoveEnd);
-
-			runtimeCharacter?.addStateDict(
-				RuntimeCharacter.State.Moving, onMove);
+		protected virtual void configureStateChanges(bool isSetup = true) {
+            if (isSetup) {
+                runtimeCharacter?.addStateEnter(
+                  RuntimeCharacter.State.Moving, onMoveStart);
+                runtimeCharacter?.addStateExit(
+                    RuntimeCharacter.State.Moving, onMoveEnd);
+                runtimeCharacter?.addStateDict(
+                    RuntimeCharacter.State.Moving, onMove);
+            }
+            else {
+                runtimeCharacter?.removeStateEnter(
+                    RuntimeCharacter.State.Moving, onMoveStart);
+                runtimeCharacter?.removeStateExit(
+                    RuntimeCharacter.State.Moving, onMoveEnd);
+                runtimeCharacter?.removeStateDict(
+                    RuntimeCharacter.State.Moving, onMove);
+            }
 		}
 
 		#endregion
@@ -333,6 +341,18 @@ namespace UI.MapSystem.Controls {
 			//refreshFacing();
 		}
 
-		#endregion
-	}
+        #endregion
+
+        #region 组件控制
+        /// <summary>
+        /// 销毁控制
+        /// 销毁时删除注册函数
+        /// </summary>
+        /// <param name="force"></param>
+        public override void destroy(bool force = false) {
+            base.destroy(force);
+            configureStateChanges(false);
+        }
+        #endregion
+    }
 }
