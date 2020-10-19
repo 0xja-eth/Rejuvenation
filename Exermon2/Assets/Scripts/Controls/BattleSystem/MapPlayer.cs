@@ -27,7 +27,7 @@ namespace UI.BattleSystem.Controls {
         /// 外部组件设置
         /// </summary>
         public SkillProcessor normalSkill, longRangeSkill;
-        public List<Material> materials = new List<Material>();
+        //public List<Material> materials = new List<Material>();
         public Material material;
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace UI.BattleSystem.Controls {
 
             Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
             Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
-            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.01f, collider.bounds.size.y - 0.01f);//微调碰撞盒
+            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.02f, collider.bounds.size.y - 0.02f);//微调碰撞盒
             Collider2D collTemp = Physics2D.OverlapCapsule(dropPos,
                 colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);//落点碰撞判断
 
@@ -388,13 +388,13 @@ namespace UI.BattleSystem.Controls {
         }
 
 
-        /// <summary>
-        /// 材质切换
-        /// </summary>
-        /// <param name="index"></param>
-        void switchMaterial(int index) {
-            material = materials[index];
-        }
+        ///// <summary>
+        ///// 材质切换
+        ///// </summary>
+        ///// <param name="index"></param>
+        //void switchMaterial(int index) {
+        //    material = materials[index];
+        //}
 
 
         /// <summary>

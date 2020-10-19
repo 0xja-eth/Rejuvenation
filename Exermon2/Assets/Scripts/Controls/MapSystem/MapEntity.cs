@@ -42,6 +42,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected virtual Map map { get; set; }
 
+
+
 		#region 初始化
 
 		/// <summary>
