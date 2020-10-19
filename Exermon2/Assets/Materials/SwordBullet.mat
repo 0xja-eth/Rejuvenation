@@ -24,10 +24,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: 035df85ebcb38df45a1236fba4c37e46, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_F197557C_Out_0:
+        m_Texture: {fileID: 2800000, guid: 035df85ebcb38df45a1236fba4c37e46, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - FlowSpeed: 0
     - Vector1_11C8E36D: 0.5
-    - Vector1_8AB4F008: 0.969
-    - Vector1_95AA7820: 0.977
+    - Vector1_8AB4F008: 1
+    - Vector1_95AA7820: 1
     m_Colors:
     - Color_5A3D590B: {r: 0.74725413, g: 2.9613404, b: 3.487186, a: 0}
+    - Color_65C75759: {r: 0.1933962, g: 1, b: 1, a: 1}

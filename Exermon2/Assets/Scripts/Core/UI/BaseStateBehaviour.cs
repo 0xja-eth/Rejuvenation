@@ -122,8 +122,9 @@ namespace Core.UI {
         /// 状态更新
         /// </summary>
         protected virtual void onStateUpdate() {
-			if (!finished && stateInfo.normalizedTime >
-				stateInfo.length + deltaTime) onStateFinished();
+            if (!finished && stateInfo.normalizedTime >
+                stateInfo.length + deltaTime) {
+                onStateFinished(); }
 		}
 
 		/// <summary>
@@ -151,7 +152,7 @@ namespace Core.UI {
         /// 状态结束
         /// </summary>
         protected virtual void onStateExit() {
-			onStateFinished();
+			if (!finished) onStateFinished();
 		}
 
 	}

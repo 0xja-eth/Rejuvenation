@@ -76,11 +76,19 @@ namespace UI.MapSystem.Controls {
 			bullet = createBullet();
 		}
 
-		/// <summary>
-		/// 发射子弹（剑气）
-		/// </summary>
-		/// <returns></returns>
-		BulletProcessor createBullet() {
+        /// <summary>
+        /// 是否有效
+        /// </summary>
+        /// <returns></returns>
+        public override bool isApplyValid() {
+            return bullet;
+        }
+
+        /// <summary>
+        /// 发射子弹（剑气）
+        /// </summary>
+        /// <returns></returns>
+        BulletProcessor createBullet() {
 			var obj = Instantiate(bulletPerfab, world);
 			var bullet = SceneUtils.get<BulletProcessor>(obj);
 			bullet.activate(this, battler.direction);
