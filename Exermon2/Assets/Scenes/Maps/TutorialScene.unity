@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -451,6 +451,7 @@ GameObject:
   - component: {fileID: 298741147}
   - component: {fileID: 298741146}
   - component: {fileID: 298741145}
+  - component: {fileID: 298741149}
   - component: {fileID: 298741144}
   - component: {fileID: 298741143}
   - component: {fileID: 298741148}
@@ -477,7 +478,7 @@ MonoBehaviour:
   promptLayer: {fileID: 118275989}
   audioSource: {fileID: 0}
   bgmClip: {fileID: 0}
-  camera: {fileID: 0}
+  camera: {fileID: 622805541}
   map1: {fileID: 537545458}
   map2: {fileID: 1450215392}
   player: {fileID: 1180445378}
@@ -575,6 +576,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   switchStrength: 0
+--- !u!114 &298741149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298741142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2336e79c3c618284587ebe48d20429c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebug: 0
 --- !u!1 &339032518 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5605720874432134848, guid: 0a63fe41472b129469ffa0a65dada09d,
@@ -1305,7 +1319,7 @@ PrefabInstance:
     - target: {fileID: 3422880219211785639, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_ColliderPaths.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3422880219211785639, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
@@ -1675,7 +1689,7 @@ PrefabInstance:
     - target: {fileID: 3422880219415616006, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3422880219415616025, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
@@ -5665,7 +5679,7 @@ PrefabInstance:
     - target: {fileID: 3422880220439878552, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_ColliderPaths.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3422880220439878552, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}

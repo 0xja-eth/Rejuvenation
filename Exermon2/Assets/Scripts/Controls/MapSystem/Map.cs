@@ -38,8 +38,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		public BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
-		public new Camera camera => scene.camera;
-		public MapPlayer player => scene.player;
+		public new Camera camera => scene?.camera;
+		public MapPlayer player => scene?.player;
 
 		public Vector2 position {
 			get => transform.position;

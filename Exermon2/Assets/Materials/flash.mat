@@ -29,7 +29,7 @@ Material:
     - Vector1_9587FEAB: 3
     - Vector1_97DB15B8: 0.331
     - Vector1_C475DFD: 0.696
-    - _DissolveAmount: 0
+    - _DissolveAmount: 0.66866803
     m_Colors:
     - Color_E9B912F9: {r: 0.2551389, g: 0.19607842, b: 0.7490196, a: 1}
     - _DissolveColor: {r: 0.9882353, g: 0.4862745, b: 2.9960785, a: 1}

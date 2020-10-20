@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -593,6 +593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 298741147}
   - component: {fileID: 298741146}
+  - component: {fileID: 298741149}
   - component: {fileID: 298741145}
   - component: {fileID: 298741144}
   - component: {fileID: 298741143}
@@ -620,12 +621,12 @@ MonoBehaviour:
   promptLayer: {fileID: 118275989}
   audioSource: {fileID: 0}
   bgmClip: {fileID: 0}
+  camera: {fileID: 622805541}
   map1: {fileID: 63349874}
   map2: {fileID: 2108210615}
   player: {fileID: 1180445378}
   dialogWindow: {fileID: 203126814}
   splitCanvas: {fileID: 75998918}
-  curMap: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
   switchSceneMaterial: {fileID: 2100000, guid: a42fecf3122942844b17e38ca84b6863, type: 2}
 --- !u!114 &298741144
@@ -715,6 +716,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   switchStrength: 0
+--- !u!114 &298741149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298741142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2336e79c3c618284587ebe48d20429c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebug: 0
 --- !u!1 &606993344
 GameObject:
   m_ObjectHideFlags: 0

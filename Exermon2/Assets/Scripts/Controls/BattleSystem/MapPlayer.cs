@@ -60,14 +60,7 @@ namespace UI.BattleSystem.Controls {
         bool flashIsCooling = false;//闪烁是否冷却
         bool flashBegin = false;//角色是否开始消失
         bool flashEnd = false;//角色是否开始出现
-
-		/// <summary>
-		/// 地图
-		/// </summary>
-        protected override Map map {
-            get => scene.currentMap;
-        }
-
+		
         /// <summary>
         /// 外部系统设置
         /// </summary>

@@ -451,8 +451,8 @@ GameObject:
   - component: {fileID: 298741147}
   - component: {fileID: 298741146}
   - component: {fileID: 298741145}
-  - component: {fileID: 298741144}
   - component: {fileID: 298741143}
+  - component: {fileID: 298741144}
   - component: {fileID: 298741148}
   - component: {fileID: 298741149}
   m_Layer: 0
@@ -471,21 +471,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 298741142}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07f72be63fd33c640a221f0fd023556e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2336e79c3c618284587ebe48d20429c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  promptLayer: {fileID: 118275989}
-  audioSource: {fileID: 0}
-  bgmClip: {fileID: 0}
-  map1: {fileID: 6468846551152070505}
-  map2: {fileID: 1493853869}
-  player: {fileID: 1180445378}
-  dialogWindow: {fileID: 203126814}
-  splitCanvas: {fileID: 453596598}
-  curMap: {fileID: 0}
-  renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
-  switchSceneMaterial: {fileID: 2100000, guid: a42fecf3122942844b17e38ca84b6863, type: 2}
 --- !u!114 &298741144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,14 +578,14 @@ MonoBehaviour:
   promptLayer: {fileID: 118275989}
   audioSource: {fileID: 0}
   bgmClip: {fileID: 0}
+  camera: {fileID: 622805541}
   map1: {fileID: 6468846551152070505}
   map2: {fileID: 1493853869}
   player: {fileID: 1180445378}
   dialogWindow: {fileID: 203126814}
   splitCanvas: {fileID: 453596598}
-  curMap: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
-  switchSceneMaterial: {fileID: 0}
+  switchSceneMaterial: {fileID: 2100000, guid: a42fecf3122942844b17e38ca84b6863, type: 2}
 --- !u!224 &453596595 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5668433843689564429, guid: aa1ab766c8269e347830fb0b124877a4,

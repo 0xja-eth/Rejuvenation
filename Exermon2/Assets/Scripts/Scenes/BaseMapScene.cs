@@ -11,6 +11,7 @@ using Core.UI.Utils;
 
 using GameModule.Services;
 using MapModule.Services;
+using PlayerModule.Services;
 
 using MapModule.Data;
 
@@ -86,8 +87,8 @@ namespace UI.MapSystem {
 		/// 地图/时空属性
 		/// </summary>
 		public TimeType timeType {
-			get => player.runtimeBattler.timeType;
-			set { player.runtimeBattler.timeType = value; }
+			get => playerSer.actor.runtimeActor.timeType;
+			set { playerSer.actor.runtimeActor.timeType = value; }
 		}
 
 		public bool isPresent => timeType == TimeType.Present;
@@ -101,16 +102,19 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
+		protected PlayerService playerSer;
 		protected MessageService messageSer;
 
-        #region  初始化
+		#region  初始化
 
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        protected override void initializeOnce() {
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
             base.initializeOnce();
-        }
+			camera = camera ?? Camera.main;
+			travel(timeType);
+		}
         
 		#endregion
 
@@ -193,8 +197,8 @@ namespace UI.MapSystem {
         /// <summary>
         /// 时空穿越
         /// </summary>
-        public void travel(TimeType type) {
-			if (switching || timeType == type) return;
+        public void travel(TimeType type, bool force = false) {
+			if (switching || (!force && timeType == type)) return;
 
 			timeType = type;
 			camera.targetTexture = renderTexture;

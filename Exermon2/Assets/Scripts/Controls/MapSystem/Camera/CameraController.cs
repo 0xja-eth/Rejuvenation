@@ -45,7 +45,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void update() {
             base.update();
-            updateCameraPos();
+			if (camera) updateCameraPos();
         }
 
         /// <summary>
