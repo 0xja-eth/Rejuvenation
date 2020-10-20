@@ -479,6 +479,7 @@ namespace UI.BattleSystem.Controls {
             var mapSeperation = SceneUtils.get<MapSeperation>(obj);
             //mapSeperation.activate();
             mapSeperations.Add(mapSeperation);
+            map?.addEntity(mapSeperation);
         }
 
         /// <summary>
@@ -487,6 +488,7 @@ namespace UI.BattleSystem.Controls {
         public void clearSeperation() {
             if (mapSeperations != null) {
                 foreach (var seperation in mapSeperations) {
+                    map?.removeEntity(seperation);
                     seperation.destroy(true);
                     //DestroyImmediate(seperation.gameObject);
                 }

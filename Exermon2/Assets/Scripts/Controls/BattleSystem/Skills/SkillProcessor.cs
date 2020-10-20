@@ -227,7 +227,7 @@ namespace UI.MapSystem.Controls {
 		protected virtual bool applyBattler(MapBattler battler) {
 			if (!isTarget(battler)) return false;
 
-			applyRuntimeBattler(battler.runtimeBattler);
+            applyRuntimeBattler(battler.runtimeBattler);
 			applyMapBattler(battler);
 
 			return true;

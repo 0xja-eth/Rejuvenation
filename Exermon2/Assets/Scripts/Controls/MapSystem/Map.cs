@@ -89,11 +89,16 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="entity"></param>
 		public void addEntity(MapEntity entity) {
-			var player = entity as MapPlayer;
-            if (player) return;
-
 			entities.Add(entity);
 		}
+
+        /// <summary>
+        /// 删除实体
+        /// </summary>
+        /// <param name="entity"></param>
+        public void removeEntity(MapEntity entity) {
+            entities.Remove(entity);
+        }
 
 		/// <summary>
 		/// 过滤特定类型的实体

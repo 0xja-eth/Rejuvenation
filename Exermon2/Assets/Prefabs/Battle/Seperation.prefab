@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ba708629525f440af814b8e6fbf022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 0
+  showDebug: 1
   collider: {fileID: 8332357647231956174}
   autoZ: 1
   directionController: {fileID: 2248290933589895970}
@@ -773,6 +773,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LongRangeAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003244700024501808, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
+        type: 3}
+      propertyPath: customSkill._name
+      value: SeperationSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003244700024501808, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
+        type: 3}
+      propertyPath: showDebug
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7891810647444413499, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
         type: 3}

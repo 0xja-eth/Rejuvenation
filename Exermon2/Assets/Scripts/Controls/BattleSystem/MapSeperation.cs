@@ -1,7 +1,21 @@
 ﻿
 
+using BattleModule.Data;
+
 namespace UI.BattleSystem.Controls {
     class MapSeperation : MapPlayer {
+
+        #region 初始化
+
+        /// <summary>
+        /// 初始化敌人显示组件
+        /// </summary>
+        protected override void setupBattlerDisplay() {
+            base.setupBattlerDisplay();
+            //设置独立的RuntimeActor，分身与player只共享行为，不共享数据
+            display.setItem(new RuntimeActor());
+        }
+        #endregion
 
 
         #region 技能控制

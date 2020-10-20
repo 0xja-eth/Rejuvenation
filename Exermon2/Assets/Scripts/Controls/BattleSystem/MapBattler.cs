@@ -262,9 +262,9 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <param name="skill"></param>
 		void useSkill(Skill skill) {
-			debugLog("Use skill: " + skill);
-			currentProcessor = skillProcessor(skill);
-			currentProcessor?.use();
+            debugLog(name + " Use skill: " + skill);
+            currentProcessor = skillProcessor(skill);
+            currentProcessor?.use();
 		}
 
 		///// <summary>
@@ -329,7 +329,8 @@ namespace UI.BattleSystem.Controls {
 		public void startAction(RuntimeAction action) {
 			if (action == null) return;
 			currentAction = action;
-			onActionStart(); processAction();
+			onActionStart();
+            processAction();
 		}
 
 		/// <summary>
