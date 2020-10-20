@@ -197,23 +197,24 @@ namespace MapModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
+		[AutoConvert] public float x { get; set; }
+		[AutoConvert] public float y { get; set; }
 		[AutoConvert]
 		public TimeType timeType { get; set; } = TimeType.Present; // 时空类型
-        [AutoConvert]
+		[AutoConvert]
         public Direction direction { get; set; } = Direction.Down;
-		[AutoConvert]
-		public Vector2 velocity { get; protected set; } = new Vector2();
 
-		[AutoConvert]
         public int state {
             get => stateMachine.state;
             set { stateMachine.changeState(value); }
         }
 
-        /// <summary>
-        /// 初次更新
-        /// </summary>
-        bool isFirstUpdate = true;
+		public Vector2 velocity { get; protected set; } = new Vector2();
+
+		/// <summary>
+		/// 初次更新
+		/// </summary>
+		bool isFirstUpdate = true;
 
         /// <summary>
         /// 状态机

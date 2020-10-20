@@ -139,7 +139,7 @@ namespace UI.MapSystem {
 			var x = DataLoader.load<float>(data, "x");
 			var y = DataLoader.load<float>(data, "y");
 
-			player.mapPos = new Vector2(x, y);
+			player.transfer(x, y, true);
 		}
 
 		/// <summary>
@@ -307,7 +307,7 @@ namespace UI.MapSystem {
 					onLoadingProgress, onLoadingCompleted));
 				sceneSys.operReady = true;
 			} else
-				player.mapPos = pos.Value;
+				player.transfer(pos.Value, true);
 		}
 		public void changeStage(SceneSystem.Scene stage) {
 			changeStage(stage, null);

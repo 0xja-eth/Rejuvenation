@@ -135,10 +135,14 @@ namespace UI.MapSystem.Controls {
 		/// 更新位置
 		/// </summary>
 		void updatePosition() {
+			if (!map) return;
+			runtimeCharacter.x = mapPos.x;
+			runtimeCharacter.y = mapPos.y;
+
 			var pos = runtimeCharacter.transferPoint;
 			if (pos == null) return;
 
-			rigidbody.position = (Vector2)pos;
+			mapPos = pos.Value;
 		}
 
 		/// <summary>
@@ -285,6 +289,9 @@ namespace UI.MapSystem.Controls {
 		/// <param name="y">y坐标</param>
 		public void transfer(float x, float y, bool force = false) {
 			runtimeCharacter?.transfer(x, y, force);
+		}
+		public void transfer(Vector2 vec, bool force = false) {
+			transfer(vec.x, vec.y, force);
 		}
 
 		/// <summary>
