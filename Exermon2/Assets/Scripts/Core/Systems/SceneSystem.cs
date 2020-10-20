@@ -36,7 +36,8 @@ namespace Core.Systems {
 
             SwitchScene = 2,
 			TurialScene = 3,
-            TaiqingScene = 4,
+			TaiqingScene = 4,
+			TaiqingRoomScene = 5,
 		}
 
 		/// <summary>
