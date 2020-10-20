@@ -44,7 +44,7 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 场景组件
 		/// </summary>
-		protected BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
+		public BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
 		/// <summary>
 		/// 内部控件设置

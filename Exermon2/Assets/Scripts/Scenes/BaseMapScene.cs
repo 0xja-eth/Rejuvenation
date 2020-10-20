@@ -20,7 +20,8 @@ using UI.BattleSystem.Controls;
 namespace UI.MapSystem {
 
 	using Controls;
-	using Windows;
+    using System.Collections;
+    using Windows;
 
 	/// <summary>
 	/// 地图场景基类
@@ -47,6 +48,10 @@ namespace UI.MapSystem {
 		const string StrengthAttrName = "_Strength";
 		const string CenterPosAttrName = "_CenterPos";
 
+		const string SceneLoadingAttrName = "SceneLoading";
+		const string SceneEnterAttrName = "SceneEnter";
+		const string SceneExitAttrName = "SceneExit";
+
 		/// <summary>
 		/// 外部组件设置
 		/// </summary>
@@ -58,6 +63,7 @@ namespace UI.MapSystem {
         public DialogWindow dialogWindow;
 
 		public Canvas splitCanvas;
+
 
 		/// <summary>
 		/// 内部组件设置
@@ -107,10 +113,28 @@ namespace UI.MapSystem {
 
 		#region  初始化
 
+        /// <summary>
+        /// 开始
+        /// </summary>
+        protected override void start() {
+            base.start();
+            doRoutine(loading());
+        }
+
 		/// <summary>
-		/// 初始化
+		/// 加载动画
 		/// </summary>
-		protected override void initializeOnce() {
+		/// <returns></returns>
+        IEnumerator loading() {
+            animator.setVar(SceneLoadingAttrName);
+            yield return new WaitForSeconds(1.2f);
+            animator.setVar(SceneEnterAttrName);
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        protected override void initializeOnce() {
             base.initializeOnce();
 			camera = camera ?? Camera.main;
 			travel(timeType);
@@ -241,12 +265,45 @@ namespace UI.MapSystem {
 
         #endregion
 
-        #region 测试
+        #region 场景控制
 
-        /// <summary>
-        /// 测试
-        /// </summary>
-        void updateForTest() {
+		/// <summary>
+		/// 下一个场景
+		/// </summary>
+        public void nextScene() {
+			animator.setVar(SceneExitAttrName);
+
+			var scene = sceneSys.realCurrentScene() + 1;
+			sceneSys.changeScene(scene, true);
+
+			doRoutine(sceneSys.startAsync(
+				onLoadingProgress, onLoadingCompleted));
+		}
+
+		/// <summary>
+		/// 读取进度改变
+		/// </summary>
+		/// <param name="progress"></param>
+		protected virtual void onLoadingProgress(float progress) {
+			animator.setVar(SceneLoadingAttrName);
+		}
+
+		/// <summary>
+		/// 读取完成
+		/// </summary>
+		/// <param name="progress"></param>
+		protected virtual void onLoadingCompleted() {
+
+		}
+
+		#endregion
+
+		#region 测试
+
+		/// <summary>
+		/// 测试
+		/// </summary>
+		void updateForTest() {
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 //TravelThrough(ThroughType.PresentSingle);
                 travel();

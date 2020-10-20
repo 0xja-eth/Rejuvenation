@@ -126,7 +126,7 @@ namespace GameModule.Services {
         /// 关卡切换
         /// </summary>
         public void switchCheckPoint() {
-            sceneSys.pushScene(SceneSystem.Scene.SwitchScene);
+            //sceneSys.pushScene(SceneSystem.Scene.SwitchScene);
         }
 
         #endregion
