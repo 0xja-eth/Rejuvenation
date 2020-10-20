@@ -47,6 +47,7 @@ namespace UI.MapSystem {
         public MapPlayer player;
 
         public DialogWindow dialogWindow;
+        public DialogWindow logWindow;
 
 		public Canvas splitCanvas;
 
@@ -55,8 +56,8 @@ namespace UI.MapSystem {
 		/// </summary>
 		[HideInInspector]
 		public Map curMap;
-		[RequireTarget]
-		protected TimeTravelEffect timeTravelEffect;
+		[RequireTarget] [HideInInspector]
+		public TimeTravelEffect timeTravelEffect;
 		[RequireTarget]
 		protected Animator animator;
 
@@ -72,11 +73,6 @@ namespace UI.MapSystem {
 		bool present = true;
         bool switching = false;
         ThroughType splitType;
-
-		/// <summary>
-		/// 属性
-		/// </summary>
-		float switchStrength => timeTravelEffect.switchStrength;
 
 		/// <summary>
 		/// 外部系统设置
@@ -103,26 +99,19 @@ namespace UI.MapSystem {
 			updateDialog();
 
 			updateForTest();
-            updateSwitchStrength();
         }
 
 		/// <summary>
 		/// 更新对话框
 		/// </summary>
 		void updateDialog() {
-			if (messageSer.messageCount() > 0 && !isBusy())
-				dialogWindow.activate();
-		}
-
-        /// <summary>
-        /// 更新镜头扭曲强度
-        /// </summary>
-        void updateSwitchStrength() {
-            if (switching) {
-                //debugLog("switch strength:" + switchStrength);
-                switchSceneMaterial.SetFloat("_Strength", switchStrength);
+            if (messageSer.messageCount() > 0 && !isBusy()) {
+                if (messageSer.DialogFlag)
+                    dialogWindow.activate();
+                else
+                    logWindow.activate();
             }
-        }
+		}
 
 		#endregion
 
@@ -185,8 +174,7 @@ namespace UI.MapSystem {
         /// </summary>
         void switchScene() {
             //以镜子为中心进行扭曲
-            var center = getPortalScreenPostion(player.transform.position);
-            switchSceneMaterial.SetVector("_CenterPos", center);
+            timeTravelEffect.center = getPortalScreenPostion(player.transform.position);
             switching = true;
             //TODO状态切换
             if (present) {

@@ -34,7 +34,7 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         protected override void onStateEnter() {
             base.onStateEnter();
-
+            mapScene.switchSceneMaterial.SetVector("_CenterPos", mapScene.timeTravelEffect.center);
         }
 
         /// <summary>
@@ -42,6 +42,8 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         protected override void onStateUpdate() {
             base.onStateUpdate();
+            if(!finished)
+                mapScene.switchSceneMaterial.SetFloat("_Strength", mapScene.timeTravelEffect.switchStrength);
         }
 
         /// <summary>

@@ -11,7 +11,12 @@ namespace MapModule.Services {
 	/// 消息服务类，进行对话的后台处理
 	/// </summary>
 	public class MessageService : BaseService<MessageService> {
-		
+
+        /// <summary>
+        /// 是否为对话标识
+        /// </summary>
+        public bool DialogFlag = true;
+
 		/// <summary>
 		/// 消息队列
 		/// </summary>

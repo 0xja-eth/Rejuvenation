@@ -696,6 +696,7 @@ namespace MapModule.Data {
         /// <summary>
         /// 属性
         /// </summary>
+        [TextArea(0, 100)]
         public string message = "";
         public string name = "";
 		[SerializeField]

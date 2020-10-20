@@ -17,9 +17,11 @@ namespace UI.MapSystem.Controls {
 	/// </summary>
 	public class MessageSender : MapEventPage {
 
-		/// <summary>
-		/// 外部变量设置
-		/// </summary>
+        /// <summary>
+        /// 外部变量设置
+        /// </summary>
+        public bool isDialog = true;
+
 		[SerializeField]
 		public List<DialogMessage> messages = new List<DialogMessage>();
 
@@ -36,6 +38,10 @@ namespace UI.MapSystem.Controls {
 		protected override void invokeCustom() {
 			base.invokeCustom();
 			messageSer.addMessages(messages);
+            if (!isDialog)
+                messageSer.DialogFlag = false;
+            else
+                messageSer.DialogFlag = true;
 		}
 
 		#endregion
