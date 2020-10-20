@@ -10,7 +10,7 @@ Material:
   m_Name: SwitchScene
   m_Shader: {fileID: -6465566751694194690, guid: 5a93ce8386df1614c826ffd14200eb4a,
     type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -26,6 +26,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_4872583E: 0
-    - _Strength: -0.0030339956
+    - _Strength: -0.00012940168
     m_Colors:
-    - _CenterPos: {r: 0.5330186, g: 0.54462934, b: 0, a: 0}
+    - _CenterPos: {r: 0.89830506, g: 0.59800667, b: 0, a: 0}

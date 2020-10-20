@@ -9,12 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: c787cda222b27d543a0f66b5b26b78ac
   - enabled: 1
-    path: Assets/Scenes/Maps/TestScene.unity
-    guid: 127dc0b86adcc254280760dc76a4650f
-  - enabled: 1
-    path: Assets/Scenes/SwitchScene.unity
-    guid: 5b2d5bd314d47d54185eb692e7a00223
-  - enabled: 1
     path: Assets/Scenes/Maps/TutorialScene.unity
     guid: 5ac3ffb17b901c344807d2ac53d99408
+  - enabled: 1
+    path: Assets/Scenes/Maps/TestScene.unity
+    guid: 127dc0b86adcc254280760dc76a4650f
   m_configObjects: {}

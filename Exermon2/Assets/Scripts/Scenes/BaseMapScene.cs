@@ -19,7 +19,8 @@ using UI.BattleSystem.Controls;
 namespace UI.MapSystem {
 
 	using Controls;
-	using Windows;
+    using System.Collections;
+    using Windows;
 
 	/// <summary>
 	/// 地图场景基类
@@ -54,6 +55,7 @@ namespace UI.MapSystem {
         [HideInInspector]
         public float switchStrength = 0;
 
+
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
@@ -73,6 +75,22 @@ namespace UI.MapSystem {
 		protected MessageService messageSer;
 
         #region  初始化
+
+        /// <summary>
+        /// 开始
+        /// </summary>
+        protected override void start() {
+            base.start();
+            debugLog(this.name);
+            StartCoroutine("loading");
+        }
+
+        IEnumerator loading() {
+            animator.SetTrigger("SceneLoading");
+            yield return new WaitForSeconds(1.2f);
+            animator.SetTrigger("SceneEnter");
+        }
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -226,6 +244,19 @@ namespace UI.MapSystem {
             }
 
             switching = false;
+        }
+
+        #endregion
+
+        #region 场景控制
+        public void nextScene() {
+            StartCoroutine("sceneExit");
+        }
+
+        IEnumerator sceneExit() {
+            animator.SetTrigger("SceneExit");
+            yield return new WaitForSeconds(1);
+            sceneSys.pushScene(sceneSys.realCurrentScene() + 1);
         }
 
         #endregion

@@ -32,10 +32,9 @@ namespace Core.Systems {
             NoneScene = -1,
 
 			TitleScene = 0,
-			TestScene = 1,
-
-            SwitchScene = 2,
-            TurialScene  = 3,
+            TurialScene = 1,
+            TestScene = 2,
+            SwitchScene = 3,
 		}
 
 		/// <summary>
