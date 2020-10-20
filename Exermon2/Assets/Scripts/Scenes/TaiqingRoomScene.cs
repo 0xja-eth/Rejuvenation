@@ -56,17 +56,6 @@ namespace UI.MapSystem {
 		}
 
 		#endregion
-
-		#region 事件控制
-
-		/// <summary>
-		/// 退出回调
-		/// </summary>
-		public override void onTerminated() {
-            base.onTerminated();
-            gameSer.switchCheckPoint();
-        }
-
-        #endregion
+		
     }
 }

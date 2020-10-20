@@ -123,6 +123,8 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public bool isCritical() {
+			if (!player) return false;
+
 			var dist = (pos - player.pos).magnitude;
 
             Vector2 targetDirection = player.transform.position - transform.position;

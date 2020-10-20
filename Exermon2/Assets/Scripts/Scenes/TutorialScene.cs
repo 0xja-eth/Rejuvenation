@@ -102,14 +102,6 @@ namespace UI.MapSystem {
             flashFailTrigger.processTrigger(map1.player, MapEventPage.TriggerType.Never);
         }
 
-        /// <summary>
-        /// 退出回调
-        /// </summary>
-        public override void onTerminated() {
-            base.onTerminated();
-            gameSer.switchCheckPoint();
-        }
-
         #endregion
     }
 }

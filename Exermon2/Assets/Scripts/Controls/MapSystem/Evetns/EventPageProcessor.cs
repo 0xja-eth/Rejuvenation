@@ -13,7 +13,7 @@ namespace UI.MapSystem.Controls {
 	using BattleSystem.Controls;
 
 	/// <summary>
-	/// 地图上的事件
+	/// 事件页处理类
 	/// </summary>
 	public class EventPageProcessor : ItemDisplay<MapEventPage> {
 
@@ -56,62 +56,6 @@ namespace UI.MapSystem.Controls {
 		}
 
 		#endregion
-
-		//#region 碰撞检测
-
-		///// <summary>
-		///// 碰撞开始
-		///// </summary>
-		///// <param name="collision"></param>
-		//private void OnTriggerEnter2D(Collider2D collision) {
-		//	var player = SceneUtils.get<MapPlayer>(collision);
-		//	if (player != null) onPlayerCollEnter(player);
-		//}
-
-		///// <summary>
-		///// 碰撞持续
-		///// </summary>
-		///// <param name="collision"></param>
-		//private void OnTriggerStay2D(Collider2D collision) {
-		//	var player = SceneUtils.get<MapPlayer>(collision);
-		//	if (player != null) onPlayerCollStay(player);
-		//}
-
-		///// <summary>
-		///// 碰撞结束
-		///// </summary>
-		///// <param name="collision"></param>
-		//private void OnTriggerExit2D(Collider2D collision) {
-		//	var player = SceneUtils.get<MapPlayer>(collision);
-		//	if (player != null) onPlayerCollExit(player);
-		//}
-
-		///// <summary>
-		///// 玩家碰撞开始
-		///// </summary>
-		///// <param name="player"></param>
-		//protected virtual void onPlayerCollEnter(MapPlayer player) {
-		//	processTrigger(player, Event.TriggerType.CollEnter);
-		//}
-
-		///// <summary>
-		///// 玩家碰撞持续
-		///// </summary>
-		///// <param name="player"></param>
-		//protected virtual void onPlayerCollStay(MapPlayer player) {
-		//	processTrigger(player, isSearching ?
-		//		Event.TriggerType.CollSearch : Event.TriggerType.CollStay);
-		//}
-
-		///// <summary>
-		///// 玩家碰撞结束
-		///// </summary>
-		///// <param name="player"></param>
-		//protected virtual void onPlayerCollExit(MapPlayer player) {
-		//	processTrigger(player, Event.TriggerType.CollExit);
-		//}
-
-		//#endregion
 
 		#region 事件控制
 			

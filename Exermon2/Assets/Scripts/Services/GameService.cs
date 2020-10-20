@@ -122,13 +122,6 @@ namespace GameModule.Services {
             if (playerSer.isPlaying()) logoutGame();
         }
 
-        /// <summary>
-        /// 关卡切换
-        /// </summary>
-        public void switchCheckPoint() {
-            //sceneSys.pushScene(SceneSystem.Scene.SwitchScene);
-        }
-
         #endregion
 
         #region 回调控制

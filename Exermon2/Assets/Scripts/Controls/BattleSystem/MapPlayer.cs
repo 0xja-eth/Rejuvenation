@@ -141,7 +141,7 @@ namespace UI.BattleSystem.Controls {
 		/// 更新当前地图
 		/// </summary>
 		void updateCurrentMap() {
-			map = scene.currentMap;
+			map = scene?.currentMap;
 		}
 
 		#endregion
@@ -176,7 +176,7 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         /// <returns></returns>
         public bool isInputable() {
-            return map.isActive() && inputable;
+            return map && map.isActive() && inputable;
         }
 
         #endregion

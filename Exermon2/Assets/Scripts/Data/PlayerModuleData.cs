@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 using LitJson;
 
+using Core.Systems;
+
 using Core.Data;
 using Core.Data.Loaders;
 
@@ -34,6 +36,11 @@ namespace PlayerModule.Data {
 		ParamDisplay.IDisplayDataConvertable {
 
 		/// <summary>
+		/// 初始关卡
+		/// </summary>
+		public const SceneSystem.Scene FirstStage = SceneSystem.Scene.TurialScene;
+
+		/// <summary>
 		/// 属性
 		/// </summary>
 		[AutoConvert]
@@ -43,6 +50,9 @@ namespace PlayerModule.Data {
 
 		[AutoConvert]
 		public Actor actor { get; protected set; }
+
+		[AutoConvert]
+		public SceneSystem.Scene stage { get; set; } = FirstStage;
 
 		/// <summary>
 		/// 转化为显示数据
@@ -56,9 +66,9 @@ namespace PlayerModule.Data {
 		/// <summary>
 		/// 生成随机UID
 		/// </summary>
-		void generateUid() {
+		string generateUid() {
 			// TODO: 完善uid生成
-			uid = Random.Range(0, 99999).ToString();
+			return Random.Range(0, 99999).ToString();
 		}
 
 		/// <summary>
@@ -68,7 +78,7 @@ namespace PlayerModule.Data {
 		public Player() { }
 		public Player(string name) {
 			this.name = name;
-            generateUid();
+			uid = generateUid();
             actor = new Actor(this);
 		}
 	}

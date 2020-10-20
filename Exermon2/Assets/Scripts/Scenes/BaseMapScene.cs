@@ -9,6 +9,8 @@ using UnityEngine;
 using Core.UI;
 using Core.UI.Utils;
 
+using Core.Data.Loaders;
+
 using Core.Systems;
 
 using GameModule.Services;
@@ -65,8 +67,7 @@ namespace UI.MapSystem {
         public DialogWindow dialogWindow;
 
 		public Canvas splitCanvas;
-
-
+		
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
@@ -87,7 +88,7 @@ namespace UI.MapSystem {
         bool switching = false;
 
 		/// <summary>
-		/// 属性
+		/// 特效属性
 		/// </summary>
 		float switchStrength => timeTravelEffect.switchStrength;
 
@@ -115,32 +116,41 @@ namespace UI.MapSystem {
 
 		#region  初始化
 
-        /// <summary>
-        /// 开始
-        /// </summary>
-        protected override void start() {
-            base.start();
-            doRoutine(loading());
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
+			base.initializeOnce();
+			playerSer.player.stage = sceneIndex();
+		}
+
+		/// <summary>
+		/// 开始
+		/// </summary>
+		protected override void start() {
+			travel(timeType, true); base.start();
+			doRoutine(loading());
         }
+
+		/// <summary>
+		/// 处理通道数据
+		/// </summary>
+		protected override void processTunnelData(JsonData data) {
+			var x = DataLoader.load<float>(data, "x");
+			var y = DataLoader.load<float>(data, "y");
+
+			player.mapPos = new Vector2(x, y);
+		}
 
 		/// <summary>
 		/// 加载动画
 		/// </summary>
 		/// <returns></returns>
-        IEnumerator loading() {
+		IEnumerator loading() {
             animator.setVar(SceneLoadingAttrName);
             yield return new WaitForSeconds(1.2f);
             animator.setVar(SceneEnterAttrName);
         }
-
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        protected override void initializeOnce() {
-            base.initializeOnce();
-			camera = camera ?? Camera.main;
-			travel(timeType);
-		}
         
 		#endregion
 
@@ -253,7 +263,7 @@ namespace UI.MapSystem {
 		/// <param name="position"></param>
 		/// <returns></returns>
 		Vector2 getPortalScreenPostion(Vector3 position) {
-            var screenPos = map1.camera.WorldToScreenPoint(position);
+            var screenPos = camera.WorldToScreenPoint(position);
             return new Vector2(screenPos.x / Screen.width, screenPos.y / Screen.height);
         }
 		
@@ -279,19 +289,40 @@ namespace UI.MapSystem {
 		/// 下一关
 		/// </summary>
 		public void nextStage() {
-			changeScene(nextScene());
+			changeStage(nextScene());
 		}
 
 		/// <summary>
-		/// 下一个场景
+		/// 切换关卡
 		/// </summary>
-		public void changeScene(SceneSystem.Scene scene) {
+		public void changeStage(SceneSystem.Scene stage, Vector2? pos) {
 			animator.setVar(SceneExitAttrName);
 
-			sceneSys.changeScene(scene, true);
+			if (stage != SceneSystem.Scene.NoneScene && 
+				stage != sceneIndex()) {
+				var data = makeTunnelData(pos);
+				sceneSys.changeScene(stage, data, true);
 
-			doRoutine(sceneSys.startAsync(
-				onLoadingProgress, onLoadingCompleted));
+				doRoutine(sceneSys.startAsync(
+					onLoadingProgress, onLoadingCompleted));
+				sceneSys.operReady = true;
+			} else
+				player.mapPos = pos.Value;
+		}
+		public void changeStage(SceneSystem.Scene stage) {
+			changeStage(stage, null);
+		}
+
+		/// <summary>
+		/// 组装通讯数据
+		/// </summary>
+		/// <param name="pos"></param>
+		/// <returns></returns>
+		JsonData makeTunnelData(Vector2? pos) {
+			if (pos == null) return null;
+			var res = new JsonData();
+			res["x"] = pos?.x; res["y"] = pos?.y;
+			return res;
 		}
 
 		/// <summary>
@@ -307,7 +338,6 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <param name="progress"></param>
 		protected virtual void onLoadingCompleted() {
-
 		}
 
 		#endregion
