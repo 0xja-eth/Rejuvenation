@@ -20647,7 +20647,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -20915,7 +20915,7 @@ GameObject:
   - component: {fileID: 2911615061624491231}
   - component: {fileID: 2732742174925138517}
   - component: {fileID: 7582381726888787597}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Black
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27776,7 +27776,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:

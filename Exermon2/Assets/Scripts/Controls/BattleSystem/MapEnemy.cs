@@ -65,11 +65,17 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 配置更新函数
 		/// </summary>
-		protected override void setupStateChanges() {
-			base.setupStateChanges();
+		protected override void configureStateChanges(bool isSetup = true) {
+			base.configureStateChanges(isSetup);
 
-			runtimeBattler?.addStateDict(
-				RuntimeBattler.State.Moving, updateMoveTime);
+            if (isSetup) {
+                runtimeBattler?.addStateDict(
+                  RuntimeBattler.State.Moving, updateMoveTime);
+            }
+            else {
+                runtimeBattler?.removeStateDict(
+                    RuntimeBattler.State.Moving, updateMoveTime);
+            }
 		}
 
 

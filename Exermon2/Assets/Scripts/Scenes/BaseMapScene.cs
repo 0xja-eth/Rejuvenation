@@ -49,8 +49,8 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 常量定义
 		/// </summary>
-		const string StrengthAttrName = "_Strength";
-		const string CenterPosAttrName = "_CenterPos";
+		public const string StrengthAttrName = "_Strength";
+		public const string CenterPosAttrName = "_CenterPos";
 
 		const string SceneLoadingAttrName = "SceneLoading";
 		const string SceneEnterAttrName = "SceneEnter";
@@ -72,7 +72,8 @@ namespace UI.MapSystem {
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
-		protected TimeTravelEffect timeTravelEffect;
+		[HideInInspector]
+		public TimeTravelEffect timeTravelEffect;
 		[RequireTarget]
 		protected AnimatorExtend animator;
 
@@ -255,6 +256,7 @@ namespace UI.MapSystem {
 			switchSceneMaterial.SetVector(CenterPosAttrName, center);
 
 			// 坐标切换已在MapEntity中实现
+            player.clearSeperation();
 		}
 
 		/// <summary>

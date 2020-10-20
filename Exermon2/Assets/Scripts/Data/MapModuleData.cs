@@ -444,11 +444,49 @@ namespace MapModule.Data {
 			stateMachine.addStateExit(from, action);
 		}
 
-		/// <summary>
-		/// 更换状态
-		/// </summary>
-		/// <param name="state"></param>
-		public void changeState(Enum state) {
+        /// <summary>
+        /// 注册状态更新函数
+        /// </summary>
+        /// <param name="state">状态</param>
+        /// <param name="action">行动</param>
+        public void removeStateDict(Enum state, UnityAction action) {
+            stateMachine.removeStateDict(state, action);
+        }
+
+        /// <summary>
+        /// 注册状态切换函数
+        /// </summary>
+        /// <param name="state">状态</param>
+        /// <param name="action">行动</param>
+        public void removeStateChange(Enum from, Enum to, UnityAction action) {
+            stateMachine.removeStateChange(from, to, action);
+        }
+
+        /// <summary>
+        /// 注册状态进入函数
+        /// </summary>
+        /// <param name="enumType">类型</param>
+        /// <param name="to">初状态</param>
+        /// <param name="action">动作</param>
+        public void removeStateEnter(Enum to, UnityAction action) {
+            stateMachine.removeStateEnter(to, action);
+        }
+
+        /// <summary>
+        /// 注册状态退出函数
+        /// </summary>
+        /// <param name="enumType">类型</param>
+        /// <param name="from">初状态</param>
+        /// <param name="action">动作</param>
+        public void removeStateExit(Enum from, UnityAction action) {
+            stateMachine.removeStateExit(from, action);
+        }
+
+        /// <summary>
+        /// 更换状态
+        /// </summary>
+        /// <param name="state"></param>
+        public void changeState(Enum state) {
 			Debug.Log("changeState: " + this + ": " +
 				Enum.ToObject(state.GetType(), this.state) + " -> " + state);
 			stateMachine.changeState(state);
@@ -578,6 +616,7 @@ namespace MapModule.Data {
         /// <summary>
         /// 属性
         /// </summary>
+        [TextArea(0, 100)]
         public string message = "";
         public string name = "";
 		[SerializeField]
