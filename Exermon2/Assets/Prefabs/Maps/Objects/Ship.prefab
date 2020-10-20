@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4495046878335277454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -0.000001}
+  m_LocalPosition: {x: 0, y: 0.35, z: -0.000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5992773457249033976}
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &6208422607753259021
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208422607753259021}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06, y: 1.376, z: 0.000001}
+  m_LocalPosition: {x: -0.06, y: 1.226, z: 0.000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5992773457249033976}
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &7994855642651499504
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,9 +331,9 @@ MonoBehaviour:
   landingRegions: []
   capacity: 1
   hidePassengers: 0
-  offset: {x: 0, y: 0.3}
+  offset: {x: 0, y: 0.5}
   freezeTime: 1
-  magnetiteDist: 4
+  magnetiteDist: 8
 --- !u!114 &1058872683695770775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,8 +363,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.8, y: 0.4}
+  m_Offset: {x: 0, y: 0.3}
+  m_Size: {x: 1.25, y: 0.75}
   m_Direction: 1
 --- !u!70 &6772570246181071853
 CapsuleCollider2D:
@@ -379,6 +379,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.5, y: 1}
+  m_Offset: {x: 0, y: 0.3}
+  m_Size: {x: 2, y: 1.5}
   m_Direction: 1
