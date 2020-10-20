@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -562,8 +562,8 @@ Transform:
   - {fileID: 1938428288}
   - {fileID: 1058422596}
   - {fileID: 622805543}
-  - {fileID: 1450215391}
   - {fileID: 537545456}
+  - {fileID: 1450215391}
   - {fileID: 725593735}
   - {fileID: 644051023}
   - {fileID: 1524144127}
@@ -1748,7 +1748,7 @@ PrefabInstance:
     - target: {fileID: 3422880219415616025, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3422880219415616025, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
@@ -21368,7 +21368,7 @@ PrefabInstance:
     - target: {fileID: 3422880219415616025, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3422880219415616025, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
@@ -21900,6 +21900,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[1].Array.data[21].y
       value: -16.000029
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539524437773701265, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 298741143}
+    - target: {fileID: 7539524437773701265, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: travel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a63fe41472b129469ffa0a65dada09d, type: 3}

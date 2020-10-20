@@ -51,14 +51,22 @@ namespace UI.MapSystem {
             return SceneSystem.Scene.TurialScene;
         }
 
-        #endregion
+		/// <summary>
+		/// 下一关
+		/// </summary>
+		/// <returns></returns>
+		public override SceneSystem.Scene nextScene() {
+			return SceneSystem.Scene.TaiqingScene;
+		}
 
-        #region 更新
+		#endregion
 
-        /// <summary>
-        /// 更新
-        /// </summary>
-        protected override void update() {
+		#region 更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
             base.update();
             bool trigger = gameSer.tutorialRobotDie;
             if (trigger)

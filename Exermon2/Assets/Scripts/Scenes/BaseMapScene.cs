@@ -9,6 +9,8 @@ using UnityEngine;
 using Core.UI;
 using Core.UI.Utils;
 
+using Core.Systems;
+
 using GameModule.Services;
 using MapModule.Services;
 using PlayerModule.Services;
@@ -263,17 +265,29 @@ namespace UI.MapSystem {
             switching = false;
         }
 
-        #endregion
+		#endregion
 
-        #region 场景控制
+		#region 场景控制
+
+		/// <summary>
+		/// 默认的下一关场景
+		/// </summary>
+		/// <returns></returns>
+		public abstract SceneSystem.Scene nextScene();
+
+		/// <summary>
+		/// 下一关
+		/// </summary>
+		public void nextStage() {
+			changeScene(nextScene());
+		}
 
 		/// <summary>
 		/// 下一个场景
 		/// </summary>
-        public void nextScene() {
+		public void changeScene(SceneSystem.Scene scene) {
 			animator.setVar(SceneExitAttrName);
 
-			var scene = sceneSys.realCurrentScene() + 1;
 			sceneSys.changeScene(scene, true);
 
 			doRoutine(sceneSys.startAsync(

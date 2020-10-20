@@ -45,16 +45,24 @@ namespace UI.MapSystem {
         /// <returns></returns>
         public override SceneSystem.Scene sceneIndex() {
             return SceneSystem.Scene.TaiqingRoomScene;
-        }
+		}
 
-        #endregion
+		/// <summary>
+		/// 下一关
+		/// </summary>
+		/// <returns></returns>
+		public override SceneSystem.Scene nextScene() {
+			return SceneSystem.Scene.NoneScene;
+		}
 
-        #region 事件控制
+		#endregion
 
-        /// <summary>
-        /// 退出回调
-        /// </summary>
-        public override void onTerminated() {
+		#region 事件控制
+
+		/// <summary>
+		/// 退出回调
+		/// </summary>
+		public override void onTerminated() {
             base.onTerminated();
             gameSer.switchCheckPoint();
         }

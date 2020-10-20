@@ -40,6 +40,14 @@ namespace UI.MapSystem {
 			return SceneSystem.Scene.TestScene;
 		}
 
+		/// <summary>
+		/// 下一关
+		/// </summary>
+		/// <returns></returns>
+		public override SceneSystem.Scene nextScene() {
+			return SceneSystem.Scene.TurialScene;
+		}
+
 		#endregion
 	}
 }
