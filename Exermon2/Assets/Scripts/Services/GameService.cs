@@ -128,6 +128,7 @@ namespace GameModule.Services {
         public void switchCheckPoint() {
             sceneSys.pushScene(SceneSystem.Scene.SwitchScene);
         }
+
         #endregion
 
         #region 回调控制
