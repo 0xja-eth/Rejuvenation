@@ -5,38 +5,45 @@ using UnityEngine.Tilemaps;
 
 namespace UI.MapSystem.Controls {
 
-    /// <summary>
-    /// 镜头挂载脚本，控制镜头状态
-    /// </summary>
-    public class CameraController : WorldComponent {
+	/// <summary>
+	/// 镜头挂载脚本，控制镜头状态
+	/// </summary>
+	[RequireComponent(typeof(Map))]
+	public class CameraController : WorldComponent {
 
 		/// <summary>
 		/// 外部组件定义
 		/// </summary>
-		public Transform target; // 跟随目标
         public Collider2D range; // 限制范围
 
-		public new Camera camera;
-
 		/// <summary>
-		/// 摄像机Transform
+		/// 属性
 		/// </summary>
-		Transform cTransform => camera.transform;
+		Transform target => map.player.transform; // 跟随目标
+
+		new Camera camera => map.camera;
+		Transform cTransform => camera.transform; // 摄像机Transform
 		
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
 		public float smoothing = 0.1f; // 镜头运动平滑系数
 
-        #region 初始化
+		/// <summary>
+		/// 内部组件设置
+		/// </summary>
+		[RequireTarget] Map map;
+
+		#region 初始化
 
 		#endregion
 
-        #region 更新
-        /// <summary>
-        /// 更新
-        /// </summary>
-        protected override void update() {
+		#region 更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
             base.update();
             updateCameraPos();
         }
@@ -68,6 +75,7 @@ namespace UI.MapSystem.Controls {
             float y = Mathf.Clamp(pos.y, minRange.y + visibleHeight, maxRange.y - visibleHeight);
 
 			cTransform.position = new Vector3(x, y, cTransform.position.z);
+
             debugLog(cTransform.position);
             debugLog(camera.transform.position);
         }

@@ -53,100 +53,17 @@ namespace MapModule { }
 /// </summary>
 namespace MapModule.Data {
 
-	///// <summary>
-	///// 事件
-	///// </summary>
-	//[Serializable]
-	//public class Event : BaseData {
+	/// <summary>
+	/// 时空类型
+	/// </summary>
+	public enum TimeType {
+		Present, Past
+	}
 
-	//	/// <summary>
-	//	/// 触发类型
-	//	/// </summary>
-	//	public enum TriggerType {
-
-	//		Never, // 不会触发
-
-	//		CollEnter, // 碰撞开始
-	//		CollStay, // 碰撞盒内持续
-	//		CollSearch, // 碰撞盒内按下搜索键
-	//		CollExit, // 碰撞结束
-
-	//		Always, // 总是执行
-	//	}
-
-	//	/// <summary>
-	//	/// 条件函数
-	//	/// </summary>
-	//	/// <returns></returns>
-	//	public delegate bool Condition();
-
- //       /// <summary>
- //       /// 触发类型
- //       /// </summary>
- //       public TriggerType triggerType { get; protected set; } = TriggerType.Never;
-
- //       /// <summary>
- //       /// 条件
- //       /// </summary>
- //       public List<Condition> conditions { get; protected set; } = new List<Condition>();
-
-	//	/// <summary>
-	//	/// 事件
-	//	/// </summary>
-	//	public UnityEvent actions { get; protected set; } = new UnityEvent();
-
-	//	/// <summary>
-	//	/// 显示的图片
-	//	/// </summary>
-	//	public Sprite picture { get; protected set; }
-
- //       /// <summary>
- //       /// 构造函数
- //       /// </summary>
- //       public Event() { }
-	//	public Event(TriggerType triggerType) {
-	//		this.triggerType = triggerType;
-	//	}
-
-	//	/// <summary>
-	//	/// 添加条件
-	//	/// </summary>
-	//	/// <param name="cond"></param>
-	//	public void addCondition(Condition cond) {
-	//		conditions.Add(cond);
-	//	}
-
-	//	/// <summary>
-	//	/// 添加行动
-	//	/// </summary>
-	//	/// <param name="action"></param>
-	//	public void addAction(UnityAction action) {
-	//		actions.AddListener(action);
-	//	}
-
-	//	/// <summary>
-	//	/// 是否在条件内
-	//	/// </summary>
-	//	/// <returns></returns>
-	//	public bool isValid() {
- //           foreach (var cond in conditions)
- //               if (cond != null && !cond.Invoke()) return false;
- //           return true;
- //       }
-
- //       /// <summary>
- //       /// 处理行动事件
- //       /// </summary>
- //       public void invoke() {
-	//		actions.Invoke();
- //           //foreach (var action in actions) action?.Invoke();
- //       }
- //   }
-
-    /// <summary>
-    /// 行走人物（处理行走相关的静态变量/方法）
-    /// </summary>
-    public class RuntimeCharacter : RuntimeData {
+	/// <summary>
+	/// 行走人物（处理行走相关的静态变量/方法）
+	/// </summary>
+	public class RuntimeCharacter : RuntimeData {
 
         #region 静态定义
 
@@ -277,15 +194,17 @@ namespace MapModule.Data {
             Moving, // 移动中
         }
 
-        /// <summary>
-        /// 属性
-        /// </summary>
-        [AutoConvert]
-        public Vector2 velocity { get; protected set; } = new Vector2();
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		public TimeType timeType { get; set; } = TimeType.Present; // 时空类型
         [AutoConvert]
         public Direction direction { get; set; } = Direction.Down;
+		[AutoConvert]
+		public Vector2 velocity { get; protected set; } = new Vector2();
 
-        [AutoConvert]
+		[AutoConvert]
         public int state {
             get => stateMachine.state;
             set { stateMachine.changeState(value); }
@@ -575,7 +494,7 @@ namespace MapModule.Data {
 
             updateStateMachine();
             updateDirection();
-
+			
             //callbackManager?.reset();
         }
 

@@ -61,15 +61,11 @@ namespace UI.BattleSystem.Controls {
         bool flashBegin = false;//角色是否开始消失
         bool flashEnd = false;//角色是否开始出现
 
-        /// <summary>
-        /// 场景组件
-        /// </summary>
-        BaseMapScene scene => SceneUtils.getCurrentScene<MapSystem.BaseMapScene>();
-
+		/// <summary>
+		/// 地图
+		/// </summary>
         protected override Map map {
-            get {
-                return scene?.curMap;
-            }
+            get => scene.currentMap;
         }
 
         /// <summary>
@@ -84,6 +80,7 @@ namespace UI.BattleSystem.Controls {
         /// 初始化
         /// </summary>
         protected override void start() {
+			updateCurrentMap();
             base.start();
         }
 
@@ -115,9 +112,10 @@ namespace UI.BattleSystem.Controls {
         protected override void update() {
             base.update();
             updateInput();
+			updateCurrentMap();
 
-            //测试用，跳过对话
-            if (Input.GetKey(KeyCode.T)) {
+			//测试用，跳过对话
+			if (Input.GetKey(KeyCode.T)) {
                 MapModule.Services.MessageService.Get().messages.Clear();
             }
         }
@@ -134,15 +132,34 @@ namespace UI.BattleSystem.Controls {
             else updateMovement();
         }
 
-        #endregion
+		#endregion
 
-        #region 状态判断
+		#region	地图控制
 
-        /// <summary>
-        /// 能否移动
-        /// </summary>
-        /// <returns></returns>
-        public bool isMovable() {
+		/// <summary>
+		/// 地图改变回调
+		/// </summary>
+		protected override void onMapChanged() {
+			base.onMapChanged();
+			// TODO: 改变形象
+		}
+
+		/// <summary>
+		/// 更新当前地图
+		/// </summary>
+		void updateCurrentMap() {
+			map = scene.currentMap;
+		}
+
+		#endregion
+
+		#region 状态判断
+
+		/// <summary>
+		/// 能否移动
+		/// </summary>
+		/// <returns></returns>
+		public bool isMovable() {
             return runtimeBattler.isMoveable();
         }
 
@@ -242,7 +259,7 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <param name="player"></param>
 		public void syncPlayer(MapPlayer player) {
-			transform.localPosition = player.transform.localPosition;
+			//transform.localPosition = player.transform.localPosition;
 		}
 
         #endregion

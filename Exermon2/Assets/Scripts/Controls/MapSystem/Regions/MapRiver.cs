@@ -15,17 +15,14 @@ namespace UI.MapSystem.Controls {
     /// 地图上的河流
     /// </summary>
     public class MapRiver : MapTerrain {
-
+		
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
-		public int emptyLayer = 0;
-		public int waterLayer = 0;
-		public int iceLayer = 0;
+		public int emptyLayer = 15;
+		public int waterLayer = 4;
+		public int iceLayer = 14;
 
-		/// <summary>
-		/// 外部变量设置
-		/// </summary>
 		[SerializeField]
 		bool _active = false;
 		public bool active {
@@ -40,8 +37,8 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 状态判断
 		/// </summary>
-		public bool isWater => active && map.type == Map.MapType.Past;
-		public bool isIce => active && map.type == Map.MapType.Present;
+		public bool isWater => active && map.type == TimeType.Past;
+		public bool isIce => active && map.type == TimeType.Present;
 
 		#region 更新
 
