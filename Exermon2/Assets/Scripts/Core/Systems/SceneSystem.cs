@@ -32,12 +32,12 @@ namespace Core.Systems {
             NoneScene = -1,
 
 			TitleScene = 0,
-			TestScene = 1,
+			TestScene,
 
-            //SwitchScene = 2,
-			TurialScene = 2,
-			TaiqingScene = 3,
-			TaiqingRoomScene = 4,
+			TurialScene,
+			TaiqingScene,
+			TaiqingRoom1Scene,
+			TaiqingRoom2Scene,
 		}
 
 		/// <summary>

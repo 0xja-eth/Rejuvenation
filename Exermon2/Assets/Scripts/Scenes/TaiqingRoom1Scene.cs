@@ -16,7 +16,7 @@ namespace UI.MapSystem {
     /// <summary>
     /// 太清房间地图场景
     /// </summary>
-    public class TaiqingRoomScene : BaseMapScene {
+    public class TaiqingRoom1Scene : BaseMapScene {
 
         /// <summary>
         /// 外部变量
@@ -42,7 +42,7 @@ namespace UI.MapSystem {
         /// </summary>
         /// <returns></returns>
         public override SceneSystem.Scene sceneIndex() {
-            return SceneSystem.Scene.TaiqingRoomScene;
+            return SceneSystem.Scene.TaiqingRoom1Scene;
 		}
 
 		/// <summary>
