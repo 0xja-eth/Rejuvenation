@@ -53,7 +53,7 @@ MonoBehaviour:
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
+  m_AlphaBlendOnOverlap: 1
   m_ShadowIntensity: 0
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
@@ -120,7 +120,7 @@ MonoBehaviour:
   actions:
     m_PersistentCalls:
       m_Calls: []
-  picture: {fileID: 0}
+  _picture: {fileID: 0}
   invokeOnce: 0
 --- !u!1 &704038675803228755
 GameObject:
@@ -241,6 +241,7 @@ MonoBehaviour:
   collider: {fileID: 0}
   autoZ: 1
   eventPages: []
+  processor: {fileID: 0}
 --- !u!70 &648446412
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
