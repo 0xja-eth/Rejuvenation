@@ -24,8 +24,10 @@ namespace UI.MapSystem {
 	/// <summary>
 	/// 地图场景基类
 	/// </summary>
-	[RequireComponent(typeof(AnimationExtend), typeof(Animator))]
-    public abstract class BaseMapScene : BaseScene {
+	[RequireComponent(typeof(AnimatorExtend))]
+	[RequireComponent(typeof(AnimationExtend))]
+	[RequireComponent(typeof(TimeTravelEffect))]
+	public abstract class BaseMapScene : BaseScene {
 
         /// <summary>
         /// 时空穿越类型
@@ -38,34 +40,63 @@ namespace UI.MapSystem {
             //PresentMain, // 右屏为主
         }
 
-        /// <summary>
-        /// 外部组件设置
-        /// </summary>
-        public Map map1, map2;
+		/// <summary>
+		/// 常量定义
+		/// </summary>
+		const string StrengthAttrName = "_Strength";
+		const string CenterPosAttrName = "_CenterPos";
+
+		/// <summary>
+		/// 外部组件设置
+		/// </summary>
+		public new Camera camera;
+
+		public Map map1, map2;
         public MapPlayer player;
-        [HideInInspector]
-        public Map curMap;
 
         public DialogWindow dialogWindow;
 
-        public RenderTexture renderTexture;
 		public Canvas splitCanvas;
-        public Material switchSceneMaterial;
-        [HideInInspector]
-        public float switchStrength = 0;
 
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
-		protected Animator animator;
+		protected TimeTravelEffect timeTravelEffect;
+		[RequireTarget]
+		protected AnimatorExtend animator;
+
+		/// <summary>
+		/// 外部变量设置
+		/// </summary>
+		public RenderTexture renderTexture;
+		public Material switchSceneMaterial;
 
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
-		bool present = true;
         bool switching = false;
-        ThroughType splitType;
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		float switchStrength => timeTravelEffect.switchStrength;
+
+		/// <summary>
+		/// 地图/时空属性
+		/// </summary>
+		public TimeType timeType {
+			get => player.runtimeBattler.timeType;
+			set { player.runtimeBattler.timeType = value; }
+		}
+
+		public bool isPresent => timeType == TimeType.Present;
+		public bool isPast => timeType == TimeType.Past;
+
+		public Map presentMap => getMap(TimeType.Present);
+		public Map pastMap => getMap(TimeType.Past);
+
+		public Map currentMap => getMap(timeType);
 
 		/// <summary>
 		/// 外部系统设置
@@ -73,14 +104,15 @@ namespace UI.MapSystem {
 		protected MessageService messageSer;
 
         #region  初始化
+
         /// <summary>
         /// 初始化
         /// </summary>
         protected override void initializeOnce() {
             base.initializeOnce();
-            curMap = map1;
         }
-        #endregion
+        
+		#endregion
 
         #region 更新
 
@@ -107,10 +139,9 @@ namespace UI.MapSystem {
         /// 更新镜头扭曲强度
         /// </summary>
         void updateSwitchStrength() {
-            if (switching) {
-                //debugLog("switch strength:" + switchStrength);
-                switchSceneMaterial.SetFloat("_Strength", switchStrength);
-            }
+            if (switching)
+				switchSceneMaterial.SetFloat(
+					StrengthAttrName, switchStrength);
         }
 
 		#endregion
@@ -137,94 +168,70 @@ namespace UI.MapSystem {
 
 		#region 地图控制
 
+		/// <summary>
+		/// 获取地图
+		/// </summary>
+		/// <param name="mapType"></param>
+		/// <returns></returns>
+		public Map getMap(TimeType mapType) {
+			if (map1.type == mapType) return map1;
+			if (map2.type == mapType) return map2;
+			return null;
+		}
+
 		#endregion
 
 		#region 时空穿越控制
 
+		/// <summary>
+		/// 穿越时空
+		/// </summary>
         public void travel() {
-            if (present)
-                TravelThrough(ThroughType.PastSingle);
-            else
-                TravelThrough(ThroughType.PresentSingle);
+            travel(isPresent ? TimeType.Past : TimeType.Present);
         }
 
         /// <summary>
         /// 时空穿越
         /// </summary>
-        public void TravelThrough(ThroughType type) {
-            if (switching)
-                return;
-            splitType = type;
-            if (type == ThroughType.PresentSingle) {
-                if (curMap == map1)
-                    return;
-                switchToPresent();
-            }
-            else if (type == ThroughType.PastSingle) {
-                if (curMap == map2)
-                    return;
-                switchToPast();
-            }
-            switchScene();
-            animator.SetTrigger(type.ToString());
-        }
+        public void travel(TimeType type) {
+			if (switching || timeType == type) return;
 
-        /// <summary>
-        /// 地图场景切换
-        /// </summary>
-        void switchScene() {
-            //以镜子为中心进行扭曲
-            var center = getPortalScreenPostion(player.transform.position);
-            switchSceneMaterial.SetVector("_CenterPos", center);
-            switching = true;
-            //TODO状态切换
-            if (present) {
-                player.transform.position -= map2.transform.position - map1.transform.position;
-            }
-            else {
-                player.transform.position += map2.transform.position - map1.transform.position;
-            }
-        }
+			timeType = type;
+			camera.targetTexture = renderTexture;
 
-        /// <summary>
-        /// 将当前扭曲位置转化为屏幕坐标百分比
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        Vector2 getPortalScreenPostion(Vector3 position) {
+			playEffect(type);
+		}
+
+		/// <summary>
+		/// 执行切换效果
+		/// </summary>
+		/// <param name="type"></param>
+		void playEffect(TimeType type) {
+			switching = true;
+			animator.setVar(type.ToString());
+
+			// 以镜子为中心进行扭曲
+			var center = getPortalScreenPostion(player.transform.position);
+			switchSceneMaterial.SetVector(CenterPosAttrName, center);
+
+			// 坐标切换已在MapEntity中实现
+		}
+
+		/// <summary>
+		/// 将当前扭曲位置转化为屏幕坐标百分比
+		/// </summary>
+		/// <param name="position"></param>
+		/// <returns></returns>
+		Vector2 getPortalScreenPostion(Vector3 position) {
             var screenPos = map1.camera.WorldToScreenPoint(position);
             return new Vector2(screenPos.x / Screen.width, screenPos.y / Screen.height);
         }
-
-        /// <summary>
-        /// 切换至“现在”
-        /// </summary>
-        void switchToPresent() {
-            present = true;
-            map2.camera.targetTexture = renderTexture;
-        }
-        /// <summary>
-        /// 切换至“过去”
-        /// </summary>
-        void switchToPast() {
-            present = false;
-            map1.camera.targetTexture = renderTexture;
-        }
-
+		
         /// <summary>
         /// 重设相机状态，取消renderTexture模式
         /// </summary>
         public void resetCamera() {
-            //debugLog("reset switch:");
-            if (present) {
-                map1.camera.targetTexture = null;
-                curMap = map1;
-            }
-            else {
-                map2.camera.targetTexture = null;
-                curMap = map2;
-            }
-
+			camera.targetTexture = null;
             switching = false;
         }
 

@@ -29,3 +29,6 @@ Material:
     - _Strength: 0
     m_Colors:
     - _CenterPos: {r: 0.7032786, g: 0.48582995, b: 0, a: 0}
+    - _Strength: -0.22468382
+    m_Colors:
+    - _CenterPos: {r: 0.48585042, g: 0.34373412, b: 0, a: 0}

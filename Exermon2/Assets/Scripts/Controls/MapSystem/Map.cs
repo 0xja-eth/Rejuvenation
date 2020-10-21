@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Core.UI;
 using Core.UI.Utils;
 
+using MapModule.Data;
+
 using UI.MapSystem;
 
 using UnityEngine;
@@ -15,21 +17,13 @@ namespace UI.MapSystem.Controls {
 	/// <summary>
 	/// 地图类
 	/// </summary>
-	[RequireComponent(typeof(CameraController))]
 	public class Map : WorldComponent {
-
-		/// <summary>
-		/// 地图类型
-		/// </summary>
-		public enum MapType {
-			Present, Past
-		}
-
+		
 		/// <summary>
 		/// 外部变量定义
 		/// </summary>
 		public bool active = true;
-		public MapType type = MapType.Present;
+		public TimeType type = TimeType.Present;
 
 		/// <summary>
 		/// 内部组件设置
@@ -37,20 +31,20 @@ namespace UI.MapSystem.Controls {
 		[RequireTarget]
 		CameraController cameraController;
 
-		[HideInInspector]
-        public MapPlayer player => scene.player;
-
 		List<MapEntity> entities = new List<MapEntity>();
 
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public new Camera camera => cameraController.camera;
+		public BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
-		/// <summary>
-		/// 场景组件
-		/// </summary>
-		BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
+		public new Camera camera => scene.camera;
+		public MapPlayer player => scene.player;
+
+		public Vector2 position {
+			get => transform.position;
+			set { transform.position = value; }
+		}
 
 		#region	状态判断
 
@@ -151,19 +145,11 @@ namespace UI.MapSystem.Controls {
 		#region 传送操作
 
 		/// <summary>
-		/// 同步角色
+		/// 刷新玩家位置
 		/// </summary>
 		/// <param name="player"></param>
-		public void syncPlayer(MapPlayer player) {
-			this.player.syncPlayer(player);
-		}
-
-		/// <summary>
-		/// 切换地图
-		/// </summary>
-		/// <param name="player"></param>
-		public void switchMap(Map map, bool syncPlayer = true) {
-			if (syncPlayer) map.syncPlayer(player);
+		public void refreshPlayerPosition() {
+			player.mapPos = player.mapPos;
 		}
 
 		#endregion

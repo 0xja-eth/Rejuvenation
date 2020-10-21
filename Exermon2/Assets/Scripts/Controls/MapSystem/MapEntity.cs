@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-using Core.UI;
+using Core.UI.Utils;
 
 using GameModule.Services;
 
@@ -36,11 +36,32 @@ namespace UI.MapSystem.Controls {
 			get => transform.position;
 			set { transform.position = value; }
 		}
+		public Vector2 mapPos {
+			get => transform.position - (Vector3)map.position;
+			set { transform.position = map.position + value; }
+		}
+
+		/// <summary>
+		/// 场景组件
+		/// </summary>
+		protected BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
 		/// <summary>
 		/// 内部控件设置
 		/// </summary>
-		protected virtual Map map { get; set; }
+		Map _map = null;
+		protected virtual Map map {
+			get => _map;
+			set {
+				if (_map == value) return;
+				if (_map == null) _map = value;
+				else {
+					var lastPos = mapPos;
+					_map = value; mapPos = lastPos;
+				}
+				onMapChanged();
+			}
+		}
 
 		#region 初始化
 
@@ -57,7 +78,6 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		void initializeMap() {
 			map = findParent<Map>();
-            // if (map != null) this.map = map;
             map?.addEntity(this);
 		}
 
@@ -67,42 +87,6 @@ namespace UI.MapSystem.Controls {
 		protected override void initializeCollFuncs() {
 			//registerOnStayFunc<ISkillApplication>(onSkillHit);
 		}
-
-		#endregion
-
-		#region 技能控制
-
-		///// <summary>
-		///// 技能命中回调
-		///// </summary>
-		///// <param name="skill"></param>
-		//void onSkillHit(ISkillApplication skill) {
-		//	if (isHittable() && isValidSkill(skill)) apply(skill);
-		//}
-
-		///// <summary>
-		///// 技能应用
-		///// </summary>
-		///// <param name="skill"></param>
-		//protected virtual void apply(ISkillApplication skill) {
-		//	skill.applyEntity(this);
-		//}
-
-		///// <summary>
-		///// 能否被击中
-		///// </summary>
-		///// <returns></returns>
-		//public virtual bool isApplyable() {
-		//	return true;
-		//}
-
-		///// <summary>
-		///// 是否有效的技能
-		///// </summary>
-		///// <returns></returns>
-		//protected virtual bool isValidSkill(ISkillApplication skill) {
-		//	return skill.isApplyValid();
-		//}
 
 		#endregion
 
@@ -141,6 +125,15 @@ namespace UI.MapSystem.Controls {
 		public static float mapY2Z(float y, float cz = -1) {
 			return (float)CalcService.Common.sigmoid(-y * YZConvert) * cz;
 		}
+
+		#endregion
+
+		#region 地图控制
+
+		/// <summary>
+		/// 地图改变回调
+		/// </summary>
+		protected virtual void onMapChanged() { }
 
 		#endregion
 	}

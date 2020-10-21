@@ -27,7 +27,7 @@ namespace UI.BattleSystem.Controls {
         /// 外部组件设置
         /// </summary>
         public SkillProcessor normalSkill, longRangeSkill;
-        public List<Material> materials = new List<Material>();
+        //public List<Material> materials = new List<Material>();
         public Material material;
 
         /// <summary>
@@ -61,15 +61,11 @@ namespace UI.BattleSystem.Controls {
         bool flashBegin = false;//角色是否开始消失
         bool flashEnd = false;//角色是否开始出现
 
-        /// <summary>
-        /// 场景组件
-        /// </summary>
-        BaseMapScene scene => SceneUtils.getCurrentScene<MapSystem.BaseMapScene>();
-
+		/// <summary>
+		/// 地图
+		/// </summary>
         protected override Map map {
-            get {
-                return scene?.curMap;
-            }
+            get => scene.currentMap;
         }
 
         /// <summary>
@@ -84,6 +80,7 @@ namespace UI.BattleSystem.Controls {
         /// 初始化
         /// </summary>
         protected override void start() {
+			updateCurrentMap();
             base.start();
         }
 
@@ -115,9 +112,10 @@ namespace UI.BattleSystem.Controls {
         protected override void update() {
             base.update();
             updateInput();
+			updateCurrentMap();
 
-            //测试用，跳过对话
-            if (Input.GetKey(KeyCode.T)) {
+			//测试用，跳过对话
+			if (Input.GetKey(KeyCode.T)) {
                 MapModule.Services.MessageService.Get().messages.Clear();
             }
         }
@@ -134,15 +132,34 @@ namespace UI.BattleSystem.Controls {
             else updateMovement();
         }
 
-        #endregion
+		#endregion
 
-        #region 状态判断
+		#region	地图控制
 
-        /// <summary>
-        /// 能否移动
-        /// </summary>
-        /// <returns></returns>
-        public bool isMovable() {
+		/// <summary>
+		/// 地图改变回调
+		/// </summary>
+		protected override void onMapChanged() {
+			base.onMapChanged();
+			// TODO: 改变形象
+		}
+
+		/// <summary>
+		/// 更新当前地图
+		/// </summary>
+		void updateCurrentMap() {
+			map = scene.currentMap;
+		}
+
+		#endregion
+
+		#region 状态判断
+
+		/// <summary>
+		/// 能否移动
+		/// </summary>
+		/// <returns></returns>
+		public bool isMovable() {
             return runtimeBattler.isMoveable();
         }
 
@@ -242,7 +259,7 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <param name="player"></param>
 		public void syncPlayer(MapPlayer player) {
-			transform.localPosition = player.transform.localPosition;
+			//transform.localPosition = player.transform.localPosition;
 		}
 
         #endregion
@@ -359,7 +376,7 @@ namespace UI.BattleSystem.Controls {
 
             Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
             Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
-            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.01f, collider.bounds.size.y - 0.01f);//微调碰撞盒
+            Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.02f, collider.bounds.size.y - 0.02f);//微调碰撞盒
             Collider2D collTemp = Physics2D.OverlapCapsule(dropPos,
                 colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);//落点碰撞判断
 
@@ -388,13 +405,13 @@ namespace UI.BattleSystem.Controls {
         }
 
 
-        /// <summary>
-        /// 材质切换
-        /// </summary>
-        /// <param name="index"></param>
-        void switchMaterial(int index) {
-            material = materials[index];
-        }
+        ///// <summary>
+        ///// 材质切换
+        ///// </summary>
+        ///// <param name="index"></param>
+        //void switchMaterial(int index) {
+        //    material = materials[index];
+        //}
 
 
         /// <summary>
