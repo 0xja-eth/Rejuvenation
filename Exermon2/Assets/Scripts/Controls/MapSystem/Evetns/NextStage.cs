@@ -11,7 +11,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void invokeCustom() {
 			base.invokeCustom();
-			mapEvent.scene.nextStage();
+			mapEvent.scene.changeNextStage();
 		}
 
 	}

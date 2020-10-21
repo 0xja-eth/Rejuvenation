@@ -65,19 +65,12 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 配置更新函数
 		/// </summary>
-		protected override void configureStateChanges(bool isSetup = true) {
-			base.configureStateChanges(isSetup);
+		protected override void configureStateChanges() {
+			base.configureStateChanges();
 
-            if (isSetup) {
-                runtimeBattler?.addStateDict(
-                  RuntimeBattler.State.Moving, updateMoveTime);
-            }
-            else {
-                runtimeBattler?.removeStateDict(
-                    RuntimeBattler.State.Moving, updateMoveTime);
-            }
+            runtimeBattler?.addStateDict(
+                RuntimeBattler.State.Moving, updateMoveTime);
 		}
-
 
 		/// <summary>
 		/// 初始化敌人显示组件
@@ -90,6 +83,20 @@ namespace UI.BattleSystem.Controls {
 				enemy = new RuntimeEnemy(enemyId);
 
 			display.setItem(enemy);
+		}
+
+		#endregion
+
+		#region 释放资源
+
+		/// <summary>
+		/// 销毁回调
+		/// </summary>
+		protected override void OnDestroy() {
+			base.OnDestroy();
+
+			runtimeBattler?.removeStateDict(
+				RuntimeBattler.State.Moving, updateMoveTime);
 		}
 
 		#endregion

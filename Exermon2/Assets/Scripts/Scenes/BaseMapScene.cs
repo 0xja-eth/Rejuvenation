@@ -49,12 +49,8 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 常量定义
 		/// </summary>
-		public const string StrengthAttrName = "_Strength";
-		public const string CenterPosAttrName = "_CenterPos";
-
-		const string SceneLoadingAttrName = "SceneLoading";
-		const string SceneEnterAttrName = "SceneEnter";
-		const string SceneExitAttrName = "SceneExit";
+		const string TravelAttrName = "travel";
+		const string SceneExitAttrName = "exit";
 
 		/// <summary>
 		/// 外部组件设置
@@ -65,7 +61,6 @@ namespace UI.MapSystem {
         public MapPlayer player;
 
         public DialogWindow dialogWindow;
-        public DialogWindow logWindow;
 
 		public Canvas splitCanvas;
 		
@@ -81,14 +76,15 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
-		public RenderTexture renderTexture;
-		public Material switchSceneMaterial;
-        public bool starting { get; set; }
+		public Vector2 startPos; // 玩家初始位置
 
-        /// <summary>
-        /// 内部变量定义
-        /// </summary>
-        bool switching = false;
+		public RenderTexture renderTexture;
+
+		/// <summary>
+		/// 内部变量定义
+		/// </summary>
+		bool loading = true;
+		bool traveling = false;
 
 		/// <summary>
 		/// 特效属性
@@ -125,15 +121,17 @@ namespace UI.MapSystem {
 		protected override void initializeOnce() {
 			base.initializeOnce();
 			playerSer.player.stage = sceneIndex();
+			refreshMapActive();
 		}
 
 		/// <summary>
 		/// 开始
 		/// </summary>
 		protected override void start() {
-			travel(timeType, true); base.start();
-			doRoutine(loading());
-        }
+			base.start();
+			playerSer.actor.runtimeActor.transfer(
+				startPos.x, startPos.y, true);
+		}
 
 		/// <summary>
 		/// 处理通道数据
@@ -142,21 +140,10 @@ namespace UI.MapSystem {
 			var x = DataLoader.load<float>(data, "x");
 			var y = DataLoader.load<float>(data, "y");
 
-			player.transfer(x, y, true);
+			startPos = new Vector2(x, y);
 		}
 
-		/// <summary>
-		/// 加载动画
-		/// </summary>
-		/// <returns></returns>
-		IEnumerator loading() {
-            starting = true;
-            animator.setVar(SceneLoadingAttrName);
-            yield return new WaitForSeconds(1.2f);
-            animator.setVar(SceneEnterAttrName);
-        }
-
-        #endregion
+		#endregion
 
         #region 更新
 
@@ -174,12 +161,26 @@ namespace UI.MapSystem {
 		/// 更新对话框
 		/// </summary>
 		void updateDialog() {
-            if (messageSer.messageCount() > 0 && !isBusy()) {
-                if (messageSer.DialogFlag)
-                    dialogWindow.activate();
-                else
-                    logWindow?.activate();
-            }
+			if (messageSer.messageCount() > 0 && !isBusy())
+				dialogWindow.activate();
+		}
+
+		#endregion
+
+		#region Loading相关
+
+		/// <summary>
+		/// Loading结束回调
+		/// </summary>
+		public void onLoadingEnd() {
+			loading = false;
+		}
+		
+		/// <summary>
+		/// Loading开始回调
+		/// </summary>
+		public void onLoadingStart() {
+			sceneSys.operReady = true;
 		}
 
 		#endregion
@@ -191,7 +192,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isBusy() {
-			return isDialogued() || starting;
+			return loading || traveling || isDialogued();
 		}
 
 		/// <summary>
@@ -232,12 +233,13 @@ namespace UI.MapSystem {
         /// 时空穿越
         /// </summary>
         public void travel(TimeType type, bool force = false) {
-			if (switching || (!force && timeType == type)) return;
+			if (traveling || (!force && timeType == type)) return;
 
-			timeType = type;
-			camera.targetTexture = renderTexture;
+			traveling = true;
+			playEffect(timeType = type);
 
-			playEffect(type);
+			// 清空所有分身
+			player.clearSeperation();
 		}
 
 		/// <summary>
@@ -245,14 +247,11 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <param name="type"></param>
 		void playEffect(TimeType type) {
-			switching = true;
-			animator.setVar(type.ToString());
+			animator.setVar(TravelAttrName);
 
 			// 以镜子为中心进行扭曲
-			timeTravelEffect.center = getPortalScreenPostion(player.transform.position);
-
-			// 坐标切换已在MapEntity中实现
-            player.clearSeperation();
+			var center = getPortalScreenPostion(player.transform.position);
+			timeTravelEffect.center = center;
 		}
 
 		/// <summary>
@@ -265,13 +264,28 @@ namespace UI.MapSystem {
             return new Vector2(screenPos.x / Screen.width, screenPos.y / Screen.height);
         }
 		
-        /// <summary>
-        /// 重设相机状态，取消renderTexture模式
-        /// </summary>
-        public void resetCamera() {
+		/// <summary>
+		/// 刷新地图显示情况
+		/// </summary>
+		public void refreshMapActive() {
+			presentMap.active = isPresent;
+			pastMap.active = isPast;
+		}
+
+		/// <summary>
+		/// 开始时空穿越，应用renderTexture模式
+		/// </summary>
+		public void onTravelStart() {
+			camera.targetTexture = renderTexture;
+		}
+
+		/// <summary>
+		/// 时空穿越结束，取消renderTexture模式
+		/// </summary>
+		public void onTravelEnd() {
 			camera.targetTexture = null;
-            switching = false;
-        }
+			traveling = false;
+		}
 
 		#endregion
 
@@ -281,13 +295,20 @@ namespace UI.MapSystem {
 		/// 默认的下一关场景
 		/// </summary>
 		/// <returns></returns>
-		public abstract SceneSystem.Scene nextScene();
+		public abstract SceneSystem.Scene nextStage();
 
 		/// <summary>
 		/// 下一关
 		/// </summary>
-		public void nextStage() {
-			changeStage(nextScene());
+		public void changeNextStage() {
+			changeStage(nextStage());
+		}
+
+		/// <summary>
+		/// 重开本关
+		/// </summary>
+		public void restartStage() {
+			//changeStage(nextScene());
 		}
 
 		/// <summary>
@@ -296,19 +317,30 @@ namespace UI.MapSystem {
 		public void changeStage(SceneSystem.Scene stage, Vector2? pos) {
 			animator.setVar(SceneExitAttrName);
 
-			if (stage != SceneSystem.Scene.NoneScene && 
-				stage != sceneIndex()) {
-				var data = makeTunnelData(pos);
-				sceneSys.changeScene(stage, data, true);
+			var same = (stage == SceneSystem.Scene.NoneScene || stage == sceneIndex());
 
-				doRoutine(sceneSys.startAsync(
-					onLoadingProgress, onLoadingCompleted));
-				sceneSys.operReady = true;
-			} else
+			if (!same)
+				changeDifferentStage(stage, pos);
+			else // 同一个场景
 				player.transfer(pos.Value, true);
 		}
 		public void changeStage(SceneSystem.Scene stage) {
 			changeStage(stage, null);
+		}
+
+		/// <summary>
+		/// 不同关卡的切换
+		/// </summary>
+		/// <param name="stage"></param>
+		/// <param name="pos"></param>
+		void changeDifferentStage(SceneSystem.Scene stage, Vector2? pos) {
+			loading = true;
+
+			var data = makeTunnelData(pos);
+			sceneSys.changeScene(stage, data, true);
+
+			doRoutine(sceneSys.startAsync(
+				onLoadingProgress, onLoadingCompleted));
 		}
 
 		/// <summary>
@@ -328,7 +360,6 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <param name="progress"></param>
 		protected virtual void onLoadingProgress(float progress) {
-			animator.setVar(SceneLoadingAttrName);
 		}
 
 		/// <summary>

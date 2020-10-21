@@ -344,6 +344,7 @@ namespace MapModule.Data {
         /// <param name="y">y坐标</param>
         public void transfer(float x, float y, bool force = false) {
             if (!force && !isMoveable()) return;
+			Debug.Log(this + ".transfer => " + _transferPoint);
             _transferPoint = new Vector2(x, y);
         }
 

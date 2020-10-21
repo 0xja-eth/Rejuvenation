@@ -28,9 +28,6 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
-		[RequireTarget]
-		CameraController cameraController;
-
 		List<MapEntity> entities = new List<MapEntity>();
 
 		/// <summary>
@@ -71,7 +68,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public bool isActive() {
-			return active && !isBusy();
+			return active && camera && !isBusy();
 		}
 
 		#endregion

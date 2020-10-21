@@ -98,23 +98,29 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 配置运行时角色
 		/// </summary>
-		protected virtual void configureStateChanges(bool isSetup = true) {
-            if (isSetup) {
-                runtimeCharacter?.addStateEnter(
-                  RuntimeCharacter.State.Moving, onMoveStart);
-                runtimeCharacter?.addStateExit(
-                    RuntimeCharacter.State.Moving, onMoveEnd);
-                runtimeCharacter?.addStateDict(
-                    RuntimeCharacter.State.Moving, onMove);
-            }
-            else {
-                runtimeCharacter?.removeStateEnter(
-                    RuntimeCharacter.State.Moving, onMoveStart);
-                runtimeCharacter?.removeStateExit(
-                    RuntimeCharacter.State.Moving, onMoveEnd);
-                runtimeCharacter?.removeStateDict(
-                    RuntimeCharacter.State.Moving, onMove);
-            }
+		protected virtual void configureStateChanges() {
+            runtimeCharacter?.addStateEnter(
+                RuntimeCharacter.State.Moving, onMoveStart);
+            runtimeCharacter?.addStateExit(
+                RuntimeCharacter.State.Moving, onMoveEnd);
+            runtimeCharacter?.addStateDict(
+                RuntimeCharacter.State.Moving, onMove);
+		}
+
+		#endregion
+
+		#region 释放资源
+
+		/// <summary>
+		/// 销毁回调
+		/// </summary>
+		protected virtual void OnDestroy() {
+			runtimeCharacter?.removeStateEnter(
+				RuntimeCharacter.State.Moving, onMoveStart);
+			runtimeCharacter?.removeStateExit(
+				RuntimeCharacter.State.Moving, onMoveEnd);
+			runtimeCharacter?.removeStateDict(
+				RuntimeCharacter.State.Moving, onMove);
 		}
 
 		#endregion
@@ -144,6 +150,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		void updatePosition() {
 			if (!map) return;
+
 			runtimeCharacter.x = mapPos.x;
 			runtimeCharacter.y = mapPos.y;
 
@@ -349,27 +356,6 @@ namespace UI.MapSystem.Controls {
 		}
 
         #endregion
-
-        #region 组件控制
-
-        /// <summary>
-        /// 销毁控制
-        /// 销毁时删除注册函数
-        /// </summary>
-        /// <param name="force"></param>
-        public override void destroy(bool force = false) {
-            base.destroy(force);
-			configureStateChanges(false);
-		}
-
-		/// <summary>
-		/// 销毁回调
-		/// </summary>
-		private void OnDestroy() {
-			configureStateChanges(false);
-		}
-
-		#endregion
 
 	}
 }
