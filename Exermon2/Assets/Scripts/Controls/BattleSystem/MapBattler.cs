@@ -94,43 +94,51 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 配置更新函数
 		/// </summary>
-		protected override void configureStateChanges(bool isSetup = true) {
-			base.configureStateChanges(isSetup);
+		protected override void configureStateChanges() {
+			base.configureStateChanges();
 
-            if (isSetup) {
-                runtimeBattler?.addStateDict(
-                  RuntimeBattler.State.Idle, updateIdle);
-                runtimeBattler?.addStateDict(
-                    RuntimeBattler.State.Using, updateUsing);
+            runtimeBattler?.addStateDict(
+                RuntimeBattler.State.Idle, updateIdle);
+            runtimeBattler?.addStateDict(
+                RuntimeBattler.State.Using, updateUsing);
 
-                runtimeBattler?.addStateEnter(
-                    RuntimeBattler.State.Hitting, onHit);
+            runtimeBattler?.addStateEnter(
+                RuntimeBattler.State.Hitting, onHit);
 
-                // TODO: 需要注意 Using 转 Hitting 时候的技能取消
+            // TODO: 需要注意 Using 转 Hitting 时候的技能取消
 
-                runtimeBattler?.addStateExit(
-                    RuntimeBattler.State.Freezing, onFreezeEnd);
+            runtimeBattler?.addStateExit(
+                RuntimeBattler.State.Freezing, onFreezeEnd);
 
-                runtimeBattler?.addStateEnter(
-                    RuntimeBattler.State.Dead, onDie);
-            }
-            else {
-                runtimeBattler?.removeStateDict(
-                    RuntimeBattler.State.Idle, updateIdle);
-                runtimeBattler?.removeStateDict(
-                    RuntimeBattler.State.Using, updateUsing);
+            runtimeBattler?.addStateEnter(
+                RuntimeBattler.State.Dead, onDie);
+		}
 
-                runtimeBattler?.removeStateEnter(
-                    RuntimeBattler.State.Hitting, onHit);
+		#endregion
 
-                // TODO: 需要注意 Using 转 Hitting 时候的技能取消
+		#region 释放资源
 
-                runtimeBattler?.removeStateExit(
-                    RuntimeBattler.State.Freezing, onFreezeEnd);
+		/// <summary>
+		/// 销毁回调
+		/// </summary>
+		protected override void OnDestroy() {
+			base.OnDestroy();
 
-                runtimeBattler?.removeStateEnter(
-                    RuntimeBattler.State.Dead, onDie);
-            }
+			runtimeBattler?.removeStateDict(
+				RuntimeBattler.State.Idle, updateIdle);
+			runtimeBattler?.removeStateDict(
+				RuntimeBattler.State.Using, updateUsing);
+
+			runtimeBattler?.removeStateEnter(
+				RuntimeBattler.State.Hitting, onHit);
+
+			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
+
+			runtimeBattler?.removeStateExit(
+				RuntimeBattler.State.Freezing, onFreezeEnd);
+
+			runtimeBattler?.removeStateEnter(
+				RuntimeBattler.State.Dead, onDie);
 		}
 
 		#endregion

@@ -14235,7 +14235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  active: 1
+  active: 0
   type: 0
 --- !u!1 &2381160272691689135
 GameObject:
@@ -15069,7 +15069,7 @@ MonoBehaviour:
   _picture: {fileID: 0}
   invokeOnce: 0
   targetStage: 3
-  position: {x: 7.5, y: 17.5}
+  position: {x: 7.5, y: 16.5}
 --- !u!1 &7268604252827736579
 GameObject:
   m_ObjectHideFlags: 0

@@ -11064,7 +11064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  active: 1
+  active: 0
   type: 0
 --- !u!1 &2381160272691689135
 GameObject:

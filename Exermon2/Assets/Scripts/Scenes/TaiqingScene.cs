@@ -49,7 +49,7 @@ namespace UI.MapSystem {
 		/// 下一关
 		/// </summary>
 		/// <returns></returns>
-		public override SceneSystem.Scene nextScene() {
+		public override SceneSystem.Scene nextStage() {
 			return SceneSystem.Scene.NoneScene;
 		}
 
