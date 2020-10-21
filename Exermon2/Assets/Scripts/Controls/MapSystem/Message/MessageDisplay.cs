@@ -17,166 +17,59 @@ namespace UI.MapSystem.Controls {
 	/// 对话框显示
 	/// </summary>
 	[RequireComponent(typeof(DialogWindow))]
-	public class MessageDisplay : ItemDisplay<DialogMessage>{
+	public class MessageDisplay : MessageBaseDisplay{
 
 		/// <summary>
 		/// 外部组件设置
 		/// </summary>
-		public Text message;
+		public new Text name = null; 
+		public GameObject nameFrame = null; 
+		public Image bust = null;
 
-		public new Text name; 
-		public GameObject nameFrame; 
+        #region 界面绘制
 
-		public Image bust;
-
-		public OptionContainer optionContainer;
-
-		/// <summary>
-		/// 外部变量设置
-		/// </summary>
-		public float printDeltaTime = 0.05f; // 文本打印间隔时间
-
-		/// <summary>
-		/// 内部组件设置
-		/// </summary>
-		[RequireTarget]
-		[HideInInspector]
-		public DialogWindow window;
-
-		/// <summary>
-		/// 内部变量定义
-		/// </summary>
-		bool stopPrintReq = false; // 停止打印请求（打印到最后一个）
-
-		/// <summary>
-		/// 属性
-		/// </summary>
-		public bool printing { get; protected set; } = false; // 当前是否打印中
-
-		#region 数据操作
-
-		/// <summary>
-		/// 选项数目
-		/// </summary>
-		/// <returns></returns>
-		public int optionCount() {
-			return item.options.Count;
-		}
-
-		/// <summary>
-		/// 物品改变回调
-		/// </summary>
-		protected override void onItemChanged() {
-			base.onItemChanged();
-			if (printing) stopPrint();
-			optionContainer.setItems(item.options);
-		}
-
-		/// <summary>
-		/// 物品清除回调
-		/// </summary>
-		protected override void onItemClear() {
-			base.onItemClear();
-			if (printing) stopPrint();
-			optionContainer.clearItems();
-		}
-
-		#endregion
-
-		#region 界面绘制
-
-		/// <summary>
-		/// 绘制物品
-		/// </summary>
-		/// <param name="item"></param>
-		protected override void drawExactlyItem(DialogMessage item) {
-			base.drawExactlyItem(item);
-			drawMessage(item); drawName(item); drawBust(item);
-		}
-
-		/// <summary>
-		/// 绘制信息
-		/// </summary>
-		/// <param name="item"></param>
-		void drawMessage(DialogMessage item) {
-			doRoutine(printMessage(item.message));
-		}
+        /// <summary>
+        /// 绘制物品
+        /// </summary>
+        /// <param name="item"></param>
+        protected override void drawExactlyItem(DialogMessage item) {
+            base.drawExactlyItem(item);
+            drawName(item);
+            drawBust(item);
+        }
 
 		/// <summary>
 		/// 绘制名称
 		/// </summary>
 		/// <param name="item"></param>
 		void drawName(DialogMessage item) {
-			nameFrame.SetActive(!string.IsNullOrEmpty(item.name));
-			name.text = item.name;
+			nameFrame?.SetActive(!string.IsNullOrEmpty(item.name));
+            name.text = item.name;
 		}
 
-		/// <summary>
-		/// 绘制立绘
-		/// </summary>
-		/// <param name="item"></param>
-		void drawBust(DialogMessage item) {
-			var bust = item.bust();
-			
-			this.bust.gameObject.SetActive(bust != null);
-			this.bust.overrideSprite = bust;
-			this.bust.SetNativeSize();
-		}
+        /// <summary>
+        /// 绘制立绘
+        /// </summary>
+        /// <param name="item"></param>
+        void drawBust(DialogMessage item) {
+            var bust = item.bust();
 
-		/// <summary>
-		/// 绘制空物品
-		/// </summary>
-		protected override void drawEmptyItem() {
-			base.drawEmptyItem();
-			message.text = name.text = "";
-			nameFrame.SetActive(false);
-			bust.gameObject.SetActive(false);
-			bust.overrideSprite = null;
-			this.bust.SetNativeSize();
-		}
+            this.bust.gameObject.SetActive(bust != null);
+            this.bust.overrideSprite = bust;
+            this.bust.SetNativeSize();
+        }
 
-		/// <summary>
-		/// 停止打印
-		/// </summary>
-		public void stopPrint() {
-			stopPrintReq = true;
-		}
-
-		/// <summary>
-		/// 打印信息
-		/// </summary>
-		/// <returns></returns>
-		IEnumerator printMessage(string message) {
-			onPrintStart();
-
-			foreach (var c in message) {
-				this.message.text += c;
-				if (stopPrintReq) {
-					this.message.text = message;
-					break;
-				}
-				yield return new WaitForSeconds(printDeltaTime);
-			}
-
-			onPrintEnd();
-		}
-
-		/// <summary>
-		/// 打印开始回调
-		/// </summary>
-		void onPrintStart() {
-			printing = true;
-			message.text = "";
-			optionContainer.deactivate();
-		}
-
-		/// <summary>
-		/// 打印结束回调
-		/// </summary>
-		void onPrintEnd() {
-			stopPrintReq = printing = false;
-			optionContainer.activate();
-		}
+        /// <summary>
+        /// 绘制空物品
+        /// </summary>
+        protected override void drawEmptyItem() {
+            base.drawEmptyItem();
+            name.text = "";
+            nameFrame?.SetActive(false);
+            bust.gameObject.SetActive(false);
+            bust.overrideSprite = null;
+            bust.SetNativeSize();
+        }
 
 		#endregion
 

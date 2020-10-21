@@ -52,7 +52,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			processTrigger(MapEventPage.TriggerType.Always);
+            processTrigger(MapEventPage.TriggerType.Always);
 		}
 
 		#endregion
