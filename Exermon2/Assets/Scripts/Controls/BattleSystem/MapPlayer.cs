@@ -45,8 +45,9 @@ namespace UI.BattleSystem.Controls {
         /// 属性
         /// </summary>
         public Actor actor => playerSer.actor;
+		public RuntimeActor runtimeActor => runtimeBattler as RuntimeActor;
 
-        protected float xDelta => Input.GetAxisRaw("Horizontal");
+		protected float xDelta => Input.GetAxisRaw("Horizontal");
         protected float yDelta => Input.GetAxisRaw("Vertical");
 
         Vector2 collCenter => pos + new Vector2(0f, collider.bounds.size.y / 2);//碰撞盒中心
@@ -67,7 +68,6 @@ namespace UI.BattleSystem.Controls {
         /// 分身
         /// </summary>
         List<MapSeperation> mapSeperations = null;
-
 		
         /// <summary>
         /// 外部系统设置
@@ -465,14 +465,32 @@ namespace UI.BattleSystem.Controls {
                 longRangeSkill : normalSkill);
         }
 
-        #endregion
+		#endregion
 
-        #region 分身
-        /// <summary>
-        /// 是否能进行分身
-        /// </summary>
-        /// <returns></returns>
-        virtual protected bool isSeprateEnable() {
+		#region 能量控制
+
+		/// <summary>
+		/// 能量
+		/// </summary>
+		public float energy => runtimeActor.energy;
+
+		/// <summary>
+		/// 添加能量
+		/// </summary>
+		/// <param name="value"></param>
+		public void addEnergy(float value) {
+			runtimeActor.addEnergy(value);
+		}
+
+		#endregion
+
+		#region 分身
+
+		/// <summary>
+		/// 是否能进行分身
+		/// </summary>
+		/// <returns></returns>
+		virtual protected bool isSeprateEnable() {
             return true;
         }
 

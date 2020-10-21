@@ -30,7 +30,25 @@ namespace PlayerModule { }
 namespace PlayerModule.Data {
 
 	/// <summary>
-	/// 基本物品数据
+	/// 物品标志
+	/// </summary>
+	public class ObjectFlags : BaseData {
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		public bool energyBall1 { get; set; } = true;
+		[AutoConvert]
+		public bool taiqingWater1 { get; set; } = false;
+		[AutoConvert]
+		public bool taiqingWater2 { get; set; } = false;
+		[AutoConvert]
+		public Vector2 shipPosition { get; set; }
+	}
+
+	/// <summary>
+	/// 玩家数据
 	/// </summary>
 	public class Player : BaseData,
 		ParamDisplay.IDisplayDataConvertable {
@@ -50,6 +68,9 @@ namespace PlayerModule.Data {
 
 		[AutoConvert]
 		public Actor actor { get; protected set; }
+
+		[AutoConvert]
+		public ObjectFlags flags { get; protected set; } = new ObjectFlags();
 
 		[AutoConvert]
 		public SceneSystem.Scene stage { get; set; } = FirstStage;

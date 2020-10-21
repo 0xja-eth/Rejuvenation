@@ -22,7 +22,8 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
-		public float magnetiteDist = 4; // 磁石距离
+		public float magnetiteDist = 8; // 万象天引距离
+		public float magnetiteEnergy = 1; // 使用万象天引耗能
 
 		/// <summary>
 		/// 内部变量定义
@@ -48,6 +49,7 @@ namespace UI.MapSystem.Controls {
 			base.initializeCollFuncs();
 
 			registerOnEnterFunc<WaterColumn>(onColumnColl);
+
 			registerOnEnterFunc<MapPlayer>(tryBoard);
 			boardingRegion.registerOnEnterFunc<MapRegion>(tryLand);
 		}
@@ -78,13 +80,16 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public bool isMagnetite() {
-			return Input.GetKeyDown(gameSer.keyboard.magnetiteKey);
+			return player.energy >= magnetiteEnergy && 
+				Input.GetKeyDown(gameSer.keyboard.magnetiteKey);
 		}
 
 		/// <summary>
 		/// 使用磁石
 		/// </summary>
 		void useMagnetite() {
+			player.addEnergy(-magnetiteEnergy);
+
 			var dir = player.direction;
 			var vec = RuntimeCharacter.dir82Vec(dir);
 			var resList = Physics2D.RaycastAll(pos, vec, magnetiteDist);
@@ -112,11 +117,19 @@ namespace UI.MapSystem.Controls {
 		#region 乘降操作
 
 		/// <summary>
+		/// 是否需要乘降
+		/// </summary>
+		/// <returns></returns>
+		public bool isTake() {
+			return Input.GetKeyDown(gameSer.keyboard.takeKey);
+		}
+
+		/// <summary>
 		/// 尝试自动上船
 		/// </summary>
 		/// <param name="player"></param>
 		void tryBoard(MapPlayer player) {
-			if (isFreezing()) return;
+			if (!isTake() && isFreezing()) return;
 			if (!boardFlag && addPassenger(player, true))
 				boardFlag = true;
 		}
@@ -126,7 +139,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="region"></param>
 		void tryLand(MapRegion region) {
-			if (isFreezing()) return;
+			if (!isTake() && isFreezing()) return;
 			if (boardFlag && landingRegions.Contains(region)
 				&& removeAllPassengers()) boardFlag = false;
 		}

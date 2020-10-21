@@ -22,10 +22,10 @@ namespace UI.MapSystem {
         /// 外部变量
         /// </summary>
 
+
         /// <summary>
         /// 外部系统定义
         /// </summary>
-        PlayerService playerSer;
         GameService gameSer;
 
         #region 初始化

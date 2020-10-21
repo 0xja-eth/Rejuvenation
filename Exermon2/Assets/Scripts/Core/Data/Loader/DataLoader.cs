@@ -171,6 +171,10 @@ namespace Core.Data.Loaders {
 			if (type == typeof(DateTime)) return loadDateTime(data);
 			if (type == typeof(TimeSpan)) return loadTimeSpan(data);
 			if (type == typeof(Tuple<int, string>)) return loadTuple(data);
+
+			if (type == typeof(Vector2)) return loadVector2(data);
+			if (type == typeof(Vector3)) return loadVector3(data);
+
 			if (type == typeof(Texture2D)) return loadTexture2D(data);
 			if (type == typeof(AudioClip)) return loadAudioClip(data);
 
@@ -239,26 +243,49 @@ namespace Core.Data.Loaders {
         /// <returns>加载的二元组</returns>
         static Tuple<int, string> loadTuple(JsonData data) {
             return new Tuple<int, string>((int)data[0], (string)data[1]);
-        }
+		}
 
-        /// <summary>
-        /// 加载纹理
-        /// </summary>
-        /// <param name="json">数据</param>
-        /// <returns>加载的纹理</returns>
-        static Texture2D loadTexture2D(JsonData data) {
-            byte[] bytes = Convert.FromBase64String((string)data);
-            var res = new Texture2D(0, 0);
-            res.LoadImage(bytes);
-            return res;
-        }
+		/// <summary>
+		/// 加载Vector2
+		/// </summary>
+		/// <param name="json">数据</param>
+		/// <returns>加载的Vector2</returns>
+		static Vector2 loadVector2(JsonData data) {
+			var x = load<float>(data, "x");
+			var y = load<float>(data, "y");
+			return new Vector2(x, y);
+		}
 
-        /// <summary>
-        /// 加载音频数据（MP3）
-        /// </summary>
-        /// <param name="json">数据</param>
-        /// <returns>加载的音频</returns>
-        public static AudioClip loadAudioClip(JsonData data) {
+		/// <summary>
+		/// 加载Vector3
+		/// </summary>
+		/// <param name="json">数据</param>
+		/// <returns>加载的Vector2</returns>
+		static Vector3 loadVector3(JsonData data) {
+			var x = load<float>(data, "x");
+			var y = load<float>(data, "y");
+			var z = load<float>(data, "z");
+			return new Vector3(x, y, z);
+		}
+
+		/// <summary>
+		/// 加载纹理
+		/// </summary>
+		/// <param name="json">数据</param>
+		/// <returns>加载的纹理</returns>
+		static Texture2D loadTexture2D(JsonData data) {
+			byte[] bytes = Convert.FromBase64String((string)data);
+			var res = new Texture2D(0, 0);
+			res.LoadImage(bytes);
+			return res;
+		}
+
+		/// <summary>
+		/// 加载音频数据（MP3）
+		/// </summary>
+		/// <param name="json">数据</param>
+		/// <returns>加载的音频</returns>
+		public static AudioClip loadAudioClip(JsonData data) {
             byte[] buffer = Convert.FromBase64String((string)data);
 
             // 转换mp3格式的代码
@@ -367,9 +394,13 @@ namespace Core.Data.Loaders {
 				if (type == typeof(DateTime) && format == "date") return convertDate((DateTime)data);
 				if (type == typeof(DateTime)) return convertDateTime((DateTime)data);
 				if (type == typeof(Tuple<int, string>)) return convertTuple((Tuple<int, string>)data);
+
+				if (type == typeof(Vector2)) return convertVector2((Vector2)data);
+				if (type == typeof(Vector3)) return convertVector3((Vector3)data);
+
 				if (type == typeof(Texture2D)) return convertTexture2D(data as Texture2D);
 				if (type == typeof(AudioClip)) return convertAudioClip(data as AudioClip);
-
+				
 				if (type.IsSubclassOf(typeof(BaseData)) || type == typeof(BaseData))
 					return convertData(data as BaseData);
 
@@ -443,12 +474,34 @@ namespace Core.Data.Loaders {
             return json;
         }
 
-        /// <summary>
-        /// 转化纹理
-        /// </summary>
-        /// <param name="data">纹理</param>
-        /// <returns>转化后的JsonData</returns>
-        static JsonData convertTexture2D(Texture2D data) {
+		/// <summary>
+		/// 转化Vector2
+		/// </summary>
+		/// <param name="json">数据</param>
+		/// <returns>加载的Vector2</returns>
+		static JsonData convertVector2(Vector2 data) {
+			var res = new JsonData();
+			res["x"] = data.x; res["y"] = data.y;
+			return res;
+		}
+
+		/// <summary>
+		/// 转化Vector3
+		/// </summary>
+		/// <param name="json">数据</param>
+		/// <returns>加载的Vector2</returns>
+		static JsonData convertVector3(Vector3 data) {
+			var res = new JsonData();
+			res["x"] = data.x; res["y"] = data.y; res["z"] = data.z;
+			return res;
+		}
+
+		/// <summary>
+		/// 转化纹理
+		/// </summary>
+		/// <param name="data">纹理</param>
+		/// <returns>转化后的JsonData</returns>
+		static JsonData convertTexture2D(Texture2D data) {
             if (data == null) return "";
             byte[] bytes = data.EncodeToPNG();
             return Convert.ToBase64String(bytes, 0, bytes.Length);

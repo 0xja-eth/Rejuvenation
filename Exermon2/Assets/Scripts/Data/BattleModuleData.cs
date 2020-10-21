@@ -1425,10 +1425,31 @@ namespace BattleModule.Data {
 	public class RuntimeActor : RuntimeBattler {
 
 		/// <summary>
+		/// 常量定义
+		/// </summary>
+		public const float MaxEnergy = 100;
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		public float energy { get; protected set; } = 0;
+
+		/// <summary>
 		/// 战斗者
 		/// </summary>
 		public override Battler battler => PlayerService.Get().actor;
 
+		#region 能量控制
+
+		/// <summary>
+		/// 获得能量
+		/// </summary>
+		/// <param name="value"></param>
+		public void addEnergy(float value) {
+			energy = Mathf.Clamp(energy + value, 0, MaxEnergy);
+		}
+
+		#endregion
 	}
 
 	/// <summary>

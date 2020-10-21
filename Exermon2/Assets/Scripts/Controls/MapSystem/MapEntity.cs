@@ -82,6 +82,29 @@ namespace UI.MapSystem.Controls {
 		}
 
 		/// <summary>
+		/// 开始
+		/// </summary>
+		protected override void start() {
+			base.start();
+			setupPosition();
+		}
+
+		/// <summary>
+		/// 配置（初始）
+		/// </summary>
+		void setupPosition() {
+			mapPos = startPosition();
+		}
+
+		/// <summary>
+		/// 初始位置
+		/// </summary>
+		/// <returns></returns>
+		protected virtual Vector2 startPosition() {
+			return mapPos;
+		}
+
+		/// <summary>
 		/// 初始化碰撞函数
 		/// </summary>
 		protected override void initializeCollFuncs() {
