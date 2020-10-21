@@ -65,9 +65,12 @@ namespace UI.MapSystem.Controls {
 		/// <returns></returns>
 		MapEventPage currentPage_ = null;
 		public MapEventPage currentPage() {
-			if (currentPage_ == null) 
+			if (currentPage_ == null)
 				foreach (var event_ in eventPages)
-					if (event_.isValid()) currentPage_ = event_;
+					if (event_.isValid()) {
+						currentPage_ = event_;
+						break;
+					}
 
 			return currentPage_;
 		}

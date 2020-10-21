@@ -34,7 +34,9 @@ namespace PlayerModule.Services {
 		public Player player { get; protected set; }
 
 		public Actor actor => player?.actor;
-		public ObjectFlags flags => player?.flags;
+		public RuntimeActor runtimeActor => actor?.runtimeActor;
+
+		public Info info => player?.info;
 
 		/// <summary>
 		/// 创建角色

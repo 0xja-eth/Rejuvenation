@@ -4,6 +4,8 @@ using UnityEngine;
 
 using Core.Data;
 
+using Core.UI.Utils;
+
 using MapModule.Data;
 using BattleModule.Data;
 
@@ -59,9 +61,10 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 玩家（敌人目标）
 		/// </summary>
-		MapPlayer player => map.player;
+		MapPlayer player => map?.player;
 
 		#region 初始化
+
 		/// <summary>
 		/// 配置更新函数
 		/// </summary>
@@ -108,7 +111,7 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected override void updateIdle() {
 			base.updateIdle();
-            updateEnemyBehaviour();
+			if (map.isActive()) updateEnemyBehaviour();
 		}
 
 		/// <summary>
@@ -123,8 +126,7 @@ namespace UI.BattleSystem.Controls {
 		/// 更新移动时间
 		/// </summary>
 		void updateMoveTime() {
-			if (moveTime > 0 && 
-				(moveTime -= Time.deltaTime) <= 0) stop();
+			if (moveTime > 0 && (moveTime -= Time.deltaTime) <= 0) stop();
 		}
 
 		#endregion
@@ -139,21 +141,21 @@ namespace UI.BattleSystem.Controls {
 			if (!player) return false;
 
 			var dist = (pos - player.pos).magnitude;
+			if (dist > enemy.criticalRange) return false;
 
-            Vector2 targetDirection = player.transform.position - transform.position;
+			Vector2 targetDirection = player.transform.position - transform.position;
             Vector2 towardDirection = RuntimeCharacter.dir82Vec(direction);
             float angle = Vector2.Angle(targetDirection, towardDirection);
-            bool canSeePlayer = false;
-            Ray2D ray2D = new Ray2D(pos, player.pos);
+
+			if (angle > deteAngle) return false;
+
+			Ray2D ray2D = new Ray2D(pos, player.pos);
             Debug.DrawLine(pos, player.pos, Color.red);
             RaycastHit2D hit = Physics2D.Raycast(pos, player.pos - pos , 100, (1 << 11 | 1 << 10));
-            if (hit) {
-                if(hit.collider.name == "Player") {
-                    canSeePlayer = true;
-                }
-            }
 
-            return dist <= enemy.criticalRange && angle <= deteAngle && canSeePlayer;
+			var mapPlayer = SceneUtils.get<MapPlayer>(hit.collider);
+
+			return hit && mapPlayer;
 		}
 
 		/// <summary>
@@ -174,7 +176,6 @@ namespace UI.BattleSystem.Controls {
 					customBehaviour(); return;
 				default: stop(); return;
 			}
-			debugLog("Move " + d);
 			moveDirection(d);
 		}
 

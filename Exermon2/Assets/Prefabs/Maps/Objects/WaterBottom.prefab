@@ -91,6 +91,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6072398430016628306}
   - component: {fileID: 940879124118884830}
+  - component: {fileID: 2486706252946025480}
+  - component: {fileID: 2112391610946571231}
   m_Layer: 4
   m_Name: WaterBottom
   m_TagString: Untagged
@@ -164,3 +166,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2486706252946025480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8927422234872176206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e75e2e47f9b034fa438b3dbd7bbf80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebug: 0
+  collider: {fileID: 2112391610946571231}
+  autoZ: 0
+  map: {fileID: 0}
+  passable: 1
+  mask: {fileID: 6848384661739825962}
+  emptyLayer: 15
+  waterLayer: 4
+  iceLayer: 14
+  _active: 1
+  relatedSwitch: 0
+--- !u!61 &2112391610946571231
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8927422234872176206}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 20, y: 18}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 2
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 20, y: 18}
+  m_EdgeRadius: 0

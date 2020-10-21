@@ -36,7 +36,9 @@ namespace UI.MapSystem.Controls {
 		public BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
 		public new Camera camera => scene?.camera;
-		public MapPlayer player => scene?.player;
+
+		[HideInInspector]
+		public MapPlayer player; // => scene?.player;
 
 		public Vector2 position {
 			get => transform.position;
@@ -44,13 +46,15 @@ namespace UI.MapSystem.Controls {
 		}
 
         #region 初始化
+
         /// <summary>
         /// 初始化
         /// </summary>
         protected override void start() {
             base.start();
-            entities.Add(player);
+            //entities.Add(player);
         }
+
         #endregion
 
         #region	状态判断
@@ -80,6 +84,11 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="entity"></param>
 		public void addEntity(MapEntity entity) {
+			debugLog("addEntity: " + entity);
+			var player = entity as MapPlayer;
+			if (player != null) this.player = player;
+			debugLog("addEntity.player: " + player);
+
 			entities.Add(entity);
 		}
 
@@ -88,7 +97,11 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         /// <param name="entity"></param>
         public void removeEntity(MapEntity entity) {
-            entities.Remove(entity);
+			debugLog("removeEntity: " + entity);
+			if (entity == player) player = null;
+			debugLog("removeEntity.player: " + player);
+
+			entities.Remove(entity);
         }
 
 		/// <summary>
@@ -157,11 +170,11 @@ namespace UI.MapSystem.Controls {
 		#region 传送操作
 
 		/// <summary>
-		/// 刷新玩家位置
+		/// 转移
 		/// </summary>
 		/// <param name="player"></param>
-		public void refreshPlayerPosition() {
-			player.mapPos = player.mapPos;
+		public void travel(Map newMap) {
+			player.changeMap(newMap);
 		}
 
 		#endregion

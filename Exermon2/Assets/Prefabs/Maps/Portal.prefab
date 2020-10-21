@@ -120,7 +120,7 @@ MonoBehaviour:
   actions:
     m_PersistentCalls:
       m_Calls: []
-  picture: {fileID: 0}
+  _picture: {fileID: 0}
   invokeOnce: 0
 --- !u!1 &704038675803228755
 GameObject:
@@ -241,6 +241,7 @@ MonoBehaviour:
   collider: {fileID: 0}
   autoZ: 1
   eventPages: []
+  processor: {fileID: 0}
 --- !u!70 &648446412
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -255,7 +256,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.04, y: 0.15}
+  m_Size: {x: 0.02, y: 0.1}
   m_Direction: 0
 --- !u!1 &3489934645064877398
 GameObject:

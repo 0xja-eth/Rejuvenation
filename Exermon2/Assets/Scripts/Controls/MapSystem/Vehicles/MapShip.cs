@@ -50,8 +50,8 @@ namespace UI.MapSystem.Controls {
 
 			registerOnEnterFunc<WaterColumn>(onColumnColl);
 
-			registerOnEnterFunc<MapPlayer>(tryBoard);
-			boardingRegion.registerOnEnterFunc<MapRegion>(tryLand);
+			registerOnStayFunc<MapPlayer>(tryBoard);
+			boardingRegion.registerOnStayFunc<MapRegion>(tryLand);
 		}
 
 		#region 更新
@@ -129,7 +129,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="player"></param>
 		void tryBoard(MapPlayer player) {
-			if (!isTake() && isFreezing()) return;
+			if (!isTake() || isFreezing()) return;
 			if (!boardFlag && addPassenger(player, true))
 				boardFlag = true;
 		}
@@ -139,7 +139,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="region"></param>
 		void tryLand(MapRegion region) {
-			if (!isTake() && isFreezing()) return;
+			debugLog("tryLand");
+			if (!isTake() || isFreezing()) return;
 			if (boardFlag && landingRegions.Contains(region)
 				&& removeAllPassengers()) boardFlag = false;
 		}

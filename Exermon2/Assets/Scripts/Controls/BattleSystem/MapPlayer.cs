@@ -2,6 +2,8 @@
 
 using UnityEngine;
 
+using Core.UI.Utils;
+
 using MapModule.Data;
 using BattleModule.Data;
 
@@ -9,9 +11,8 @@ using GameModule.Services;
 using PlayerModule.Services;
 
 namespace UI.BattleSystem.Controls {
-    using Core.UI.Utils;
-    using MapSystem.Controls;
-    using UI.MapSystem;
+
+	using MapSystem.Controls;
 
     /// <summary>
     /// 地图上的玩家实体
@@ -81,7 +82,6 @@ namespace UI.BattleSystem.Controls {
         /// 初始化
         /// </summary>
         protected override void start() {
-			updateCurrentMap();
             base.start();
         }
 
@@ -113,7 +113,6 @@ namespace UI.BattleSystem.Controls {
         protected override void update() {
             base.update();
             updateInput();
-			updateCurrentMap();
 
 			//测试用，跳过对话
 			if (Input.GetKey(KeyCode.T)) {
@@ -142,14 +141,8 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected override void onMapChanged() {
 			base.onMapChanged();
+			clearSeperation();
 			// TODO: 改变形象
-		}
-
-		/// <summary>
-		/// 更新当前地图
-		/// </summary>
-		void updateCurrentMap() {
-			map = scene?.currentMap;
 		}
 
 		#endregion

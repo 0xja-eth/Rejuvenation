@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+using PlayerModule.Services;
+using PlayerModule.Data;
+
 namespace UI.MapSystem.Controls {
 
     /// <summary>
@@ -12,46 +15,20 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
-		public Sprite offSprite, onSprite; // On/Off 状态精灵
-
-		public bool isOn = false;
-
-		public bool reset = false; // 是否在不满足触发条件后重置
-		public float resetDuration = 0; // 重置用时
-
-		public bool toggle = false; // 是否在多次满足触发条件时反转
-
-		public UnityEvent onOn, onOff; 
+		public float energy = 10; // 恢复能量值
 
 		/// <summary>
-		/// 内部变量定义
+		/// 外部系统设置
 		/// </summary>
-		float resetTime = 0;
+		PlayerService playerSer;
 
 		/// <summary>
-		/// 更新
+		/// 是否有效
 		/// </summary>
-		protected override void update() {
-			base.update();
-			updateReset();
-			updateState();
-		}
-
-		/// <summary>
-		/// 更新重置
-		/// </summary>
-		void updateReset() {
-			if (reset && resetTime > 0) {
-				resetTime -= Time.deltaTime;
-				if (resetTime <= 0) isOn = false;
-			}
-		}
-
-		/// <summary>
-		/// 更新状态
-		/// </summary>
-		void updateState() {
-			picture = isOn ? onSprite : offSprite;
+		/// <returns></returns>
+		public override bool isValid() {
+			return base.isValid() && !playerSer.info.getSwitch(
+				Info.Switches.EnergyBall1);
 		}
 
 		/// <summary>
@@ -59,11 +36,9 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void invokeCustom() {
 			base.invokeCustom();
-			isOn = toggle ? !isOn : true;
-
-			if (reset) resetTime = resetDuration;
-
-			(isOn ? onOn : onOff).Invoke();
+			playerSer.info.setSwitch(
+				Info.Switches.EnergyBall1, true);
+			mapEvent.map.player?.addEnergy(energy);
 		}
 
 	}

@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 7386742595705331937}
   eventPlayer: {fileID: 0}
 --- !u!114 &1663960390708659013
 MonoBehaviour:
@@ -206,5 +206,6 @@ MonoBehaviour:
   showDebug: 0
   collider: {fileID: 1994887897007261012}
   autoZ: 1
+  map: {fileID: 0}
   eventPages: []
   processor: {fileID: 0}

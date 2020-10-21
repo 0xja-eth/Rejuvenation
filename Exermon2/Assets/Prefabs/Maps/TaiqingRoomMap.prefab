@@ -12366,6 +12366,7 @@ MonoBehaviour:
   showDebug: 0
   collider: {fileID: 5164059423188005498}
   autoZ: 0
+  map: {fileID: 0}
   type: 0
 --- !u!1 &2381160271960951023
 GameObject:
@@ -14237,6 +14238,7 @@ MonoBehaviour:
   showDebug: 0
   active: 0
   type: 0
+  player: {fileID: 0}
 --- !u!1 &2381160272691689135
 GameObject:
   m_ObjectHideFlags: 0
@@ -14953,7 +14955,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6094076797866196801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0.5, z: 0}
+  m_LocalPosition: {x: -2, y: -0.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1012549265699326452}
@@ -14990,6 +14992,7 @@ MonoBehaviour:
   showDebug: 0
   collider: {fileID: 0}
   autoZ: 1
+  map: {fileID: 0}
   eventPages: []
   processor: {fileID: 0}
 --- !u!61 &4796061044634643415
@@ -15530,6 +15533,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.7644384
       objectReference: {fileID: 0}
+    - target: {fileID: 2112391610946571231, guid: 0f98577d33f53984192b80d72d86056d,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2112391610946571231, guid: 0f98577d33f53984192b80d72d86056d,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6072398430016628306, guid: 0f98577d33f53984192b80d72d86056d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15955,6 +15968,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7298331272133715546, guid: 1640ab3fd21847c42ad468626b539c94,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298331272133715546, guid: 1640ab3fd21847c42ad468626b539c94,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7783653446285024882, guid: 1640ab3fd21847c42ad468626b539c94,
         type: 3}
       propertyPath: m_LocalScale.y
@@ -16089,12 +16112,12 @@ PrefabInstance:
     - target: {fileID: 8913135897385690326, guid: 66a98657ef3ffba43866fdd744d53741,
         type: 3}
       propertyPath: onOn.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8913135897385690326, guid: 66a98657ef3ffba43866fdd744d53741,
         type: 3}
       propertyPath: onOff.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8913135897385690326, guid: 66a98657ef3ffba43866fdd744d53741,
         type: 3}
@@ -16150,6 +16173,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onOff.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913135897385690326, guid: 66a98657ef3ffba43866fdd744d53741,
+        type: 3}
+      propertyPath: relatedSwitch
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66a98657ef3ffba43866fdd744d53741, type: 3}
@@ -16518,12 +16546,12 @@ PrefabInstance:
     - target: {fileID: 8913135897385690326, guid: 66a98657ef3ffba43866fdd744d53741,
         type: 3}
       propertyPath: onOn.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8913135897385690326, guid: 66a98657ef3ffba43866fdd744d53741,
         type: 3}
       propertyPath: onOff.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8913135897385690326, guid: 66a98657ef3ffba43866fdd744d53741,
         type: 3}
@@ -16579,6 +16607,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onOff.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913135897385690326, guid: 66a98657ef3ffba43866fdd744d53741,
+        type: 3}
+      propertyPath: relatedSwitch
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66a98657ef3ffba43866fdd744d53741, type: 3}
