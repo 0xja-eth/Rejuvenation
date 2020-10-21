@@ -65,6 +65,7 @@ namespace UI.MapSystem {
         public MapPlayer player;
 
         public DialogWindow dialogWindow;
+        public DialogWindow logWindow;
 
 		public Canvas splitCanvas;
 		
@@ -82,10 +83,11 @@ namespace UI.MapSystem {
 		/// </summary>
 		public RenderTexture renderTexture;
 		public Material switchSceneMaterial;
+        public bool starting { get; set; }
 
-		/// <summary>
-		/// 内部变量定义
-		/// </summary>
+        /// <summary>
+        /// 内部变量定义
+        /// </summary>
         bool switching = false;
 
 		/// <summary>
@@ -148,12 +150,13 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		IEnumerator loading() {
+            starting = true;
             animator.setVar(SceneLoadingAttrName);
             yield return new WaitForSeconds(1.2f);
             animator.setVar(SceneEnterAttrName);
         }
-        
-		#endregion
+
+        #endregion
 
         #region 更新
 
@@ -165,25 +168,19 @@ namespace UI.MapSystem {
 			updateDialog();
 
 			updateForTest();
-            updateSwitchStrength();
         }
 
 		/// <summary>
 		/// 更新对话框
 		/// </summary>
 		void updateDialog() {
-			if (messageSer.messageCount() > 0 && !isBusy())
-				dialogWindow.activate();
+            if (messageSer.messageCount() > 0 && !isBusy()) {
+                if (messageSer.DialogFlag)
+                    dialogWindow.activate();
+                else
+                    logWindow?.activate();
+            }
 		}
-
-        /// <summary>
-        /// 更新镜头扭曲强度
-        /// </summary>
-        void updateSwitchStrength() {
-            if (switching)
-				switchSceneMaterial.SetFloat(
-					StrengthAttrName, switchStrength);
-        }
 
 		#endregion
 
@@ -194,7 +191,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isBusy() {
-			return isDialogued();
+			return isDialogued() || starting;
 		}
 
 		/// <summary>
@@ -252,8 +249,7 @@ namespace UI.MapSystem {
 			animator.setVar(type.ToString());
 
 			// 以镜子为中心进行扭曲
-			var center = getPortalScreenPostion(player.transform.position);
-			switchSceneMaterial.SetVector(CenterPosAttrName, center);
+			timeTravelEffect.center = getPortalScreenPostion(player.transform.position);
 
 			// 坐标切换已在MapEntity中实现
             player.clearSeperation();

@@ -16,14 +16,14 @@ namespace UI.MapSystem.Windows {
 	/// <summary>
 	/// 对话窗口层
 	/// </summary>
-	[RequireComponent(typeof(MessageDisplay))]
+	[RequireComponent(typeof(MessageBaseDisplay))]
 	public class DialogWindow : BaseWindow {
 
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
-		MessageDisplay display;
+        MessageBaseDisplay display;
 
 		/// <summary>
 		/// 外部系统设置

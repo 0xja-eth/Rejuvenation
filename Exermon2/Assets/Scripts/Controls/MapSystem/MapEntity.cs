@@ -58,8 +58,12 @@ namespace UI.MapSystem.Controls {
 				else {
 					var lastPos = mapPos;
 					_map = value; mapPos = lastPos;
-				}
-				onMapChanged();
+                    debugLog("map pos last:" + lastPos);
+                    debugLog("map pos curMap:" + map.name);
+                    debugLog("map pos curMap:" + map.position);
+                    debugLog("map pos pos:" + pos);
+                }
+                onMapChanged();
 			}
 		}
 
