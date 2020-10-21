@@ -351,6 +351,7 @@ namespace UI.MapSystem.Controls {
         #endregion
 
         #region 组件控制
+
         /// <summary>
         /// 销毁控制
         /// 销毁时删除注册函数
@@ -358,8 +359,17 @@ namespace UI.MapSystem.Controls {
         /// <param name="force"></param>
         public override void destroy(bool force = false) {
             base.destroy(force);
-            configureStateChanges(false);
-        }
-        #endregion
-    }
+			configureStateChanges(false);
+		}
+
+		/// <summary>
+		/// 销毁回调
+		/// </summary>
+		private void OnDestroy() {
+			configureStateChanges(false);
+		}
+
+		#endregion
+
+	}
 }
