@@ -338,13 +338,13 @@ namespace UI.BattleSystem.Controls {
 			if (action == null) return;
 			currentAction = action;
 			onActionStart();
-            processAction();
+			processAction();
 		}
 
 		/// <summary>
 		/// 处理行动
 		/// </summary>
-		protected virtual void processAction() {
+		public virtual void processAction() {
 			useSkill(currentAction.skill);
 		}
 

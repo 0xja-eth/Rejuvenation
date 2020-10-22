@@ -244,8 +244,8 @@ namespace UI.MapSystem {
 		/// <param name="mapType"></param>
 		/// <returns></returns>
 		public Map getMap(TimeType mapType) {
-			if (map1.type == mapType) return map1;
-			if (map2.type == mapType) return map2;
+			if (map1 && map1.type == mapType) return map1;
+			if (map2 && map2.type == mapType) return map2;
 			return null;
 		}
 
@@ -299,8 +299,11 @@ namespace UI.MapSystem {
 		/// 刷新地图显示情况
 		/// </summary>
 		public void refreshMapActive() {
-			presentMap.active = isPresent;
-			pastMap.active = isPast;
+			var map = presentMap;
+			if (map) presentMap.active = isPresent;
+
+			map = pastMap;
+			if (map) pastMap.active = isPast;
 		}
 
 		/// <summary>
