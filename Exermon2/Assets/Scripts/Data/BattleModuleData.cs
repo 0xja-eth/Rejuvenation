@@ -121,13 +121,8 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 行走图属性
 		/// </summary>
-		[AutoConvert]
-		public int characterId { get; set; }
-
-		/// <summary>
-		/// Editor中赋值
-		/// </summary>
-		[SerializeField] Sprite[] _character = null;
+		[SerializeField] int _characterId = 0;
+		[AutoConvert] public int characterId { get => _characterId; set { _characterId = value; } }
 
 		/// <summary>
 		/// 获取动画实例
@@ -139,18 +134,49 @@ namespace BattleModule.Data {
 				Asset.Type.Character, characterId);
 		}
 		public Sprite[] character() {
-			return _character ?? character_?.value();
+			return character_?.value();
 		}
-		
+
+		/// <summary>
+		/// 获取动画实例
+		/// </summary>
+		/// <returns></returns>
+		protected CacheAttr<Sprite[]> attackAni_ = null;
+		protected Sprite[] _attackAni_() {
+			return AssetLoader.loadAssets<Sprite>(
+				Asset.Type.Battler, characterId);
+		}
+		public Sprite[] attackAni() {
+			return attackAni_?.value();
+		}
+
 		/// <summary>
 		/// 获取指定行列的精灵
 		/// </summary>
 		/// <returns></returns>
 		public Sprite getSprite(int r, int c) {
 			var xCnt = RuntimeCharacter.XCnt;
+			Debug.Log(this + ".getSprite: " + r + ", " + c);
 			return character()[r * xCnt + c];
-			//return AssetLoader.genSpriteByCnt(character(),
-			//	RuntimeCharacter.XCnt, RuntimeCharacter.YCnt, c, r);
+		}
+
+		/// <summary>
+		/// 每方向
+		/// </summary>
+		static readonly int[] AttackAniFrameCounts = new int[] { 6, 8, 8, 6 };
+		static readonly int[] AttackAniFrameStarts = new int[] { 8, 0, 0, 14 };
+
+		/// <summary>
+		/// 获取指定方向指定比率的战斗动画
+		/// </summary>
+		/// <returns></returns>
+		public Sprite getAttackAni(int d, float rate) {
+			var count = AttackAniFrameCounts[d];
+			var start = AttackAniFrameStarts[d];
+			int index = start + (int)Mathf.Floor(count * rate);
+
+			Debug.Log(this + ".getAttackAni: " + d + ", " + rate);
+			return attackAni()[index];
 		}
 	}
 
