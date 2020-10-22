@@ -28,9 +28,6 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
-		[RequireTarget]
-		CameraController cameraController;
-
 		List<MapEntity> entities = new List<MapEntity>();
 
 		/// <summary>
@@ -38,21 +35,31 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		public BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
-		public new Camera camera => scene.camera;
-		public MapPlayer player => scene.player;
+		public new Camera camera => scene?.camera;
+		public MapPlayer player => scene?.player;
 
 		public Vector2 position {
 			get => transform.position;
 			set { transform.position = value; }
 		}
 
-		#region	状态判断
+        #region 初始化
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        protected override void start() {
+            base.start();
+            entities.Add(player);
+        }
+        #endregion
 
-		/// <summary>
-		/// 是否繁忙
-		/// </summary>
-		/// <returns></returns>
-		public bool isBusy() {
+        #region	状态判断
+
+        /// <summary>
+        /// 是否繁忙
+        /// </summary>
+        /// <returns></returns>
+        public bool isBusy() {
 			return scene && scene.isBusy();
 		}
 
@@ -61,7 +68,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public bool isActive() {
-			return active && !isBusy();
+			return active && camera && !isBusy();
 		}
 
 		#endregion
@@ -73,11 +80,16 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="entity"></param>
 		public void addEntity(MapEntity entity) {
-			var player = entity as MapPlayer;
-            if (player) return;
-
 			entities.Add(entity);
 		}
+
+        /// <summary>
+        /// 删除实体
+        /// </summary>
+        /// <param name="entity"></param>
+        public void removeEntity(MapEntity entity) {
+            entities.Remove(entity);
+        }
 
 		/// <summary>
 		/// 过滤特定类型的实体

@@ -58,6 +58,8 @@ namespace Core.UI {
 		int layerIndex;
         int stateMachinePathHash;
 
+		protected float aniRate = 0;
+
         protected GameObject gameObject;
 
 		/// <summary>
@@ -122,9 +124,9 @@ namespace Core.UI {
         /// 状态更新
         /// </summary>
         protected virtual void onStateUpdate() {
-            if (!finished && stateInfo.normalizedTime >
-                stateInfo.length + deltaTime) {
-                onStateFinished(); }
+			aniRate = stateInfo.normalizedTime / (stateInfo.length + deltaTime);
+
+			if (!finished && aniRate >= 1) onStateFinished(); 
 		}
 
 		/// <summary>

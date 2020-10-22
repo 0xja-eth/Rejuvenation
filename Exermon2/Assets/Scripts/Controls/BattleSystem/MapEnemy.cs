@@ -65,13 +65,12 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 配置更新函数
 		/// </summary>
-		protected override void setupStateChanges() {
-			base.setupStateChanges();
+		protected override void configureStateChanges() {
+			base.configureStateChanges();
 
-			runtimeBattler?.addStateDict(
-				RuntimeBattler.State.Moving, updateMoveTime);
+            runtimeBattler?.addStateDict(
+                RuntimeBattler.State.Moving, updateMoveTime);
 		}
-
 
 		/// <summary>
 		/// 初始化敌人显示组件
@@ -84,6 +83,20 @@ namespace UI.BattleSystem.Controls {
 				enemy = new RuntimeEnemy(enemyId);
 
 			display.setItem(enemy);
+		}
+
+		#endregion
+
+		#region 释放资源
+
+		/// <summary>
+		/// 销毁回调
+		/// </summary>
+		protected override void OnDestroy() {
+			base.OnDestroy();
+
+			runtimeBattler?.removeStateDict(
+				RuntimeBattler.State.Moving, updateMoveTime);
 		}
 
 		#endregion
@@ -123,6 +136,8 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public bool isCritical() {
+			if (!player) return false;
+
 			var dist = (pos - player.pos).magnitude;
 
             Vector2 targetDirection = player.transform.position - transform.position;

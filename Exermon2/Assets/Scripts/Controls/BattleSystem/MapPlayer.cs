@@ -29,6 +29,7 @@ namespace UI.BattleSystem.Controls {
         public SkillProcessor normalSkill, longRangeSkill;
         //public List<Material> materials = new List<Material>();
         public Material material;
+        public GameObject seperationPrefab;//分身预制件
 
         /// <summary>
         /// 外部变量定义
@@ -50,6 +51,7 @@ namespace UI.BattleSystem.Controls {
 
         Vector2 collCenter => pos + new Vector2(0f, collider.bounds.size.y / 2);//碰撞盒中心
 
+        public bool flashUsable { get; set; } = true;//是否能进行闪烁
         const float flashCoolTime = 1f;//闪烁冷却时间
         float flashCoolTimeRemain = flashCoolTime;//闪烁冷却计时
         const float dissolveSpeed = 3f;//角色消失/出现    速度
@@ -61,18 +63,17 @@ namespace UI.BattleSystem.Controls {
         bool flashBegin = false;//角色是否开始消失
         bool flashEnd = false;//角色是否开始出现
 
-		/// <summary>
-		/// 地图
-		/// </summary>
-        protected override Map map {
-            get => scene.currentMap;
-        }
+        /// <summary>
+        /// 分身
+        /// </summary>
+        List<MapSeperation> mapSeperations = null;
 
+		
         /// <summary>
         /// 外部系统设置
         /// </summary>
-        GameService gameSer;
-        PlayerService playerSer;
+        protected GameService gameSer;
+        protected PlayerService playerSer;
 
         #region 初始化
 
@@ -148,7 +149,7 @@ namespace UI.BattleSystem.Controls {
 		/// 更新当前地图
 		/// </summary>
 		void updateCurrentMap() {
-			map = scene.currentMap;
+			map = scene?.currentMap;
 		}
 
 		#endregion
@@ -183,7 +184,7 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         /// <returns></returns>
         public bool isInputable() {
-            return map.isActive() && inputable;
+            return map && map.isActive() && inputable;
         }
 
         #endregion
@@ -312,7 +313,7 @@ namespace UI.BattleSystem.Controls {
             var keyflash = gameSer.keyboard.rushKey;
             bool flash = Input.GetKeyDown(keyflash);
 
-            if (flash && !flashIsCooling)
+            if (flash && !flashIsCooling )
                 useSkillFlash();
 
             return attack || attacking || (flashBegin && !flashEnd);
@@ -369,11 +370,9 @@ namespace UI.BattleSystem.Controls {
         }
 
         /// <summary>
-        /// 使用闪烁技能
+        /// 计算闪烁位置
         /// </summary>
-        /// <param name="skill"></param>
-        void useSkillFlash() {
-
+        public float calFlashDistance() {
             Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
             Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
             Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.02f, collider.bounds.size.y - 0.02f);//微调碰撞盒
@@ -386,20 +385,58 @@ namespace UI.BattleSystem.Controls {
             if (collTemp) {
                 //寻找最远落点
                 while (flashDistStep <= flashDistance) {
-                    collTemp = Physics2D.OverlapCapsule(collCenter + flashVec * flashDistStep, 
+                    collTemp = Physics2D.OverlapCapsule(collCenter + flashVec * flashDistStep,
                         colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);
                     debugLog(collTemp?.name);
                     if (!collTemp)
                         flashDistRes = flashDistStep;
                     flashDistStep += 0.05f;
                 }
-                Vector2 offset = flashVec * flashDistRes;
-                flashPos = pos + offset;
+                return flashDistRes;
             }
             //直接闪烁到最远距离
             else {
-                flashPos = pos + flashVec * flashDistance;
+                return flashDistance;
             }
+        }
+
+        /// <summary>
+        /// 将闪烁距离应用到闪烁
+        /// </summary>
+        /// <param name="distance"></param>
+        public void applyFlashDistance(float distance) {
+            Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
+            flashPos = pos + flashVec * distance;
+        }
+
+        /// <summary>
+        /// 设置闪烁位置
+        /// </summary>
+        virtual protected void setFlashPos() {
+            if (mapSeperations == null || mapSeperations.Count == 0)
+                applyFlashDistance(calFlashDistance());
+            else { 
+                List<float> disList = new List<float>();
+                disList.Add(calFlashDistance());
+                foreach (var sepearation in mapSeperations) {
+                    disList.Add(sepearation.calFlashDistance());
+                }
+                disList.Sort();
+                var minDis = disList[0];
+                foreach (var sepearation in mapSeperations) {
+                    sepearation.applyFlashDistance(minDis);
+                }
+                applyFlashDistance(minDis);
+            }
+        }
+
+        /// <summary>
+        /// 使用闪烁技能
+        /// </summary>
+        /// <param name="skill"></param>
+        void useSkillFlash() {
+            setFlashPos();
+
             flashIsCooling = true;
             flashBegin = true;
         }
@@ -428,6 +465,47 @@ namespace UI.BattleSystem.Controls {
                 longRangeSkill : normalSkill);
         }
 
+        #endregion
+
+        #region 分身
+        /// <summary>
+        /// 是否能进行分身
+        /// </summary>
+        /// <returns></returns>
+        virtual protected bool isSeprateEnable() {
+            return true;
+        }
+
+        /// <summary>
+        /// 添加分身
+        /// </summary>
+        public void addSeperation() {
+            if (!isSeprateEnable())
+                return;
+            if (mapSeperations == null)
+                mapSeperations = new List<MapSeperation>();            
+            var obj = Instantiate(seperationPrefab, transform.position + new Vector3(2, 0, 0),
+                transform.rotation, transform.parent);
+            obj.name = name + "Seperation_" + (mapSeperations.Count + 1);
+            var mapSeperation = SceneUtils.get<MapSeperation>(obj);
+            //mapSeperation.activate();
+            mapSeperations.Add(mapSeperation);
+            map?.addEntity(mapSeperation);
+        }
+
+        /// <summary>
+        /// 清除分身
+        /// </summary>
+        public void clearSeperation() {
+            if (mapSeperations != null) {
+                foreach (var seperation in mapSeperations) {
+                    map?.removeEntity(seperation);
+                    seperation.destroy(true);
+                    //DestroyImmediate(seperation.gameObject);
+                }
+                mapSeperations.Clear();
+            }
+        }
         #endregion
     }
 }

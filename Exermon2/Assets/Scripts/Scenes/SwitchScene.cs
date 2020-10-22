@@ -35,7 +35,7 @@ namespace UI.SwitchScene {
         /// </summary>
         /// <returns></returns>
         public override SceneSystem.Scene sceneIndex() {
-            return SceneSystem.Scene.SwitchScene;
+			return SceneSystem.Scene.NoneScene; //.SwitchScene;
         }
 
         #endregion

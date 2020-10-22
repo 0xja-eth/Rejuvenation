@@ -368,7 +368,7 @@ PrefabInstance:
     - target: {fileID: 1649693429194646656, guid: c12d166e59faf034b849ffb2987f06c8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2307271478243285366, guid: c12d166e59faf034b849ffb2987f06c8,
         type: 3}
@@ -29863,7 +29863,7 @@ PrefabInstance:
     - target: {fileID: 2381160272357329161, guid: c12d166e59faf034b849ffb2987f06c8,
         type: 3}
       propertyPath: m_Name
-      value: TaiqingRoomMap2
+      value: TaiqingRoomMap-Present
       objectReference: {fileID: 0}
     - target: {fileID: 2381160272357329174, guid: c12d166e59faf034b849ffb2987f06c8,
         type: 3}
@@ -29928,7 +29928,7 @@ PrefabInstance:
     - target: {fileID: 4869760170753299521, guid: c12d166e59faf034b849ffb2987f06c8,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5142757278133980575, guid: c12d166e59faf034b849ffb2987f06c8,
         type: 3}

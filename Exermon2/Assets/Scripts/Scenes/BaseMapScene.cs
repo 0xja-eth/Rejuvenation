@@ -9,8 +9,13 @@ using UnityEngine;
 using Core.UI;
 using Core.UI.Utils;
 
+using Core.Data.Loaders;
+
+using Core.Systems;
+
 using GameModule.Services;
 using MapModule.Services;
+using PlayerModule.Services;
 
 using MapModule.Data;
 
@@ -19,7 +24,8 @@ using UI.BattleSystem.Controls;
 namespace UI.MapSystem {
 
 	using Controls;
-	using Windows;
+    using System.Collections;
+    using Windows;
 
 	/// <summary>
 	/// 地图场景基类
@@ -43,8 +49,8 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 常量定义
 		/// </summary>
-		const string StrengthAttrName = "_Strength";
-		const string CenterPosAttrName = "_CenterPos";
+		const string TravelAttrName = "travel";
+		const string SceneExitAttrName = "exit";
 
 		/// <summary>
 		/// 外部组件设置
@@ -57,28 +63,31 @@ namespace UI.MapSystem {
         public DialogWindow dialogWindow;
 
 		public Canvas splitCanvas;
-
+		
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
-		protected TimeTravelEffect timeTravelEffect;
+		[HideInInspector]
+		public TimeTravelEffect timeTravelEffect;
 		[RequireTarget]
 		protected AnimatorExtend animator;
 
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
+		public Vector2 startPos; // 玩家初始位置
+
 		public RenderTexture renderTexture;
-		public Material switchSceneMaterial;
 
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
-        bool switching = false;
+		bool loading = true;
+		bool traveling = false;
 
 		/// <summary>
-		/// 属性
+		/// 特效属性
 		/// </summary>
 		float switchStrength => timeTravelEffect.switchStrength;
 
@@ -86,8 +95,8 @@ namespace UI.MapSystem {
 		/// 地图/时空属性
 		/// </summary>
 		public TimeType timeType {
-			get => player.runtimeBattler.timeType;
-			set { player.runtimeBattler.timeType = value; }
+			get => playerSer.actor.runtimeActor.timeType;
+			set { playerSer.actor.runtimeActor.timeType = value; }
 		}
 
 		public bool isPresent => timeType == TimeType.Present;
@@ -101,17 +110,39 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
+		protected PlayerService playerSer;
 		protected MessageService messageSer;
 
-        #region  初始化
+		#region  初始化
 
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        protected override void initializeOnce() {
-            base.initializeOnce();
-        }
-        
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
+			base.initializeOnce();
+			playerSer.player.stage = sceneIndex();
+			refreshMapActive();
+		}
+
+		/// <summary>
+		/// 开始
+		/// </summary>
+		protected override void start() {
+			base.start();
+			playerSer.actor.runtimeActor.transfer(
+				startPos.x, startPos.y, true);
+		}
+
+		/// <summary>
+		/// 处理通道数据
+		/// </summary>
+		protected override void processTunnelData(JsonData data) {
+			var x = DataLoader.load<float>(data, "x");
+			var y = DataLoader.load<float>(data, "y");
+
+			startPos = new Vector2(x, y);
+		}
+
 		#endregion
 
         #region 更新
@@ -124,7 +155,6 @@ namespace UI.MapSystem {
 			updateDialog();
 
 			updateForTest();
-            updateSwitchStrength();
         }
 
 		/// <summary>
@@ -135,14 +165,23 @@ namespace UI.MapSystem {
 				dialogWindow.activate();
 		}
 
-        /// <summary>
-        /// 更新镜头扭曲强度
-        /// </summary>
-        void updateSwitchStrength() {
-            if (switching)
-				switchSceneMaterial.SetFloat(
-					StrengthAttrName, switchStrength);
-        }
+		#endregion
+
+		#region Loading相关
+
+		/// <summary>
+		/// Loading结束回调
+		/// </summary>
+		public void onLoadingEnd() {
+			loading = false;
+		}
+		
+		/// <summary>
+		/// Loading开始回调
+		/// </summary>
+		public void onLoadingStart() {
+			sceneSys.operReady = true;
+		}
 
 		#endregion
 
@@ -153,7 +192,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isBusy() {
-			return isDialogued();
+			return loading || traveling || isDialogued();
 		}
 
 		/// <summary>
@@ -193,13 +232,14 @@ namespace UI.MapSystem {
         /// <summary>
         /// 时空穿越
         /// </summary>
-        public void travel(TimeType type) {
-			if (switching || timeType == type) return;
+        public void travel(TimeType type, bool force = false) {
+			if (traveling || (!force && timeType == type)) return;
 
-			timeType = type;
-			camera.targetTexture = renderTexture;
+			traveling = true;
+			playEffect(timeType = type);
 
-			playEffect(type);
+			// 清空所有分身
+			player.clearSeperation();
 		}
 
 		/// <summary>
@@ -207,14 +247,11 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <param name="type"></param>
 		void playEffect(TimeType type) {
-			switching = true;
-			animator.setVar(type.ToString());
+			animator.setVar(TravelAttrName);
 
 			// 以镜子为中心进行扭曲
 			var center = getPortalScreenPostion(player.transform.position);
-			switchSceneMaterial.SetVector(CenterPosAttrName, center);
-
-			// 坐标切换已在MapEntity中实现
+			timeTravelEffect.center = center;
 		}
 
 		/// <summary>
@@ -223,26 +260,123 @@ namespace UI.MapSystem {
 		/// <param name="position"></param>
 		/// <returns></returns>
 		Vector2 getPortalScreenPostion(Vector3 position) {
-            var screenPos = map1.camera.WorldToScreenPoint(position);
+            var screenPos = camera.WorldToScreenPoint(position);
             return new Vector2(screenPos.x / Screen.width, screenPos.y / Screen.height);
         }
 		
-        /// <summary>
-        /// 重设相机状态，取消renderTexture模式
-        /// </summary>
-        public void resetCamera() {
+		/// <summary>
+		/// 刷新地图显示情况
+		/// </summary>
+		public void refreshMapActive() {
+			presentMap.active = isPresent;
+			pastMap.active = isPast;
+		}
+
+		/// <summary>
+		/// 开始时空穿越，应用renderTexture模式
+		/// </summary>
+		public void onTravelStart() {
+			camera.targetTexture = renderTexture;
+		}
+
+		/// <summary>
+		/// 时空穿越结束，取消renderTexture模式
+		/// </summary>
+		public void onTravelEnd() {
 			camera.targetTexture = null;
-            switching = false;
-        }
+			traveling = false;
+		}
 
-        #endregion
+		#endregion
 
-        #region 测试
+		#region 场景控制
 
-        /// <summary>
-        /// 测试
-        /// </summary>
-        void updateForTest() {
+		/// <summary>
+		/// 默认的下一关场景
+		/// </summary>
+		/// <returns></returns>
+		public abstract SceneSystem.Scene nextStage();
+
+		/// <summary>
+		/// 下一关
+		/// </summary>
+		public void changeNextStage() {
+			changeStage(nextStage());
+		}
+
+		/// <summary>
+		/// 重开本关
+		/// </summary>
+		public void restartStage() {
+			//changeStage(nextScene());
+		}
+
+		/// <summary>
+		/// 切换关卡
+		/// </summary>
+		public void changeStage(SceneSystem.Scene stage, Vector2? pos) {
+			animator.setVar(SceneExitAttrName);
+
+			var same = (stage == SceneSystem.Scene.NoneScene || stage == sceneIndex());
+
+			if (!same)
+				changeDifferentStage(stage, pos);
+			else // 同一个场景
+				player.transfer(pos.Value, true);
+		}
+		public void changeStage(SceneSystem.Scene stage) {
+			changeStage(stage, null);
+		}
+
+		/// <summary>
+		/// 不同关卡的切换
+		/// </summary>
+		/// <param name="stage"></param>
+		/// <param name="pos"></param>
+		void changeDifferentStage(SceneSystem.Scene stage, Vector2? pos) {
+			loading = true;
+
+			var data = makeTunnelData(pos);
+			sceneSys.changeScene(stage, data, true);
+
+			doRoutine(sceneSys.startAsync(
+				onLoadingProgress, onLoadingCompleted));
+		}
+
+		/// <summary>
+		/// 组装通讯数据
+		/// </summary>
+		/// <param name="pos"></param>
+		/// <returns></returns>
+		JsonData makeTunnelData(Vector2? pos) {
+			if (pos == null) return null;
+			var res = new JsonData();
+			res["x"] = pos?.x; res["y"] = pos?.y;
+			return res;
+		}
+
+		/// <summary>
+		/// 读取进度改变
+		/// </summary>
+		/// <param name="progress"></param>
+		protected virtual void onLoadingProgress(float progress) {
+		}
+
+		/// <summary>
+		/// 读取完成
+		/// </summary>
+		/// <param name="progress"></param>
+		protected virtual void onLoadingCompleted() {
+		}
+
+		#endregion
+
+		#region 测试
+
+		/// <summary>
+		/// 测试
+		/// </summary>
+		void updateForTest() {
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 //TravelThrough(ThroughType.PresentSingle);
                 travel();

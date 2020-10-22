@@ -34,10 +34,10 @@ namespace Core.Systems {
 			TitleScene = 0,
 			TestScene = 1,
 
-            SwitchScene = 2,
-			TurialScene = 3,
-			TaiqingScene = 4,
-			TaiqingRoomScene = 5,
+            //SwitchScene = 2,
+			TurialScene = 2,
+			TaiqingScene = 3,
+			TaiqingRoomScene = 4,
 		}
 
 		/// <summary>

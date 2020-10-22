@@ -113,14 +113,6 @@ namespace Core.UI {
             base.update(); SceneUtils.update();
         }
 
-        /// <summary>
-        /// 创建协程
-        /// </summary>
-        /// <param name="func">协程函数</param>
-        public void createCoroutine(IEnumerator func) {
-            StartCoroutine(func);
-        }
-
         #endregion
 
         #region 流程控制

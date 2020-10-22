@@ -31,7 +31,19 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		public TriggerType triggerType = TriggerType.Never; // 触发类型
 		public UnityEvent actions = new UnityEvent(); // 事件
-		public Sprite picture; // 显示的图片
+
+		/// <summary>
+		/// 显示的图片
+		/// </summary>
+		[SerializeField]
+		Sprite _picture = null;
+		public Sprite picture {
+			get => _picture;
+			set {
+				if (_picture == value) return;
+				_picture = value; requestRefresh();
+			}
+		} 
 
 		public bool invokeOnce = false; // 只触发一次
 
@@ -74,6 +86,14 @@ namespace UI.MapSystem.Controls {
 		public virtual bool isValid() {
 			return !isInvoked || !invokeOnce;
 		}
+
+		/// <summary>
+		/// 是否为当前页
+		/// </summary>
+		/// <returns></returns>
+		public bool isCurrent() {
+			return mapEvent.currentPage() == this;
+		}
 		
 		/// <summary>
 		/// 调用
@@ -99,5 +119,23 @@ namespace UI.MapSystem.Controls {
 
 		#endregion
 
+		#region 刷新
+
+		/// <summary>
+		/// 刷新事件页
+		/// </summary>
+		void refreshEventPage() {
+			if (isCurrent()) mapEvent.processor.requestRefresh(true);
+		}
+
+		/// <summary>
+		/// 刷新
+		/// </summary>
+		protected override void refresh() {
+			base.refresh();
+			refreshEventPage();
+		}
+
+		#endregion
 	}
 }

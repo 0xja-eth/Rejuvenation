@@ -94,23 +94,50 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 配置更新函数
 		/// </summary>
-		protected override void setupStateChanges() {
-			base.setupStateChanges();
+		protected override void configureStateChanges() {
+			base.configureStateChanges();
 
-			runtimeBattler?.addStateDict(
+            runtimeBattler?.addStateDict(
+                RuntimeBattler.State.Idle, updateIdle);
+            runtimeBattler?.addStateDict(
+                RuntimeBattler.State.Using, updateUsing);
+
+            runtimeBattler?.addStateEnter(
+                RuntimeBattler.State.Hitting, onHit);
+
+            // TODO: 需要注意 Using 转 Hitting 时候的技能取消
+
+            runtimeBattler?.addStateExit(
+                RuntimeBattler.State.Freezing, onFreezeEnd);
+
+            runtimeBattler?.addStateEnter(
+                RuntimeBattler.State.Dead, onDie);
+		}
+
+		#endregion
+
+		#region 释放资源
+
+		/// <summary>
+		/// 销毁回调
+		/// </summary>
+		protected override void OnDestroy() {
+			base.OnDestroy();
+
+			runtimeBattler?.removeStateDict(
 				RuntimeBattler.State.Idle, updateIdle);
-			runtimeBattler?.addStateDict(
+			runtimeBattler?.removeStateDict(
 				RuntimeBattler.State.Using, updateUsing);
 
-			runtimeBattler?.addStateEnter(
+			runtimeBattler?.removeStateEnter(
 				RuntimeBattler.State.Hitting, onHit);
 
 			// TODO: 需要注意 Using 转 Hitting 时候的技能取消
 
-			runtimeBattler?.addStateExit(
+			runtimeBattler?.removeStateExit(
 				RuntimeBattler.State.Freezing, onFreezeEnd);
 
-			runtimeBattler?.addStateEnter( 
+			runtimeBattler?.removeStateEnter(
 				RuntimeBattler.State.Dead, onDie);
 		}
 
@@ -243,9 +270,9 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <param name="skill"></param>
 		void useSkill(Skill skill) {
-			debugLog("Use skill: " + skill);
-			currentProcessor = skillProcessor(skill);
-			currentProcessor?.use();
+            debugLog(name + " Use skill: " + skill);
+            currentProcessor = skillProcessor(skill);
+            currentProcessor?.use();
 		}
 
 		///// <summary>
@@ -310,7 +337,8 @@ namespace UI.BattleSystem.Controls {
 		public void startAction(RuntimeAction action) {
 			if (action == null) return;
 			currentAction = action;
-			onActionStart(); processAction();
+			onActionStart();
+            processAction();
 		}
 
 		/// <summary>
@@ -338,7 +366,25 @@ namespace UI.BattleSystem.Controls {
 			//currentProcessor = null;
 		}
 
-		#endregion
+        #endregion
 
-	}
+        #region 组件控制
+        /// <summary>
+        /// 销毁控制
+        /// 销毁时删除注册函数
+        /// </summary>
+        /// <param name="force"></param>
+        public override void destroy(bool force = false) {
+            base.destroy(force);
+
+            runtimeCharacter?.removeStateEnter(
+                RuntimeCharacter.State.Moving, onMoveStart);
+            runtimeCharacter?.removeStateExit(
+                RuntimeCharacter.State.Moving, onMoveEnd);
+
+            runtimeCharacter?.removeStateDict(
+                RuntimeCharacter.State.Moving, onMove);
+        }
+        #endregion
+    }
 }

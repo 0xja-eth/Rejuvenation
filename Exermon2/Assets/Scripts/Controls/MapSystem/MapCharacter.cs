@@ -92,20 +92,34 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void start() {
 			base.start();
-			setupStateChanges();
+			configureStateChanges();
 		}
 
 		/// <summary>
 		/// 配置运行时角色
 		/// </summary>
-		protected virtual void setupStateChanges() {
+		protected virtual void configureStateChanges() {
+            runtimeCharacter?.addStateEnter(
+                RuntimeCharacter.State.Moving, onMoveStart);
+            runtimeCharacter?.addStateExit(
+                RuntimeCharacter.State.Moving, onMoveEnd);
+            runtimeCharacter?.addStateDict(
+                RuntimeCharacter.State.Moving, onMove);
+		}
 
-			runtimeCharacter?.addStateEnter(
+		#endregion
+
+		#region 释放资源
+
+		/// <summary>
+		/// 销毁回调
+		/// </summary>
+		protected virtual void OnDestroy() {
+			runtimeCharacter?.removeStateEnter(
 				RuntimeCharacter.State.Moving, onMoveStart);
-			runtimeCharacter?.addStateExit(
+			runtimeCharacter?.removeStateExit(
 				RuntimeCharacter.State.Moving, onMoveEnd);
-
-			runtimeCharacter?.addStateDict(
+			runtimeCharacter?.removeStateDict(
 				RuntimeCharacter.State.Moving, onMove);
 		}
 
@@ -135,10 +149,15 @@ namespace UI.MapSystem.Controls {
 		/// 更新位置
 		/// </summary>
 		void updatePosition() {
+			if (!map) return;
+
+			runtimeCharacter.x = mapPos.x;
+			runtimeCharacter.y = mapPos.y;
+
 			var pos = runtimeCharacter.transferPoint;
 			if (pos == null) return;
 
-			rigidbody.position = (Vector2)pos;
+			mapPos = pos.Value;
 		}
 
 		/// <summary>
@@ -286,6 +305,9 @@ namespace UI.MapSystem.Controls {
 		public void transfer(float x, float y, bool force = false) {
 			runtimeCharacter?.transfer(x, y, force);
 		}
+		public void transfer(Vector2 vec, bool force = false) {
+			transfer(vec.x, vec.y, force);
+		}
 
 		/// <summary>
 		/// 移动
@@ -333,6 +355,7 @@ namespace UI.MapSystem.Controls {
 			//refreshFacing();
 		}
 
-		#endregion
+        #endregion
+
 	}
 }

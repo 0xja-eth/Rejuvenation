@@ -24,7 +24,8 @@ namespace UI.MapSystem.Controls {
 		/// 内部组件设置
 		/// </summary>
 		[RequireTarget]
-		protected EventPageProcessor processor;
+		[HideInInspector]
+		public EventPageProcessor processor;
 		
 		/// <summary>
 		/// 外部系统

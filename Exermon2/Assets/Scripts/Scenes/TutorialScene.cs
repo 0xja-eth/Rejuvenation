@@ -51,14 +51,22 @@ namespace UI.MapSystem {
             return SceneSystem.Scene.TurialScene;
         }
 
-        #endregion
+		/// <summary>
+		/// 下一关
+		/// </summary>
+		/// <returns></returns>
+		public override SceneSystem.Scene nextStage() {
+			return SceneSystem.Scene.TaiqingScene;
+		}
 
-        #region 更新
+		#endregion
 
-        /// <summary>
-        /// 更新
-        /// </summary>
-        protected override void update() {
+		#region 更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
             base.update();
             bool trigger = gameSer.tutorialRobotDie;
             if (trigger)
@@ -92,14 +100,6 @@ namespace UI.MapSystem {
         /// </summary>
         void onFlashFail() {
             flashFailTrigger.processTrigger(map1.player, MapEventPage.TriggerType.Never);
-        }
-
-        /// <summary>
-        /// 退出回调
-        /// </summary>
-        public override void onTerminated() {
-            base.onTerminated();
-            gameSer.switchCheckPoint();
         }
 
         #endregion

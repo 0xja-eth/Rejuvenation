@@ -44,17 +44,17 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 场景组件
 		/// </summary>
-		protected BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
+		public BaseMapScene scene => SceneUtils.getCurrentScene<BaseMapScene>();
 
 		/// <summary>
 		/// 内部控件设置
 		/// </summary>
 		Map _map = null;
-		protected virtual Map map {
+		public Map map {
 			get => _map;
 			set {
 				if (_map == value) return;
-				if (_map == null) _map = value;
+				if (_map == null || value == null) _map = value;
 				else {
 					var lastPos = mapPos;
 					_map = value; mapPos = lastPos;
@@ -114,6 +114,8 @@ namespace UI.MapSystem.Controls {
 		/// 计算新坐标
 		/// </summary>
 		protected virtual float calcZCoord(Vector3 pos) {
+			if (!map?.camera) return 0;
+
 			var cz = map.camera.transform.position.z;
 			return mapY2Z(pos.y, cz);
 		}

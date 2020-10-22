@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Glitch
+  m_Shader: {fileID: -6465566751694194690, guid: c48d853e7b7f651419f3213deab4e0b1,
+    type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: d9dfd914f59cc6746aff3c45eb572d3d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_41AA359E: 0
+    - Vector1_AFEF2494: 0.112
+    - Vector1_E82A3AF0: 0.175
+    m_Colors:
+    - Vector2_4DF1B4EC: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_9B0A4EB6: {r: 0.03, g: 0.8, b: 0, a: 0}
+    - Vector2_A15B6A57: {r: 0.01, g: 0.42, b: 0, a: 0}
+    - Vector2_FD44865B: {r: 0, g: 0, b: 0, a: 0}

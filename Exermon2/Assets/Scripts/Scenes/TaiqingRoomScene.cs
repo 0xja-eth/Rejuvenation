@@ -35,8 +35,6 @@ namespace UI.MapSystem {
         /// </summary>
         protected override void initializeOthers() {
             base.initializeOthers();
-            playerSer.createPlayer("TestPlayer");
-            playerSer.actor.runtimeActor.direction = MapModule.Data.RuntimeCharacter.Direction.Up;
         }
 
         /// <summary>
@@ -45,20 +43,17 @@ namespace UI.MapSystem {
         /// <returns></returns>
         public override SceneSystem.Scene sceneIndex() {
             return SceneSystem.Scene.TaiqingRoomScene;
-        }
+		}
 
-        #endregion
+		/// <summary>
+		/// 下一关
+		/// </summary>
+		/// <returns></returns>
+		public override SceneSystem.Scene nextStage() {
+			return SceneSystem.Scene.NoneScene;
+		}
 
-        #region 事件控制
-
-        /// <summary>
-        /// 退出回调
-        /// </summary>
-        public override void onTerminated() {
-            base.onTerminated();
-            gameSer.switchCheckPoint();
-        }
-
-        #endregion
+		#endregion
+		
     }
 }

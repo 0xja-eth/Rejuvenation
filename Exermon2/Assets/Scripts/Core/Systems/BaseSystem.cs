@@ -129,12 +129,24 @@ namespace Core.Systems {
 				addStateDict(e);
 		}
 
-		/// <summary>
-		/// 是否存在状态
-		/// </summary>
-		/// <param name="state">状态名</param>
-		/// <returns>是否存在</returns>
-		public bool hasState(int state) {
+        /// <summary>
+        /// 删除状态字典
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="action"></param>
+        public void removeStateDict(int state, UnityAction action = null) {
+            getListDict(stateDict, state)?.Remove(action);
+        }
+        public void removeStateDict(Enum state, UnityAction action = null) {
+            removeStateDict(state.GetHashCode(), action);
+        }
+
+        /// <summary>
+        /// 是否存在状态
+        /// </summary>
+        /// <param name="state">状态名</param>
+        /// <returns>是否存在</returns>
+        public bool hasState(int state) {
 			return hasListDict(stateDict, state);
 		}
 		public bool hasState(Enum state) {
@@ -192,36 +204,73 @@ namespace Core.Systems {
 			addStateChange(from.GetHashCode(), to.GetHashCode(), action);
 		}
 
-		/// <summary>
-		/// 注册状态进入函数
-		/// </summary>
-		/// <param name="enumType">类型</param>
-		/// <param name="to">初状态</param>
-		/// <param name="action">动作</param>
-		public void addStateEnter(int to, UnityAction action) {
+        /// <summary>
+        /// 删除状态切换函数
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="action"></param>
+        public void removeStateChange(int from, int to, UnityAction action) {
+            getListDict(stateChanges, new Tuple<int, int>(from, to))?.Remove(action);
+        }
+        public void removeStateChange(Enum from, Enum to, UnityAction action) {
+            removeStateChange(from.GetHashCode(), to.GetHashCode(), action);
+        }
+
+        /// <summary>
+        /// 注册状态进入函数
+        /// </summary>
+        /// <param name="enumType">类型</param>
+        /// <param name="to">初状态</param>
+        /// <param name="action">动作</param>
+        public void addStateEnter(int to, UnityAction action) {
 			addListDict(stateEnters, to, action);
 		}
 		public void addStateEnter(Enum to, UnityAction action) {
 			addStateEnter(to.GetHashCode(), action);
 		}
 
-		/// <summary>
-		/// 注册状态退出函数
-		/// </summary>
-		/// <param name="enumType">类型</param>
-		/// <param name="from">初状态</param>
-		/// <param name="action">动作</param>
-		public void addStateExit(int from, UnityAction action) {
+        /// <summary>
+        /// 删除状态进入函数
+        /// </summary>
+        /// <param name="to"></param>
+        /// <param name="action"></param>
+        public void removeStateEnter(int to, UnityAction action) {
+            getListDict(stateEnters, to)?.Remove(action);
+        }
+        public void removeStateEnter(Enum to, UnityAction action) {
+            removeStateEnter(to.GetHashCode(), action);
+        }
+
+        /// <summary>
+        /// 注册状态退出函数
+        /// </summary>
+        /// <param name="enumType">类型</param>
+        /// <param name="from">初状态</param>
+        /// <param name="action">动作</param>
+        public void addStateExit(int from, UnityAction action) {
 			addListDict(stateExits, from, action);
 		}
 		public void addStateExit(Enum from, UnityAction action) {
 			addStateExit(from.GetHashCode(), action);
 		}
-		
-		/// <summary>
-		/// 是否存在状态变更
-		/// </summary>
-		public bool hasStateChange(int from, int to) {
+
+        /// <summary>
+        /// 删除状态退出函数
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="action"></param>
+        public void removeStateExit(int from, UnityAction action) {
+            getListDict(stateExits, from)?.Remove(action);
+        }
+        public void removeStateExit(Enum from, UnityAction action) {
+            removeStateExit(from.GetHashCode(), action);
+        }
+
+        /// <summary>
+        /// 是否存在状态变更
+        /// </summary>
+        public bool hasStateChange(int from, int to) {
 			var key = new Tuple<int, int>(from, to);
 			return hasListDict(stateChanges, key);
 		}
