@@ -4,64 +4,70 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -5769565844064261211
-    second: PastBattler_0
+    second: Battler_2_0
   - first:
       213: -6904470167025221114
-    second: PastBattler_1
+    second: Battler_2_1
   - first:
       213: 6392787900554368767
-    second: PastBattler_2
+    second: Battler_2_2
   - first:
       213: 2971739346565813274
-    second: PastBattler_3
+    second: Battler_2_3
   - first:
       213: 7963852500169213983
-    second: PastBattler_4
+    second: Battler_2_4
   - first:
       213: 1401072731155125266
-    second: PastBattler_5
+    second: Battler_2_5
   - first:
       213: -1444279926047938874
-    second: PastBattler_6
+    second: Battler_2_6
   - first:
       213: 943962234102986941
-    second: PastBattler_7
+    second: Battler_2_7
   - first:
       213: -5261184273010222172
     second: PastBattler_8
   - first:
       213: -5902364740824567682
-    second: PastBattler_9
+    second: Battler_2_8
   - first:
       213: -8226081544506064773
-    second: PastBattler_10
+    second: Battler_2_9
   - first:
       213: 3579441705608380468
-    second: PastBattler_11
+    second: Battler_2_10
   - first:
       213: -9148444974876899415
-    second: PastBattler_12
+    second: Battler_2_11
   - first:
       213: -8641068199707160211
-    second: PastBattler_13
+    second: Battler_2_12
   - first:
       213: 1349994656976814162
     second: PastBattler_14
   - first:
       213: -2754909195639791205
-    second: PastBattler_15
+    second: Battler_2_14
   - first:
       213: -8013801311553656828
-    second: PastBattler_16
+    second: Battler_2_15
   - first:
       213: 1201291756244864918
-    second: PastBattler_17
+    second: Battler_2_16
   - first:
       213: -7299764099451650304
-    second: PastBattler_18
+    second: Battler_2_17
   - first:
       213: 1934750708020127408
-    second: PastBattler_19
+    second: Battler_2_18
+  - first:
+      213: -8958093788459423777
+    second: Battler_2_13
+  - first:
+      213: 3188414425567312646
+    second: Battler_2_19
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -146,7 +152,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PastBattler_0
+      name: Battler_2_0
       rect:
         serializedVersion: 2
         x: 43
@@ -167,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_1
+      name: Battler_2_1
       rect:
         serializedVersion: 2
         x: 136
@@ -188,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_2
+      name: Battler_2_2
       rect:
         serializedVersion: 2
         x: 225
@@ -209,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_3
+      name: Battler_2_3
       rect:
         serializedVersion: 2
         x: 312
@@ -230,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_4
+      name: Battler_2_4
       rect:
         serializedVersion: 2
         x: 411
@@ -251,7 +257,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_5
+      name: Battler_2_5
       rect:
         serializedVersion: 2
         x: 515
@@ -272,7 +278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_6
+      name: Battler_2_6
       rect:
         serializedVersion: 2
         x: 617
@@ -293,7 +299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_7
+      name: Battler_2_7
       rect:
         serializedVersion: 2
         x: 721
@@ -314,28 +320,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_8
-      rect:
-        serializedVersion: 2
-        x: 169
-        y: 126
-        width: 33
-        height: 74
-      alignment: 9
-      pivot: {x: 0.51010686, y: 0.044759803}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4ab9a5557c48cf6b0800000000000000
-      internalID: -5261184273010222172
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PastBattler_9
+      name: Battler_2_8
       rect:
         serializedVersion: 2
         x: 206
@@ -356,10 +341,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_10
+      name: Battler_2_9
       rect:
         serializedVersion: 2
-        x: 255
+        x: 256
         y: 111
         width: 43
         height: 94
@@ -377,13 +362,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_11
+      name: Battler_2_10
       rect:
         serializedVersion: 2
         x: 299
-        y: 109
-        width: 58
-        height: 88
+        y: 107
+        width: 60
+        height: 90
       alignment: 9
       pivot: {x: 0.24904606, y: 0.17209868}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -398,15 +383,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_12
+      name: Battler_2_11
       rect:
         serializedVersion: 2
         x: 359
-        y: 110
-        width: 56
-        height: 85
+        y: 107
+        width: 59
+        height: 88
       alignment: 9
-      pivot: {x: 0.25376293, y: 0.16653398}
+      pivot: {x: 0.23435742, y: 0.19069767}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -419,15 +404,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_13
+      name: Battler_2_12
       rect:
         serializedVersion: 2
         x: 418
-        y: 114
-        width: 56
-        height: 75
+        y: 107
+        width: 60
+        height: 82
       alignment: 9
-      pivot: {x: 0.25376347, y: 0.1425004}
+      pivot: {x: 0.23235321, y: 0.20709452}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -440,32 +425,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_14
+      name: Battler_2_14
       rect:
         serializedVersion: 2
-        x: 169
-        y: 17
-        width: 33
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 25047c9ecf42cb210800000000000000
-      internalID: 1349994656976814162
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PastBattler_15
-      rect:
-        serializedVersion: 2
-        x: 211
-        y: 17
+        x: 544
+        y: 112
         width: 42
         height: 90
       alignment: 9
@@ -482,11 +446,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_16
+      name: Battler_2_15
       rect:
         serializedVersion: 2
-        x: 253
-        y: 18
+        x: 586
+        y: 113
         width: 59
         height: 70
       alignment: 9
@@ -503,11 +467,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_17
+      name: Battler_2_16
       rect:
         serializedVersion: 2
-        x: 312
-        y: 19
+        x: 645
+        y: 114
         width: 48
         height: 88
       alignment: 9
@@ -524,11 +488,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_18
+      name: Battler_2_17
       rect:
         serializedVersion: 2
-        x: 360
-        y: 19
+        x: 693
+        y: 114
         width: 46
         height: 88
       alignment: 9
@@ -545,11 +509,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PastBattler_19
+      name: Battler_2_18
       rect:
         serializedVersion: 2
-        x: 406
-        y: 19
+        x: 739
+        y: 114
         width: 43
         height: 77
       alignment: 9
@@ -561,6 +525,48 @@ TextureImporter:
       bones: []
       spriteID: 0b6a978a48d99da10800000000000000
       internalID: 1934750708020127408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battler_2_13
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 20
+        width: 60
+        height: 82
+      alignment: 9
+      pivot: {x: 0.23115641, y: 0.20590955}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd72e3259257ea380800000000000000
+      internalID: -8958093788459423777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battler_2_19
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 33
+        width: 43
+        height: 77
+      alignment: 9
+      pivot: {x: 0.5074988, y: 0.12933211}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60bbba0f6068f3c20800000000000000
+      internalID: 3188414425567312646
       vertices: []
       indices: 
       edges: []

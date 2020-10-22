@@ -70,13 +70,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: -6309087919181308291, guid: fbc0245b4e294de459eff141de9fb1e2,
+  m_Sprite: {fileID: 3938806748556797917, guid: 64cf1a3e718cbfc478e7975185130867,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.42, y: 1.05}
+  m_Size: {x: 0.6875, y: 1.5}
   m_AdaptiveModeThreshold: 0
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -461,6 +461,7 @@ MonoBehaviour:
   showDebug: 1
   collider: {fileID: 3563039429576385748}
   autoZ: 1
+  map: {fileID: 0}
   directionController: {fileID: 6765399399855176504}
   defaultMoveSpeed: 1
   rigidbody: {fileID: 0}
@@ -492,6 +493,7 @@ MonoBehaviour:
   hpDisplay: {fileID: 4214867100585478214}
   hpBar: {fileID: 4031193178851629648}
   stateText: {fileID: 0}
+  aniRate: 0
 --- !u!70 &3563039429576385748
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

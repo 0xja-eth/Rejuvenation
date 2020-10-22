@@ -7,67 +7,67 @@ TextureImporter:
     second: FutureBattler_0
   - first:
       213: 3747871901337862438
-    second: FutureBattler_1
+    second: Battler_1_14
   - first:
       213: -5845358887696698478
-    second: FutureBattler_2
+    second: Battler_1_15
   - first:
       213: 3157173422583424010
-    second: FutureBattler_3
+    second: Battler_1_16
   - first:
       213: -2086460581157758180
-    second: FutureBattler_4
+    second: Battler_1_17
   - first:
       213: 206435820112638257
-    second: FutureBattler_5
+    second: Battler_1_18
   - first:
       213: -7903172451723177620
-    second: FutureBattler_6
+    second: Battler_1_19
   - first:
       213: 4917132452116414040
-    second: FutureBattler_7
+    second: Battler_1_0
   - first:
       213: -1800719750910352453
-    second: FutureBattler_8
+    second: Battler_1_1
   - first:
       213: -9057220573507436150
-    second: FutureBattler_9
+    second: Battler_1_2
   - first:
       213: -1055912879535098934
-    second: FutureBattler_10
+    second: Battler_1_3
   - first:
       213: -6212057425245681982
-    second: FutureBattler_11
+    second: Battler_1_4
   - first:
       213: 1291260205203705018
-    second: FutureBattler_12
+    second: Battler_1_5
   - first:
       213: -4419375639039453548
-    second: FutureBattler_13
+    second: Battler_1_6
   - first:
       213: -559166605269425739
-    second: FutureBattler_14
+    second: Battler_1_7
   - first:
       213: -4387253041137749001
     second: FutureBattler_15
   - first:
       213: 614312598748004279
-    second: FutureBattler_16
+    second: Battler_1_8
   - first:
       213: -5320851139465936261
-    second: FutureBattler_17
+    second: Battler_1_9
   - first:
       213: 5705078701712391375
-    second: FutureBattler_18
+    second: Battler_1_10
   - first:
       213: 8304349102941206701
-    second: FutureBattler_19
+    second: Battler_1_11
   - first:
       213: 6788066742833585129
-    second: FutureBattler_20
+    second: Battler_1_12
   - first:
       213: -1925729818964744811
-    second: FutureBattler_21
+    second: Battler_1_13
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -152,32 +152,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FutureBattler_0
+      name: Battler_1_14
       rect:
         serializedVersion: 2
-        x: 312
-        y: 190
-        width: 34
-        height: 71
-      alignment: 9
-      pivot: {x: 0.5233827, y: 0.02969081}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0e3b807f50d86c830800000000000000
-      internalID: 4091112368271569888
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FutureBattler_1
-      rect:
-        serializedVersion: 2
-        x: 351
-        y: 190
+        x: 685
+        y: 8
         width: 41
         height: 81
       alignment: 9
@@ -194,11 +173,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_2
+      name: Battler_1_15
       rect:
         serializedVersion: 2
-        x: 392
-        y: 182
+        x: 726
+        y: 0
         width: 58
         height: 69
       alignment: 9
@@ -215,12 +194,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_3
+      name: Battler_1_16
       rect:
         serializedVersion: 2
-        x: 450
-        y: 183
-        width: 47
+        x: 784
+        y: 1
+        width: 46
         height: 90
       alignment: 9
       pivot: {x: 0.48708004, y: 0.10328878}
@@ -236,12 +215,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_4
+      name: Battler_1_17
       rect:
         serializedVersion: 2
-        x: 498
-        y: 183
-        width: 42
+        x: 830
+        y: 1
+        width: 43
         height: 89
       alignment: 9
       pivot: {x: 0.5260228, y: 0.11247665}
@@ -257,11 +236,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_5
+      name: Battler_1_18
       rect:
         serializedVersion: 2
-        x: 539
-        y: 182
+        x: 873
+        y: 1
         width: 43
         height: 90
       alignment: 9
@@ -278,11 +257,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_6
+      name: Battler_1_19
       rect:
         serializedVersion: 2
-        x: 582
-        y: 184
+        x: 916
+        y: 2
         width: 42
         height: 74
       alignment: 9
@@ -299,7 +278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_7
+      name: Battler_1_0
       rect:
         serializedVersion: 2
         x: 77
@@ -320,7 +299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_8
+      name: Battler_1_1
       rect:
         serializedVersion: 2
         x: 166
@@ -341,7 +320,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_9
+      name: Battler_1_2
       rect:
         serializedVersion: 2
         x: 262
@@ -362,7 +341,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_10
+      name: Battler_1_3
       rect:
         serializedVersion: 2
         x: 346
@@ -383,7 +362,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_11
+      name: Battler_1_4
       rect:
         serializedVersion: 2
         x: 450
@@ -404,7 +383,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_12
+      name: Battler_1_5
       rect:
         serializedVersion: 2
         x: 557
@@ -425,7 +404,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_13
+      name: Battler_1_6
       rect:
         serializedVersion: 2
         x: 660
@@ -446,7 +425,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_14
+      name: Battler_1_7
       rect:
         serializedVersion: 2
         x: 764
@@ -467,28 +446,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_15
-      rect:
-        serializedVersion: 2
-        x: 259
-        y: 19
-        width: 33
-        height: 73
-      alignment: 9
-      pivot: {x: 0.5224314, y: 0.057186674}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7f37b3f8a985d13c0800000000000000
-      internalID: -4387253041137749001
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FutureBattler_16
+      name: Battler_1_8
       rect:
         serializedVersion: 2
         x: 294
@@ -509,7 +467,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_17
+      name: Battler_1_9
       rect:
         serializedVersion: 2
         x: 344
@@ -530,7 +488,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_18
+      name: Battler_1_10
       rect:
         serializedVersion: 2
         x: 386
@@ -551,7 +509,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_19
+      name: Battler_1_11
       rect:
         serializedVersion: 2
         x: 452
@@ -572,7 +530,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_20
+      name: Battler_1_12
       rect:
         serializedVersion: 2
         x: 519
@@ -593,7 +551,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FutureBattler_21
+      name: Battler_1_13
       rect:
         serializedVersion: 2
         x: 578
