@@ -2285,6 +2285,11 @@ PrefabInstance:
       propertyPath: m_CompositePaths.m_Paths.Array.data[1].Array.data[7].y
       value: -4.0000296
       objectReference: {fileID: 0}
+    - target: {fileID: 4212297223184329340, guid: 21e88da389acbe449a43f10c5b8b15c9,
+        type: 3}
+      propertyPath: m_Name
+      value: WaterBottom
+      objectReference: {fileID: 0}
     - target: {fileID: 4654834315746438405, guid: 21e88da389acbe449a43f10c5b8b15c9,
         type: 3}
       propertyPath: m_IsActive
