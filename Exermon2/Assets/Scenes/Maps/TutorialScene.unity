@@ -5762,6 +5762,11 @@ PrefabInstance:
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[5].x
       value: -45.999973
       objectReference: {fileID: 0}
+    - target: {fileID: 3422880220439878552, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: m_GeometryType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3422880220480104700, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_IsActive
@@ -21237,6 +21242,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 298741147}
     m_Modifications:
+    - target: {fileID: 241543387064538173, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -36
+      objectReference: {fileID: 0}
     - target: {fileID: 3422880218842067347, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_FalloffIntensity
@@ -21827,6 +21837,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[1].Array.data[21].y
       value: -16.000029
+      objectReference: {fileID: 0}
+    - target: {fileID: 7018010053035068689, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7539524437773701265, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}

@@ -372,7 +372,7 @@ namespace UI.BattleSystem.Controls {
             Collider2D collHard = Physics2D.OverlapCapsule(dropPos,
                 colliderSize, CapsuleDirection2D.Horizontal, 0f, (1 << 11) | (1 << 4) | (1 << 15));//落点碰撞判断
 
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(pos, flashVec, flashDistance, 1 << 11);
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(pos, flashVec, flashDistance, (1 << 11) | (1 << 4) | (1 << 15));
 
             Collider2D collSoft = Physics2D.OverlapCapsule(dropPos,
                 colliderSize, CapsuleDirection2D.Horizontal, 0f, (1 << 8));//落点碰撞判断
