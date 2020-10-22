@@ -50,7 +50,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public override SceneSystem.Scene nextStage() {
-			return SceneSystem.Scene.NoneScene;
+			return SceneSystem.Scene.TaiqingRoom2Scene;
 		}
 
 		#endregion

@@ -12,15 +12,11 @@ using UI.BattleSystem.Controls;
 
 namespace UI.MapSystem.Controls {
 
-    /// <summary>
-    /// 地图上的河流
-    /// </summary>
-    public class MapWater : MapTerrain {
-
-		/// <summary>
-		/// 外部组件设置
-		/// </summary>
-		public GameObject mask;
+	/// <summary>
+	/// 地图上的河流
+	/// </summary>
+	[RequireComponent(typeof(SpriteMask))]
+	public class MapWater : MapTerrain {
 
 		/// <summary>
 		/// 外部变量设置
@@ -41,6 +37,12 @@ namespace UI.MapSystem.Controls {
 		}
 
 		public Info.Switches relatedSwitch = Info.Switches.None; // 关联的开关信息
+
+		/// <summary>
+		/// 内部组件设置
+		/// </summary>
+		[RequireTarget]
+		SpriteMask mask;
 
 		/// <summary>
 		/// 状态判断
@@ -131,7 +133,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void refresh() {
 			base.refresh();
-			mask.SetActive(active);
+			mask.enabled = active;
 			if (active) refreshActive();
 			else refreshDeactive();
 		}

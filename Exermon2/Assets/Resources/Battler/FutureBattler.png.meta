@@ -1,0 +1,631 @@
+fileFormatVersion: 2
+guid: bb2af6b9e28743c478fef305a6cb55c3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4091112368271569888
+    second: FutureBattler_0
+  - first:
+      213: 3747871901337862438
+    second: FutureBattler_1
+  - first:
+      213: -5845358887696698478
+    second: FutureBattler_2
+  - first:
+      213: 3157173422583424010
+    second: FutureBattler_3
+  - first:
+      213: -2086460581157758180
+    second: FutureBattler_4
+  - first:
+      213: 206435820112638257
+    second: FutureBattler_5
+  - first:
+      213: -7903172451723177620
+    second: FutureBattler_6
+  - first:
+      213: 4917132452116414040
+    second: FutureBattler_7
+  - first:
+      213: -1800719750910352453
+    second: FutureBattler_8
+  - first:
+      213: -9057220573507436150
+    second: FutureBattler_9
+  - first:
+      213: -1055912879535098934
+    second: FutureBattler_10
+  - first:
+      213: -6212057425245681982
+    second: FutureBattler_11
+  - first:
+      213: 1291260205203705018
+    second: FutureBattler_12
+  - first:
+      213: -4419375639039453548
+    second: FutureBattler_13
+  - first:
+      213: -559166605269425739
+    second: FutureBattler_14
+  - first:
+      213: -4387253041137749001
+    second: FutureBattler_15
+  - first:
+      213: 614312598748004279
+    second: FutureBattler_16
+  - first:
+      213: -5320851139465936261
+    second: FutureBattler_17
+  - first:
+      213: 5705078701712391375
+    second: FutureBattler_18
+  - first:
+      213: 8304349102941206701
+    second: FutureBattler_19
+  - first:
+      213: 6788066742833585129
+    second: FutureBattler_20
+  - first:
+      213: -1925729818964744811
+    second: FutureBattler_21
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 48
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FutureBattler_0
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 190
+        width: 34
+        height: 71
+      alignment: 9
+      pivot: {x: 0.5233827, y: 0.02969081}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e3b807f50d86c830800000000000000
+      internalID: 4091112368271569888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_1
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 190
+        width: 41
+        height: 81
+      alignment: 9
+      pivot: {x: 0.53393406, y: 0.05339992}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62149ee13ad130430800000000000000
+      internalID: 3747871901337862438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_2
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 182
+        width: 58
+        height: 69
+      alignment: 9
+      pivot: {x: 0.32830548, y: 0.05999203}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2937a2acf0d11eea0800000000000000
+      internalID: -5845358887696698478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_3
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 183
+        width: 47
+        height: 90
+      alignment: 9
+      pivot: {x: 0.48708004, y: 0.10328878}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a04a36b108880db20800000000000000
+      internalID: 3157173422583424010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_4
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 183
+        width: 42
+        height: 89
+      alignment: 9
+      pivot: {x: 0.5260228, y: 0.11247665}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1b9c3ee7276b03e0800000000000000
+      internalID: -2086460581157758180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_5
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 182
+        width: 43
+        height: 90
+      alignment: 9
+      pivot: {x: 0.5187392, y: 0.10964542}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 131fabed8486dd200800000000000000
+      internalID: 206435820112638257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_6
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 184
+        width: 42
+        height: 74
+      alignment: 9
+      pivot: {x: 0.54604375, y: 0.12324441}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c611368278a425290800000000000000
+      internalID: -7903172451723177620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_7
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 98
+        width: 89
+        height: 71
+      alignment: 9
+      pivot: {x: 0.1692096, y: 0.095177725}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85eb1f1c9e92d3440800000000000000
+      internalID: 4917132452116414040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_8
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 106
+        width: 96
+        height: 63
+      alignment: 9
+      pivot: {x: 0.2677153, y: 0.056383163}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb365fa5dee8207e0800000000000000
+      internalID: -1800719750910352453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_9
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 105
+        width: 84
+        height: 68
+      alignment: 9
+      pivot: {x: 0.7527582, y: 0.060327753}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a81cab720e94e4280800000000000000
+      internalID: -9057220573507436150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_10
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 97
+        width: 104
+        height: 69
+      alignment: 9
+      pivot: {x: 0.30962518, y: 0.13298167}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac3fc8d94d4a851f0800000000000000
+      internalID: -1055912879535098934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_11
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 98
+        width: 104
+        height: 65
+      alignment: 9
+      pivot: {x: 0.31613484, y: 0.14053532}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c647e34fa65ac9a0800000000000000
+      internalID: -6212057425245681982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_12
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 98
+        width: 101
+        height: 66
+      alignment: 9
+      pivot: {x: 0.27623484, y: 0.1546943}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abcc3c3b05a7be110800000000000000
+      internalID: 1291260205203705018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_13
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 98
+        width: 101
+        height: 67
+      alignment: 9
+      pivot: {x: 0.2649935, y: 0.13170646}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 496d90a65493ba2c0800000000000000
+      internalID: -4419375639039453548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_14
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 97
+        width: 91
+        height: 67
+      alignment: 9
+      pivot: {x: 0.30889556, y: 0.14222923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b1a7a26fe07d38f0800000000000000
+      internalID: -559166605269425739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_15
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 19
+        width: 33
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5224314, y: 0.057186674}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f37b3f8a985d13c0800000000000000
+      internalID: -4387253041137749001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_16
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 5
+        width: 50
+        height: 66
+      alignment: 9
+      pivot: {x: 0.5888324, y: 0.16724974}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bffb65cd0a768800800000000000000
+      internalID: 614312598748004279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_17
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 4
+        width: 40
+        height: 93
+      alignment: 9
+      pivot: {x: 0.607988, y: 0.09649544}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b728669641a8826b0800000000000000
+      internalID: -5320851139465936261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_18
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 5
+        width: 64
+        height: 72
+      alignment: 9
+      pivot: {x: 0.33206797, y: 0.1915025}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fccb6373ad28c2f40800000000000000
+      internalID: 5705078701712391375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_19
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 5
+        width: 63
+        height: 72
+      alignment: 9
+      pivot: {x: 0.363522, y: 0.19896613}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da8f4a3c289fe3370800000000000000
+      internalID: 8304349102941206701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_20
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 5
+        width: 56
+        height: 69
+      alignment: 9
+      pivot: {x: 0.25370026, y: 0.20405012}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eb1d36ecbe043e50800000000000000
+      internalID: 6788066742833585129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FutureBattler_21
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 2
+        width: 59
+        height: 72
+      alignment: 9
+      pivot: {x: 0.24193509, y: 0.22633296}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 595aa3fbeee6645e0800000000000000
+      internalID: -1925729818964744811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

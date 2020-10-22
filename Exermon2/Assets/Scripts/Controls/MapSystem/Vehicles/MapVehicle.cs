@@ -230,7 +230,7 @@ namespace UI.MapSystem.Controls {
 
 			foreach (var region in landingRegions) {
 				var pt = region.collider.ClosestPoint(pos);
-				if (collider.OverlapPoint(pt)) return pt;
+				if (boardingRegion.collider.OverlapPoint(pt)) return pt;
 			}
 
 			return null;
