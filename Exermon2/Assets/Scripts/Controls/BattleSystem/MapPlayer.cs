@@ -57,7 +57,7 @@ namespace UI.BattleSystem.Controls {
         const float flashCoolTime = 1f;//闪烁冷却时间
         float flashCoolTimeRemain = flashCoolTime;//闪烁冷却计时
         const float dissolveSpeed = 3f;//角色消失/出现    速度
-        const float flashDistance = 2f;//闪烁距离
+        public float flashDistance = 2f;//闪烁距离
         public float dissolveAnt = 0f;//据色出现/消失参数
         public Vector2 flashPos;//闪烁最终落点
 

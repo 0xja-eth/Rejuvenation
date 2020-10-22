@@ -1432,7 +1432,7 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public float energy { get; protected set; } = 0;
+		public float energy { get; protected set; } = 100;
 
 		/// <summary>
 		/// 战斗者
