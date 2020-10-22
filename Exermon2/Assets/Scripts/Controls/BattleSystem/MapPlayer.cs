@@ -12,7 +12,7 @@ using PlayerModule.Services;
 
 namespace UI.BattleSystem.Controls {
 
-	using MapSystem.Controls;
+    using MapSystem.Controls;
 
     /// <summary>
     /// 地图上的玩家实体
@@ -46,9 +46,9 @@ namespace UI.BattleSystem.Controls {
         /// 属性
         /// </summary>
         public Actor actor => playerSer.actor;
-		public RuntimeActor runtimeActor => runtimeBattler as RuntimeActor;
+        public RuntimeActor runtimeActor => runtimeBattler as RuntimeActor;
 
-		protected float xDelta => Input.GetAxisRaw("Horizontal");
+        protected float xDelta => Input.GetAxisRaw("Horizontal");
         protected float yDelta => Input.GetAxisRaw("Vertical");
 
         Vector2 collCenter => pos + new Vector2(0f, collider.bounds.size.y / 2);//碰撞盒中心
@@ -69,7 +69,7 @@ namespace UI.BattleSystem.Controls {
         /// 分身
         /// </summary>
         List<MapSeperation> mapSeperations = null;
-		
+
         /// <summary>
         /// 外部系统设置
         /// </summary>
@@ -114,8 +114,8 @@ namespace UI.BattleSystem.Controls {
             base.update();
             updateInput();
 
-			//测试用，跳过对话
-			if (Input.GetKey(KeyCode.T)) {
+            //测试用，跳过对话
+            if (Input.GetKey(KeyCode.T)) {
                 MapModule.Services.MessageService.Get().messages.Clear();
             }
         }
@@ -132,28 +132,28 @@ namespace UI.BattleSystem.Controls {
             else updateMovement();
         }
 
-		#endregion
+        #endregion
 
-		#region	地图控制
+        #region	地图控制
 
-		/// <summary>
-		/// 地图改变回调
-		/// </summary>
-		protected override void onMapChanged() {
-			base.onMapChanged();
-			clearSeperation();
-			// TODO: 改变形象
-		}
+        /// <summary>
+        /// 地图改变回调
+        /// </summary>
+        protected override void onMapChanged() {
+            base.onMapChanged();
+            clearSeperation();
+            // TODO: 改变形象
+        }
 
-		#endregion
+        #endregion
 
-		#region 状态判断
+        #region 状态判断
 
-		/// <summary>
-		/// 能否移动
-		/// </summary>
-		/// <returns></returns>
-		public bool isMovable() {
+        /// <summary>
+        /// 能否移动
+        /// </summary>
+        /// <returns></returns>
+        public bool isMovable() {
             return runtimeBattler.isMoveable();
         }
 
@@ -248,13 +248,13 @@ namespace UI.BattleSystem.Controls {
             return !flag;
         }
 
-		/// <summary>
-		/// 同步角色
-		/// </summary>
-		/// <param name="player"></param>
-		public void syncPlayer(MapPlayer player) {
-			//transform.localPosition = player.transform.localPosition;
-		}
+        /// <summary>
+        /// 同步角色
+        /// </summary>
+        /// <param name="player"></param>
+        public void syncPlayer(MapPlayer player) {
+            //transform.localPosition = player.transform.localPosition;
+        }
 
         #endregion
 
@@ -306,7 +306,7 @@ namespace UI.BattleSystem.Controls {
             var keyflash = gameSer.keyboard.rushKey;
             bool flash = Input.GetKeyDown(keyflash);
 
-            if (flash && !flashIsCooling )
+            if (flash && !flashIsCooling)
                 useSkillFlash();
 
             return attack || attacking || (flashBegin && !flashEnd);
@@ -369,19 +369,33 @@ namespace UI.BattleSystem.Controls {
             Vector2 flashVec = RuntimeCharacter.dir82Vec(direction);//闪烁方向
             Vector2 dropPos = collCenter + flashVec * flashDistance;//落点
             Vector2 colliderSize = new Vector2(collider.bounds.size.x - 0.02f, collider.bounds.size.y - 0.02f);//微调碰撞盒
-            Collider2D collTemp = Physics2D.OverlapCapsule(dropPos,
-                colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);//落点碰撞判断
+            Collider2D collHard = Physics2D.OverlapCapsule(dropPos,
+                colliderSize, CapsuleDirection2D.Horizontal, 0f, (1 << 11) | (1 << 4) | (1 << 15));//落点碰撞判断
+
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(pos, flashVec, flashDistance, 1 << 11);
+
+            Collider2D collSoft = Physics2D.OverlapCapsule(dropPos,
+                colliderSize, CapsuleDirection2D.Horizontal, 0f, (1 << 8));//落点碰撞判断
+
 
             float flashDistStep = 0.05f;
             float flashDistRes = 0.0f;
 
-            if (collTemp) {
+            if (raycastHit2D || collSoft) {
                 //寻找最远落点
                 while (flashDistStep <= flashDistance) {
-                    collTemp = Physics2D.OverlapCapsule(collCenter + flashVec * flashDistStep,
-                        colliderSize, CapsuleDirection2D.Horizontal, 0f, 1 << 11);
-                    debugLog(collTemp?.name);
-                    if (!collTemp)
+                    collHard = Physics2D.OverlapCapsule(collCenter + flashVec * flashDistStep,
+                        colliderSize, CapsuleDirection2D.Horizontal, 0f, (1 << 11) | (1 << 4) | (1 << 15));
+
+
+                    collSoft = Physics2D.OverlapCapsule(collCenter + flashVec * flashDistStep,
+                        colliderSize, CapsuleDirection2D.Horizontal, 0f, (1 << 8));//落点碰撞判断
+
+                    debugLog(collHard?.name);
+                    debugLog(collSoft?.name);
+                    if (collHard)
+                        break;
+                    if (!collSoft || collSoft.isTrigger)
                         flashDistRes = flashDistStep;
                     flashDistStep += 0.05f;
                 }
@@ -408,7 +422,7 @@ namespace UI.BattleSystem.Controls {
         virtual protected void setFlashPos() {
             if (mapSeperations == null || mapSeperations.Count == 0)
                 applyFlashDistance(calFlashDistance());
-            else { 
+            else {
                 List<float> disList = new List<float>();
                 disList.Add(calFlashDistance());
                 foreach (var sepearation in mapSeperations) {
@@ -458,32 +472,32 @@ namespace UI.BattleSystem.Controls {
                 longRangeSkill : normalSkill);
         }
 
-		#endregion
+        #endregion
 
-		#region 能量控制
+        #region 能量控制
 
-		/// <summary>
-		/// 能量
-		/// </summary>
-		public float energy => runtimeActor.energy;
+        /// <summary>
+        /// 能量
+        /// </summary>
+        public float energy => runtimeActor.energy;
 
-		/// <summary>
-		/// 添加能量
-		/// </summary>
-		/// <param name="value"></param>
-		public void addEnergy(float value) {
-			runtimeActor.addEnergy(value);
-		}
+        /// <summary>
+        /// 添加能量
+        /// </summary>
+        /// <param name="value"></param>
+        public void addEnergy(float value) {
+            runtimeActor.addEnergy(value);
+        }
 
-		#endregion
+        #endregion
 
-		#region 分身
+        #region 分身
 
-		/// <summary>
-		/// 是否能进行分身
-		/// </summary>
-		/// <returns></returns>
-		virtual protected bool isSeprateEnable() {
+        /// <summary>
+        /// 是否能进行分身
+        /// </summary>
+        /// <returns></returns>
+        virtual protected bool isSeprateEnable() {
             return true;
         }
 
@@ -494,7 +508,7 @@ namespace UI.BattleSystem.Controls {
             if (!isSeprateEnable())
                 return;
             if (mapSeperations == null)
-                mapSeperations = new List<MapSeperation>();            
+                mapSeperations = new List<MapSeperation>();
             var obj = Instantiate(seperationPrefab, transform.position + new Vector3(2, 0, 0),
                 transform.rotation, transform.parent);
             obj.name = name + "Seperation_" + (mapSeperations.Count + 1);
