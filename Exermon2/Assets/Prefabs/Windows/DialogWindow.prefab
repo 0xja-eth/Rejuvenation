@@ -129,7 +129,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 220, y: 45}
+  m_AnchoredPosition: {x: 115.8, y: 45}
   m_SizeDelta: {x: 0, y: 64}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7037944105968620975
@@ -601,12 +601,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   message: {fileID: 7037944106746631956}
-  name: {fileID: 7037944105701318927}
-  nameFrame: {fileID: 7037944105968620970}
-  bust: {fileID: 7037944106000128902}
   optionContainer: {fileID: 8889563049566589706}
   printDeltaTime: 0.05
   window: {fileID: 0}
+  name: {fileID: 7037944105701318927}
+  nameFrame: {fileID: 7037944105968620970}
+  bust: {fileID: 7037944106000128902}
 --- !u!1001 &7037944106814084876
 PrefabInstance:
   m_ObjectHideFlags: 0
