@@ -40,8 +40,13 @@ namespace PlayerModule.Data {
 		public enum Switches {
 			None,
 			EnergyBall1,
-			TaiqingWater1,
-			TaiqingWater2
+			TaiqingWater1, // 房间1
+			TaiqingWater2,
+			TaiqingWater3, // 房间2
+			TaiqingWater4,
+			TaiqingWater5,
+			TaiqingBlock1,
+			TaiqingBlock2,
 		}
 
 		/// <summary>
