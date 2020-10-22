@@ -24,6 +24,8 @@ namespace UI.BattleSystem.Controls {
 
 		public TextMesh stateText;
 
+		public float aniRate = 0;
+
 		/// <summary>
 		/// 内部变量定义
 		/// </summary>
@@ -47,10 +49,11 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected override void update() {
 			base.update();
-			debugLog("Direction: " + item.direction);
 
 			if (isNullItem(item)) return;
-			updateHPChange(); updateCharacter();
+
+			updateHPChange();
+			updateAnimation();
 			updateState();
 		}
 
@@ -67,8 +70,8 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 更新行走图
 		/// </summary>
-		void updateCharacter() {
-			drawCharacter(item);
+		void updateAnimation() {
+			drawAnimation(item);
 		}
 
 		/// <summary>
@@ -101,7 +104,7 @@ namespace UI.BattleSystem.Controls {
 		/// <param name="item"></param>
 		protected override void drawExactlyItem(RuntimeBattler item) {
 			base.drawExactlyItem(item);
-			drawHP(item); drawCharacter(item);
+			drawHP(item); drawAnimation(item);
 			drawState(item);
 		}
 
@@ -119,22 +122,45 @@ namespace UI.BattleSystem.Controls {
 		}
 
 		/// <summary>
-		/// 绘制角色
+		/// 绘制动画
 		/// </summary>
 		/// <param name="item"></param>
-		void drawCharacter(RuntimeBattler item) {
+		void drawAnimation(RuntimeBattler item) {
 			var dir = item.direction;
 
 			if (RuntimeCharacter.isDir4(dir))
 				lastDir = RuntimeCharacter.dir2Index(dir);
 
-			if (RuntimeCharacter.isRightDir(dir))
-				sprite.flipX = true;
-			else if (RuntimeCharacter.isLeftDir(dir))
-				sprite.flipX = false;
+			switch ((RuntimeBattler.State)item.state) {
+				case RuntimeBattler.State.Idle:
+				case RuntimeBattler.State.Moving:
+					drawCharacter(item); break;
+				case RuntimeBattler.State.Using:
+					drawAttackAction(item); break;
+				default:
+					drawCharacter(item); break;
+			}
+		}
 
+		/// <summary>
+		/// 绘制角色
+		/// </summary>
+		/// <param name="item"></param>
+		void drawCharacter(RuntimeBattler item) {
+			aniRate = 0;
+			sprite.flipX = false;
 			sprite.sprite = item.battler.
 				getSprite(lastDir, item.pattern);
+		}
+
+		/// <summary>
+		/// 绘制攻击动画
+		/// </summary>
+		/// <param name="item"></param>
+		void drawAttackAction(RuntimeBattler item) {
+			sprite.flipX = RuntimeCharacter.isLeftDir(item.direction);
+			sprite.sprite = item.battler.
+				getAttackAni(lastDir, aniRate);
 		}
 
 		/// <summary>

@@ -169,9 +169,9 @@ namespace MapModule.Data {
         public static int dir2Index(Direction d) {
             switch (d) {
                 case Direction.Down: return 0;
-                case Direction.Left:
-                case Direction.Right: return 1;
-                case Direction.Up: return 2;
+				case Direction.Right: return 1;
+                case Direction.Left: return 2;
+				case Direction.Up: return 3;
                 default: return -1;
             }
         }
@@ -496,7 +496,7 @@ namespace MapModule.Data {
         }
 
         /// <summary>
-        /// 更换状态
+        /// 判断状态
         /// </summary>
         /// <param name="state"></param>
         public bool isState(Enum state) {

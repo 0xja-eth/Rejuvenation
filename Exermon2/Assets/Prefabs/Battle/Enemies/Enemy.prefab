@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: -7094179202080397849, guid: 39b8dcd94a3eb354189bee044e1be94c,
+  m_Sprite: {fileID: -3320946748400755363, guid: 98b55c37293b56144840bad52e0c2bc1,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -436,6 +436,7 @@ MonoBehaviour:
   showDebug: 0
   collider: {fileID: 0}
   autoZ: 1
+  map: {fileID: 0}
   directionController: {fileID: 9102216902027385333}
   defaultMoveSpeed: 20
   rigidbody: {fileID: 0}
@@ -451,16 +452,7 @@ MonoBehaviour:
     _speed: 1
     _attack: 0
     _defense: 0
-    _character:
-    - {fileID: -3199294949871373731, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
-    - {fileID: -345094371469603222, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
-    - {fileID: -2644719746594264722, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
-    - {fileID: 5798040017267913814, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
-    - {fileID: -7094179202080397849, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
-    - {fileID: 2174448747083212310, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
-    - {fileID: 4874904985355933556, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
-    - {fileID: 7261550511007689227, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
-    - {fileID: 5720438816908009035, guid: 39b8dcd94a3eb354189bee044e1be94c, type: 3}
+    _characterId: 2
     _description: 
     _refreshType: 1
     _frequency: 1
@@ -484,6 +476,7 @@ MonoBehaviour:
   hpDisplay: {fileID: 5194098965331227198}
   hpBar: {fileID: 5304783319215083573}
   stateText: {fileID: 4135325828451471855}
+  aniRate: 0
 --- !u!1 &5194098965663560233
 GameObject:
   m_ObjectHideFlags: 0
