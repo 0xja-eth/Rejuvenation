@@ -1,0 +1,583 @@
+fileFormatVersion: 2
+guid: 3feac21361bbfb649a39c88dc35a8364
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5769565844064261211
+    second: PastBattler_0
+  - first:
+      213: -6904470167025221114
+    second: PastBattler_1
+  - first:
+      213: 6392787900554368767
+    second: PastBattler_2
+  - first:
+      213: 2971739346565813274
+    second: PastBattler_3
+  - first:
+      213: 7963852500169213983
+    second: PastBattler_4
+  - first:
+      213: 1401072731155125266
+    second: PastBattler_5
+  - first:
+      213: -1444279926047938874
+    second: PastBattler_6
+  - first:
+      213: 943962234102986941
+    second: PastBattler_7
+  - first:
+      213: -5261184273010222172
+    second: PastBattler_8
+  - first:
+      213: -5902364740824567682
+    second: PastBattler_9
+  - first:
+      213: -8226081544506064773
+    second: PastBattler_10
+  - first:
+      213: 3579441705608380468
+    second: PastBattler_11
+  - first:
+      213: -9148444974876899415
+    second: PastBattler_12
+  - first:
+      213: -8641068199707160211
+    second: PastBattler_13
+  - first:
+      213: 1349994656976814162
+    second: PastBattler_14
+  - first:
+      213: -2754909195639791205
+    second: PastBattler_15
+  - first:
+      213: -8013801311553656828
+    second: PastBattler_16
+  - first:
+      213: 1201291756244864918
+    second: PastBattler_17
+  - first:
+      213: -7299764099451650304
+    second: PastBattler_18
+  - first:
+      213: 1934750708020127408
+    second: PastBattler_19
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 48
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PastBattler_0
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 211
+        width: 93
+        height: 71
+      alignment: 9
+      pivot: {x: 0.20345643, y: 0.061217833}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5aba25cee626eefa0800000000000000
+      internalID: -5769565844064261211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_1
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 211
+        width: 89
+        height: 65
+      alignment: 9
+      pivot: {x: 0.21882047, y: 0.05607206}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6020e2ce6f46e20a0800000000000000
+      internalID: -6904470167025221114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_2
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 211
+        width: 84
+        height: 70
+      alignment: 9
+      pivot: {x: 0.7462369, y: 0.06589334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff655f0a9beb7b850800000000000000
+      internalID: 6392787900554368767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 205
+        width: 99
+        height: 73
+      alignment: 9
+      pivot: {x: 0.2833335, y: 0.118713796}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a145b15d03dbd3920800000000000000
+      internalID: 2971739346565813274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_4
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 205
+        width: 102
+        height: 66
+      alignment: 9
+      pivot: {x: 0.29721668, y: 0.124702916}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f18413497a9458e60800000000000000
+      internalID: 7963852500169213983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_5
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 205
+        width: 102
+        height: 66
+      alignment: 9
+      pivot: {x: 0.26967844, y: 0.14017902}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 214dcfcc93c917310800000000000000
+      internalID: 1401072731155125266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_6
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 205
+        width: 104
+        height: 66
+      alignment: 9
+      pivot: {x: 0.2888395, y: 0.14017902}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c66fa33f03e4fbe0800000000000000
+      internalID: -1444279926047938874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_7
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 205
+        width: 94
+        height: 66
+      alignment: 9
+      pivot: {x: 0.31255713, y: 0.13244097}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db8b71d86a0a91d00800000000000000
+      internalID: 943962234102986941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_8
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 126
+        width: 33
+        height: 74
+      alignment: 9
+      pivot: {x: 0.51010686, y: 0.044759803}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ab9a5557c48cf6b0800000000000000
+      internalID: -5261184273010222172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_9
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 112
+        width: 50
+        height: 68
+      alignment: 9
+      pivot: {x: 0.596727, y: 0.16400516}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e707c505a86961ea0800000000000000
+      internalID: -5902364740824567682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_10
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 111
+        width: 43
+        height: 94
+      alignment: 9
+      pivot: {x: 0.57720095, y: 0.092515744}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b70c15e3b6617dd80800000000000000
+      internalID: -8226081544506064773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_11
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 109
+        width: 58
+        height: 88
+      alignment: 9
+      pivot: {x: 0.24904606, y: 0.17209868}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 430810d344bbca130800000000000000
+      internalID: 3579441705608380468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_12
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 110
+        width: 56
+        height: 85
+      alignment: 9
+      pivot: {x: 0.25376293, y: 0.16653398}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a7414114c13a0180800000000000000
+      internalID: -9148444974876899415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_13
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 114
+        width: 56
+        height: 75
+      alignment: 9
+      pivot: {x: 0.25376347, y: 0.1425004}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d61d7843142c41880800000000000000
+      internalID: -8641068199707160211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_14
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 17
+        width: 33
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25047c9ecf42cb210800000000000000
+      internalID: 1349994656976814162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_15
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 17
+        width: 42
+        height: 90
+      alignment: 9
+      pivot: {x: 0.4544398, y: 0.11201225}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b91ee65cea894c9d0800000000000000
+      internalID: -2754909195639791205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_16
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 18
+        width: 59
+        height: 70
+      alignment: 9
+      pivot: {x: 0.3324016, y: 0.0771232}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 408e8448a2249c090800000000000000
+      internalID: -8013801311553656828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_17
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 19
+        width: 48
+        height: 88
+      alignment: 9
+      pivot: {x: 0.46855927, y: 0.10370409}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69f8492dc78dba010800000000000000
+      internalID: 1201291756244864918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_18
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 19
+        width: 46
+        height: 88
+      alignment: 9
+      pivot: {x: 0.4870811, y: 0.0965095}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00ff8043a3702ba90800000000000000
+      internalID: -7299764099451650304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PastBattler_19
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 19
+        width: 43
+        height: 77
+      alignment: 9
+      pivot: {x: 0.50838166, y: 0.1288117}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b6a978a48d99da10800000000000000
+      internalID: 1934750708020127408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
