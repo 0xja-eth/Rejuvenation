@@ -25,6 +25,7 @@ namespace UI.MapSystem {
 
 	using Controls;
     using System.Collections;
+    using UI.Controls;
     using Windows;
 
 	/// <summary>
@@ -63,10 +64,12 @@ namespace UI.MapSystem {
 
 		public Canvas splitCanvas;
 
-		/// <summary>
-		/// 预制件设置
-		/// </summary>
-		public GameObject playerPerfab;
+        public MainUIDisplay mainUIDisplay;
+
+        /// <summary>
+        /// 预制件设置
+        /// </summary>
+        public GameObject playerPerfab;
 
 		/// <summary>
 		/// 内部组件设置
@@ -133,7 +136,16 @@ namespace UI.MapSystem {
 		protected override void start() {
 			base.start();
 			setupPlayer();
+            setupUI();
 		}
+
+        /// <summary>
+        /// 设置主界面
+        /// </summary>
+        void setupUI() {
+            mainUIDisplay?.activate();
+            mainUIDisplay?.setItem(new UIShowAttributes());
+        }
 
 		/// <summary>
 		/// 处理通道数据
