@@ -30,7 +30,93 @@ namespace PlayerModule { }
 namespace PlayerModule.Data {
 
 	/// <summary>
-	/// 基本物品数据
+	/// 游戏数据变量
+	/// </summary>
+	public class Info : BaseData {
+
+		/// <summary>
+		/// 开关
+		/// </summary>
+		public enum Switches {
+			None,
+			EnergyBall1,
+			TaiqingWater1,
+			TaiqingWater2
+		}
+
+		/// <summary>
+		/// 变量
+		/// </summary>
+		public enum Variables {
+			None,
+			ShipPosX, ShipPosY
+		}
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		public Dictionary<Switches, bool> switches { get; set; } 
+			= new Dictionary<Switches, bool>();
+		[AutoConvert]
+		public Dictionary<Variables, float> variables { get; set; }
+			= new Dictionary<Variables, float>();
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public Info() {
+			setupSwitches();
+			setupVariables();
+		}
+
+		/// <summary>
+		/// 配置开关字典
+		/// </summary>
+		void setupSwitches() {
+			foreach (var s in Enum.GetValues(typeof(Switches)))
+				switches.Add((Switches)s, false);
+		}
+
+		/// <summary>
+		/// 配置变量字典
+		/// </summary>
+		void setupVariables() {
+			foreach (var v in Enum.GetValues(typeof(Variables)))
+				variables.Add((Variables)v, 0);
+		}
+
+		/// <summary>
+		/// 获取开关值
+		/// </summary>
+		public bool getSwitch(Switches type) {
+			return switches[type];
+		}
+
+		/// <summary>
+		/// 设置开关值
+		/// </summary>
+		public bool setSwitch(Switches type, bool val) {
+			return switches[type] = val;
+		}
+
+		/// <summary>
+		/// 获取变量值
+		/// </summary>
+		public float getVariable(Variables type) {
+			return variables[type];
+		}
+
+		/// <summary>
+		/// 获取开关值
+		/// </summary>
+		public float setVariable(Variables type, float val) {
+			return variables[type] = val;
+		}
+	}
+
+	/// <summary>
+	/// 玩家数据
 	/// </summary>
 	public class Player : BaseData,
 		ParamDisplay.IDisplayDataConvertable {
@@ -50,6 +136,9 @@ namespace PlayerModule.Data {
 
 		[AutoConvert]
 		public Actor actor { get; protected set; }
+
+		[AutoConvert]
+		public Info info { get; protected set; } = new Info();
 
 		[AutoConvert]
 		public SceneSystem.Scene stage { get; set; } = FirstStage;

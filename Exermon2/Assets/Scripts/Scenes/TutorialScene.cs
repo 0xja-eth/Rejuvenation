@@ -83,7 +83,7 @@ namespace UI.MapSystem {
         /// 战斗结束回调
         /// </summary>
         void onAttackEnd() {
-            attackEndTrigger.processTrigger(map1.player, MapEventPage.TriggerType.Never);
+            attackEndTrigger.processTrigger(player, MapEventPage.TriggerType.Never);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace UI.MapSystem {
         /// 闪烁失败回调
         /// </summary>
         void onFlashFail() {
-            flashFailTrigger.processTrigger(map1.player, MapEventPage.TriggerType.Never);
+            flashFailTrigger.processTrigger(player, MapEventPage.TriggerType.Never);
         }
 
         #endregion

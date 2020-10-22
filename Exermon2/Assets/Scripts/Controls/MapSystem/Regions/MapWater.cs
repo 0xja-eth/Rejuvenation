@@ -3,6 +3,7 @@
 using UnityEngine;
 
 using MapModule.Data;
+using PlayerModule.Data;
 using BattleModule.Data;
 
 using GameModule.Services;
@@ -14,8 +15,13 @@ namespace UI.MapSystem.Controls {
     /// <summary>
     /// 地图上的河流
     /// </summary>
-    public class MapRiver : MapTerrain {
-		
+    public class MapWater : MapTerrain {
+
+		/// <summary>
+		/// 外部组件设置
+		/// </summary>
+		public GameObject mask;
+
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
@@ -34,13 +40,36 @@ namespace UI.MapSystem.Controls {
 			}
 		}
 
+		public Info.Switches relatedSwitch = Info.Switches.None; // 关联的开关信息
+
 		/// <summary>
 		/// 状态判断
 		/// </summary>
 		public bool isWater => active && map.type == TimeType.Past;
 		public bool isIce => active && map.type == TimeType.Present;
 
+		/// <summary>
+		/// 外部系统设置
+		/// </summary>
+		protected PlayerService playerSer;
+
 		#region 更新
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
+			updateActive();
+			base.update();
+		}
+
+		/// <summary>
+		/// 更新激活状态
+		/// </summary>
+		void updateActive() {
+			if (relatedSwitch == Info.Switches.None) return;
+			active = playerSer.info.getSwitch(relatedSwitch);
+		}
 
 		/// <summary>
 		/// 更新所属层
@@ -102,6 +131,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void refresh() {
 			base.refresh();
+			mask.SetActive(active);
 			if (active) refreshActive();
 			else refreshDeactive();
 		}

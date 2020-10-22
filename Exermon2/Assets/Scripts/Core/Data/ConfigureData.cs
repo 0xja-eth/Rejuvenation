@@ -42,6 +42,16 @@ namespace Core.Data {
 		public KeyCode switchKey { get; set; } = KeyCode.LeftShift; // 切换人物键
 		[AutoConvert]
 		public KeyCode searchKey { get; set; } = KeyCode.E; // 搜索键
+
+		/// <summary>
+		/// 载具按键
+		/// </summary>
+		[AutoConvert]
+		public KeyCode takeKey { get; set; } = KeyCode.Return; // 乘降键
+
+		/// <summary>
+		/// 道具按键
+		/// </summary>
 		[AutoConvert]
 		public KeyCode magnetiteKey { get; set; } = KeyCode.L; // 使用磁石键
 

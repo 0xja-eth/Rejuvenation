@@ -367,24 +367,5 @@ namespace UI.BattleSystem.Controls {
 		}
 
         #endregion
-
-        #region 组件控制
-        /// <summary>
-        /// 销毁控制
-        /// 销毁时删除注册函数
-        /// </summary>
-        /// <param name="force"></param>
-        public override void destroy(bool force = false) {
-            base.destroy(force);
-
-            runtimeCharacter?.removeStateEnter(
-                RuntimeCharacter.State.Moving, onMoveStart);
-            runtimeCharacter?.removeStateExit(
-                RuntimeCharacter.State.Moving, onMoveEnd);
-
-            runtimeCharacter?.removeStateDict(
-                RuntimeCharacter.State.Moving, onMove);
-        }
-        #endregion
     }
 }

@@ -84,7 +84,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isValid() {
-			return !isInvoked || !invokeOnce;
+			return triggerType != TriggerType.Never 
+				&& (!isInvoked || !invokeOnce);
 		}
 
 		/// <summary>

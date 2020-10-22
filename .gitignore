@@ -6,6 +6,7 @@ Design/
 Document/
 *.zip
 *.orig
+*.orig.meta
 
 # Visual Studio cache directory
 .vs/

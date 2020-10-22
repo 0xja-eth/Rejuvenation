@@ -17,11 +17,6 @@ namespace UI.MapSystem {
 	/// </summary>
 	public class TestScene : BaseMapScene {
 
-		/// <summary>
-		/// 外部系统定义
-		/// </summary>
-		PlayerService playerSer;
-
 		#region 初始化
 
 		/// <summary>

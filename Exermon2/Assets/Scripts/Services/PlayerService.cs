@@ -32,7 +32,11 @@ namespace PlayerModule.Services {
 		/// 玩家
 		/// </summary>
 		public Player player { get; protected set; }
+
 		public Actor actor => player?.actor;
+		public RuntimeActor runtimeActor => actor?.runtimeActor;
+
+		public Info info => player?.info;
 
 		/// <summary>
 		/// 创建角色

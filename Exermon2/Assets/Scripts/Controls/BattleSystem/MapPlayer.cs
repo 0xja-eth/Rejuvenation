@@ -2,6 +2,8 @@
 
 using UnityEngine;
 
+using Core.UI.Utils;
+
 using MapModule.Data;
 using BattleModule.Data;
 
@@ -9,9 +11,8 @@ using GameModule.Services;
 using PlayerModule.Services;
 
 namespace UI.BattleSystem.Controls {
-    using Core.UI.Utils;
-    using MapSystem.Controls;
-    using UI.MapSystem;
+
+	using MapSystem.Controls;
 
     /// <summary>
     /// 地图上的玩家实体
@@ -45,8 +46,9 @@ namespace UI.BattleSystem.Controls {
         /// 属性
         /// </summary>
         public Actor actor => playerSer.actor;
+		public RuntimeActor runtimeActor => runtimeBattler as RuntimeActor;
 
-        protected float xDelta => Input.GetAxisRaw("Horizontal");
+		protected float xDelta => Input.GetAxisRaw("Horizontal");
         protected float yDelta => Input.GetAxisRaw("Vertical");
 
         Vector2 collCenter => pos + new Vector2(0f, collider.bounds.size.y / 2);//碰撞盒中心
@@ -67,7 +69,6 @@ namespace UI.BattleSystem.Controls {
         /// 分身
         /// </summary>
         List<MapSeperation> mapSeperations = null;
-
 		
         /// <summary>
         /// 外部系统设置
@@ -81,7 +82,6 @@ namespace UI.BattleSystem.Controls {
         /// 初始化
         /// </summary>
         protected override void start() {
-			updateCurrentMap();
             base.start();
         }
 
@@ -113,7 +113,6 @@ namespace UI.BattleSystem.Controls {
         protected override void update() {
             base.update();
             updateInput();
-			updateCurrentMap();
 
 			//测试用，跳过对话
 			if (Input.GetKey(KeyCode.T)) {
@@ -142,14 +141,8 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected override void onMapChanged() {
 			base.onMapChanged();
+			clearSeperation();
 			// TODO: 改变形象
-		}
-
-		/// <summary>
-		/// 更新当前地图
-		/// </summary>
-		void updateCurrentMap() {
-			map = scene?.currentMap;
 		}
 
 		#endregion
@@ -465,14 +458,32 @@ namespace UI.BattleSystem.Controls {
                 longRangeSkill : normalSkill);
         }
 
-        #endregion
+		#endregion
 
-        #region 分身
-        /// <summary>
-        /// 是否能进行分身
-        /// </summary>
-        /// <returns></returns>
-        virtual protected bool isSeprateEnable() {
+		#region 能量控制
+
+		/// <summary>
+		/// 能量
+		/// </summary>
+		public float energy => runtimeActor.energy;
+
+		/// <summary>
+		/// 添加能量
+		/// </summary>
+		/// <param name="value"></param>
+		public void addEnergy(float value) {
+			runtimeActor.addEnergy(value);
+		}
+
+		#endregion
+
+		#region 分身
+
+		/// <summary>
+		/// 是否能进行分身
+		/// </summary>
+		/// <returns></returns>
+		virtual protected bool isSeprateEnable() {
             return true;
         }
 

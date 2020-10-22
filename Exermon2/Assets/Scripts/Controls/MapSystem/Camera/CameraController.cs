@@ -14,16 +14,16 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 外部组件定义
 		/// </summary>
-        public Collider2D range; // 限制范围
+		public Collider2D range; // 限制范围
 
 		/// <summary>
 		/// 属性
 		/// </summary>
-		Transform target => map.player.transform; // 跟随目标
+		Transform target => map?.player?.transform; // 跟随目标
 
 		new Camera camera => map.camera;
 		Transform cTransform => camera.transform; // 摄像机Transform
-		
+
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
@@ -44,9 +44,17 @@ namespace UI.MapSystem.Controls {
 		/// 更新
 		/// </summary>
 		protected override void update() {
-            base.update();
-			if (map.isActive()) updateCameraPos();
-        }
+			base.update();
+			if (isEnable()) updateCameraPos();
+		}
+
+		/// <summary>
+		/// 是否有效
+		/// </summary>
+		/// <returns></returns>
+		public bool isEnable() {
+			return map.active && camera && target;
+		}
 
         /// <summary>
         /// 更新镜头位置

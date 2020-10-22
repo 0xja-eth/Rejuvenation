@@ -58,12 +58,16 @@ namespace UI.MapSystem {
 		public new Camera camera;
 
 		public Map map1, map2;
-        public MapPlayer player;
 
         public DialogWindow dialogWindow;
 
 		public Canvas splitCanvas;
-		
+
+		/// <summary>
+		/// 预制件设置
+		/// </summary>
+		public GameObject playerPerfab;
+
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
@@ -87,9 +91,9 @@ namespace UI.MapSystem {
 		bool traveling = false;
 
 		/// <summary>
-		/// 特效属性
+		/// 玩家属性
 		/// </summary>
-		float switchStrength => timeTravelEffect.switchStrength;
+		public MapPlayer player => map1.player ?? map2.player;
 
 		/// <summary>
 		/// 地图/时空属性
@@ -120,7 +124,6 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			playerSer.player.stage = sceneIndex();
 			refreshMapActive();
 		}
 
@@ -129,8 +132,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void start() {
 			base.start();
-			playerSer.actor.runtimeActor.transfer(
-				startPos.x, startPos.y, true);
+			setupPlayer();
 		}
 
 		/// <summary>
@@ -163,6 +165,35 @@ namespace UI.MapSystem {
 		void updateDialog() {
 			if (messageSer.messageCount() > 0 && !isBusy())
 				dialogWindow.activate();
+		}
+
+		#endregion
+
+		#region 玩家相关
+
+		/// <summary>
+		/// 初始化玩家
+		/// </summary>
+		void setupPlayer() {
+			setupPlayerData();
+			setupMapPlayer();
+		}
+
+		/// <summary>
+		/// 配置玩家数据
+		/// </summary>
+		void setupPlayerData() {
+			playerSer.player.stage = sceneIndex();
+			playerSer.runtimeActor.transfer(
+				startPos.x, startPos.y, true);
+		}
+
+		/// <summary>
+		/// 配置地图玩家
+		/// </summary>
+		void setupMapPlayer() {
+			var map = currentMap.transform;
+			Instantiate(playerPerfab, map);
 		}
 
 		#endregion
@@ -236,10 +267,10 @@ namespace UI.MapSystem {
 			if (traveling || (!force && timeType == type)) return;
 
 			traveling = true;
-			playEffect(timeType = type);
 
-			// 清空所有分身
-			player.clearSeperation();
+			currentMap.travel(getMap(type));
+
+			playEffect(timeType = type);
 		}
 
 		/// <summary>
