@@ -99,7 +99,9 @@ namespace UI.BattleSystem.Controls {
 
             runtimeBattler?.addStateDict(
                 RuntimeBattler.State.Idle, updateIdle);
-            runtimeBattler?.addStateDict(
+			runtimeBattler?.addStateDict(
+				RuntimeBattler.State.Moving, updateMoving);
+			runtimeBattler?.addStateDict(
                 RuntimeBattler.State.Using, updateUsing);
 
             runtimeBattler?.addStateEnter(
@@ -121,11 +123,13 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 销毁回调
 		/// </summary>
-		protected override void OnDestroy() {
-			base.OnDestroy();
+		protected override void onDestroy() {
+			base.onDestroy();
 
 			runtimeBattler?.removeStateDict(
 				RuntimeBattler.State.Idle, updateIdle);
+			runtimeBattler?.removeStateDict(
+				RuntimeBattler.State.Moving, updateMoving);
 			runtimeBattler?.removeStateDict(
 				RuntimeBattler.State.Using, updateUsing);
 
@@ -151,6 +155,11 @@ namespace UI.BattleSystem.Controls {
 		protected virtual void updateIdle() {
 			updateAction();
 		}
+
+		/// <summary>
+		/// 移动状态更新
+		/// </summary>
+		protected virtual void updateMoving() { }
 
 		/// <summary>
 		/// 更新使用

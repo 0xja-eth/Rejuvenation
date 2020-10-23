@@ -122,7 +122,10 @@ namespace BattleModule.Data {
 		/// 行走图属性
 		/// </summary>
 		[SerializeField] int _characterId = 0;
-		[AutoConvert] public int characterId { get => _characterId; set { _characterId = value; } }
+		[AutoConvert] public int characterId {
+			get => _characterId;
+			set { _characterId = value; clearCaches(); }
+		}
 
 		/// <summary>
 		/// 获取动画实例
@@ -176,6 +179,7 @@ namespace BattleModule.Data {
 
 			return attackAni()[index];
 		}
+
 	}
 
 	/// <summary>
@@ -513,7 +517,7 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		public float hp { get; protected set; }
+		public virtual float hp { get; protected set; }
 		[AutoConvert]
 		public List<RuntimeBuff> buffs { get; protected set; } = new List<RuntimeBuff>();
 
@@ -689,7 +693,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="value">目标值</param>
 		/// <param name="show">是否显示</param>
-		public void changeHP(float value, bool show = true) {
+		public virtual void changeHP(float value, bool show = true) {
 			var oriHp = hp;
 			hp = Mathf.Clamp(value, 0, mhp);
 			if (show) setHPChange(hp - oriHp);
@@ -814,7 +818,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="paramId">属性ID</param>
 		/// <returns>属性值</returns>
-		public float param(int paramId) {
+		public virtual float param(int paramId) {
 			var base_ = baseParam(paramId) + traitParamVal(paramId) + buffValue(paramId);
 			var rate = buffRate(paramId) * traitParamRate(paramId);
 			var extra = extraParam(paramId);
@@ -1041,7 +1045,7 @@ namespace BattleModule.Data {
 			int value = 0, double rate = 1, int turns = 0) {
 			return addBuff(new RuntimeBuff(paramId, value, rate, turns));
 		}
-		public RuntimeBuff addBuff(RuntimeBuff buff) {
+		public virtual RuntimeBuff addBuff(RuntimeBuff buff) {
 			buffs.Add(buff); onBuffAdd(buff);
 			_addedBuffs.Add(buff);
 
@@ -1457,12 +1461,18 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		public float energy { get; protected set; } = 0;
-        public float energyRate => energy / MaxEnergy;
+		public float energyRate => energy / MaxEnergy;
 
 		/// <summary>
 		/// 战斗者
 		/// </summary>
 		public override Battler battler => PlayerService.Get().actor;
+
+		/// <summary>
+		/// 是否玩家
+		/// </summary>
+		/// <returns></returns>
+		public override bool isActor() { return true; }
 
 		#region 能量控制
 
@@ -1472,6 +1482,54 @@ namespace BattleModule.Data {
 		/// <param name="value"></param>
 		public void addEnergy(float value) {
 			energy = Mathf.Clamp(energy + value, 0, MaxEnergy);
+		}
+
+		#endregion
+	}
+
+	/// <summary>
+	/// 战斗分身
+	/// </summary>
+	public class RuntimeSeperation : RuntimeActor {
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		public override float hp {
+			get => actor.hp;
+		}
+
+		/// <summary>
+		/// 主体
+		/// </summary>
+		public RuntimeActor actor => PlayerService.Get().runtimeActor;
+
+		#region 状态同步控制
+
+		/// <summary>
+		/// 获取属性
+		/// </summary>
+		/// <param name="paramId"></param>
+		/// <returns></returns>
+		public override float param(int paramId) {
+			return actor.param(paramId);
+		}
+
+		/// <summary>
+		/// 更改HP
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="show"></param>
+		public override void changeHP(float value, bool show = true) {
+			actor.changeHP(value, show);
+		}
+
+		/// <summary>
+		/// 死亡
+		/// </summary>
+		protected override void onDie() {
+			base.onDie(); actor.on(CbType.Die);
 		}
 
 		#endregion
@@ -1507,6 +1565,12 @@ namespace BattleModule.Data {
 		/// 战斗者
 		/// </summary>
 		public override Battler battler => customEnemy ?? enemy();
+
+		/// <summary>
+		/// 是否玩家
+		/// </summary>
+		/// <returns></returns>
+		public override bool isEnemy() { return true; }
 
 		/// <summary>
 		/// 获取标签实例
