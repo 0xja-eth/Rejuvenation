@@ -35,11 +35,11 @@ namespace Core.Data {
 		/// 动作按键
 		/// </summary>
 		[AutoConvert]
-		public KeyCode attackKey { get; set; } = KeyCode.J; // 攻击键
+		public KeyCode attack1Key { get; set; } = KeyCode.J; // 近战攻击键
+		[AutoConvert]
+		public KeyCode attack2Key { get; set; } = KeyCode.K; // 远程攻击键
 		[AutoConvert]
 		public KeyCode rushKey { get; set; } = KeyCode.Space; // 冲刺键
-		[AutoConvert]
-		public KeyCode switchKey { get; set; } = KeyCode.LeftShift; // 切换人物键
 		[AutoConvert]
 		public KeyCode searchKey { get; set; } = KeyCode.E; // 搜索键
 
@@ -53,7 +53,7 @@ namespace Core.Data {
 		/// 道具按键
 		/// </summary>
 		[AutoConvert]
-		public KeyCode magnetiteKey { get; set; } = KeyCode.L; // 使用磁石键
+		public KeyCode magnetiteKey { get; set; } = KeyCode.L; // 使用引力键
 
 		/// <summary>
 		/// 对话框按键

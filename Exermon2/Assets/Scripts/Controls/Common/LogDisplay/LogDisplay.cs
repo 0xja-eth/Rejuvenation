@@ -42,7 +42,9 @@ namespace UI.Common.Controls.LogDisplay {
 		/// <summary>
 		/// 释放回调
 		/// </summary>
-		private void OnDestroy() {
+		protected override void onDestroy() {
+			base.onDestroy();
+
 			TestSystem.removeLogCallback(addLog);
 		}
 

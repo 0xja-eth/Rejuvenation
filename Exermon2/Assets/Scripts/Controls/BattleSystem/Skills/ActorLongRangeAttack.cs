@@ -71,7 +71,7 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 使用技能
 		/// </summary>
-		protected override void onUse() {
+		public override void onUse() {
 			base.onUse();
 			bullet = createBullet();
 		}

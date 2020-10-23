@@ -6,6 +6,8 @@ using Core.UI;
 
 namespace UI.MapSystem.Controls {
 
+	using BattleSystem.Controls;
+
 	/// <summary>
 	/// 地图上的事件
 	/// </summary>
@@ -56,6 +58,11 @@ namespace UI.MapSystem.Controls {
 		/// 内部变量定义
 		/// </summary>
 		protected bool isInvoked = false;
+
+		/// <summary>
+		/// 玩家
+		/// </summary>
+		public MapPlayer mapPlayer => mapEvent?.map?.player;
 
 		#region 初始化
 

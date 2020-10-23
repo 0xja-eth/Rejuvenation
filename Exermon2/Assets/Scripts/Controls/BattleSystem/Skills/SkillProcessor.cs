@@ -60,6 +60,7 @@ namespace UI.MapSystem.Controls {
 		/// 属性
 		/// </summary>
 		public bool isStarted { get; protected set; } = false;
+		public bool isUsed { get; protected set; } = false;
 
 		#region 初始化
 
@@ -140,8 +141,7 @@ namespace UI.MapSystem.Controls {
 		/// <returns></returns>
 		public bool use() {
 			if (!isUsable()) return false;
-			onUseStart(); onUse();
-			return true;
+			onUseStart(); return true;
 		}
 
 		/// <summary>
@@ -149,6 +149,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected virtual void onUseStart() {
 			debugLog("On skill start: " + skill);
+			playUseAnimation();
 			isStarted = true;
 		}
 
@@ -156,8 +157,8 @@ namespace UI.MapSystem.Controls {
 		/// 使用技能
 		/// </summary>
 		/// <returns></returns>
-		protected virtual void onUse() {
-			playUseAnimation();
+		public virtual void onUse() {
+			isUsed = true;
 		}
 
 		/// <summary>
@@ -173,7 +174,7 @@ namespace UI.MapSystem.Controls {
 		public virtual void onUseEnd() {
 			debugLog("On skill end: " + skill);
 			if (collider) collider.enabled = true;
-			isStarted = false;
+			isUsed = isStarted = false;
 		}
 
 		#endregion
@@ -185,7 +186,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isApplyValid() {
-			return isStarted;
+			return isStarted && isUsed;
 		}
 
 		/// <summary>

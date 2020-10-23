@@ -20,11 +20,6 @@ namespace UI.BattleSystem.Controls {
     public class MapPlayer : MapBattler {
 
         /// <summary>
-        /// 远程攻击蓄力时间
-        /// </summary>
-        const float LongRangeSkillTime = 0.5f;
-
-        /// <summary>
         /// 外部组件设置
         /// </summary>
         public SkillProcessor normalSkill, longRangeSkill;
@@ -32,15 +27,20 @@ namespace UI.BattleSystem.Controls {
         public Material material;
         public GameObject seperationPrefab;//分身预制件
 
-        /// <summary>
-        /// 外部变量定义
-        /// </summary>
-        public bool inputable = true;
+		/// <summary>
+		/// 外部变量定义
+		/// </summary>
+		public int presentCharacterId = 1;
+		public int pastCharacterId = 2;
 
-        /// <summary>
-        /// 类型
-        /// </summary>
-        public override Type type => Type.Player;
+		public bool inputable = true;
+
+		public int maxSeperation = 1; // 最大分身数
+
+		/// <summary>
+		/// 类型
+		/// </summary>
+		public override Type type => Type.Player;
 
         /// <summary>
         /// 属性
@@ -99,7 +99,6 @@ namespace UI.BattleSystem.Controls {
         /// 初始化敌人显示组件
         /// </summary>
         protected override void setupBattlerDisplay() {
-            actor.characterId = 1;
             display.setItem(playerSer.actor.runtimeActor);
         }
 
@@ -112,18 +111,33 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         protected override void update() {
             base.update();
-            updateInput();
 
             //测试用，跳过对话
             if (Input.GetKey(KeyCode.T)) {
                 MapModule.Services.MessageService.Get().messages.Clear();
             }
-        }
+		}
 
-        /// <summary>
-        /// 更新玩家输入事件
-        /// </summary>
-        void updateInput() {
+		/// <summary>
+		/// Idle状态更新
+		/// </summary>
+		protected override void updateIdle() {
+			base.updateIdle();
+			updateInput();
+		}
+
+		/// <summary>
+		/// 移动状态更新
+		/// </summary>
+		protected override void updateMoving() {
+			base.updateMoving();
+			updateInput();
+		}
+
+		/// <summary>
+		/// 更新玩家输入事件
+		/// </summary>
+		void updateInput() {
             if (!isInputable() && !(!flashBegin && flashEnd)) {
                 stop(); return;
             }
@@ -141,42 +155,49 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         protected override void onMapChanged() {
             base.onMapChanged();
-            clearSeperation();
-            // TODO: 改变形象
-        }
+			switchCharacter();
+		}
 
-        #endregion
+		/// <summary>
+		/// 切换行走图
+		/// </summary>
+		void switchCharacter() {
+			if (runtimeBattler == null) return;
+			var cid = scene.isPresent ? presentCharacterId : pastCharacterId;
+			runtimeBattler.battler.characterId = cid;
+		}
 
-        #region 状态判断
+		#endregion
 
-        /// <summary>
-        /// 能否移动
-        /// </summary>
-        /// <returns></returns>
-        public bool isMovable() {
+		#region 状态判断
+
+		/// <summary>
+		/// 能否移动
+		/// </summary>
+		/// <returns></returns>
+		public bool isMovable() {
             return runtimeBattler.isMoveable();
         }
 
-        #endregion
+		#endregion
 
-        #region 输入控制变量
+		#region 输入控制变量
 
-        /// <summary>
-        /// 搜索相关
-        /// </summary>
-        bool search = false, searching = false;
+		/// <summary>
+		/// 搜索相关
+		/// </summary>
+		bool search = false, searching = false;
 
-        /// <summary>
-        /// 攻击相关
-        /// </summary>
-        float attackTime = 0;
-        bool attack = false, attacking = false;
+		/// <summary>
+		/// 攻击相关
+		/// </summary>
+		bool attack = false, attacking = false;
 
-        /// <summary>
-        /// 能否输入
-        /// </summary>
-        /// <returns></returns>
-        public bool isInputable() {
+		/// <summary>
+		/// 能否输入
+		/// </summary>
+		/// <returns></returns>
+		public bool isInputable() {
             return map && map.isActive() && inputable;
         }
 
@@ -290,32 +311,43 @@ namespace UI.BattleSystem.Controls {
         bool updateSkill() {
             if (!isSkillUsable()) return false;
 
-            stop();
-            var key = gameSer.keyboard.attackKey;
-            attack = Input.GetKeyUp(key);
-            attacking = Input.GetKey(key);
+			//stop();
 
-            if (attack) useSkill();
-            if (attacking) {
-                attackTime += Time.deltaTime;
-                debugLog(attackTime);
-            }
-
-            updateSkillFlash();
-
-            var keyflash = gameSer.keyboard.rushKey;
-            bool flash = Input.GetKeyDown(keyflash);
-
-            if (flash && !flashIsCooling)
-                useSkillFlash();
-
-            return attack || attacking || (flashBegin && !flashEnd);
+			return updateAttack() || updateFlash();
         }
 
-        /// <summary>
-        /// 更新闪烁技能使用
-        /// </summary>
-        void updateSkillFlash() {
+		/// <summary>
+		/// 更新攻击输入
+		/// </summary>
+		bool updateAttack() {
+			attacking = Input.GetKey(gameSer.keyboard.attack1Key) || 
+				Input.GetKey(gameSer.keyboard.attack2Key);
+
+			if (attack = Input.GetKeyUp(gameSer.keyboard.attack1Key))
+				useSkill(normalSkill);
+			else if (attack = Input.GetKeyUp(gameSer.keyboard.attack2Key))
+				useSkill(longRangeSkill);
+
+			return attack || attacking;
+		}
+
+		/// <summary>
+		/// 更新闪烁输入
+		/// </summary>
+		/// <returns></returns>
+		bool updateFlash() {
+			updateFlashEffect();
+
+			if (Input.GetKeyDown(gameSer.keyboard.rushKey) 
+				&& !flashIsCooling) useSkillFlash();
+
+			return flashBegin && !flashEnd;
+		}
+
+		/// <summary>
+		/// 更新闪烁技能使用
+		/// </summary>
+		void updateFlashEffect() {
             //闪烁冷却倒计时
             if (flashIsCooling) {
                 flashCoolTimeRemain -= Time.deltaTime;
@@ -448,7 +480,6 @@ namespace UI.BattleSystem.Controls {
             flashBegin = true;
         }
 
-
         ///// <summary>
         ///// 材质切换
         ///// </summary>
@@ -463,13 +494,7 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         /// <param name="skill"></param>
         void useSkill(SkillProcessor skill) {
-            debugLog("useSkill: " + skill + ", time: " + attackTime);
             runtimeBattler.addAction(skill.skill);
-            attackTime = 0;
-        }
-        void useSkill() {
-            useSkill(attackTime >= LongRangeSkillTime ?
-                longRangeSkill : normalSkill);
         }
 
         #endregion
@@ -489,47 +514,85 @@ namespace UI.BattleSystem.Controls {
             runtimeActor.addEnergy(value);
         }
 
-        #endregion
+		#endregion
 
-        #region 分身
+		#region 分身
 
-        /// <summary>
-        /// 是否能进行分身
-        /// </summary>
-        /// <returns></returns>
-        virtual protected bool isSeprateEnable() {
-            return true;
-        }
+		/// <summary>
+		/// 受击回调
+		/// </summary>
+		protected override void onDie() {
+			base.onDie();
+			if (seperationsCount() > 0)
+				foreach (var sep in mapSeperations)
+					sep.onDie();
+		}
 
-        /// <summary>
-        /// 添加分身
-        /// </summary>
-        public void addSeperation() {
-            if (!isSeprateEnable())
-                return;
-            if (mapSeperations == null)
-                mapSeperations = new List<MapSeperation>();
-            var obj = Instantiate(seperationPrefab, transform.position + new Vector3(2, 0, 0),
-                transform.rotation, transform.parent);
-            obj.name = name + "Seperation_" + (mapSeperations.Count + 1);
-            var mapSeperation = SceneUtils.get<MapSeperation>(obj);
-            //mapSeperation.activate();
-            mapSeperations.Add(mapSeperation);
-            map?.addEntity(mapSeperation);
-        }
+		/// <summary>
+		/// 重载更改地图函数（分身也要一起转移）
+		/// </summary>
+		public override void changeMap(Map map, bool origin = false) {
+			base.changeMap(map, origin);
+			if (seperationsCount() > 0)
+				changeMapForSeperations(map, origin);
+		}
 
-        /// <summary>
-        /// 清除分身
-        /// </summary>
-        public void clearSeperation() {
-            if (mapSeperations != null) {
-                foreach (var seperation in mapSeperations) {
-                    map?.removeEntity(seperation);
-                    seperation.destroy(true);
-                    //DestroyImmediate(seperation.gameObject);
-                }
-                mapSeperations.Clear();
-            }
+		/// <summary>
+		/// 更改分身的地图
+		/// </summary>
+		void changeMapForSeperations(Map map, bool origin = false) {
+			foreach (var sep in mapSeperations)
+				sep.changeMap(map, origin);
+		}
+
+		/// <summary>
+		/// 分身数目
+		/// </summary>
+		/// <returns></returns>
+		public int seperationsCount() {
+			return mapSeperations == null ? 0 : mapSeperations.Count;
+		}
+
+		/// <summary>
+		/// 是否能进行分身
+		/// </summary>
+		/// <returns></returns>
+		protected virtual bool isSeprateEnable() {
+			return seperationsCount() < maxSeperation;
+		}
+
+		/// <summary>
+		/// 添加分身
+		/// </summary>
+		public void addSeperation(Vector3 position) {
+			if (!isSeprateEnable()) return;
+
+			if (mapSeperations == null)
+				mapSeperations = new List<MapSeperation>();
+
+			var obj = Instantiate(seperationPrefab,
+				position, transform.rotation, transform.parent);
+
+			var mapSeperation = SceneUtils.get<MapSeperation>(obj);
+			mapSeperations.Add(mapSeperation);
+		}
+		public void addSeperation(Transform transform) {
+			addSeperation(transform.position);
+		}
+		public void addSeperation() {
+			addSeperation(transform);
+		}
+
+		/// <summary>
+		/// 清除分身
+		/// </summary>
+		public void clearSeperations() {
+			if (mapSeperations == null) return;
+
+			foreach (var seperation in mapSeperations) 
+                seperation.destroy(true);
+
+            mapSeperations.Clear();
         }
         #endregion
     }
