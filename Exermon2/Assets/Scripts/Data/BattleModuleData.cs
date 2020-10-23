@@ -536,7 +536,7 @@ namespace BattleModule.Data {
 		[AutoConvert]
 		public virtual float hp { get; protected set; }
 		[AutoConvert]
-		public List<RuntimeBuff> buffs { get; protected set; } = new List<RuntimeBuff>();
+		public virtual List<RuntimeBuff> buffs { get; protected set; } = new List<RuntimeBuff>();
 
 		#region 战斗中变量标志
 
@@ -605,7 +605,7 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 快捷定义
 		/// </summary>
-		public int mhp => (int)Math.Round(param(MHPParamId));
+		public float mhp => Mathf.Round(param(MHPParamId));
 		public float attack => param(AttackParamId);
 		public float defense => param(DefenseParamId);
 		public float speed => param(SpeedParamId);
@@ -710,11 +710,11 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="value">目标值</param>
 		/// <param name="show">是否显示</param>
-		public virtual void changeHP(float value, bool show = true) {
+		public void changeHP(float value, bool show = true) {
 			var oriHp = hp;
 			hp = Mathf.Clamp(value, 0, mhp);
 			if (show) setHPChange(hp - oriHp);
-			if (isDead()) onDie();
+			//if (isDead()) onDie();
 		}
 
 		/// <summary>
@@ -835,7 +835,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		/// <param name="paramId">属性ID</param>
 		/// <returns>属性值</returns>
-		public virtual float param(int paramId) {
+		public float param(int paramId) {
 			var base_ = baseParam(paramId) + traitParamVal(paramId) + buffValue(paramId);
 			var rate = buffRate(paramId) * traitParamRate(paramId);
 			var extra = extraParam(paramId);
@@ -1400,6 +1400,7 @@ namespace BattleModule.Data {
 			base.updateIdle();
 			if (judge(CbType.ActionStart))
 				changeState(State.Using);
+			if (isDead()) changeState(State.Dead);
 		}
 
 		/// <summary>
@@ -1407,6 +1408,7 @@ namespace BattleModule.Data {
 		/// </summary>
 		protected override void updateMoving() {
 			base.updateMoving();
+			if (isDead()) changeState(State.Dead);
 		}
 
 		/// <summary>
@@ -1415,6 +1417,7 @@ namespace BattleModule.Data {
 		protected virtual void updateUsing() {
 			if (judge(CbType.ActionEnd))
 				changeState(State.Idle);
+			if (isDead()) changeState(State.Dead);
 		}
 
 		/// <summary>
@@ -1432,6 +1435,7 @@ namespace BattleModule.Data {
 		protected virtual void updateFreezing() {
 			freezing = Math.Max(0, freezing - Time.deltaTime);
 			if (!isFreezing()) changeState(State.Idle);
+			if (isDead()) changeState(State.Dead);
 		}
 
 		/// <summary>
@@ -1472,13 +1476,13 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 常量定义
 		/// </summary>
-		public const float MaxEnergy = 100;
+		public const int MaxEnergy = 100;
 
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public float energy { get; protected set; } = 0;
-		public float energyRate => energy / MaxEnergy;
+		public virtual int energy { get; protected set; } = 0;
+		public float energyRate => energy * 1.0f / MaxEnergy;
 
 		/// <summary>
 		/// 战斗者
@@ -1494,13 +1498,66 @@ namespace BattleModule.Data {
 		#region 能量控制
 
 		/// <summary>
+		/// 更改能力值
+		/// </summary>
+		/// <param name="value"></param>
+		public void changeEnergy(int value) {
+			var oriEnergy = energy;
+			energy = Mathf.Clamp(value, 0, MaxEnergy);
+			setEnergyChange(energy - oriEnergy);
+		}
+
+		/// <summary>
 		/// 获得能量
 		/// </summary>
 		/// <param name="value"></param>
-		public void addEnergy(float value) {
-			energy = Mathf.Clamp(energy + value, 0, MaxEnergy);
+		public void addEnergy(int value) {
+			changeEnergy(energy + value);
 		}
 
+		#region Energy变化显示
+
+		/// <summary>
+		/// HP该变量
+		/// </summary>
+		public class DeltaEnergy {
+
+			public float value = 0; // 值
+
+			public bool critical = false; // 是否暴击
+			public bool miss = false; // 是否闪避
+
+			/// <summary>
+			/// 构造函数
+			/// </summary>
+			/// <param name="value"></param>
+			public DeltaEnergy(float value = 0, bool critical = false, bool miss = false) {
+				this.value = value; this.critical = critical; this.miss = miss;
+			}
+		}
+
+		/// <summary>
+		/// 能量变化量
+		/// </summary>
+		DeltaEnergy _deltaEnergy = null;
+		public DeltaEnergy deltaEnergy {
+			get {
+				var res = _deltaEnergy;
+				_deltaEnergy = null; return res;
+			}
+		}
+
+		/// <summary>
+		/// 设置值变化
+		/// </summary>
+		/// <param name="value"></param>
+		public void setEnergyChange(float value) {
+			_deltaEnergy = _deltaEnergy ?? new DeltaEnergy();
+			_deltaEnergy.value += value;
+		}
+
+		#endregion
+		
 		#endregion
 	}
 
@@ -1510,14 +1567,6 @@ namespace BattleModule.Data {
 	public class RuntimeSeperation : RuntimeActor {
 
 		/// <summary>
-		/// 属性
-		/// </summary>
-		[AutoConvert]
-		public override float hp {
-			get => actor.hp;
-		}
-
-		/// <summary>
 		/// 主体
 		/// </summary>
 		public RuntimeActor actor => PlayerService.Get().runtimeActor;
@@ -1525,28 +1574,45 @@ namespace BattleModule.Data {
 		#region 状态同步控制
 
 		/// <summary>
-		/// 获取属性
+		/// 属性
 		/// </summary>
-		/// <param name="paramId"></param>
+		[AutoConvert]
+		public override float hp {
+			get => actor.hp;
+			protected set { actor.changeHP(value); }
+		}
+		[AutoConvert]
+		public override int energy {
+			get => actor.energy;
+			protected set { actor.changeEnergy(value); }
+		}
+		[AutoConvert]
+		public override List<RuntimeBuff> buffs => actor.buffs;
+
+		/// <summary>
+		/// 基本属性
+		/// </summary>
+		/// <param name="paramId">属性ID</param>
 		/// <returns></returns>
-		public override float param(int paramId) {
-			return actor.param(paramId);
+		public override float baseParam(int paramId) {
+			return actor.baseParam(paramId);
 		}
 
 		/// <summary>
-		/// 更改HP
+		/// 额外属性
 		/// </summary>
-		/// <param name="value"></param>
-		/// <param name="show"></param>
-		public override void changeHP(float value, bool show = true) {
-			actor.changeHP(value, show);
+		/// <param name="paramId">属性ID</param>
+		/// <returns></returns>
+		public override float extraParam(int paramId) {
+			return actor.extraParam(paramId);
 		}
 
 		/// <summary>
-		/// 死亡
+		/// 获取所有特性
 		/// </summary>
-		protected override void onDie() {
-			base.onDie(); actor.on(CbType.Die);
+		/// <returns></returns>
+		public override List<TraitData> traits() {
+			return actor.traits();
 		}
 
 		#endregion

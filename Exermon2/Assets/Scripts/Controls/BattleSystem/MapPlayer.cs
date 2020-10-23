@@ -148,16 +148,24 @@ namespace UI.BattleSystem.Controls {
             // 返回 True => 有输入  返回 False => 无输入
             if (updateSearching() || updateSkill()) stop();
             else updateMovement();
-        }
+		}
 
-        #endregion
+		/// <summary>
+		/// 死亡回调
+		/// </summary>
+		protected override void onDie() {
+			base.onDie();
+			// TODO: 重来
+		}
 
-        #region	地图控制
+		#endregion
 
-        /// <summary>
-        /// 地图改变回调
-        /// </summary>
-        protected override void onMapChanged() {
+		#region	地图控制
+
+		/// <summary>
+		/// 地图改变回调
+		/// </summary>
+		protected override void onMapChanged() {
             base.onMapChanged();
 			switchCharacter();
 		}
@@ -279,14 +287,6 @@ namespace UI.BattleSystem.Controls {
             else moveDirection(RuntimeCharacter.vec2Dir8(speed));
 
             return !flag;
-        }
-
-        /// <summary>
-        /// 同步角色
-        /// </summary>
-        /// <param name="player"></param>
-        public void syncPlayer(MapPlayer player) {
-            //transform.localPosition = player.transform.localPosition;
         }
 
         #endregion
@@ -511,34 +511,17 @@ namespace UI.BattleSystem.Controls {
 
         #endregion
 
-        #region 能量控制
-
-        /// <summary>
-        /// 能量
-        /// </summary>
-        public float energy => runtimeActor.energy;
-
-        /// <summary>
-        /// 添加能量
-        /// </summary>
-        /// <param name="value"></param>
-        public void addEnergy(float value) {
-            runtimeActor.addEnergy(value);
-        }
-
-		#endregion
-
 		#region 分身
 
-		/// <summary>
-		/// 受击回调
-		/// </summary>
-		protected override void onDie() {
-			base.onDie();
-			if (seperationsCount() > 0)
-				foreach (var sep in mapSeperations)
-					sep.onDie();
-		}
+		///// <summary>
+		///// 受击回调
+		///// </summary>
+		//protected override void onDie() {
+		//	base.onDie();
+		//	if (seperationsCount() > 0)
+		//		foreach (var sep in mapSeperations)
+		//			sep.onDie();
+		//}
 
 		/// <summary>
 		/// 重载更改地图函数（分身也要一起转移）
@@ -570,7 +553,7 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual bool isSeprateEnable() {
-			return seperationsCount() < maxSeperation;
+			return isMaster() && seperationsCount() < maxSeperation;
 		}
 
 		/// <summary>
