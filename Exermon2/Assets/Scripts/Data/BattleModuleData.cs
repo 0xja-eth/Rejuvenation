@@ -156,7 +156,6 @@ namespace BattleModule.Data {
 		/// <returns></returns>
 		public Sprite getSprite(int r, int c) {
 			var xCnt = RuntimeCharacter.XCnt;
-			Debug.Log(this + ".getSprite: " + r + ", " + c);
 			return character()[r * xCnt + c];
 		}
 
@@ -175,7 +174,6 @@ namespace BattleModule.Data {
 			var start = AttackAniFrameStarts[d];
 			int index = start + (int)Mathf.Floor(count * rate);
 
-			Debug.Log(this + ".getAttackAni: " + d + ", " + rate);
 			return attackAni()[index];
 		}
 	}
