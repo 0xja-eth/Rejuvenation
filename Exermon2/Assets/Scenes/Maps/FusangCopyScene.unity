@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -480,15 +480,16 @@ MonoBehaviour:
   bgmClip: {fileID: 0}
   camera: {fileID: 622805541}
   map1: {fileID: 537545458}
-  map2: {fileID: 0}
+  map2: {fileID: 1765146686}
   dialogWindow: {fileID: 203126814}
   splitCanvas: {fileID: 725593734}
   mainUIDisplay: {fileID: 1333217121}
   playerPerfab: {fileID: 3358975077202514727, guid: 88696545c11e37e4a888fea5e69006f9,
     type: 3}
   timeTravelEffect: {fileID: 0}
-  startPos: {x: 0, y: 0}
+  startPos: {x: -4, y: -3}
   renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
+  copyStartPos: {x: -4, y: -6}
 --- !u!114 &298741144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,6 +1324,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1765146686 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 529456157920384440, guid: 5be7bc0ef6aa11b4398a4a084398ac65,
+    type: 3}
+  m_PrefabInstance: {fileID: 4541264413169057092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276401a47f39be44ea4a52c26515f417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &499022782773087426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2980,6 +2993,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 298741147}
     m_Modifications:
+    - target: {fileID: 5131709501155780900, guid: 6fbe8dc4ea15166489482576bdec6244,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 5131709501155780900, guid: 6fbe8dc4ea15166489482576bdec6244,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.26
+      objectReference: {fileID: 0}
     - target: {fileID: 5696676784826977337, guid: 6fbe8dc4ea15166489482576bdec6244,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.size

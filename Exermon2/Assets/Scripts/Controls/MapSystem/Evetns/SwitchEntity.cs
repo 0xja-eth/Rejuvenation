@@ -15,29 +15,41 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 外部组件设置
 		/// </summary>
+		public GameObject[] objects; // 对象
 		public SpriteRenderer[] sprites; // 图片
 		public Collider2D[] colliders; // 碰撞盒
 
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
-		public Info.Switches relatedSwitch = Info.Switches.None; // 关联的开关信息
+		public Info.Switches[] relatedSwitches = new Info.Switches[0]; // 关联的开关信息（AND）
 
 		public bool inverse = true; // 反向，即开关开启时才关闭挡板
 
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
-		PlayerService playerSer;
+		protected PlayerService playerSer;
 
 		/// <summary>
 		/// 是否激活
 		/// </summary>
 		/// <returns></returns>
-		public bool isActive() {
-			if (relatedSwitch == Info.Switches.None) return false;
-			var flag = playerSer.info.getSwitch(relatedSwitch);
+		public virtual bool isActive() {
+			var flag = isAllSwitchesOn();
 			return inverse ? !flag : flag;
+		}
+
+		/// <summary>
+		/// 是否所有开关都打开
+		/// </summary>
+		/// <returns></returns>
+		bool isAllSwitchesOn() {
+			foreach (var s in relatedSwitches)
+				// 如果有一个开关是 false
+				if (s != Info.Switches.None && 
+					!playerSer.info.getSwitch(s)) return false;
+			return true;
 		}
 
 		/// <summary>
@@ -46,7 +58,9 @@ namespace UI.MapSystem.Controls {
 		protected override void update() {
 			base.update();
 			var active = isActive();
-			foreach(var sprite in sprites)
+			foreach (var obj in objects)
+				obj.SetActive(active);
+			foreach (var sprite in sprites)
 				sprite.enabled = active;
 			foreach (var collider in colliders)
 				collider.enabled = active;

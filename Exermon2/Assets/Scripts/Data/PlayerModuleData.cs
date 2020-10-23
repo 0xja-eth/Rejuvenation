@@ -42,11 +42,18 @@ namespace PlayerModule.Data {
 			EnergyBall1,
 			TaiqingWater1, // 房间1
 			TaiqingWater2,
+
 			TaiqingWater3, // 房间2
 			TaiqingWater4,
 			TaiqingWater5,
 			TaiqingBlock1,
 			TaiqingBlock2,
+
+			FusangBlock1, // 扶桑长廊
+			FusangBlock2,
+
+			FusangBlock3, // 扶桑复制
+			FusangBlock4,
 		}
 
 		/// <summary>

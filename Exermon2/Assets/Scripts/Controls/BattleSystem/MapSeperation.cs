@@ -19,14 +19,22 @@ namespace UI.BattleSystem.Controls {
             display.setItem(new RuntimeSeperation());
         }
 
-        #endregion
+		/// <summary>
+		/// 是否主体
+		/// </summary>
+		/// <returns></returns>
+		public override bool isMaster() {
+			return false;
+		}
 
-        #region 技能控制
+		#endregion
 
-        /// <summary>
-        /// 受击回调
-        /// </summary>
-        protected override void onHit() {
+		#region 技能控制
+
+		/// <summary>
+		/// 受击回调
+		/// </summary>
+		protected override void onHit() {
             base.onHit();
             //onDie();
         }

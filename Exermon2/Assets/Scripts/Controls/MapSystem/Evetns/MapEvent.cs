@@ -32,6 +32,11 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected GameService gameSer;
 
+		/// <summary>
+		/// 属性
+		/// </summary>
+		public MapPlayer eventPlayer => processor.eventPlayer;
+
 		#region 更新
 
 		/// <summary>
