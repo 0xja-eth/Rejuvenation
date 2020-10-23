@@ -497,7 +497,7 @@ namespace UI.BattleSystem.Controls {
         /// 是否能进行分身
         /// </summary>
         /// <returns></returns>
-        virtual protected bool isSeprateEnable() {
+        protected virtual bool isSeprateEnable() {
             return true;
         }
 
