@@ -237,7 +237,7 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 默认属性
 		/// </summary>
-		public const int DefaultMHP = 6; // 初始体力值
+		public const int DefaultMHP = 10; // 初始体力值
 		public const float DefaultAttack = 0; // 初始力量
         public const float DefaultDefense = 0; // 初始格挡
         public const float DefaultSpeed = 2; // 初始速度
@@ -1459,6 +1459,7 @@ namespace BattleModule.Data {
 		/// 属性
 		/// </summary>
 		public float energy { get; protected set; } = 0;
+        public float energyRate => energy / MaxEnergy;
 
 		/// <summary>
 		/// 战斗者

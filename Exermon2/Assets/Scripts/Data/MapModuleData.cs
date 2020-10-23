@@ -15,6 +15,8 @@ using Core.Data;
 using Core.Utils;
 using Core.Systems;
 using Core.Data.Loaders;
+using BattleModule.Data;
+using PlayerModule.Services;
 
 ///// <summary>
 ///// Unity拓展
@@ -666,4 +668,18 @@ namespace MapModule.Data {
         }
     }
 
+
+    public class UIShowAttributes : BaseData {
+        /// <summary>
+        /// 内部变量
+        /// </summary>
+        public RuntimeActor runtimeActor => PlayerService.Get().runtimeActor;
+
+        /// <summary>
+        /// 外部变量
+        /// </summary>
+        public float hpRate => runtimeActor.hpRate();
+        public float powerRate => runtimeActor.energyRate;
+        public int keyNumber => 0;//UnityEngine.Random.Range(0, 10);
+    }
 }
