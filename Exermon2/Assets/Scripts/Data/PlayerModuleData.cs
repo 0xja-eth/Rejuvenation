@@ -49,10 +49,11 @@ namespace PlayerModule.Data {
 			TaiqingBlock1,
 			TaiqingBlock2,
 
-			FusangBlock1, // 扶桑长廊
-			FusangBlock2,
+			CloneFlag, // 扶桑长廊
 
-			FusangBlock3, // 扶桑复制
+			FusangBlock1, // 扶桑复制
+			FusangBlock2,
+			FusangBlock3,
 			FusangBlock4,
 		}
 
