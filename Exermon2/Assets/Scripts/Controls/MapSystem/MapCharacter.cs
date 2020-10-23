@@ -114,7 +114,9 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 销毁回调
 		/// </summary>
-		protected virtual void OnDestroy() {
+		protected override void onDestroy() {
+			base.onDestroy();
+
 			runtimeCharacter?.removeStateEnter(
 				RuntimeCharacter.State.Moving, onMoveStart);
 			runtimeCharacter?.removeStateExit(

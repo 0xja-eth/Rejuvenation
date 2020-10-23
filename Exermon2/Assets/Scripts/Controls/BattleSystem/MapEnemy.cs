@@ -95,8 +95,8 @@ namespace UI.BattleSystem.Controls {
 		/// <summary>
 		/// 销毁回调
 		/// </summary>
-		protected override void OnDestroy() {
-			base.OnDestroy();
+		protected override void onDestroy() {
+			base.onDestroy();
 
 			runtimeBattler?.removeStateDict(
 				RuntimeBattler.State.Moving, updateMoveTime);

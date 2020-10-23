@@ -74,14 +74,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			initializeMap();
-		}
-
-		/// <summary>
-		/// 初始化地图配置
-		/// </summary>
-		void initializeMap() {
-			changeMap(findParent<Map>(), true);
+			//initializeMap();
 		}
 
 		/// <summary>
@@ -96,6 +89,7 @@ namespace UI.MapSystem.Controls {
 		/// 配置（初始）
 		/// </summary>
 		void setupPosition() {
+			changeMap(findParent<Map>(), true);
 			mapPos = startPosition();
 		}
 
@@ -112,6 +106,14 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void initializeCollFuncs() {
 			//registerOnStayFunc<ISkillApplication>(onSkillHit);
+		}
+
+		/// <summary>
+		/// 销毁回调（同OnDestroy）
+		/// </summary>
+		protected override void onDestroy() {
+			base.onDestroy();
+			map?.removeEntity(this);
 		}
 
 		#endregion
@@ -163,7 +165,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="map">新地图</param>
 		/// <param name="origin">是否初始地图</param>
-		public void changeMap(Map map, bool origin = false) {
+		public virtual void changeMap(Map map, bool origin = false) {
 			if (this.map == map) return; // 无变化
 			this.map?.removeEntity(this);
 

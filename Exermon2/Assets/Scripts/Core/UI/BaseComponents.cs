@@ -282,6 +282,18 @@ namespace Core.UI {
         /// </summary>
         protected virtual void start() { }
 
+		/// <summary>
+		/// 销毁回调
+		/// </summary>
+		private void OnDestroy() {
+			onDestroy();
+		}
+
+		/// <summary>
+		/// 销毁回调（同OnDestroy）
+		/// </summary>
+		protected virtual void onDestroy() { }
+
 		#endregion
 
 		#region 激活和关闭
