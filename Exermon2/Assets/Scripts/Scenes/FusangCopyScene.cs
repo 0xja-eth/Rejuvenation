@@ -13,10 +13,11 @@ using GameModule.Services;
 
 namespace UI.MapSystem {
     using Controls;
+
     /// <summary>
     /// 太清房间地图场景
     /// </summary>
-    public class FusangCorridorScene : BaseMapScene {
+    public class FusangCopyScene : BaseMapScene {
 
         /// <summary>
         /// 外部变量
@@ -35,6 +36,9 @@ namespace UI.MapSystem {
         /// </summary>
         protected override void initializeOthers() {
             base.initializeOthers();
+			playerSer.createPlayer("TestPlayer");
+			playerSer.actor.runtimeActor.direction = MapModule.Data.RuntimeCharacter.Direction.Up;
+			playerSer.actor.runtimeActor.addEnergy(100);
 		}
 
 		/// <summary>
@@ -42,7 +46,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public override SceneSystem.Scene sceneIndex() {
-            return SceneSystem.Scene.FusangCorridorScene;
+            return SceneSystem.Scene.FusangCopyScene;
 		}
 
 		/// <summary>
@@ -50,7 +54,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public override SceneSystem.Scene nextStage() {
-			return SceneSystem.Scene.FusangCopyScene;
+			return SceneSystem.Scene.FinalScene;
 		}
 
 		#endregion

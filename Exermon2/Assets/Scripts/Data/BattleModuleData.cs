@@ -163,18 +163,18 @@ namespace BattleModule.Data {
 		}
 
 		/// <summary>
-		/// 每方向
+		/// 每方向攻击动画参数
 		/// </summary>
-		static readonly int[] AttackAniFrameCounts = new int[] { 6, 8, 8, 6 };
-		static readonly int[] AttackAniFrameStarts = new int[] { 8, 0, 0, 14 };
+		public int[] attackAniFrameCounts = new int[] { 6, 8, 8, 6 }; // 每方向攻击动画帧数（下，左，右，上）
+		public int[] attackAniFrameStarts = new int[] { 8, 0, 0, 14 }; // 每方向攻击动画开始帧（下，左，右，上）
 
 		/// <summary>
 		/// 获取指定方向指定比率的战斗动画
 		/// </summary>
 		/// <returns></returns>
 		public Sprite getAttackAni(int d, float rate) {
-			var count = AttackAniFrameCounts[d];
-			var start = AttackAniFrameStarts[d];
+			var count = attackAniFrameCounts[d];
+			var start = attackAniFrameStarts[d];
 			int index = start + (int)Mathf.Floor(count * rate);
 
 			return attackAni()[index];
