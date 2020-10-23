@@ -10,7 +10,7 @@ Material:
   m_Name: Accumulate
   m_Shader: {fileID: -6465566751694194690, guid: ea175feb4f6daca4b9ffd5250666b779,
     type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

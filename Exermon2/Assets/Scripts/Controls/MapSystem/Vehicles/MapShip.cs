@@ -42,15 +42,20 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         GameService gameSer;
 
+        #region 初始化
+
         /// <summary>
         /// 初始化碰撞回调
         /// </summary>
         protected override void initializeCollFuncs() {
             base.initializeCollFuncs();
-
+            registerOnEnterFunc<MapEntity>(showTip);
+            registerOnExitFunc<MapEntity>(hideTip);
             registerOnStayFunc<MapPlayer>(tryBoard);
             boardingRegion.registerOnStayFunc<MapRegion>(tryLand);
         }
+
+        #endregion
 
         #region 更新
 
@@ -155,5 +160,35 @@ namespace UI.MapSystem.Controls {
 
         #endregion
 
+        #region 按键提示
+
+        /// <summary>
+        /// 提示控制
+        /// </summary>
+        void showTip(MapEntity entity) {
+            var p = entity as MapPlayer;
+            if (p) {
+                p.keyTip.SetActive(true);
+                return;
+            }
+
+            var region = entity as MapRegion;
+            if (region.collider.name == "Ground")
+                player.keyTip.SetActive(true);
+        }
+
+        void hideTip(MapEntity entity) {
+            var p = entity as MapPlayer;
+            if (p) {
+                p.keyTip.SetActive(false);
+                return;
+            }
+
+            var region = entity as MapRegion;
+            if (region.collider.name == "Ground")
+                player.keyTip.SetActive(false);
+        }
+
+        #endregion
     }
 }

@@ -21722,6 +21722,11 @@ PrefabInstance:
       propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3422880220803731653, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: triggerType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3422880220928758066, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.size
