@@ -154,30 +154,47 @@ namespace BattleModule.Data {
 		}
 
 		/// <summary>
+		/// 每方向攻击动画参数
+		/// </summary>
+		public Vector4 characterFrameCounts = new Vector4(3, 3, 3, 3); // 每方向攻击动画帧数（下，左，右，上）
+		public Vector4 characterFrameStarts = new Vector4(0, 3, 6, 9); // 每方向攻击动画开始帧（下，左，右，上）
+		public Vector4 characterStaticFrames = new Vector4(1, 1, 1, 1); // 每方向的静止帧（下，左，右，上）
+
+		public bool characterFlip = false; // 行走图是否需要翻转（朝向左时候翻转）
+
+		/// <summary>
 		/// 获取指定行列的精灵
 		/// </summary>
 		/// <returns></returns>
-		public Sprite getSprite(int r, int c) {
-			var xCnt = RuntimeCharacter.XCnt;
-			return character()[r * xCnt + c];
+		public Sprite getCharacter(int d, float rate) {
+			var count = (int)characterFrameCounts[d] + 1;
+			var start = (int)characterFrameStarts[d];
+			int index = (int)Mathf.Floor(count * rate);
+			if (index >= count - 1)
+				index = (int)characterStaticFrames[d];
+
+			return character()[start + index];
 		}
 
 		/// <summary>
 		/// 每方向攻击动画参数
 		/// </summary>
-		public int[] attackAniFrameCounts = new int[] { 6, 8, 8, 6 }; // 每方向攻击动画帧数（下，左，右，上）
-		public int[] attackAniFrameStarts = new int[] { 8, 0, 0, 14 }; // 每方向攻击动画开始帧（下，左，右，上）
+		public Vector4 attackAniFrameCounts = new Vector4(6, 8, 8, 6); // 每方向攻击动画帧数（下，左，右，上）
+		public Vector4 attackAniFrameStarts = new Vector4(8, 0, 0, 14); // 每方向攻击动画开始帧（下，左，右，上）
+
+		public bool attackAniFlip = true; // 攻击动画是否需要翻转（朝向左时候翻转）
 
 		/// <summary>
 		/// 获取指定方向指定比率的战斗动画
 		/// </summary>
 		/// <returns></returns>
 		public Sprite getAttackAni(int d, float rate) {
-			var count = attackAniFrameCounts[d];
-			var start = attackAniFrameStarts[d];
-			int index = start + (int)Mathf.Floor(count * rate);
+			var count = (int)attackAniFrameCounts[d];
+			var start = (int)attackAniFrameStarts[d];
+			int index = (int)Mathf.Floor(count * rate);
+			if (index >= count) index = count - 1;
 
-			return attackAni()[index];
+			return attackAni()[start + index];
 		}
 
 	}

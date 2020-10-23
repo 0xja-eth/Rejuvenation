@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: -3320946748400755363, guid: 98b55c37293b56144840bad52e0c2bc1,
+  m_Sprite: {fileID: 2162299307647738440, guid: 9a930af0fd8a543489ec71e91e82bb88,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -452,12 +452,19 @@ MonoBehaviour:
     _speed: 1
     _attack: 0
     _defense: 0
-    _characterId: 2
+    _characterId: 3
+    characterFrameCounts: {x: 2, y: 2, z: 2, w: 2}
+    characterFrameStarts: {x: 0, y: 0, z: 0, w: 0}
+    characterStaticFrames: {x: 0, y: 0, z: 0, w: 0}
+    characterFlip: 1
+    attackAniFrameCounts: {x: 1, y: 1, z: 1, w: 1}
+    attackAniFrameStarts: {x: 0, y: 0, z: 0, w: 0}
+    attackAniFlip: 1
     _description: 
     _refreshType: 1
     _frequency: 1
     _criticalRange: 4
-    _generalBehaviour: 0
+    _generalBehaviour: 1
     _criticalBehaviour: 2
 --- !u!114 &5194098965410796468
 MonoBehaviour:
