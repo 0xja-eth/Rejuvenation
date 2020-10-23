@@ -92,7 +92,7 @@ namespace UI.MapSystem.Controls {
             //var resList = Physics2D.RaycastAll(pos, vec, magnetiteDist);
 
             Collider2D collider2d = Physics2D.OverlapBox(pos, collider.bounds.size, 0f, 1 << 8);
-            for (int i = 1; i < 8; i++) {
+            for (int i = 1; i < magnetiteDist; i++) {
                 collider2d = Physics2D.OverlapBox(pos + vec * i, collider.bounds.size, 0f, 1 << 8);
                 debugLog(collider2d?.name);
                 debugLog(collider?.bounds.size);
