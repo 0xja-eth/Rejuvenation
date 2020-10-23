@@ -39,7 +39,7 @@ namespace UI.MapSystem.Controls {
 		protected override void initializeCollFuncs() {
 			base.initializeCollFuncs();
 
-			registerOnStayFunc<MapPlayer>(onPlayerColl);
+			registerOnEnterFunc<MapPlayer>(onPlayerColl);
 		}
 
 		/// <summary>
