@@ -156,7 +156,7 @@ namespace BattleModule.Data {
 		/// <returns></returns>
 		public Sprite getSprite(int r, int c) {
 			var xCnt = RuntimeCharacter.XCnt;
-			Debug.Log(this + ".getSprite: " + r + ", " + c);
+			//Debug.Log(this + ".getSprite: " + r + ", " + c);
 			return character()[r * xCnt + c];
 		}
 
