@@ -222,6 +222,7 @@ namespace UI.Common.Controls.AnimationSystem {
         public bool isState(string name) {
             if (animator == null) return false;
             var state = animator.GetCurrentAnimatorStateInfo(layerIndex);
+            Debug.Log("state.IsName(Idle)" + state.IsName("Idle"));
             return state.IsName(name);
         }
 

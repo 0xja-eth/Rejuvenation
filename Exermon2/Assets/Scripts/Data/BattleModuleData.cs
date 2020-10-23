@@ -1460,7 +1460,7 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public float energy { get; protected set; } = 0;
+		public float energy { get; protected set; } = 100;
 		public float energyRate => energy / MaxEnergy;
 
 		/// <summary>
