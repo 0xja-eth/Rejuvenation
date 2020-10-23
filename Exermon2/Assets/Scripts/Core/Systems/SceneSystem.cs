@@ -38,7 +38,9 @@ namespace Core.Systems {
 			TaiqingScene,
 			TaiqingRoom1Scene,
 			TaiqingRoom2Scene,
-			FusangCorridorScene
+			FusangCorridorScene,
+			FusangCopyScene,
+			FinalScene
 		}
 
 		/// <summary>
