@@ -83,7 +83,8 @@ namespace UI.BattleSystem.Controls {
         /// </summary>
         protected override void start() {
             base.start();
-        }
+			scene?.onPlayerStart();
+		}
 
         /// <summary>
         /// 初始化碰撞函数
@@ -93,7 +94,10 @@ namespace UI.BattleSystem.Controls {
             registerOnEnterFunc<MapEvent>(onEventCollEnter);
             registerOnStayFunc<MapEvent>(onEventCollStay);
             registerOnExitFunc<MapEvent>(onEventCollExit);
-        }
+
+			// TODO: 代码优化
+			//registerOnStayFunc<RayBlock>((block) => block.onPlayerColl(this));
+		}
 
         /// <summary>
         /// 初始化敌人显示组件
@@ -178,6 +182,14 @@ namespace UI.BattleSystem.Controls {
 		public bool isMovable() {
             return runtimeBattler.isMoveable();
         }
+
+		/// <summary>
+		/// 是否主体
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool isMaster() {
+			return true;
+		}
 
 		#endregion
 

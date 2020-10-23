@@ -139,6 +139,11 @@ namespace UI.MapSystem {
             setupUI();
 		}
 
+		/// <summary>
+		/// 玩家启动回调
+		/// </summary>
+		public virtual void onPlayerStart() { }
+
         /// <summary>
         /// 设置主界面
         /// </summary>

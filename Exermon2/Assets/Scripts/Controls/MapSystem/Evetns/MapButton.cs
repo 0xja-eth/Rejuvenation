@@ -62,7 +62,7 @@ namespace UI.MapSystem.Controls {
 		/// 更新重置
 		/// </summary>
 		void updateReset() {
-			if (reset && resetTime > 0) {
+			if (reset && resetTime >= 0) {
 				resetTime -= Time.deltaTime;
 				if (resetTime <= 0) isOn = false;
 			}

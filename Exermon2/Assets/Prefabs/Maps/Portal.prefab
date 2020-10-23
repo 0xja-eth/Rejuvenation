@@ -122,6 +122,7 @@ MonoBehaviour:
       m_Calls: []
   _picture: {fileID: 0}
   invokeOnce: 0
+  needGater: 0
 --- !u!1 &704038675803228755
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  collider: {fileID: 0}
+  collider: {fileID: 648446412}
   autoZ: 1
   map: {fileID: 0}
   eventPages: []

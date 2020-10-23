@@ -19,10 +19,10 @@ namespace UI.MapSystem {
     /// </summary>
     public class FusangCopyScene : BaseMapScene {
 
-        /// <summary>
-        /// 外部变量
-        /// </summary>
-
+		/// <summary>
+		/// 外部变量
+		/// </summary>
+		public Vector2 copyStartPos;
 
         /// <summary>
         /// 外部系统定义
@@ -36,9 +36,21 @@ namespace UI.MapSystem {
         /// </summary>
         protected override void initializeOthers() {
             base.initializeOthers();
-			playerSer.createPlayer("TestPlayer");
-			playerSer.actor.runtimeActor.direction = MapModule.Data.RuntimeCharacter.Direction.Up;
-			playerSer.actor.runtimeActor.addEnergy(100);
+		}
+
+		/// <summary>
+		/// 开始
+		/// </summary>
+		protected override void start() {
+			base.start();
+		}
+
+		/// <summary>
+		/// 玩家启动回调
+		/// </summary>
+		public override void onPlayerStart() {
+			base.onPlayerStart();
+			player.addSeperation(copyStartPos);
 		}
 
 		/// <summary>

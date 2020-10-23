@@ -53,7 +53,7 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public bool isEnable() {
-			return map.active && camera && target;
+			return map.active && camera && target; // && !map.scene.traveling;
 		}
 
         /// <summary>

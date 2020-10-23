@@ -178,7 +178,7 @@ namespace GameModule.Services {
 				this.battler = battler;
 				this.result = result;
 
-				subject = result.action.subject;
+				subject = result.action?.subject;
 				actor = (battler as RuntimeActor) ?? 
 					(subject as RuntimeActor);
 			}
@@ -191,7 +191,7 @@ namespace GameModule.Services {
 				battler.addHP(-result.hpDamage);
 				battler.addHP(-result.hpDrain);
 
-				subject.addHP(result.hpDrain);
+				subject?.addHP(result.hpDrain);
 			}
 
 			/// <summary>
