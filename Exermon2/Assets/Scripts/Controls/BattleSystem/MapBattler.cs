@@ -272,7 +272,7 @@ namespace UI.BattleSystem.Controls {
 		void useSkill(Skill skill) {
             debugLog(name + " Use skill: " + skill);
             currentProcessor = skillProcessor(skill);
-            currentProcessor?.use();
+			currentProcessor?.use();
 		}
 
 		///// <summary>
@@ -337,15 +337,18 @@ namespace UI.BattleSystem.Controls {
 		public void startAction(RuntimeAction action) {
 			if (action == null) return;
 			currentAction = action;
+
 			onActionStart();
-			processAction();
+			useSkill(currentAction.skill);
+
+			//processAction();
 		}
 
 		/// <summary>
-		/// 处理行动
+		/// 技能发动
 		/// </summary>
-		public virtual void processAction() {
-			useSkill(currentAction.skill);
+		public void onSkillUse() {
+			currentProcessor?.onUse();
 		}
 
 		/// <summary>

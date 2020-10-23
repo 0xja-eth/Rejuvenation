@@ -30,7 +30,7 @@ namespace Config {
 				AssetLoader.SystemPath, "Animations", "Animation_{0}"),
 			new AssetSetting(Type.Character, "Characters/", "Character_{0}"),
 			new AssetSetting(Type.Bust, "Busts/", "Bust_{0}"),
-			new AssetSetting(Type.Battler, "Battler/", "Battler_{0}"),
+			new AssetSetting(Type.Battler, "Battlers/", "Battler_{0}"),
 		};
 
 	}
