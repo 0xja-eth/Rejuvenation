@@ -83,6 +83,8 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
+		public bool autoSave = true; // 进入该场景是否自动保存
+
 		public Vector2 startPos; // 玩家初始位置
 
 		public RenderTexture renderTexture;
@@ -127,6 +129,8 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
+			if (autoSave) playerSer.savePlayer();
+
 			refreshMapActive();
 		}
 

@@ -155,7 +155,9 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected override void onDie() {
 			base.onDie();
+
 			// TODO: 重来
+			playerSer.resumeGame();
 		}
 
 		#endregion

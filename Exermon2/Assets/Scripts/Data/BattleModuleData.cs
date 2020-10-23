@@ -307,6 +307,7 @@ namespace BattleModule.Data {
 		public Actor() { }
 		public Actor(Player player) {
 			name = player.name;
+
 			mhp = DefaultMHP;
 			attack = DefaultAttack;
 			defense = DefaultDefense;

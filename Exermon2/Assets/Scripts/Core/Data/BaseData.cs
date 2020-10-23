@@ -431,12 +431,12 @@ namespace Core.Data {
 					var pType = p.PropertyType; var pName = p.Name;
 					var key = attr.keyName ?? DataLoader.hump2Underline(pName);
 					var val = p.GetValue(this);
-					/*
+
 					var debug = string.Format("Loading {0} {1} {2} in {3} " +
-						"(ori:{4})", p, pType, pName, type, val);
+						"(ori:{4})", p, pType, pName, pType, val);
 					Debug.Log(debug);
-					*/
-					val = attr.preventCover ? DataLoader.load(
+
+ 					val = attr.preventCover ? DataLoader.load(
 						pType, val, json, key, attr.ignoreNull) :
 						DataLoader.load(pType, json, key);
 					p.SetValue(this, val); //, BindingFlags.Public | BindingFlags.NonPublic, null, null, null);
@@ -477,12 +477,11 @@ namespace Core.Data {
 					var key = attr.keyName ?? DataLoader.hump2Underline(pName);
 					var val = p.GetValue(this);
 
-					json[key] = DataLoader.convert(pType, val, attr.format);
-					/*
 					var debug = string.Format("Converting {0} {1} in {2} (val:{3}) " +
-						"to key: {4}, res: {5}", pType, pName, type, val, key, json[key]);
+						"to key: {4}", pType, pName, pType, val, key);
 					Debug.Log(debug);
-					*/
+
+					json[key] = DataLoader.convert(pType, val, attr.format);
 				});
 		}
 
