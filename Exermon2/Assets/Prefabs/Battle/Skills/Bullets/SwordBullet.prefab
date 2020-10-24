@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4046049679775206224}
   - component: {fileID: 2723044834142041233}
   - component: {fileID: 7347541900567936648}
-  m_Layer: 8
+  m_Layer: 16
   m_Name: BulletTail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4765,7 +4765,7 @@ GameObject:
   - component: {fileID: 6242069225541393465}
   - component: {fileID: 119919633757856050}
   - component: {fileID: 6307510040185467690}
-  m_Layer: 8
+  m_Layer: 16
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9521,7 +9521,7 @@ GameObject:
   - component: {fileID: 506948187378267203}
   - component: {fileID: 859271692558789895}
   - component: {fileID: 607232698818203747}
-  m_Layer: 8
+  m_Layer: 16
   m_Name: SwordBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9660,7 +9660,5 @@ MonoBehaviour:
   showDebug: 1
   collider: {fileID: 506948187378267203}
   skillProcessor: {fileID: 0}
-  speed: 5
-  range: 6
   throughEntities: -1
   throughWalls: -1
