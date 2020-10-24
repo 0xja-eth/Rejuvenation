@@ -9,15 +9,14 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 需要所有复制体和主体都进入门
 		/// </summary>
-		public bool needGater = false;
+		//public bool needGater = false;
 
 		/// <summary>
 		/// 执行
 		/// </summary>
 		protected override void invokeCustom() {
 			base.invokeCustom();
-			if (mapEvent.eventPlayer.isMaster())
-				mapEvent.scene.travel();
+			if (eventPlayer.isMaster()) mapEvent.scene.travel();
 		}
 
 	}

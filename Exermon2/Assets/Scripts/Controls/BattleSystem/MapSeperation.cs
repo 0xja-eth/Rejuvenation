@@ -36,29 +36,15 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		protected override void onHit() {
             base.onHit();
-            //onDie();
         }
 
         /// <summary>
         /// 设置闪烁位置
         /// 由player控制
         /// </summary>
-        protected override void setFlashPos() {
-
-        }
+        protected override void setFlashPos() { }
 
         #endregion
 		
-        #region 分身
-
-        /// <summary>
-        /// 分身不能进行分身
-        /// </summary>
-        /// <returns></returns>
-        protected override bool isSeprateEnable() {
-            return false;
-        }
-
-        #endregion
     }
 }

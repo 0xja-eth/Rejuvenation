@@ -15,7 +15,7 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
-		public float energy = 10; // 恢复能量值
+		public int energy = 10; // 恢复能量值
 
 		/// <summary>
 		/// 外部系统设置
@@ -38,7 +38,7 @@ namespace UI.MapSystem.Controls {
 			base.invokeCustom();
 			playerSer.info.setSwitch(
 				Info.Switches.EnergyBall1, true);
-			mapPlayer?.addEnergy(energy);
+			mapPlayer?.runtimeActor?.addEnergy(energy);
 		}
 
 	}

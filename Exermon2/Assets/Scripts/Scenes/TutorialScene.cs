@@ -39,8 +39,7 @@ namespace UI.MapSystem {
         /// </summary>
         protected override void initializeOthers() {
             base.initializeOthers();
-            playerSer.createPlayer("TestPlayer");
-            playerSer.actor.runtimeActor.direction = MapModule.Data.RuntimeCharacter.Direction.Up;
+			playerSer.startGame(true);
         }
 
         /// <summary>

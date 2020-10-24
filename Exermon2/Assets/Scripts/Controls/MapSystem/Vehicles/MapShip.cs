@@ -19,11 +19,11 @@ namespace UI.MapSystem.Controls {
     /// </summary>
     public class MapShip : MapVehicle {
 
-        /// <summary>
-        /// 外部变量设置
-        /// </summary>
-        public float magnetiteDist = 8; // 万象天引距离
-        public float magnetiteEnergy = 1; // 使用万象天引耗能
+		/// <summary>
+		/// 外部变量设置
+		/// </summary>
+		public float magnetiteDist = 8; // 万象天引距离
+		public int magnetiteEnergy = 1; // 使用万象天引耗能
 
         /// <summary>
         /// 内部变量定义
@@ -36,6 +36,7 @@ namespace UI.MapSystem.Controls {
         /// 乘客玩家
         /// </summary>
         public MapPlayer player => passengers.getSubView(0) as MapPlayer;
+		RuntimeActor runtimeActor => player?.runtimeActor;
 
         /// <summary>
         /// 外部系统设置
@@ -78,19 +79,20 @@ namespace UI.MapSystem.Controls {
 
         #region 磁石柱子控制
 
-        /// <summary>
-        /// 是否使用磁石
-        /// </summary>
-        /// <returns></returns>
-        public bool isMagnetite() {
-            return player.energy >= magnetiteEnergy &&
-                Input.GetKeyDown(gameSer.keyboard.magnetiteKey);
-        }
+		/// <summary>
+		/// 是否使用磁石
+		/// </summary>
+		/// <returns></returns>
+		public bool isMagnetite() {
+			return runtimeActor.energy >= magnetiteEnergy && 
+				Input.GetKeyDown(gameSer.keyboard.magnetiteKey);
+		}
 
-        /// <summary>
-        /// 使用磁石
-        /// </summary>
-        void useMagnetite() {
+		/// <summary>
+		/// 使用磁石
+		/// </summary>
+		void useMagnetite() {
+			runtimeActor?.addEnergy(-magnetiteEnergy);
 
             var dir = player.direction;
             var vec = RuntimeCharacter.dir82Vec(dir);
