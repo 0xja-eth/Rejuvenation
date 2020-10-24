@@ -97,7 +97,7 @@ namespace PlayerModule.Services {
 			if (load && hasPlayer()) loadPlayer();
 			else createPlayer();
 
-			sceneSys.pushScene(player.stage, true, true);
+			sceneSys.pushScene(player.stage, async: true);
 			return sceneSys.startAsync(onProgress, onCompleted);
 		}
 

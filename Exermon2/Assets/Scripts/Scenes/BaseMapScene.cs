@@ -289,9 +289,8 @@ namespace UI.MapSystem {
 
 			traveling = true;
 
-			currentMap.travel(getMap(type));
-
-			playEffect(timeType = type);
+			currentMap.travel(getMap(timeType = type));
+			playEffect(type);
 		}
 
 		/// <summary>
