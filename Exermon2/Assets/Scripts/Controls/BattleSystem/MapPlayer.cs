@@ -94,9 +94,6 @@ namespace UI.BattleSystem.Controls {
             registerOnEnterFunc<MapEvent>(onEventCollEnter);
             registerOnStayFunc<MapEvent>(onEventCollStay);
             registerOnExitFunc<MapEvent>(onEventCollExit);
-
-			// TODO: 代码优化
-			//registerOnStayFunc<RayBlock>((block) => block.onPlayerColl(this));
 		}
 
         /// <summary>
@@ -156,8 +153,10 @@ namespace UI.BattleSystem.Controls {
 		protected override void onDie() {
 			base.onDie();
 
+			debugLog("OnDie");
+
 			// TODO: 重来
-			playerSer.resumeGame();
+			scene.restartStage(true);
 		}
 
 		#endregion

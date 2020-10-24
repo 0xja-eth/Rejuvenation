@@ -129,7 +129,6 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			if (autoSave) playerSer.savePlayer();
 
 			refreshMapActive();
 		}
@@ -207,6 +206,7 @@ namespace UI.MapSystem {
 			playerSer.player.stage = sceneIndex();
 			playerSer.runtimeActor.transfer(
 				startPos.x, startPos.y, true);
+			if (autoSave) playerSer.savePlayer();
 		}
 
 		/// <summary>
@@ -362,8 +362,11 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 重开本关
 		/// </summary>
+		public void restartStage(bool died) {
+			doRoutine(playerSer.resumeGame(onLoadingProgress, onLoadingCompleted));
+		}
 		public void restartStage() {
-			//changeStage(nextScene());
+			restartStage(false);
 		}
 
 		/// <summary>
@@ -392,7 +395,7 @@ namespace UI.MapSystem {
 			loading = true;
 
 			var data = makeTunnelData(pos);
-			sceneSys.changeScene(stage, data, true);
+			sceneSys.changeScene(stage, data, async: true);
 
 			doRoutine(sceneSys.startAsync(
 				onLoadingProgress, onLoadingCompleted));

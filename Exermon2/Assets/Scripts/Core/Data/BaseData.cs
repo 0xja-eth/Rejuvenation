@@ -432,9 +432,9 @@ namespace Core.Data {
 					var key = attr.keyName ?? DataLoader.hump2Underline(pName);
 					var val = p.GetValue(this);
 
-					var debug = string.Format("Loading {0} {1} {2} in {3} " +
-						"(ori:{4})", p, pType, pName, pType, val);
-					Debug.Log(debug);
+					//var debug = string.Format("Loading {0} {1} {2} in {3} " +
+					//	"(ori:{4})", p, pType, pName, pType, val);
+					//Debug.Log(debug);
 
  					val = attr.preventCover ? DataLoader.load(
 						pType, val, json, key, attr.ignoreNull) :
@@ -477,9 +477,9 @@ namespace Core.Data {
 					var key = attr.keyName ?? DataLoader.hump2Underline(pName);
 					var val = p.GetValue(this);
 
-					var debug = string.Format("Converting {0} {1} in {2} (val:{3}) " +
-						"to key: {4}", pType, pName, pType, val, key);
-					Debug.Log(debug);
+					//var debug = string.Format("Converting {0} {1} in {2} (val:{3}) " +
+					//	"to key: {4}", pType, pName, pType, val, key);
+					//Debug.Log(debug);
 
 					json[key] = DataLoader.convert(pType, val, attr.format);
 				});

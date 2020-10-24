@@ -89,21 +89,27 @@ namespace PlayerModule.Services {
 		}
 
 		/// <summary>
-		/// 开始游戏
+		/// 开始游戏（启动了异步场景加载）
 		/// </summary>
-		public void startGame(bool load) {
+		public IEnumerator startGame(bool load,
+			UnityAction<float> onProgress, UnityAction onCompleted = null) {
+
 			if (load && hasPlayer()) loadPlayer();
 			else createPlayer();
 
-			sceneSys.pushScene(player.stage);
+			sceneSys.pushScene(player.stage, true, true);
+			return sceneSys.startAsync(onProgress, onCompleted);
 		}
 
 		/// <summary>
 		/// 重开本局
 		/// </summary>
-		public void resumeGame() {
+		public IEnumerator resumeGame(
+			UnityAction<float> onProgress, UnityAction onCompleted = null) {
 			player = DataLoader.load<Player>(savedPlayer);
-			sceneSys.pushScene(player.stage);
+
+			sceneSys.changeScene(player.stage, true, true);
+			return sceneSys.startAsync(onProgress, onCompleted);
 		}
 
 		/// <summary>
