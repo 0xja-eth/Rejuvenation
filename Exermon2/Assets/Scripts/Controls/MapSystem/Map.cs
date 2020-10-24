@@ -84,10 +84,9 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="entity"></param>
 		public void addEntity(MapEntity entity) {
-			debugLog("addEntity: " + entity);
 			var player = entity as MapPlayer;
-			if (player != null) this.player = player;
-			debugLog("addEntity.player: " + player);
+			if (player != null && player.isMaster())
+				this.player = player;
 
 			entities.Add(entity);
 		}
@@ -97,10 +96,8 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         /// <param name="entity"></param>
         public void removeEntity(MapEntity entity) {
-			debugLog("removeEntity: " + entity);
 			if (entity == player) player = null;
-			debugLog("removeEntity.player: " + player);
-
+		
 			entities.Remove(entity);
         }
 

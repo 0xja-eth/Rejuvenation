@@ -7,11 +7,16 @@ namespace UI.MapSystem.Controls {
     public class TravelTime : MapEventPage {
 
 		/// <summary>
+		/// 需要所有复制体和主体都进入门
+		/// </summary>
+		//public bool needGater = false;
+
+		/// <summary>
 		/// 执行
 		/// </summary>
 		protected override void invokeCustom() {
 			base.invokeCustom();
-			mapEvent.scene.travel();
+			if (eventPlayer.isMaster()) mapEvent.scene.travel();
 		}
 
 	}

@@ -26,11 +26,10 @@ namespace UI.MapSystem {
         public MapEvent flashFailTrigger;
         public Collider2D flashWall;
 
-        /// <summary>
-        /// 外部系统定义
-        /// </summary>
-        PlayerService playerSer;
-        GameService gameSer;
+		/// <summary>
+		/// 外部系统定义
+		/// </summary>
+		protected GameService gameSer;
 
         #region 初始化
 
@@ -39,8 +38,8 @@ namespace UI.MapSystem {
         /// </summary>
         protected override void initializeOthers() {
             base.initializeOthers();
-            playerSer.createPlayer("TestPlayer");
-            playerSer.actor.runtimeActor.direction = MapModule.Data.RuntimeCharacter.Direction.Up;
+			doRoutine(playerSer.startGame(true, 
+				onLoadingProgress, onLoadingCompleted));
         }
 
         /// <summary>

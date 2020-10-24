@@ -42,11 +42,19 @@ namespace PlayerModule.Data {
 			EnergyBall1,
 			TaiqingWater1, // 房间1
 			TaiqingWater2,
+
 			TaiqingWater3, // 房间2
 			TaiqingWater4,
 			TaiqingWater5,
 			TaiqingBlock1,
 			TaiqingBlock2,
+
+			CloneFlag, // 扶桑长廊
+
+			FusangBlock1, // 扶桑复制
+			FusangBlock2,
+			FusangBlock3,
+			FusangBlock4,
 		}
 
 		/// <summary>
@@ -60,12 +68,69 @@ namespace PlayerModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		[AutoConvert]
 		public Dictionary<Switches, bool> switches { get; set; } 
 			= new Dictionary<Switches, bool>();
-		[AutoConvert]
 		public Dictionary<Variables, float> variables { get; set; }
 			= new Dictionary<Variables, float>();
+
+		#region 数据读取
+
+		/// <summary>
+		/// 读取自定义属性
+		/// </summary>
+		/// <param name="json"></param>
+		protected override void loadCustomAttributes(JsonData json) {
+			base.loadCustomAttributes(json);
+
+			this.switches.Clear();
+			this.variables.Clear();
+			
+			var switches = DataLoader.load(json, "switches");
+			var variables = DataLoader.load(json, "variables");
+
+			if (switches != null) {
+				switches.SetJsonType(JsonType.Object);
+				foreach (KeyValuePair<string, JsonData> pair in switches) {
+					var key = (Switches)int.Parse(pair.Key);
+					var data = DataLoader.load<bool>(pair.Value);
+					Debug.Log("Load switches: " + key + " => " + data);
+					this.switches.Add(key, data);
+				}
+			}
+			if (variables != null) {
+				variables.SetJsonType(JsonType.Object);
+				foreach (KeyValuePair<string, JsonData> pair in variables) {
+					var key = (Variables)int.Parse(pair.Key);
+					var data = DataLoader.load<float>(pair.Value);
+					Debug.Log("Load variables: " + key + " => " + data);
+					this.variables.Add(key, data);
+				}
+			}
+		}
+
+		/// <summary>
+		/// 转化自定义属性
+		/// </summary>
+		/// <param name="json"></param>
+		protected override void convertCustomAttributes(ref JsonData json) {
+			base.convertCustomAttributes(ref json);
+
+			var switches = new JsonData();
+			var variables = new JsonData();
+
+			switches.SetJsonType(JsonType.Object);
+			variables.SetJsonType(JsonType.Object);
+
+			foreach (var pair in this.switches)
+				switches[pair.Key.GetHashCode().ToString()] = DataLoader.convert(pair.Value);
+			foreach (var pair in this.variables)
+				variables[pair.Key.GetHashCode().ToString()] = DataLoader.convert(pair.Value);
+
+			json["switches"] = switches;
+			json["variables"] = variables;
+		}
+
+		#endregion
 
 		/// <summary>
 		/// 构造函数
@@ -121,7 +186,7 @@ namespace PlayerModule.Data {
 	}
 
 	/// <summary>
-	/// 玩家数据
+	/// 玩家数据（包含角色数据、存档数据、关卡状态等）
 	/// </summary>
 	public class Player : BaseData,
 		ParamDisplay.IDisplayDataConvertable {

@@ -38,7 +38,9 @@ namespace Core.Systems {
 			TaiqingScene,
 			TaiqingRoom1Scene,
 			TaiqingRoom2Scene,
-			FusangCorridorScene
+			FusangCorridorScene,
+			FusangCopyScene,
+			FinalScene
 		}
 
 		/// <summary>
@@ -106,57 +108,63 @@ namespace Core.Systems {
         /// 返回上一场景（如果上一场景为空则退出游戏）
         /// </summary>
         /// <returns>当前场景名称</returns>
-        public void popScene(JsonData data, bool async = false) {
-            sceneStack.Pop(); loadScene(data: data, async: async);
+        public void popScene(JsonData data, bool reload = false, bool async = false) {
+            sceneStack.Pop(); loadScene(reload, data, async);
         }
-        public void popScene(object data, bool async = false) {
-            popScene(DataLoader.convert(data.GetType(), data), async);
+        public void popScene(object data, bool reload = false, bool async = false) {
+			var json = DataLoader.convert(data.GetType(), data);
+			popScene(json, reload, async);
         }
-        public void popScene(bool async = false) {
-            popScene((JsonData)null, async: async);
+        public void popScene(bool reload = false, bool async = false) {
+            popScene((JsonData)null, reload, async);
         }
 
         /// <summary>
         /// 添加场景（往当前追加场景）
         /// </summary>
         /// <param name="scene">场景名称</param>
-        public void pushScene(Scene scene, JsonData data, bool async = false) {
-            sceneStack.Push(scene); loadScene(data: data, async: async);
+        public void pushScene(Scene scene, JsonData data, 
+			bool reload = false, bool async = false) {
+            sceneStack.Push(scene); loadScene(reload, data, async);
         }
-        public void pushScene(Scene scene, object data, bool async = false) {
-            pushScene(scene, DataLoader.convert(data.GetType(), data), async);
+        public void pushScene(Scene scene, object data,
+			bool reload = false, bool async = false) {
+			var json = DataLoader.convert(data.GetType(), data);
+			pushScene(scene, json, reload, async);
         }
-        public void pushScene(Scene scene, bool async = false) {
-            pushScene(scene, (JsonData)null, async: async);
+        public void pushScene(Scene scene, bool reload = false, bool async = false) {
+            pushScene(scene, (JsonData)null, reload, async);
         }
 
         /// <summary>
         /// 切换场景（替换掉当前场景）
         /// </summary>
         /// <param name="scene">场景名称</param>
-        public void changeScene(Scene scene, JsonData data, bool async = false) {
+        public void changeScene(Scene scene, JsonData data, bool reload = false, bool async = false) {
             if (sceneStack.Count > 0) sceneStack.Pop();
-            pushScene(scene, data, async);
+            pushScene(scene, data, reload, async);
         }
-        public void changeScene(Scene scene, object data, bool async = false) {
-            changeScene(scene, DataLoader.convert(data.GetType(), data), async);
+        public void changeScene(Scene scene, object data, bool reload = false, bool async = false) {
+			var json = DataLoader.convert(data.GetType(), data);
+			changeScene(scene, json, reload, async);
         }
-        public void changeScene(Scene scene, bool async = false) {
-            changeScene(scene, (JsonData)null, async: async);
+        public void changeScene(Scene scene, bool reload = false, bool async = false) {
+            changeScene(scene, (JsonData)null, reload, async);
         }
 
         /// <summary>
         /// 转到场景（前面的场景将被清空）
         /// </summary>
         /// <param name="scene">场景名称</param>
-        public void gotoScene(Scene scene, JsonData data, bool async = false) {
-            clearScene(); pushScene(scene, data, async);
+        public void gotoScene(Scene scene, JsonData data, bool reload = false, bool async = false) {
+            clearScene(); pushScene(scene, data, reload, async);
         }
-        public void gotoScene(Scene scene, object data, bool async = false) {
-            gotoScene(scene, DataLoader.convert(data.GetType(), data), async);
+        public void gotoScene(Scene scene, object data, bool reload = false, bool async = false) {
+			var json = DataLoader.convert(data.GetType(), data);
+			gotoScene(scene, json, reload, async);
         }
-        public void gotoScene(Scene scene, bool async = false) {
-            gotoScene(scene, (JsonData)null, async: async);
+        public void gotoScene(Scene scene, bool reload = false, bool async = false) {
+            gotoScene(scene, (JsonData)null, reload, async);
         }
 
         /// <summary>

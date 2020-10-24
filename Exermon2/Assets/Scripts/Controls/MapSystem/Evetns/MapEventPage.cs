@@ -63,6 +63,7 @@ namespace UI.MapSystem.Controls {
 		/// 玩家
 		/// </summary>
 		public MapPlayer mapPlayer => mapEvent?.map?.player;
+		public MapPlayer eventPlayer => mapEvent?.eventPlayer;
 
 		#region 初始化
 

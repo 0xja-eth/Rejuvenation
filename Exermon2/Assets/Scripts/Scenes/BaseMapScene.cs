@@ -83,6 +83,8 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
+		public bool autoSave = true; // 进入该场景是否自动保存
+
 		public Vector2 startPos; // 玩家初始位置
 
 		public RenderTexture renderTexture;
@@ -127,6 +129,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
+
 			refreshMapActive();
 		}
 
@@ -138,6 +141,11 @@ namespace UI.MapSystem {
 			setupPlayer();
             setupUI();
 		}
+
+		/// <summary>
+		/// 玩家启动回调
+		/// </summary>
+		public virtual void onPlayerStart() { }
 
         /// <summary>
         /// 设置主界面
@@ -198,6 +206,7 @@ namespace UI.MapSystem {
 			playerSer.player.stage = sceneIndex();
 			playerSer.runtimeActor.transfer(
 				startPos.x, startPos.y, true);
+			if (autoSave) playerSer.savePlayer();
 		}
 
 		/// <summary>
@@ -280,9 +289,8 @@ namespace UI.MapSystem {
 
 			traveling = true;
 
-			currentMap.travel(getMap(type));
-
-			playEffect(timeType = type);
+			currentMap.travel(getMap(timeType = type));
+			playEffect(type);
 		}
 
 		/// <summary>
@@ -353,8 +361,11 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 重开本关
 		/// </summary>
+		public void restartStage(bool died) {
+			doRoutine(playerSer.resumeGame(onLoadingProgress, onLoadingCompleted));
+		}
 		public void restartStage() {
-			//changeStage(nextScene());
+			restartStage(false);
 		}
 
 		/// <summary>
@@ -383,7 +394,7 @@ namespace UI.MapSystem {
 			loading = true;
 
 			var data = makeTunnelData(pos);
-			sceneSys.changeScene(stage, data, true);
+			sceneSys.changeScene(stage, data, async: true);
 
 			doRoutine(sceneSys.startAsync(
 				onLoadingProgress, onLoadingCompleted));

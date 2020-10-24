@@ -153,8 +153,8 @@ namespace UI.MapSystem.Controls {
 		void updatePosition() {
 			if (!map) return;
 
-			runtimeCharacter.x = mapPos.x;
-			runtimeCharacter.y = mapPos.y;
+			//runtimeCharacter.x = mapPos.x;
+			//runtimeCharacter.y = mapPos.y;
 
 			var pos = runtimeCharacter.transferPoint;
 			if (pos == null) return;

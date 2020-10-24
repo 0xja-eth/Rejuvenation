@@ -133,13 +133,27 @@ namespace UI.BattleSystem.Controls {
 
 			switch ((RuntimeBattler.State)item.state) {
 				case RuntimeBattler.State.Idle:
+					drawIdle(item); break;
 				case RuntimeBattler.State.Moving:
 					drawCharacter(item); break;
 				case RuntimeBattler.State.Using:
 					drawAttackAction(item); break;
 				default:
-					drawCharacter(item); break;
+					drawIdle(item); break;
 			}
+		}
+
+		/// <summary>
+		/// 绘制Idle
+		/// </summary>
+		/// <param name="item"></param>
+		void drawIdle(RuntimeBattler item) {
+			var battler = item.battler;
+
+			// 朝向左时候才会翻转
+			sprite.flipX = battler.characterFlip &&
+				RuntimeCharacter.isLeftDir(item.direction);
+			sprite.sprite = item.battler.getCharacter(lastDir, 1);
 		}
 
 		/// <summary>
@@ -147,10 +161,12 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <param name="item"></param>
 		void drawCharacter(RuntimeBattler item) {
-			aniRate = 0;
-			sprite.flipX = false;
-			sprite.sprite = item.battler.
-				getSprite(lastDir, item.pattern);
+			var battler = item.battler;
+
+			// 朝向左时候才会翻转
+			sprite.flipX = battler.characterFlip &&
+				RuntimeCharacter.isLeftDir(item.direction);
+			sprite.sprite = battler.getCharacter(lastDir, aniRate);
 		}
 
 		/// <summary>
@@ -158,9 +174,12 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		/// <param name="item"></param>
 		void drawAttackAction(RuntimeBattler item) {
-			sprite.flipX = RuntimeCharacter.isLeftDir(item.direction);
-			sprite.sprite = item.battler.
-				getAttackAni(lastDir, aniRate);
+			var battler = item.battler;
+
+			// 朝向左时候才会翻转
+			sprite.flipX = battler.attackAniFlip && 
+				RuntimeCharacter.isLeftDir(item.direction);
+			sprite.sprite = battler.getAttackAni(lastDir, aniRate);
 		}
 
 		/// <summary>

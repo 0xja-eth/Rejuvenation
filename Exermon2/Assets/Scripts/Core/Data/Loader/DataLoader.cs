@@ -407,7 +407,7 @@ namespace Core.Data.Loaders {
 				// 处理基本类型
 				if (type == typeof(int)) return (int)data;
 				if (type == typeof(double)) return (double)data;
-				if (type == typeof(float)) return (double)data;
+				if (type == typeof(float)) return (float)data;
 				if (type == typeof(string)) return (string)data;
 				if (type == typeof(bool)) return (bool)data;
 
@@ -415,7 +415,7 @@ namespace Core.Data.Loaders {
 				return data as JsonData;
 			} catch (Exception e) {
 				Debug.LogError(e + "\n" + e.StackTrace + "\n\nError (convert type: " 
-					+ type + ") in covnerting " + data);
+					+ type + ") in covnerting " + data + " (type: " + data.GetType() + ")");
 				throw new Exception();
 			}
 		}

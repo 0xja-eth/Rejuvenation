@@ -78,14 +78,6 @@ namespace MapModule.Data {
         static float DefaultMoveSpeed = 2;
 
         /// <summary>
-        /// 行走图常量定义
-        /// </summary>
-        public const int XCnt = 3, YCnt = 3;
-
-        const int DefaultPattern = 1;
-        const float PatternFrequency = 0.2f;
-
-        /// <summary>
         /// 方向位移
         /// </summary>
         public static readonly float[] dirX = new float[] {
@@ -199,8 +191,8 @@ namespace MapModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		[AutoConvert] public float x { get; set; }
-		[AutoConvert] public float y { get; set; }
+		//[AutoConvert] public float x { get; set; }
+		//[AutoConvert] public float y { get; set; }
 		[AutoConvert]
 		public TimeType timeType { get; set; } = TimeType.Present; // 时空类型
 		[AutoConvert]
@@ -385,27 +377,27 @@ namespace MapModule.Data {
 
         #endregion
 
-        #region 图案控制
+        //#region 图案控制
 
-        /// <summary>
-        /// 图案
-        /// </summary>
-        float patternTime = 0;
-        int _pattern = DefaultPattern;
-        public int pattern => _pattern >= XCnt ? 1 : _pattern;
+        ///// <summary>
+        ///// 图案
+        ///// </summary>
+        //float patternTime = 0;
+        //int _pattern = DefaultPattern;
+        //public int pattern => _pattern >= XCnt ? 1 : _pattern;
 
-        /// <summary>
-        /// 更新图案
-        /// </summary>
-        void updatePattern() {
-            patternTime += Time.deltaTime;
-            if (patternTime > PatternFrequency) {
-                _pattern = (_pattern + 1) % (XCnt + 1);
-                patternTime = 0;
-            }
-        }
+        ///// <summary>
+        ///// 更新图案
+        ///// </summary>
+        //void updatePattern() {
+        //    patternTime += Time.deltaTime;
+        //    if (patternTime > PatternFrequency) {
+        //        _pattern = (_pattern + 1) % (XCnt + 1);
+        //        patternTime = 0;
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
         #region 状态控制
 
@@ -510,7 +502,7 @@ namespace MapModule.Data {
         /// </summary>
         protected virtual void updateIdle() {
             if (isMoving()) changeState(State.Moving);
-            _pattern = DefaultPattern;
+            //_pattern = DefaultPattern;
         }
 
         /// <summary>
@@ -518,7 +510,7 @@ namespace MapModule.Data {
         /// </summary>
         protected virtual void updateMoving() {
             if (!isMoving()) changeState(State.Idle);
-            updatePattern();
+            //updatePattern();
         }
 
         #endregion

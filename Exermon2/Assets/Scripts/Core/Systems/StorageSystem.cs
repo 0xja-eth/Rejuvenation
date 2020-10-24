@@ -80,11 +80,7 @@ namespace Core.Systems {
         /// 缓存文件路径
         /// </summary>
         public const string StaticDataFilename = ".static";
-        public const string CacheDataFilename = ".cache";
         public const string ConfigDataFilename = ".config";
-
-        public const string EngCacheDataFilename = ".eng.cache";
-        //public const string EngRecordFilename = ".eng.record";
 
         /// <summary>
         /// 加密盐
@@ -174,10 +170,10 @@ namespace Core.Systems {
 		/// <param name="path">文件路径</param>
 		/// <param name="name">文件名</param>
 		public static void saveDataIntoFile(string data, string path, string name) {
-			path = SaveRootPath + path;
+			path = SaveRootPath + path; var filePath = path + name;
 			if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-			Debug.Log("saveToFile: " + data);
-			StreamWriter streamWriter = new StreamWriter(path + name, false);
+			StreamWriter streamWriter = new StreamWriter(filePath, false);
+			Debug.Log("saveToFile: " + filePath + ": " + data);
 			streamWriter.Write(data);
 			streamWriter.Close();
 			streamWriter.Dispose();
@@ -196,7 +192,6 @@ namespace Core.Systems {
 		/// <param name="filePath">文件路径（包括文件名）</param>
 		public static void loadObjectFromFile<T>(
 			ref T data, string filePath) where T : BaseData {
-			Debug.Log("Loading " + data + " from " + filePath);
 			var json = loadJsonFromFile(filePath);
 			data = DataLoader.load(data, json);
 		}
@@ -231,10 +226,24 @@ namespace Core.Systems {
 			if (!File.Exists(filePath)) return "";
 			StreamReader streamReader = new StreamReader(filePath);
 			string data = streamReader.ReadToEnd();
-			Debug.Log("loadFromFile: " + data);
+			Debug.Log("loadFromFile: " + filePath + ": " + data);
 			streamReader.Close();
 			streamReader.Dispose();
 			return data;
+		}
+
+		/// <summary>
+		/// 是否存在指定文件
+		/// </summary>
+		/// <param name="path">文件路径</param>
+		/// <param name="name">文件名</param>
+		public static bool hasFile(string path, string name) {
+			return hasFile(path + name);
+		}
+		/// <param name="filePath">文件路径（包括文件名）</param>
+		public static bool hasFile(string filePath) {
+			filePath = SaveRootPath + filePath;
+			return File.Exists(filePath);
 		}
 
 		/// <summary>
@@ -247,6 +256,7 @@ namespace Core.Systems {
 		}
 		/// <param name="filePath">文件路径（包括文件名）</param>
 		public static void deleteFile(string filePath) {
+			filePath = SaveRootPath + filePath;
 			if (File.Exists(filePath)) File.Delete(filePath);
 		}
 
