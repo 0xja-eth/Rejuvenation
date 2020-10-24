@@ -213,6 +213,9 @@ namespace PlayerModule.Data {
 		[AutoConvert]
 		public SceneSystem.Scene stage { get; set; } = FirstStage;
 
+        [AutoConvert]
+        public bool firstStart { get; set; } = true;
+
 		/// <summary>
 		/// 转化为显示数据
 		/// </summary>

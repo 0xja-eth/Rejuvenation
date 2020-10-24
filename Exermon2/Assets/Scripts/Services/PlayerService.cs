@@ -97,6 +97,8 @@ namespace PlayerModule.Services {
 			if (load && hasPlayer()) loadPlayer();
 			else createPlayer();
 
+            //test
+            player.stage = SceneSystem.Scene.TurialScene;
 			sceneSys.pushScene(player.stage, async: true);
 			return sceneSys.startAsync(onProgress, onCompleted);
 		}

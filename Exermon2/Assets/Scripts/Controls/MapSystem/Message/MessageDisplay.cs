@@ -24,7 +24,37 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		public new Text name = null; 
 		public GameObject nameFrame = null; 
-		public Image bust = null;
+        public OptionContainer optionContainer = null;
+
+        /// <summary>
+        /// 内部组件设置
+        /// </summary>
+        [RequireTarget]
+        [HideInInspector]
+        public DialogWindow window;
+
+        #region 数据操作
+
+        /// <summary>
+        /// 物品改变回调
+        /// </summary>
+        protected override void onItemChanged() {
+            base.onItemChanged();
+            if (printing) stopPrint();
+            optionContainer.setItems(item.options);
+        }
+
+        /// <summary>
+        /// 物品清除回调
+        /// </summary>
+        protected override void onItemClear() {
+            base.onItemClear();
+            if (printing) stopPrint();
+            optionContainer.clearItems();
+        }
+
+        #endregion
+
 
         #region 界面绘制
 
@@ -35,7 +65,7 @@ namespace UI.MapSystem.Controls {
         protected override void drawExactlyItem(DialogMessage item) {
             base.drawExactlyItem(item);
             drawName(item);
-            drawBust(item);
+            drawImage(item);
         }
 
 		/// <summary>
@@ -51,13 +81,12 @@ namespace UI.MapSystem.Controls {
         /// 绘制立绘
         /// </summary>
         /// <param name="item"></param>
-        void drawBust(DialogMessage item) {
+        override protected void drawImage(DialogMessage item) {
             var bust = item.bust();
 
-            this.bust.gameObject.SetActive(bust != null);
-            this.bust.overrideSprite = MessageSender.busts(item.name)[0];
-            this.bust.gameObject.SetActive(true);
-            //this.bust.SetNativeSize();
+            image.gameObject.SetActive(bust != null);
+            image.overrideSprite = MessageSender.busts(item.name)[0];
+            image.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -67,12 +96,25 @@ namespace UI.MapSystem.Controls {
             base.drawEmptyItem();
             name.text = "";
             nameFrame?.SetActive(false);
-            bust.gameObject.SetActive(false);
-            bust.overrideSprite = null;
-            bust.SetNativeSize();
         }
 
-		#endregion
+        /// <summary>
+        /// 打印开始回调
+        /// </summary>
+        protected override void onPrintStart() {
+            base.onPrintStart();
+            optionContainer.deactivate();
+        }
 
-	}
+        /// <summary>
+        /// 打印结束回调
+        /// </summary>
+        protected override void onPrintEnd() {
+            base.onPrintEnd();
+            optionContainer.activate();
+        }
+
+        #endregion
+
+    }
 }

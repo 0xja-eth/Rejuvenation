@@ -410,9 +410,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   message: {fileID: 8728656984462568249}
-  optionContainer: {fileID: 7194418873685946151}
+  image: {fileID: 4183807474531782099}
   printDeltaTime: 0.05
-  window: {fileID: 0}
 --- !u!1 &8728656984272188297
 GameObject:
   m_ObjectHideFlags: 0

@@ -61,6 +61,8 @@ namespace UI.MapSystem {
 		public Map map1, map2;
 
         public DialogWindow dialogWindow;
+        public DialogWindow logWindow;
+        public IllustrationWindow illustrationWindow;
 
 		public Canvas splitCanvas;
 
@@ -140,12 +142,24 @@ namespace UI.MapSystem {
 			base.start();
 			setupPlayer();
             setupUI();
+            setupStartIllustration();
 		}
 
 		/// <summary>
 		/// 玩家启动回调
 		/// </summary>
 		public virtual void onPlayerStart() { }
+
+        /// <summary>
+        /// 开始背景插画
+        /// </summary>
+        void setupStartIllustration() {
+            if (playerSer.player.firstStart) {
+                illustrationWindow?.activate();
+            }
+            //else
+            //    playerSer.player.firstStart = false;
+        }
 
         /// <summary>
         /// 设置主界面
@@ -183,8 +197,12 @@ namespace UI.MapSystem {
 		/// 更新对话框
 		/// </summary>
 		void updateDialog() {
-			if (messageSer.messageCount() > 0 && !isBusy())
-				dialogWindow.activate();
+            if (messageSer.messageCount() > 0 && !isBusy()) {
+                if (messageSer.DialogFlag)
+                    dialogWindow.activate();
+                else
+                    logWindow.activate();
+            }
 		}
 
 		#endregion
@@ -252,7 +270,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isDialogued() {
-			return dialogWindow.shown;
+			return dialogWindow.shown || logWindow .shown || illustrationWindow.shown;
 		}
 
 		#endregion
