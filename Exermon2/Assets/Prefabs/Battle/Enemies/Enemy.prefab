@@ -832,6 +832,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 4266882848027395256, guid: c009c49a266c1f34cbbda23bb0a50499,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4266882848027395257, guid: c009c49a266c1f34cbbda23bb0a50499,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -912,6 +917,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 5003244700024501808, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
+        type: 3}
+      propertyPath: rate
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003244700024501808, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
+        type: 3}
+      propertyPath: bulletPerfab
+      value: 
+      objectReference: {fileID: 3511005868380528688, guid: 2a0e5e0b8c2db75429987e44e38c9981,
+        type: 3}
     - target: {fileID: 7891810647444413499, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
         type: 3}
       propertyPath: m_LocalPosition.x

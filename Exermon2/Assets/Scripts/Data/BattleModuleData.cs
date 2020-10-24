@@ -1482,7 +1482,6 @@ namespace BattleModule.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		[AutoConvert]
 		public virtual int energy { get; protected set; } = 0;
 		public float energyRate => energy * 1.0f / MaxEnergy;
 

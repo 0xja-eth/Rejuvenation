@@ -55,8 +55,9 @@ namespace UI.MapSystem.Controls {
             var bust = item.bust();
 
             this.bust.gameObject.SetActive(bust != null);
-            this.bust.overrideSprite = bust;
-            this.bust.SetNativeSize();
+            this.bust.overrideSprite = MessageSender.busts(item.name)[0];
+            this.bust.gameObject.SetActive(true);
+            //this.bust.SetNativeSize();
         }
 
         /// <summary>
