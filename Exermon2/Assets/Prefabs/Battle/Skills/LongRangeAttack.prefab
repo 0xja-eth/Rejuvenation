@@ -60,6 +60,8 @@ MonoBehaviour:
     _freezing: 0.2
     _startAnimation: {fileID: 7400000, guid: ae31fc19a23ebf34eac39f111bf1a1bf, type: 2}
     _targetAnimation: {fileID: 7400000, guid: d5562b2009bacc84cb812c2971c12062, type: 2}
+  speed: 3
+  range: 4
   battler: {fileID: 0}
   bulletPerfab: {fileID: 6344433871323983421, guid: 900add40739dc1042b9c9b577a1223fb,
     type: 3}

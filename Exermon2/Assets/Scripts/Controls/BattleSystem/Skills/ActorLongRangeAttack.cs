@@ -28,12 +28,13 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 内部组件设置
 		/// </summary>
-		BulletProcessor bullet;
+		List<BulletProcessor> bullets = new List<BulletProcessor>();
 
 		/// <summary>
 		/// 世界变换
 		/// </summary>
 		Transform world => battler.transform.parent;
+
 
 		#region	更新
 
@@ -49,10 +50,14 @@ namespace UI.MapSystem.Controls {
 		/// 更新子弹
 		/// </summary>
 		void udpateBullet() {
-			if (!bullet) return;
-			if (bullet.destroyFlag) {
-				bullet.destroy(true); bullet = null;
-			}
+            foreach(var bullet in bullets) {
+                if (!bullet) return;
+                if (bullet.destroyFlag) {
+                    bullet.destroy(true);
+                    bullets.Remove(bullet);
+                    //bullet = null;
+                }
+            }
 		}
 
 		#endregion
@@ -73,7 +78,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		public override void onUse() {
 			base.onUse();
-			bullet = createBullet();
+            var bullet = createBullet();
+            bullets.Add(bullet);
 		}
 
         /// <summary>
@@ -81,7 +87,7 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         /// <returns></returns>
         public override bool isApplyValid() {
-            return bullet;
+            return bullets.Count >= 1;
         }
 
         /// <summary>

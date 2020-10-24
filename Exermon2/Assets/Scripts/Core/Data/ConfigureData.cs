@@ -47,7 +47,7 @@ namespace Core.Data {
 		/// 载具按键
 		/// </summary>
 		[AutoConvert]
-		public KeyCode takeKey { get; set; } = KeyCode.Return; // 乘降键
+		public KeyCode takeKey { get; set; } = KeyCode.E; // 乘降键
 
 		/// <summary>
 		/// 道具按键

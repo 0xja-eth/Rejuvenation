@@ -31,14 +31,22 @@ namespace UI.MapSystem.Controls {
 		/// 进入区域的实体列表
 		/// </summary>
 		List<MapCharacter> entries = new List<MapCharacter>();
-		
-		#region 内容控制
 
-		/// <summary>
-		/// 是否在区域内
-		/// </summary>
-		/// <returns></returns>
-		public bool isEnter(MapCharacter character) {
+        protected override void update() {
+            base.update();
+            foreach(MapCharacter mapCharacter in entries) {
+                var obj = mapCharacter as MapShip;
+                obj?.tryLand(this);
+            }
+        }
+
+        #region 内容控制
+
+        /// <summary>
+        /// 是否在区域内
+        /// </summary>
+        /// <returns></returns>
+        public bool isEnter(MapCharacter character) {
 			return entries.Contains(character);
 		}
 

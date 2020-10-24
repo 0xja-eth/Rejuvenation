@@ -176,6 +176,13 @@ namespace UI.BattleSystem.Controls {
 					customBehaviour(); return;
 				default: stop(); return;
 			}
+            var dist = (pos - player.pos).magnitude;
+            var curr = currentProcessor;
+            if (curr && dist <= curr.range) {
+                runtimeCharacter.direction = d;
+                return;
+            }
+
 			moveDirection(d);
 		}
 

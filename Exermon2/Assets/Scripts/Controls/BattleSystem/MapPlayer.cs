@@ -26,11 +26,12 @@ namespace UI.BattleSystem.Controls {
         //public List<Material> materials = new List<Material>();
         public Material material;
         public GameObject seperationPrefab;//分身预制件
+        public GameObject keyTip;
 
-		/// <summary>
-		/// 外部变量定义
-		/// </summary>
-		public int presentCharacterId = 1;
+        /// <summary>
+        /// 外部变量定义
+        /// </summary>
+        public int presentCharacterId = 1;
 		public int pastCharacterId = 2;
 
 		public bool inputable = true;
@@ -57,7 +58,7 @@ namespace UI.BattleSystem.Controls {
         const float flashCoolTime = 1f;//闪烁冷却时间
         float flashCoolTimeRemain = flashCoolTime;//闪烁冷却计时
         const float dissolveSpeed = 3f;//角色消失/出现    速度
-        const float flashDistance = 2f;//闪烁距离
+        public float flashDistance = 2f;//闪烁距离
         public float dissolveAnt = 0f;//据色出现/消失参数
         public Vector2 flashPos;//闪烁最终落点
 

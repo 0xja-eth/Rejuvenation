@@ -1640,11 +1640,12 @@ namespace BattleModule.Data {
 		/// 思考时间
 		/// </summary>
 		float idleTime = 0;
+        
 
-		/// <summary>
-		/// 自定义敌人
-		/// </summary>
-		public Enemy customEnemy = null;
+        /// <summary>
+        /// 自定义敌人
+        /// </summary>
+        public Enemy customEnemy = null;
 
 		/// <summary>
 		/// 战斗者
@@ -1710,6 +1711,7 @@ namespace BattleModule.Data {
 		void updateSkill() {
 			var skill = randomSkill();
 			if (skill == null) return;
+
 			addAction(skill.skill);
 		}
 

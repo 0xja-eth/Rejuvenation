@@ -12,141 +12,193 @@ using PlayerModule.Services;
 
 namespace UI.MapSystem.Controls {
 
-	using BattleSystem.Controls;
+    using BattleSystem.Controls;
 
     /// <summary>
     /// 地图上的船载具
     /// </summary>
     public class MapShip : MapVehicle {
 
-		/// <summary>
-		/// 外部变量设置
-		/// </summary>
-		public float magnetiteDist = 8; // 万象天引距离
-		public int magnetiteEnergy = 1; // 使用万象天引耗能
+        /// <summary>
+        /// 外部变量设置
+        /// </summary>
+        public float magnetiteDist = 8; // 万象天引距离
+        public int magnetiteEnergy = 1; // 使用万象天引耗能
 
-		/// <summary>
-		/// 内部变量定义
-		/// </summary>
-		WaterColumn targetCol; // 目标柱子
+        /// <summary>
+        /// 内部变量定义
+        /// </summary>
+        WaterColumn targetCol; // 目标柱子
 
-		bool boardFlag = false;
+        bool boardFlag = false;
 
-		/// <summary>
-		/// 乘客玩家
-		/// </summary>
-		MapPlayer player => passengers.getSubView(0) as MapPlayer;
-		RuntimeActor runtimeActor => player?.runtimeActor;
+        /// <summary>
+        /// 乘客玩家
+        /// </summary>
+        public MapPlayer player => passengers.getSubView(0) as MapPlayer;
+        RuntimeActor runtimeActor => player?.runtimeActor;
 
-		/// <summary>
-		/// 外部系统设置
-		/// </summary>
-		GameService gameSer;
+        /// <summary>
+        /// 外部系统设置
+        /// </summary>
+        GameService gameSer;
 
-		/// <summary>
-		/// 初始化碰撞回调
-		/// </summary>
-		protected override void initializeCollFuncs() {
-			base.initializeCollFuncs();
+        #region 初始化
 
-			registerOnEnterFunc<WaterColumn>(onColumnColl);
+        /// <summary>
+        /// 初始化碰撞回调
+        /// </summary>
+        protected override void initializeCollFuncs() {
+            base.initializeCollFuncs();
+            registerOnEnterFunc<MapPlayer>(onColliderEnterWithPlayer);
+            registerOnEnterFunc<MapRegion>(onColliderEnterWithGround);
+            registerOnExitFunc<MapPlayer>(onColliderExitWithPlayer);
+            registerOnExitFunc<MapRegion>(onColliderExitWithGround);
 
-			registerOnStayFunc<MapPlayer>(tryBoard);
-			boardingRegion.registerOnStayFunc<MapRegion>(tryLand);
-		}
 
-		#region 更新
+            registerOnStayFunc<MapPlayer>(tryBoard);
+            boardingRegion.registerOnStayFunc<MapRegion>(tryLand);
+        }
 
-		/// <summary>
-		/// 更新
-		/// </summary>
-		protected override void update() {
-			base.update();
-			if (player) updateInput();
-		}
+        #endregion
 
-		/// <summary>
-		/// 更新输入
-		/// </summary>
-		void updateInput() {
-			if (isMagnetite()) useMagnetite();
-		}
+        #region 更新
 
-		#endregion
+        /// <summary>
+        /// 更新
+        /// </summary>
+        protected override void update() {
+            base.update();
+            if (player) updateInput();
+        }
 
-		#region 磁石柱子控制
+        /// <summary>
+        /// 更新输入
+        /// </summary>
+        void updateInput() {
+            if (isMagnetite()) useMagnetite();
+        }
 
-		/// <summary>
-		/// 是否使用磁石
-		/// </summary>
-		/// <returns></returns>
-		public bool isMagnetite() {
-			return runtimeActor.energy >= magnetiteEnergy && 
-				Input.GetKeyDown(gameSer.keyboard.magnetiteKey);
-		}
+        #endregion
 
-		/// <summary>
-		/// 使用磁石
-		/// </summary>
-		void useMagnetite() {
-			runtimeActor?.addEnergy(-magnetiteEnergy);
+        #region 磁石柱子控制
 
-			var dir = player.direction;
-			var vec = RuntimeCharacter.dir82Vec(dir);
-			var resList = Physics2D.RaycastAll(pos, vec, magnetiteDist);
+        /// <summary>
+        /// 是否使用磁石
+        /// </summary>
+        /// <returns></returns>
+        public bool isMagnetite() {
+            return runtimeActor.energy >= magnetiteEnergy &&
+                Input.GetKeyDown(gameSer.keyboard.magnetiteKey);
+        }
 
-			foreach(var res in resList) {
-				var obj = res.collider?.gameObject;
+        /// <summary>
+        /// 使用磁石
+        /// </summary>
+        void useMagnetite() {
+            var dir = player.direction;
+            var vec = RuntimeCharacter.dir82Vec(dir);
+            //var resList = Physics2D.RaycastAll(pos, vec, magnetiteDist);
 
-				targetCol = SceneUtils.get<WaterColumn>(obj);
-				if (targetCol == null) continue;
+            Collider2D collider2d = Physics2D.OverlapBox(pos, collider.bounds.size, 0f, 1 << 8);
+            for (int i = 1; i < magnetiteDist; i++) {
+                collider2d = Physics2D.OverlapBox(pos + vec * i, collider.bounds.size, 0f, 1 << 8);
+                debugLog(collider2d?.name);
+                debugLog(collider?.bounds.size);
+                var obj = collider2d?.gameObject;
+                targetCol = SceneUtils.get<WaterColumn>(obj);
+                if (targetCol == null) continue;
+                runtimeActor.addEnergy(-magnetiteEnergy);
+                moveDirection(dir); break;
+            }
+            //foreach(var res in resList) {
+            //	var obj = res.collider?.gameObject;
 
-				moveDirection(dir); break;
-			}
-		}
+            //	targetCol = SceneUtils.get<WaterColumn>(obj);
+            //	if (targetCol == null) continue;
 
-		/// <summary>
-		/// 与柱子相撞
-		/// </summary>
-		/// <param name="col"></param>
-		void onColumnColl(WaterColumn col) {
-			if (col == targetCol) stop();
-		}
+            //	moveDirection(dir); break;
+            //}
+        }
 
-		#endregion
+        /// <summary>
+        /// 与柱子相撞
+        /// </summary>
+        /// <param name="col"></param>
+        void onColumnColl(WaterColumn col) {
+            if (col == targetCol) stop();
+        }
 
-		#region 乘降操作
+        #endregion
 
-		/// <summary>
-		/// 是否需要乘降
-		/// </summary>
-		/// <returns></returns>
-		public bool isTake() {
-			return Input.GetKeyDown(gameSer.keyboard.takeKey);
-		}
+        #region 乘降操作
 
-		/// <summary>
-		/// 尝试自动上船
-		/// </summary>
-		/// <param name="player"></param>
-		void tryBoard(MapPlayer player) {
-			if (!isTake() || isFreezing()) return;
-			if (!boardFlag && addPassenger(player, true))
-				boardFlag = true;
-		}
+        /// <summary>
+        /// 是否需要乘降
+        /// </summary>
+        /// <returns></returns>
+        public bool isTake() {
+            return Input.GetKeyDown(gameSer.keyboard.takeKey);
+        }
 
-		/// <summary>
-		/// 尝试自动下船
-		/// </summary>
-		/// <param name="region"></param>
-		void tryLand(MapRegion region) {
-			debugLog("tryLand");
-			if (!isTake() || isFreezing()) return;
-			if (boardFlag && landingRegions.Contains(region)
-				&& removeAllPassengers()) boardFlag = false;
-		}
+        /// <summary>
+        /// 尝试自动上船
+        /// </summary>
+        /// <param name="player"></param>
+        void tryBoard(MapPlayer player) {
+            if (!isTake() || isFreezing()) return;
+            if (!boardFlag && addPassenger(player, true))
+                boardFlag = true;
+        }
 
-		#endregion
+        /// <summary>
+        /// 尝试自动下船
+        /// </summary>
+        /// <param name="region"></param>
+        public void tryLand(MapRegion region) {
+            debugLog("tryLand");
+            if (!isTake() || isFreezing()) return;
+            if (boardFlag && landingRegions.Contains(region)
+                && removeAllPassengers()) boardFlag = false;
+        }
 
-	}
+        #endregion
+
+        #region 按键提示
+
+        /// <summary>
+        /// 人进入船碰撞体
+        /// </summary>
+        void onColliderEnterWithPlayer(MapPlayer p) {
+            p?.keyTip.SetActive(true);
+        }
+
+        /// <summary>
+        /// 船进入地面碰撞体
+        /// </summary>
+        /// <param name="region"></param>
+        void onColliderEnterWithGround(MapRegion region) {
+            if (region.gameObject.layer == 13)//"Ground"
+                player?.keyTip.SetActive(true);
+        }
+
+        /// <summary>
+        /// 人离开船碰撞体
+        /// </summary>
+        /// <param name="p"></param>
+        void onColliderExitWithPlayer(MapPlayer p) {
+            p?.keyTip.SetActive(false);
+        }
+
+        /// <summary>
+        /// 船离开地面碰撞体
+        /// </summary>
+        /// <param name="region"></param>
+        void onColliderExitWithGround(MapRegion region) {
+            if (region.gameObject.layer == 13)//"Ground"
+                player?.keyTip.SetActive(false);
+        }
+
+        #endregion
+    }
 }
