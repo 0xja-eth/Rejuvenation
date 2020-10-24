@@ -203,27 +203,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_2_2
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 287
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8108370114245f190800000000000000
-      internalID: -7929358721699577832
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Character_2_3
       rect:
         serializedVersion: 2
@@ -312,7 +291,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 5
-        y: 78
+        y: 77
         width: 35
         height: 75
       alignment: 9
