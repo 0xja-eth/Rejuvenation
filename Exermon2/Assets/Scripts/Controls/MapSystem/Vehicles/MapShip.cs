@@ -50,8 +50,12 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         protected override void initializeCollFuncs() {
             base.initializeCollFuncs();
-            registerOnEnterFunc<MapEntity>(showTip);
-            registerOnExitFunc<MapEntity>(hideTip);
+            registerOnEnterFunc<MapPlayer>(onColliderEnterWithPlayer);
+            registerOnEnterFunc<MapRegion>(onColliderEnterWithGround);
+            registerOnExitFunc<MapPlayer>(onColliderExitWithPlayer);
+            registerOnExitFunc<MapRegion>(onColliderExitWithGround);
+
+
             registerOnStayFunc<MapPlayer>(tryBoard);
             boardingRegion.registerOnStayFunc<MapRegion>(tryLand);
         }
@@ -92,8 +96,6 @@ namespace UI.MapSystem.Controls {
         /// 使用磁石
         /// </summary>
         void useMagnetite() {
-            runtimeActor?.addEnergy(-magnetiteEnergy);
-
             var dir = player.direction;
             var vec = RuntimeCharacter.dir82Vec(dir);
             //var resList = Physics2D.RaycastAll(pos, vec, magnetiteDist);
@@ -106,7 +108,7 @@ namespace UI.MapSystem.Controls {
                 var obj = collider2d?.gameObject;
                 targetCol = SceneUtils.get<WaterColumn>(obj);
                 if (targetCol == null) continue;
-                player.runtimeActor.addEnergy(-magnetiteEnergy);
+                runtimeActor.addEnergy(-magnetiteEnergy);
                 moveDirection(dir); break;
             }
             //foreach(var res in resList) {
@@ -165,30 +167,36 @@ namespace UI.MapSystem.Controls {
         #region 按键提示
 
         /// <summary>
-        /// 提示控制
+        /// 人进入船碰撞体
         /// </summary>
-        void showTip(MapEntity entity) {
-            var p = entity as MapPlayer;
-            if (p) {
-                p.keyTip.SetActive(true);
-                return;
-            }
-
-            var region = entity as MapRegion;
-            if (region.gameObject.layer == 13)//"Ground"
-                player.keyTip.SetActive(true);
+        void onColliderEnterWithPlayer(MapPlayer p) {
+            p?.keyTip.SetActive(true);
         }
 
-        void hideTip(MapEntity entity) {
-            var p = entity as MapPlayer;
-            if (p) {
-                p.keyTip.SetActive(false);
-                return;
-            }
-
-            var region = entity as MapRegion;
+        /// <summary>
+        /// 船进入地面碰撞体
+        /// </summary>
+        /// <param name="region"></param>
+        void onColliderEnterWithGround(MapRegion region) {
             if (region.gameObject.layer == 13)//"Ground"
-                player.keyTip.SetActive(false);
+                player?.keyTip.SetActive(true);
+        }
+
+        /// <summary>
+        /// 人离开船碰撞体
+        /// </summary>
+        /// <param name="p"></param>
+        void onColliderExitWithPlayer(MapPlayer p) {
+            p?.keyTip.SetActive(false);
+        }
+
+        /// <summary>
+        /// 船离开地面碰撞体
+        /// </summary>
+        /// <param name="region"></param>
+        void onColliderExitWithGround(MapRegion region) {
+            if (region.gameObject.layer == 13)//"Ground"
+                player?.keyTip.SetActive(false);
         }
 
         #endregion
