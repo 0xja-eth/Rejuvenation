@@ -27347,7 +27347,7 @@ PrefabInstance:
     - target: {fileID: 609721154294055838, guid: 9b96b8a133a721245b097ef145e29af5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 609721154294055838, guid: 9b96b8a133a721245b097ef145e29af5,
         type: 3}

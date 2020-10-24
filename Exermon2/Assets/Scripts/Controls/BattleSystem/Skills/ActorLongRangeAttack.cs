@@ -50,11 +50,13 @@ namespace UI.MapSystem.Controls {
 		/// 更新子弹
 		/// </summary>
 		void udpateBullet() {
-            foreach(var bullet in bullets) {
+			var bullets = new List<BulletProcessor>(this.bullets);
+
+			foreach (var bullet in bullets) {
                 if (!bullet) return;
                 if (bullet.destroyFlag) {
                     bullet.destroy(true);
-                    bullets.Remove(bullet);
+                    this.bullets.Remove(bullet);
                     //bullet = null;
                 }
             }

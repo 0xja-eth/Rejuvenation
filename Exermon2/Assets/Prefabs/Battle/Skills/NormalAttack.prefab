@@ -85,9 +85,11 @@ MonoBehaviour:
     _frequency: 0
     _speed: 0
     _range: 0
-    _power: 1
+    _power: 1.5
     _hitting: 0.8
     _freezing: 0.1
     _startAnimation: {fileID: 7400000, guid: ae31fc19a23ebf34eac39f111bf1a1bf, type: 2}
     _targetAnimation: {fileID: 7400000, guid: d5562b2009bacc84cb812c2971c12062, type: 2}
+  speed: 1
+  range: 4
   battler: {fileID: 0}

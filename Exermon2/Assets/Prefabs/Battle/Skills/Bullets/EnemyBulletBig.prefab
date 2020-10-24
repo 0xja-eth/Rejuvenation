@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1158950963}
   - component: {fileID: 1158950965}
   - component: {fileID: 1158950964}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: AccLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,14 +284,14 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 0.4
+      scalar: 1
       minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
-          value: 0.49689484
+          time: 0.009036144
+          value: 0.7950315
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -308,8 +308,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.7256942
         - serializedVersion: 3
-          time: 0.503095
-          value: 0.49259496
+          time: 0.5121311
+          value: 0.7907316
           inSlope: -0.05188919
           outSlope: -0.05188919
           tangentMode: 0
@@ -327,7 +327,7 @@ ParticleSystem:
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0.5078449
+          value: 0.8059816
           inSlope: -0.03713516
           outSlope: -0.03713516
           tangentMode: 0
@@ -4793,8 +4793,8 @@ GameObject:
   - component: {fileID: 4485896855007366091}
   - component: {fileID: 311344262277321107}
   - component: {fileID: 5605204692474260057}
-  m_Layer: 12
-  m_Name: EnemyBullet
+  m_Layer: 16
+  m_Name: EnemyBulletBig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4830,7 +4830,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.12
+  m_Radius: 0.24
 --- !u!50 &311344262277321107
 Rigidbody2D:
   serializedVersion: 4
@@ -4867,7 +4867,5 @@ MonoBehaviour:
   showDebug: 1
   collider: {fileID: 4485896855007366091}
   skillProcessor: {fileID: 0}
-  speed: 2
-  range: 6
   throughEntities: -1
   throughWalls: -1
