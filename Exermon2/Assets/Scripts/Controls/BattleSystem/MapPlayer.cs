@@ -157,7 +157,7 @@ namespace UI.BattleSystem.Controls {
 			debugLog("OnDie");
 
 			// TODO: 重来
-			scene.restartStage(true);
+			if (isMaster()) scene.restartStage(true);
 		}
 
 		#endregion
