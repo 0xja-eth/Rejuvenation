@@ -39,7 +39,7 @@ namespace UI.MapSystem {
         /// </summary>
         protected override void initializeOthers() {
             base.initializeOthers();
-			playerSer.startGame(true);
+			playerSer.startGame(false);
         }
 
         /// <summary>

@@ -26,11 +26,12 @@ namespace UI.BattleSystem.Controls {
         //public List<Material> materials = new List<Material>();
         public Material material;
         public GameObject seperationPrefab;//分身预制件
+        public GameObject keyTip;
 
-		/// <summary>
-		/// 外部变量定义
-		/// </summary>
-		public int presentCharacterId = 1;
+        /// <summary>
+        /// 外部变量定义
+        /// </summary>
+        public int presentCharacterId = 1;
 		public int pastCharacterId = 2;
 
 		public bool inputable = true;
