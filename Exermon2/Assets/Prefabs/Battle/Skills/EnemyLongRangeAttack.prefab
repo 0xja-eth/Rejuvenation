@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7891810647444413499}
   - component: {fileID: 5003244700024501808}
   m_Layer: 10
-  m_Name: LongRangeAttack
+  m_Name: EnemyLongRangeAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4042018778852954307}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   collider: {fileID: 0}
-  rate: 10
+  rate: 20
   useCustomParams: 1
   customSkill:
     cacheable: 1
@@ -60,8 +60,8 @@ MonoBehaviour:
     _freezing: 0.2
     _startAnimation: {fileID: 7400000, guid: ae31fc19a23ebf34eac39f111bf1a1bf, type: 2}
     _targetAnimation: {fileID: 7400000, guid: d5562b2009bacc84cb812c2971c12062, type: 2}
-  speed: 3
+  speed: 2
   range: 4
   battler: {fileID: 0}
-  bulletPerfab: {fileID: 6344433871323983421, guid: 900add40739dc1042b9c9b577a1223fb,
+  bulletPerfab: {fileID: 3511005868380528688, guid: 216238158da339e44b0ecd41f4b90086,
     type: 3}

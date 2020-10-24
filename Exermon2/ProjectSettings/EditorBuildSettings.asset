@@ -23,9 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Maps/TaiqingRoom2Scene.unity
     guid: d383c3bc0529ffa4f9f90d00543ef83b
-  - enabled: 1
-    path: Assets/Scenes/Maps/FusangCorridorScene.unity
-    guid: e94ebe0407cb5a444872b1a35678f78f
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Maps/FusangCopyScene.unity
     guid: f74b9573e69c8324f82f7296b9b4a29e
