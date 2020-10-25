@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -9404,10 +9404,12 @@ MonoBehaviour:
   camera: {fileID: 647793074}
   map1: {fileID: 875993867}
   map2: {fileID: 1947542047}
-  player: {fileID: 3358975077986196483}
   dialogWindow: {fileID: 1902667773}
   splitCanvas: {fileID: 1064197022}
+  mainUIDisplay: {fileID: 0}
+  playerPerfab: {fileID: 0}
   timeTravelEffect: {fileID: 0}
+  autoSave: 1
   startPos: {x: -7, y: -4}
   renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
 --- !u!114 &1262557838
@@ -9458,6 +9460,133 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
+--- !u!1 &1317077792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1317077794}
+  - component: {fileID: 1317077793}
+  m_Layer: 0
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1317077793
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317077792}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: fdb29b767f44d4e4f85a97d1a24fb9fe, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1317077794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317077792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.778358, y: -8.347724, z: 30.657547}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1420542968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18606,6 +18735,7 @@ MonoBehaviour:
   showDebug: 1
   collider: {fileID: 3563039428800048122}
   autoZ: 1
+  map: {fileID: 0}
   directionController: {fileID: 6765399398559527958}
   defaultMoveSpeed: 1
   rigidbody: {fileID: 0}
@@ -18618,7 +18748,12 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: d66e7d64619faef46a0f2cd26dab7892, type: 2}
   seperationPrefab: {fileID: 7804021619844875069, guid: 8ab6dfadabb0f144bb1aa8dd7cf4434b,
     type: 3}
+  keyTip: {fileID: 0}
+  presentCharacterId: 1
+  pastCharacterId: 2
   inputable: 1
+  maxSeperation: 1
+  flashDistance: 2
   dissolveAnt: 0
   flashPos: {x: 0, y: 0}
 --- !u!95 &3358975077986196484
@@ -18719,6 +18854,7 @@ MonoBehaviour:
   hpDisplay: {fileID: 4214867099264927592}
   hpBar: {fileID: 4031193180164052350}
   stateText: {fileID: 0}
+  aniRate: 0
 --- !u!70 &3563039428800048122
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -18861,7 +18997,7 @@ SpriteRenderer:
   m_Size: {x: 2.42, y: 1.05}
   m_AdaptiveModeThreshold: 0
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!114 &5226991695132785163
