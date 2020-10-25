@@ -11,11 +11,7 @@ using UI.MapSystem.Windows;
 namespace Assets.Scripts.Scenes {
     public class TitleScene : BaseScene {
 
-        public IllustrationWindow illustrationWindow = null;
-
-
-        SceneSystem sceneSys;
-        PlayerService playerSer;
+        public IllustrationWindow illustrationWindow = null;        PlayerService playerSer;
 
         /// <summary>
         /// 场景索引
