@@ -28,6 +28,7 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
+		public bool setNativeSize = true;
 		public float printDeltaTime = 0.05f; // 文本打印间隔时间
 
         /// <summary>
@@ -47,7 +48,10 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			imageFrame = imageFrame ?? image?.gameObject;
+			debugLog("initializeOnce: " + imageFrame);
+			debugLog("initializeOnce: " + image?.gameObject);
+			if(!imageFrame) imageFrame = image?.gameObject;
+			debugLog("initializeOnce: " + imageFrame);
 		}
 
 		#endregion
@@ -94,6 +98,8 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         /// <param name="item"></param>
         virtual protected void drawImage(DialogMessage item) {
+			debugLog("drawImage: " + imageFrame);
+
 			if (!imageFrame || !image) return;
 
 			var bust = getBust(item);
@@ -101,7 +107,8 @@ namespace UI.MapSystem.Controls {
 			imageFrame.gameObject.SetActive(bust != null);
 
 			image.overrideSprite = bust;
-			image.SetNativeSize();
+			if (setNativeSize)
+				image.SetNativeSize();
 		}
 
         /// <summary>

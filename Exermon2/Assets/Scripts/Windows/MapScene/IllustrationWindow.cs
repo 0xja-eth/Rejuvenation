@@ -35,6 +35,7 @@ namespace UI.MapSystem.Windows {
         /// 外部系统设置
         /// </summary>
         GameService gameSer;
+		SceneSystem sceneSys;
 
         #region 流程控制
         /// <summary>
@@ -56,7 +57,7 @@ namespace UI.MapSystem.Windows {
 
             var finaleScene = scene as FinalScene;
             if (finaleScene)
-                SceneSystem.Get().pushScene(SceneSystem.Scene.TitleScene);
+				sceneSys.pushScene(SceneSystem.Scene.TitleScene);
         }
         #endregion
 
@@ -93,7 +94,7 @@ namespace UI.MapSystem.Windows {
                 illustrationMessages.RemoveAt(0);
                 requestRefresh();
             }
-            else
+            else // 结束
                 deactivate();
         }
 
