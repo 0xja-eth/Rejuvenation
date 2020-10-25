@@ -62,6 +62,7 @@ namespace UI.MapSystem {
 
         public DialogWindow dialogWindow;
         public DialogWindow logWindow;
+        public DeadWindow deadWindow = null;
 
 		public Canvas splitCanvas;
 

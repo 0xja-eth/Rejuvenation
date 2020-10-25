@@ -12,6 +12,7 @@ using MapModule.Data;
 namespace UI.MapSystem.Windows {
     using Assets.Scripts.Scenes;
     using Controls;
+    using Core.Systems;
 
     /// <summary>
     /// 对话窗口层
@@ -52,6 +53,10 @@ namespace UI.MapSystem.Windows {
             var titleScene = scene as TitleScene;
             if (titleScene)
                 titleScene.startGame();
+
+            var finaleScene = scene as FinalScene;
+            if (finaleScene)
+                SceneSystem.Get().pushScene(SceneSystem.Scene.TitleScene);
         }
         #endregion
 

@@ -156,18 +156,19 @@ namespace UI.BattleSystem.Controls {
 
 			debugLog("OnDie");
 
-			// TODO: 重来
-			if (isMaster()) scene.restartStage(true);
-		}
+            // TODO: 重来
+            //if (isMaster())  scene.restartStage(true);
+            if (isMaster())  scene.deadWindow?.activate();
+        }
 
-		#endregion
+        #endregion
 
-		#region	地图控制
+        #region	地图控制
 
-		/// <summary>
-		/// 地图改变回调
-		/// </summary>
-		protected override void onMapChanged() {
+        /// <summary>
+        /// 地图改变回调
+        /// </summary>
+        protected override void onMapChanged() {
             base.onMapChanged();
 			switchCharacter();
 		}
