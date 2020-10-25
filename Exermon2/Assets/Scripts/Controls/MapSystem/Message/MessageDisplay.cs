@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using UI.Common.Controls.ItemDisplays;
+using Config;
+using Core.Data.Loaders;
 
 using MapModule.Data;
+using PlayerModule.Services;
 
 namespace UI.MapSystem.Controls {
 
@@ -20,11 +22,18 @@ namespace UI.MapSystem.Controls {
     public class MessageDisplay : MessageBaseDisplay {
 
 		/// <summary>
+		/// 常量定义
+		/// </summary>
+		const string WangZi = "王子";
+		const string Zhizi = "智子";
+
+		/// <summary>
 		/// 外部组件设置
 		/// </summary>
-        public new Text name = null;
-        public GameObject nameFrame = null;
-        public OptionContainer optionContainer = null;
+		public new Text name;
+        public GameObject nameFrame;
+
+		public OptionContainer optionContainer;
 
         /// <summary>
         /// 内部组件设置
@@ -33,15 +42,34 @@ namespace UI.MapSystem.Controls {
         [HideInInspector]
         public DialogWindow window;
 
-        #region 数据操作
+		/// <summary>
+		/// 内部变量设置
+		/// </summary>
+		Dictionary<string, int> bustIdDict = new Dictionary<string, int>();
 
-        /// <summary>
-        /// 物品改变回调
-        /// </summary>
-        protected override void onItemChanged() {
+		/// <summary>
+		/// 外部系统设置
+		/// </summary>
+		PlayerService playerSer;
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
+			base.initializeOnce();
+			bustIdDict.Add(WangZi, 0); // 0 表示跟随主角
+			bustIdDict.Add(Zhizi, 2);
+		}
+
+		#region 数据操作
+
+		/// <summary>
+		/// 物品改变回调
+		/// </summary>
+		protected override void onItemChanged() {
             base.onItemChanged();
             if (printing) stopPrint();
-            optionContainer.setItems(item.options);
+            optionContainer?.setItems(item.options);
         }
 
         /// <summary>
@@ -50,19 +78,32 @@ namespace UI.MapSystem.Controls {
         protected override void onItemClear() {
             base.onItemClear();
             if (printing) stopPrint();
-            optionContainer.clearItems();
+            optionContainer?.clearItems();
         }
 
-        #endregion
+		/// <summary>
+		/// 获取立绘
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public Sprite[] busts(string name) {
+			if (bustIdDict.ContainsKey(name)) {
+				var bid = bustIdDict[name];
+				if (bid == 0) bid = playerSer.actor.characterId;
+				return AssetLoader.loadAssets<Sprite>(Asset.Type.Bust, bid);
+			}
+			return null;
+		}
 
+		#endregion
 
-        #region 界面绘制
+		#region 界面绘制
 
-        /// <summary>
-        /// 绘制物品
-        /// </summary>
-        /// <param name="item"></param>
-        protected override void drawExactlyItem(DialogMessage item) {
+		/// <summary>
+		/// 绘制物品
+		/// </summary>
+		/// <param name="item"></param>
+		protected override void drawExactlyItem(DialogMessage item) {
             base.drawExactlyItem(item);
             drawName(item);
             drawImage(item);
@@ -73,23 +114,20 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <param name="item"></param>
 		void drawName(DialogMessage item) {
-			nameFrame?.SetActive(!string.IsNullOrEmpty(item.name));
+			if(nameFrame) nameFrame.SetActive(!string.IsNullOrEmpty(item.name));
             name.text = item.name;
 		}
 
-        /// <summary>
-        /// 绘制立绘
-        /// </summary>
-        /// <param name="item"></param>
-        override protected void drawImage(DialogMessage item) {
+		/// <summary>
+		/// 获取立绘
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		protected override Sprite getBust(DialogMessage item) {
+			if (busts(item.name) != null) return busts(item.name)[0];
 
-            if (MessageSender.busts(item.name) != null)
-                image.overrideSprite = MessageSender.busts(item.name)[0];
-            else
-                image.overrideSprite = null;
-
-            image.gameObject.SetActive(image.overrideSprite != null);
-        }
+			return base.getBust(item);
+		}
 
         /// <summary>
         /// 绘制空物品
@@ -97,7 +135,7 @@ namespace UI.MapSystem.Controls {
         protected override void drawEmptyItem() {
             base.drawEmptyItem();
             name.text = "";
-            nameFrame?.SetActive(false);
+			if (nameFrame) nameFrame.SetActive(false);
         }
 
         /// <summary>
@@ -105,7 +143,7 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         protected override void onPrintStart() {
             base.onPrintStart();
-            optionContainer.deactivate();
+            optionContainer?.deactivate();
         }
 
         /// <summary>
@@ -113,7 +151,7 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         protected override void onPrintEnd() {
             base.onPrintEnd();
-            optionContainer.activate();
+            optionContainer?.activate();
         }
 
         #endregion

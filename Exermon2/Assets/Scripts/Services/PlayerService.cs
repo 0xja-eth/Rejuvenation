@@ -85,6 +85,14 @@ namespace PlayerModule.Services {
 		/// </summary>
 		/// <returns></returns>
 		public bool hasPlayer() {
+			return player != null;
+		}
+
+		/// <summary>
+		/// 是否存在存档
+		/// </summary>
+		/// <returns></returns>
+		public bool hasPlayerSave() {
 			return StorageSystem.hasFile(PlayerSaveFilename);
 		}
 
@@ -92,7 +100,7 @@ namespace PlayerModule.Services {
 		/// 开始游戏（启动了异步场景加载）
 		/// </summary>
 		public SceneSystem.Scene startGame(bool load = false) {
-			if (load && hasPlayer()) loadPlayer();
+			if (load && hasPlayerSave()) loadPlayer();
 			else createPlayer();
 
 			return player.stage;

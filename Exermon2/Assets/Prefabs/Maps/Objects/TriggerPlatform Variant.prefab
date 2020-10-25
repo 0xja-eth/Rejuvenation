@@ -7,13 +7,13 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3784183397679259746}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.2883706}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.25}
@@ -24,7 +24,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.0833333, y: 3.6639967}
+  m_Size: {x: 3, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &3753174427339587326
 MonoBehaviour:
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 1
-  triggerType: 1
+  triggerType: 3
   actions:
     m_PersistentCalls:
       m_Calls:
@@ -128,7 +128,7 @@ MonoBehaviour:
       \t \r      \t \u827E\u745F\u56FD\u4EE5\u79D1\u6280\u5B9E\u529B\u95FB\u540D\u4E16\u754C\uFF0C\u5728\u4E16\u754C\u5404\u5730\u62DB\u8D24\u7EB3\u58EB\uFF0C\u805A\u96C6\u4E86\u4E00\u6279\u4F18\u79C0\u7684\u79D1\u6280\u4EBA\u624D\uFF0C\u5728\u6B64\u5730\u4E0B\u6210\u7ACB\u4E86\u7814\u7A76\u5B9E\u9A8C\u5BA4\uFF0C\u53D1\u5C55\u672A\u6765\u79D1\u6280\u3002\r"
     name: 
     options: []
-    _bust: {fileID: 21300000, guid: a819602f56a05da4586770aaf491ed9c, type: 3}
+    _bust: {fileID: 0}
 --- !u!1001 &1017262003099073694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -218,6 +218,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 1.2201602
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502339443206229707, guid: a69a5a4e0e176f74792bc601a5c679b0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a69a5a4e0e176f74792bc601a5c679b0, type: 3}
