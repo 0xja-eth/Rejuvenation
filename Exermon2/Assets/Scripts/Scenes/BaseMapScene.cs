@@ -265,7 +265,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isDialogued() {
-			return dialogWindow.shown || logWindow .shown;
+			return dialogWindow.shown || logWindow.shown;
 		}
 
 		#endregion
