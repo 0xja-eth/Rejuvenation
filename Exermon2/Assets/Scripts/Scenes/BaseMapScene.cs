@@ -61,6 +61,7 @@ namespace UI.MapSystem {
 		public Map map1, map2;
 
         public DialogWindow dialogWindow;
+        public DialogWindow logWindow;
 
 		public Canvas splitCanvas;
 
@@ -129,7 +130,10 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			if (!hasPlayer()) return;
+            //test
+            playerSer.startGame(false);
+
+            if (!hasPlayer()) return;
 			refreshMapActive();
 		}
 
@@ -183,8 +187,12 @@ namespace UI.MapSystem {
 		/// 更新对话框
 		/// </summary>
 		void updateDialog() {
-			if (messageSer.messageCount() > 0 && !isBusy())
-				dialogWindow.activate();
+            if (messageSer.messageCount() > 0 && !isBusy()) {
+                if (messageSer.DialogFlag)
+                    dialogWindow.activate();
+                else
+                    logWindow.activate();
+            }
 		}
 
 		#endregion
@@ -259,8 +267,8 @@ namespace UI.MapSystem {
 		/// 处于对话框状态
 		/// </summary>
 		/// <returns></returns>
-		public bool isDialogued() {
-			return dialogWindow.shown;
+		public virtual bool isDialogued() {
+			return dialogWindow.shown || logWindow .shown;
 		}
 
 		#endregion

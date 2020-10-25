@@ -11,20 +11,50 @@ using MapModule.Data;
 
 namespace UI.MapSystem.Controls {
 
-    using Windows;
+	using Windows;
 
-    /// <summary>
-    /// 对话框显示
-    /// </summary>
-    [RequireComponent(typeof(DialogWindow))]
+	/// <summary>
+	/// 对话框显示
+	/// </summary>
+	[RequireComponent(typeof(DialogWindow))]
     public class MessageDisplay : MessageBaseDisplay {
 
-        /// <summary>
-        /// 外部组件设置
-        /// </summary>
+		/// <summary>
+		/// 外部组件设置
+		/// </summary>
         public new Text name = null;
         public GameObject nameFrame = null;
-        public Image bust = null;
+        public OptionContainer optionContainer = null;
+
+        /// <summary>
+        /// 内部组件设置
+        /// </summary>
+        [RequireTarget]
+        [HideInInspector]
+        public DialogWindow window;
+
+        #region 数据操作
+
+        /// <summary>
+        /// 物品改变回调
+        /// </summary>
+        protected override void onItemChanged() {
+            base.onItemChanged();
+            if (printing) stopPrint();
+            optionContainer.setItems(item.options);
+        }
+
+        /// <summary>
+        /// 物品清除回调
+        /// </summary>
+        protected override void onItemClear() {
+            base.onItemClear();
+            if (printing) stopPrint();
+            optionContainer.clearItems();
+        }
+
+        #endregion
+
 
         #region 界面绘制
 
@@ -35,32 +65,30 @@ namespace UI.MapSystem.Controls {
         protected override void drawExactlyItem(DialogMessage item) {
             base.drawExactlyItem(item);
             drawName(item);
-            drawBust(item);
+            drawImage(item);
         }
 
-        /// <summary>
-        /// 绘制名称
-        /// </summary>
-        /// <param name="item"></param>
-        void drawName(DialogMessage item) {
-            nameFrame?.SetActive(!string.IsNullOrEmpty(item.name));
+		/// <summary>
+		/// 绘制名称
+		/// </summary>
+		/// <param name="item"></param>
+		void drawName(DialogMessage item) {
+			nameFrame?.SetActive(!string.IsNullOrEmpty(item.name));
             name.text = item.name;
-        }
+		}
 
         /// <summary>
         /// 绘制立绘
         /// </summary>
         /// <param name="item"></param>
-        void drawBust(DialogMessage item) {
+        override protected void drawImage(DialogMessage item) {
 
             if (MessageSender.busts(item.name) != null)
-                bust.overrideSprite = MessageSender.busts(item.name)[0];
+                image.overrideSprite = MessageSender.busts(item.name)[0];
             else
-                bust.overrideSprite = null;
+                image.overrideSprite = null;
 
-            bust.gameObject.SetActive(bust.overrideSprite != null);
-            //this.bust.gameObject.SetActive(true);
-            //this.bust.SetNativeSize();
+            image.gameObject.SetActive(image.overrideSprite != null);
         }
 
         /// <summary>
@@ -70,9 +98,22 @@ namespace UI.MapSystem.Controls {
             base.drawEmptyItem();
             name.text = "";
             nameFrame?.SetActive(false);
-            bust.gameObject.SetActive(false);
-            bust.overrideSprite = null;
-            bust.SetNativeSize();
+        }
+
+        /// <summary>
+        /// 打印开始回调
+        /// </summary>
+        protected override void onPrintStart() {
+            base.onPrintStart();
+            optionContainer.deactivate();
+        }
+
+        /// <summary>
+        /// 打印结束回调
+        /// </summary>
+        protected override void onPrintEnd() {
+            base.onPrintEnd();
+            optionContainer.activate();
         }
 
         #endregion

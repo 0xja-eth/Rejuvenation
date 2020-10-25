@@ -16,26 +16,18 @@ namespace UI.MapSystem.Controls {
     /// <summary>
     /// 对话框显示
     /// </summary>
-    [RequireComponent(typeof(DialogWindow))]
     public class MessageBaseDisplay : ItemDisplay<DialogMessage> {
 
         /// <summary>
         /// 外部组件设置
         /// </summary>
         public Text message;
-        public OptionContainer optionContainer = null;
+        public Image image = null;
 
         /// <summary>
         /// 外部变量设置
         /// </summary>
         public float printDeltaTime = 0.05f; // 文本打印间隔时间
-
-        /// <summary>
-        /// 内部组件设置
-        /// </summary>
-        [RequireTarget]
-        [HideInInspector]
-        public DialogWindow window;
 
         /// <summary>
         /// 内部变量定义
@@ -47,7 +39,6 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         public bool printing { get; protected set; } = false; // 当前是否打印中
 
-        #region 数据操作
 
         /// <summary>
         /// 选项数目
@@ -56,26 +47,6 @@ namespace UI.MapSystem.Controls {
         public int optionCount() {
             return item.options.Count;
         }
-
-        /// <summary>
-        /// 物品改变回调
-        /// </summary>
-        protected override void onItemChanged() {
-            base.onItemChanged();
-            if (printing) stopPrint();
-            optionContainer.setItems(item.options);
-        }
-
-        /// <summary>
-        /// 物品清除回调
-        /// </summary>
-        protected override void onItemClear() {
-            base.onItemClear();
-            if (printing) stopPrint();
-            optionContainer.clearItems();
-        }
-
-        #endregion
 
         #region 界面绘制
 
@@ -86,6 +57,7 @@ namespace UI.MapSystem.Controls {
         protected override void drawExactlyItem(DialogMessage item) {
             base.drawExactlyItem(item);
             drawMessage(item);
+            drawImage(item);
         }
 
         /// <summary>
@@ -96,7 +68,17 @@ namespace UI.MapSystem.Controls {
             doRoutine(printMessage(item.message));
         }
 
+        /// <summary>
+        /// 绘制立绘
+        /// </summary>
+        /// <param name="item"></param>
+        virtual protected void drawImage(DialogMessage item) {
+            var bust = item.bust();
 
+            image.gameObject.SetActive(bust != null);
+            image.overrideSprite = bust;
+            image.gameObject.SetActive(true);
+        }
 
         /// <summary>
         /// 绘制空物品
@@ -104,6 +86,9 @@ namespace UI.MapSystem.Controls {
         protected override void drawEmptyItem() {
             base.drawEmptyItem();
             message.text = "";
+            image.gameObject.SetActive(false);
+            image.overrideSprite = null;
+            image.SetNativeSize();
         }
 
         /// <summary>
@@ -135,18 +120,16 @@ namespace UI.MapSystem.Controls {
         /// <summary>
         /// 打印开始回调
         /// </summary>
-        void onPrintStart() {
+        virtual protected void onPrintStart() {
             printing = true;
             message.text = "";
-            optionContainer.deactivate();
         }
 
         /// <summary>
         /// 打印结束回调
         /// </summary>
-        void onPrintEnd() {
+        virtual protected void onPrintEnd() {
             stopPrintReq = printing = false;
-            optionContainer.activate();
         }
 
         #endregion

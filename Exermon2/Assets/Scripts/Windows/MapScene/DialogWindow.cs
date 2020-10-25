@@ -89,6 +89,7 @@ namespace UI.MapSystem.Windows {
 		/// </summary>
 		protected override void refresh() {
 			base.refresh();
+            debugLog("message count: " + messageSer.messageCount());
 			var msg = messageSer.getMessage();
 			display.setItem(msg);
 		}

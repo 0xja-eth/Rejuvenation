@@ -39,10 +39,10 @@ namespace PlayerModule.Services {
 		/// </summary>
 		public const string DefaultPlayerName = "富文";
 
-		/// <summary>
-		/// 玩家
-		/// </summary>
-		public Player player { get; protected set; }
+        /// <summary>
+        /// 玩家
+        /// </summary>
+        public Player player { get; protected set; } = null;
 
 		/// <summary>
 		/// 快捷访问

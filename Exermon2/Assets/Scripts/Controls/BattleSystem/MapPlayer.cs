@@ -377,6 +377,15 @@ namespace UI.BattleSystem.Controls {
                 dissolveAnt += Time.deltaTime * dissolveSpeed;
                 dissolveAnt = Mathf.Clamp01(dissolveAnt);
                 material.SetFloat("_DissolveAmount", dissolveAnt);
+                //播放音频
+                if (isMaster()) {
+                    AudioSource audio = gameObject.GetComponent<AudioSource>();
+                    AudioClip clip = (AudioClip)Resources.Load("Audios/Flitch");
+                    audio.clip = clip;
+                    audio.volume = 0.5f;
+                    audio.Play();
+                    //audio.volume *= 2;
+                }
             }
             //角色完全消失，位置改变
             if (flashBegin && dissolveAnt >= 1f) {
@@ -393,17 +402,19 @@ namespace UI.BattleSystem.Controls {
             //闪烁结束
             if (flashEnd && dissolveAnt <= 0f) {
                 flashEnd = false;
-                //debugLog("tutorialFlash x:" + gameSer.tutorialFlash);
-                //debugLog("wall x:" + gameSer.tutorialFlashPosX);
-                //debugLog("flash x:" + flashPos.x);
                 //新手教程
                 if (gameSer.tutorialFlash) {
+                    //debugLog("tutorialFlash x:" + gameSer.tutorialFlash);
+                    //debugLog("wall x:" + gameSer.tutorialFlashPosX);
+                    //debugLog("flash x:" + flashPos.x);
                     if (flashPos.x > gameSer.tutorialFlashPosX) {
                         gameSer.tutorialFlashPosX = -1;
                         gameSer.tutorialFlash = false;
                     }
-                    else
+                    else {
+                        //debugLog("flash fail:" + flashPos.x);
                         gameSer.onTutorialFlashFail();
+                    }
                 }
             }
         }

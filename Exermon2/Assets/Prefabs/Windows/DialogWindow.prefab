@@ -601,12 +601,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   message: {fileID: 7037944106746631956}
-  optionContainer: {fileID: 8889563049566589706}
+  image: {fileID: 7037944106000128902}
   printDeltaTime: 0.05
-  window: {fileID: 0}
   name: {fileID: 7037944105701318927}
   nameFrame: {fileID: 7037944105968620970}
-  bust: {fileID: 7037944106000128902}
+  optionContainer: {fileID: 8889563049566589706}
+  window: {fileID: 0}
 --- !u!1001 &7037944106814084876
 PrefabInstance:
   m_ObjectHideFlags: 0
