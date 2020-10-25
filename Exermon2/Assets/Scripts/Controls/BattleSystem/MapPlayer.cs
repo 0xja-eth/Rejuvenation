@@ -378,12 +378,14 @@ namespace UI.BattleSystem.Controls {
                 dissolveAnt = Mathf.Clamp01(dissolveAnt);
                 material.SetFloat("_DissolveAmount", dissolveAnt);
                 //播放音频
-                AudioSource audio = gameObject.GetComponent<AudioSource>();
-                AudioClip clip = (AudioClip)Resources.Load("Audios/Flitch");
-                audio.clip = clip;
-                audio.volume = 0.5f;
-                audio.Play();
-                //audio.volume *= 2;
+                if (isMaster()) {
+                    AudioSource audio = gameObject.GetComponent<AudioSource>();
+                    AudioClip clip = (AudioClip)Resources.Load("Audios/Flitch");
+                    audio.clip = clip;
+                    audio.volume = 0.5f;
+                    audio.Play();
+                    //audio.volume *= 2;
+                }
             }
             //角色完全消失，位置改变
             if (flashBegin && dissolveAnt >= 1f) {

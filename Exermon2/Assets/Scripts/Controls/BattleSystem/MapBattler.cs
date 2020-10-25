@@ -385,7 +385,9 @@ namespace UI.BattleSystem.Controls {
 		protected void playDeathAudio() {
 			Debug.Log("play death audio dante");
 			AudioSource audio = gameObject.GetComponent<AudioSource>();
-			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Swing");
+            if (audio == null)
+                return;
+            AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Swing");
 			audio.clip = clip;
 			audio.volume = 1.0f;
 			audio.Play();
@@ -394,6 +396,8 @@ namespace UI.BattleSystem.Controls {
 		protected void playSkillAudio() {
 			Debug.Log("play skill audio dante");
 			AudioSource audio = gameObject.GetComponent<AudioSource>();
+            if (audio == null)
+                return;
 			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Swing");
             audio.clip = clip;
 			audio.volume = 1.0f;
@@ -404,7 +408,9 @@ namespace UI.BattleSystem.Controls {
         {
 			Debug.Log("play hit audio dante");
             AudioSource audio = gameObject.GetComponent<AudioSource>();
-			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Hit");
+            if (audio == null)
+                return;
+            AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Hit");
 			audio.clip = clip;
 			audio.volume = 1.0f;
 			audio.Play();
