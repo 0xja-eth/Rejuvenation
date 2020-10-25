@@ -13,6 +13,7 @@ using GameModule.Services;
 
 namespace UI.MapSystem {
     using Controls;
+    using UI.MapSystem.Windows;
 
     /// <summary>
     /// 最终场景
@@ -22,7 +23,7 @@ namespace UI.MapSystem {
         /// <summary>
         /// 外部变量
         /// </summary>
-
+        public IllustrationWindow illustrationWindow = null;
 
         /// <summary>
         /// 外部系统定义
@@ -56,6 +57,13 @@ namespace UI.MapSystem {
 		public override SceneSystem.Scene nextStage() {
 			return SceneSystem.Scene.NoneScene;
 		}
+        
+        /// <summary>
+        /// 游戏结束
+        /// </summary>
+        public void gameOver() {
+            illustrationWindow?.activate();
+        }
 
 		#endregion
 		
