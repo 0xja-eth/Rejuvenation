@@ -34,7 +34,7 @@ namespace Config {
 		/// <summary>
 		/// 初始场景
 		/// </summary>
-		public const SceneSystem.Scene FirstScene = SceneSystem.Scene.TestScene;
+		public const SceneSystem.Scene FirstScene = SceneSystem.Scene.TitleScene;
 
 	}
 }

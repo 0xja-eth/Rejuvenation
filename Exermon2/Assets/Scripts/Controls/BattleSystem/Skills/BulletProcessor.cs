@@ -91,8 +91,8 @@ namespace UI.MapSystem.Controls {
         /// <summary>
         /// 配置位置
         /// </summary>
-        void setupPosition() {
-            Vector3 position = skillProcessor.transform.position + new Vector3(0, Random.Range(-0.5f, 1f), 0);
+        protected virtual void setupPosition() {
+            Vector3 position = skillProcessor.transform.position;
 
             transform.position = position;
         }
