@@ -17,13 +17,13 @@ namespace UI.MapSystem.Controls {
 	/// 对话框显示
 	/// </summary>
 	[RequireComponent(typeof(DialogWindow))]
-	public class MessageDisplay : MessageBaseDisplay{
+    public class MessageDisplay : MessageBaseDisplay {
 
 		/// <summary>
 		/// 外部组件设置
 		/// </summary>
-		public new Text name = null; 
-		public GameObject nameFrame = null; 
+        public new Text name = null;
+        public GameObject nameFrame = null;
         public OptionContainer optionContainer = null;
 
         /// <summary>
@@ -82,12 +82,13 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         /// <param name="item"></param>
         override protected void drawImage(DialogMessage item) {
-            var bust = item.bust();
 
-            image.gameObject.SetActive(bust != null);
-            image.overrideSprite = MessageSender.busts(item.name)[0];
-            image.gameObject.SetActive(true);
-        }
+            if (MessageSender.busts(item.name) != null)
+                bust.overrideSprite = MessageSender.busts(item.name)[0];
+            else
+                bust.overrideSprite = null;
+
+            bust.gameObject.SetActive(bust.overrideSprite != null);        }
 
         /// <summary>
         /// 绘制空物品
