@@ -382,14 +382,16 @@ namespace UI.MapSystem {
 		/// </summary>
 		public void changeStage(SceneSystem.Scene stage, 
 			Vector2? pos, bool reload = false) {
-			animator.setVar(SceneExitAttrName);
-			
+
+			var flag = false;
 			var same = (stage == SceneSystem.Scene.NoneScene || stage == sceneIndex());
 
-			if (!same || reload)
+			if (flag = (!same || reload))
 				changeDifferentStage(stage, pos, reload);
-			else if (pos != null)// 同一个场景
+			else if (flag = pos != null)// 同一个场景
 				player.transfer(pos.Value, true);
+
+			if (flag) animator.setVar(SceneExitAttrName);
 		}
 		public void changeStage(SceneSystem.Scene stage, bool reload) {
 			changeStage(stage, null, reload);

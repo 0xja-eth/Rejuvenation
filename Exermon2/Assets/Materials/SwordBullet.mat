@@ -31,8 +31,8 @@ Material:
     m_Floats:
     - FlowSpeed: 0
     - Vector1_11C8E36D: 0.5
-    - Vector1_8AB4F008: 1
+    - Vector1_8AB4F008: 0.616
     - Vector1_95AA7820: 1
     m_Colors:
-    - Color_5A3D590B: {r: 0.74725413, g: 2.9613404, b: 3.487186, a: 0}
+    - Color_5A3D590B: {r: 0.22738336, g: 0.9039875, b: 1.0592737, a: 0}
     - Color_65C75759: {r: 0.1933962, g: 1, b: 1, a: 1}

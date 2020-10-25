@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.8
+      scalar: 1.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1480,7 +1480,8 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: -2306960320319455000, guid: c524a8f2add0e894fba8b4c19ab8a063,
+        type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -1488,7 +1489,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3762,7 +3763,7 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 0
+    enabled: 1
     ratio: 0
     light: {fileID: 0}
     randomDistribution: 1
@@ -9521,6 +9522,7 @@ GameObject:
   - component: {fileID: 506948187378267203}
   - component: {fileID: 859271692558789895}
   - component: {fileID: 607232698818203747}
+  - component: {fileID: 4565059671119746777}
   m_Layer: 16
   m_Name: SwordBullet
   m_TagString: Untagged
@@ -9662,3 +9664,66 @@ MonoBehaviour:
   skillProcessor: {fileID: 0}
   throughEntities: -1
   throughWalls: -1
+--- !u!114 &4565059671119746777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6344433871323983421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
+  m_Intensity: 2
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 2
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 4
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.2
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.12416366, y: -0.593959, z: 0}
+  - {x: 0.057735503, y: -0.686533, z: 0}
+  - {x: 0.24777687, y: -0.7498802, z: 0}
+  - {x: 0.38417435, y: -0.76248187, z: 0}
+  - {x: 0.5472364, y: -0.77291554, z: 0}
+  - {x: 0.63937765, y: -0.7383625, z: 0}
+  - {x: 0.7805145, y: -0.6932225, z: 0}
+  - {x: 0.49540678, y: -0.62894464, z: 0}
+  - {x: 0.2996065, y: -0.5195268, z: 0}
+  - {x: 0.12578672, y: -0.37490106, z: 0}
+  - {x: -0.051682472, y: -0.20854972, z: 0}
+  - {x: -0.17291188, y: 0.0066939443, z: 0}
+  - {x: -0.270518, y: 0.20032756, z: 0}
+  - {x: -0.24748278, y: 0.35581598, z: 0}
+  - {x: -0.20306948, y: 0.5177096, z: 0}
+  - {x: -0.07471776, y: 0.63223994, z: 0}
+  - {x: 0.100901306, y: 0.7063305, z: 0}
+  - {x: -0.063200116, y: 0.76469314, z: 0}
+  - {x: -0.28528357, y: 0.8113314, z: 0}
+  - {x: -0.48935372, y: 0.70134604, z: 0}
+  - {x: -0.6879182, y: 0.47651017, z: 0}
+  - {x: -0.7254661, y: 0.25791582, z: 0}
+  - {x: -0.60883605, y: -0.058243707, z: 0}
+  - {x: -0.48935372, y: -0.23158506, z: 0}
+  - {x: -0.35690057, y: -0.38707358, z: 0}
+  - {x: -0.24172384, y: -0.48497382, z: 0}

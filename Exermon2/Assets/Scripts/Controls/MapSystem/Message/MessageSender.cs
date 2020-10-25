@@ -73,8 +73,10 @@ namespace UI.MapSystem.Controls {
         /// <param name="name"></param>
         /// <returns></returns>
         public static Sprite[] busts(string name) {
-            return AssetLoader.loadAssets<Sprite>(
-                Asset.Type.Bust, bustIdDict[name]);
+            if (bustIdDict.ContainsKey(name))
+                return AssetLoader.loadAssets<Sprite>(
+                    Asset.Type.Bust, bustIdDict[name]);
+            return null;
         }
 
         /// <summary>

@@ -194,7 +194,7 @@ namespace PlayerModule.Data {
 		/// <summary>
 		/// 初始关卡
 		/// </summary>
-		public const SceneSystem.Scene FirstStage = SceneSystem.Scene.TurialScene;
+		public const SceneSystem.Scene FirstStage = SceneSystem.Scene.TutorialScene;
 
 		/// <summary>
 		/// 属性

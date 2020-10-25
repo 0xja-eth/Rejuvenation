@@ -40,7 +40,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public override SceneSystem.Scene nextStage() {
-			return SceneSystem.Scene.TurialScene;
+			return SceneSystem.Scene.TutorialScene;
 		}
 
 		#endregion

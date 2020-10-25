@@ -11,20 +11,20 @@ using MapModule.Data;
 
 namespace UI.MapSystem.Controls {
 
-	using Windows;
+    using Windows;
 
-	/// <summary>
-	/// 对话框显示
-	/// </summary>
-	[RequireComponent(typeof(DialogWindow))]
-	public class MessageDisplay : MessageBaseDisplay{
+    /// <summary>
+    /// 对话框显示
+    /// </summary>
+    [RequireComponent(typeof(DialogWindow))]
+    public class MessageDisplay : MessageBaseDisplay {
 
-		/// <summary>
-		/// 外部组件设置
-		/// </summary>
-		public new Text name = null; 
-		public GameObject nameFrame = null; 
-		public Image bust = null;
+        /// <summary>
+        /// 外部组件设置
+        /// </summary>
+        public new Text name = null;
+        public GameObject nameFrame = null;
+        public Image bust = null;
 
         #region 界面绘制
 
@@ -38,25 +38,28 @@ namespace UI.MapSystem.Controls {
             drawBust(item);
         }
 
-		/// <summary>
-		/// 绘制名称
-		/// </summary>
-		/// <param name="item"></param>
-		void drawName(DialogMessage item) {
-			nameFrame?.SetActive(!string.IsNullOrEmpty(item.name));
+        /// <summary>
+        /// 绘制名称
+        /// </summary>
+        /// <param name="item"></param>
+        void drawName(DialogMessage item) {
+            nameFrame?.SetActive(!string.IsNullOrEmpty(item.name));
             name.text = item.name;
-		}
+        }
 
         /// <summary>
         /// 绘制立绘
         /// </summary>
         /// <param name="item"></param>
         void drawBust(DialogMessage item) {
-            var bust = item.bust();
 
-            this.bust.gameObject.SetActive(bust != null);
-            this.bust.overrideSprite = MessageSender.busts(item.name)[0];
-            this.bust.gameObject.SetActive(true);
+            if (MessageSender.busts(item.name) != null)
+                bust.overrideSprite = MessageSender.busts(item.name)[0];
+            else
+                bust.overrideSprite = null;
+
+            bust.gameObject.SetActive(bust.overrideSprite != null);
+            //this.bust.gameObject.SetActive(true);
             //this.bust.SetNativeSize();
         }
 
@@ -72,7 +75,7 @@ namespace UI.MapSystem.Controls {
             bust.SetNativeSize();
         }
 
-		#endregion
+        #endregion
 
-	}
+    }
 }

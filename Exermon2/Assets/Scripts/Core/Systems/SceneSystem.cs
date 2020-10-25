@@ -34,7 +34,7 @@ namespace Core.Systems {
 			TitleScene = 0,
 			TestScene,
 
-			TurialScene,
+			TutorialScene,
 			TaiqingScene,
 			TaiqingRoom1Scene,
 			TaiqingRoom2Scene,

@@ -44,9 +44,9 @@ namespace UI.MapSystem {
 		/// 开始
 		/// </summary>
 		protected override void start() {
+			//var stage = playerSer.startGame(true);
+			//changeStage(stage);
 			base.start();
-			var stage = playerSer.startGame(true);
-			changeStage(stage, true);
 		}
 
 		/// <summary>
@@ -54,7 +54,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public override SceneSystem.Scene sceneIndex() {
-            return SceneSystem.Scene.TurialScene;
+            return SceneSystem.Scene.TutorialScene;
         }
 
 		/// <summary>

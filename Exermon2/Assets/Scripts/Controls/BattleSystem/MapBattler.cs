@@ -359,7 +359,7 @@ namespace UI.BattleSystem.Controls {
 		/// </summary>
 		public void onSkillUse() {
 			currentProcessor?.onUse();
-		}
+        }
 
 		/// <summary>
 		/// 行动开始
@@ -369,7 +369,7 @@ namespace UI.BattleSystem.Controls {
 		}
 
 		/// <summary>
-		/// 行动开始
+		/// 行动开始F
 		/// </summary>
 		protected virtual void onActionEnd() {
 			runtimeBattler.onActionEnd(currentAction);
@@ -383,20 +383,30 @@ namespace UI.BattleSystem.Controls {
 
         #region 音效播放
 		protected void playDeathAudio() {
+			Debug.Log("play death audio dante");
 			AudioSource audio = gameObject.GetComponent<AudioSource>();
-			AudioClip clip = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Audios/Death", typeof(AudioClip));
+			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Swing");
 			audio.clip = clip;
 			audio.Play();
 		}
 
 		protected void playSkillAudio() {
-            AudioSource audio = gameObject.GetComponent<AudioSource>();
-            AudioClip clip = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Audios/Sword-Swing", typeof(AudioClip));
+			Debug.Log("play skill audio dante");
+			AudioSource audio = gameObject.GetComponent<AudioSource>();
+			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Swing");
             audio.clip = clip;
             audio.Play();
         }
 
-		#endregion
+        protected void playHitAudio()
+        {
+			Debug.Log("play hit audio dante");
+            AudioSource audio = gameObject.GetComponent<AudioSource>();
+			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Hit");
+			audio.clip = clip;
+            audio.Play();
+        }
+        #endregion
 
-	}
+    }
 }
