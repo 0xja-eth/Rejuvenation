@@ -62,7 +62,7 @@ namespace UI.MapSystem {
 
         public DialogWindow dialogWindow;
         public DialogWindow logWindow;
-        public IllustrationWindow illustrationWindow;
+        public IllustrationWindow illustrationWindow = null;
 
 		public Canvas splitCanvas;
 
@@ -270,7 +270,8 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public bool isDialogued() {
-			return dialogWindow.shown || logWindow .shown || illustrationWindow.shown;
+			return dialogWindow.shown || logWindow .shown ||
+                (illustrationWindow != null &&illustrationWindow.shown);
 		}
 
 		#endregion
