@@ -30,7 +30,7 @@ namespace UI.MapSystem.Controls {
         /// <summary>
         /// 内部组件设置
         /// </summary>
-        List<BulletProcessor> bullets = new List<BulletProcessor>();
+        List<BigBulletProcessor> bullets = new List<BigBulletProcessor>();
 
         /// <summary>
         /// 世界变换
@@ -96,10 +96,10 @@ namespace UI.MapSystem.Controls {
         /// 发射子弹（剑气）
         /// </summary>
         /// <returns></returns>
-        BulletProcessor createBullet() {
+        BigBulletProcessor createBullet() {
 
             var obj = Instantiate(bulletPerfab, world);
-            var bullet = SceneUtils.get<BulletProcessor>(obj);
+            var bullet = SceneUtils.get<BigBulletProcessor>(obj);
 
             return bullet;
         }

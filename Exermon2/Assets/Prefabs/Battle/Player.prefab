@@ -126,6 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7666399549640136811}
   - component: {fileID: 2292247921838047006}
+  - component: {fileID: 2516004045322485896}
   m_Layer: 16
   m_Name: HitCollider
   m_TagString: Untagged
@@ -173,6 +174,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 1.1}
   m_EdgeRadius: 0
+--- !u!114 &2516004045322485896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875592128831410473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8351634ea55394798cae1aa71c276e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebug: 0
+  collider: {fileID: 0}
+  autoZ: 1
+  map: {fileID: 0}
+  battler: {fileID: 0}
 --- !u!1 &2171764066261331603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,6 +1084,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de52b3bf284c34a4d89dae5ac4b2fd36, type: 3}
+--- !u!4 &297768804548628413 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7891810647444413499, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
+    type: 3}
+  m_PrefabInstance: {fileID: 7612408139224290182}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3227863039324808630 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5003244700024501808, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
@@ -1078,9 +1102,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7655a0214f222479822a9ab16463c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &297768804548628413 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7891810647444413499, guid: de52b3bf284c34a4d89dae5ac4b2fd36,
-    type: 3}
-  m_PrefabInstance: {fileID: 7612408139224290182}
-  m_PrefabAsset: {fileID: 0}
