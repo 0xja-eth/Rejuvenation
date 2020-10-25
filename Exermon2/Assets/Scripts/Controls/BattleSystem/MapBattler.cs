@@ -387,6 +387,7 @@ namespace UI.BattleSystem.Controls {
 			AudioSource audio = gameObject.GetComponent<AudioSource>();
 			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Swing");
 			audio.clip = clip;
+			audio.volume = 1.0f;
 			audio.Play();
 		}
 
@@ -395,7 +396,8 @@ namespace UI.BattleSystem.Controls {
 			AudioSource audio = gameObject.GetComponent<AudioSource>();
 			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Swing");
             audio.clip = clip;
-            audio.Play();
+			audio.volume = 1.0f;
+			audio.Play();
         }
 
         protected void playHitAudio()
@@ -404,8 +406,10 @@ namespace UI.BattleSystem.Controls {
             AudioSource audio = gameObject.GetComponent<AudioSource>();
 			AudioClip clip = (AudioClip)Resources.Load("Audios/Sword-Hit");
 			audio.clip = clip;
-            audio.Play();
+			audio.volume = 1.0f;
+			audio.Play();
         }
+
         #endregion
 
     }
