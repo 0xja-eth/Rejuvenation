@@ -4736,7 +4736,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: edc77f74dc39ef3498d20e838a21ed7a, type: 2}
+  - {fileID: 2100000, guid: 2c09219a7a590b946885af28bb2acba7, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4792,7 +4792,7 @@ GameObject:
   - component: {fileID: 3511005868380528691}
   - component: {fileID: 4485896855007366091}
   - component: {fileID: 311344262277321107}
-  - component: {fileID: 5605204692474260057}
+  - component: {fileID: 8564448785324938468}
   m_Layer: 16
   m_Name: EnemyBulletBig
   m_TagString: Untagged
@@ -4852,7 +4852,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5605204692474260057
+--- !u!114 &8564448785324938468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4861,10 +4861,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3511005868380528688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03f95c15712f8b344af460ef05155ae9, type: 3}
+  m_Script: {fileID: 11500000, guid: 93f2b6089fd846a4daf932b786da35b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 1
+  showDebug: 0
   collider: {fileID: 4485896855007366091}
   skillProcessor: {fileID: 0}
   throughEntities: -1

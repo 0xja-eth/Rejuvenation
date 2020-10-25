@@ -35,7 +35,7 @@ namespace UI.MapSystem.Controls {
         /// 内部组件设置
         /// </summary>
         [RequireTarget]
-        new Rigidbody2D rigidbody;
+        protected new Rigidbody2D rigidbody;
 
         /// <summary>
         /// 外部变量设置
