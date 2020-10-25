@@ -74,11 +74,9 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void update() {
             base.update();
-            bool trigger = gameSer.tutorialRobotDie;
-            if (trigger)
+            if (gameSer.tutorialRobotDie)
                 onAttackEnd();
-            trigger = gameSer.tutorialFlashFail;
-            if (trigger)
+            if (gameSer.tutorialFlashFail)
                 onFlashFail();
         }
         #endregion
@@ -89,7 +87,8 @@ namespace UI.MapSystem {
         /// 战斗结束回调
         /// </summary>
         void onAttackEnd() {
-            attackEndTrigger.processTrigger(player, MapEventPage.TriggerType.Never);
+            debugLog("attack end");
+            attackEndTrigger.processTrigger(player, MapEventPage.TriggerType.Initiactive);
         }
 
         /// <summary>
@@ -105,7 +104,8 @@ namespace UI.MapSystem {
         /// 闪烁失败回调
         /// </summary>
         void onFlashFail() {
-            flashFailTrigger.processTrigger(player, MapEventPage.TriggerType.Never);
+            debugLog("flash on fail");
+            flashFailTrigger.processTrigger(player, MapEventPage.TriggerType.Initiactive);
         }
 
         #endregion

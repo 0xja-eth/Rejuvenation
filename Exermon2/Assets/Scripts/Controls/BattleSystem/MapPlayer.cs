@@ -393,17 +393,19 @@ namespace UI.BattleSystem.Controls {
             //闪烁结束
             if (flashEnd && dissolveAnt <= 0f) {
                 flashEnd = false;
-                //debugLog("tutorialFlash x:" + gameSer.tutorialFlash);
-                //debugLog("wall x:" + gameSer.tutorialFlashPosX);
-                //debugLog("flash x:" + flashPos.x);
                 //新手教程
                 if (gameSer.tutorialFlash) {
+                    //debugLog("tutorialFlash x:" + gameSer.tutorialFlash);
+                    //debugLog("wall x:" + gameSer.tutorialFlashPosX);
+                    //debugLog("flash x:" + flashPos.x);
                     if (flashPos.x > gameSer.tutorialFlashPosX) {
                         gameSer.tutorialFlashPosX = -1;
                         gameSer.tutorialFlash = false;
                     }
-                    else
+                    else {
+                        //debugLog("flash fail:" + flashPos.x);
                         gameSer.onTutorialFlashFail();
+                    }
                 }
             }
         }

@@ -62,7 +62,6 @@ namespace UI.MapSystem {
 
         public DialogWindow dialogWindow;
         public DialogWindow logWindow;
-        public IllustrationWindow illustrationWindow = null;
 
 		public Canvas splitCanvas;
 
@@ -131,7 +130,10 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-			if (!hasPlayer()) return;
+            //test
+            playerSer.startGame(false);
+
+            if (!hasPlayer()) return;
 			refreshMapActive();
 		}
 
@@ -142,24 +144,12 @@ namespace UI.MapSystem {
 			base.start();
 			if (!hasPlayer()) return;
 			setupPlayer(); setupUI();
-            setupStartIllustration();
 		}
 
 		/// <summary>
 		/// 玩家启动回调
 		/// </summary>
 		public virtual void onPlayerStart() { }
-
-        /// <summary>
-        /// 开始背景插画
-        /// </summary>
-        void setupStartIllustration() {
-            if (playerSer.player.firstStart) {
-                illustrationWindow?.activate();
-            }
-            //else
-            //    playerSer.player.firstStart = false;
-        }
 
         /// <summary>
         /// 设置主界面
@@ -277,9 +267,8 @@ namespace UI.MapSystem {
 		/// 处于对话框状态
 		/// </summary>
 		/// <returns></returns>
-		public bool isDialogued() {
-			return dialogWindow.shown || logWindow .shown ||
-                (illustrationWindow != null &&illustrationWindow.shown);
+		public virtual bool isDialogued() {
+			return dialogWindow.shown || logWindow .shown;
 		}
 
 		#endregion

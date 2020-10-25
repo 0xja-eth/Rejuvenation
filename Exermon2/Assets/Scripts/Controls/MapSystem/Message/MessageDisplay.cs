@@ -84,11 +84,12 @@ namespace UI.MapSystem.Controls {
         override protected void drawImage(DialogMessage item) {
 
             if (MessageSender.busts(item.name) != null)
-                bust.overrideSprite = MessageSender.busts(item.name)[0];
+                image.overrideSprite = MessageSender.busts(item.name)[0];
             else
-                bust.overrideSprite = null;
+                image.overrideSprite = null;
 
-            bust.gameObject.SetActive(bust.overrideSprite != null);        }
+            image.gameObject.SetActive(image.overrideSprite != null);
+        }
 
         /// <summary>
         /// 绘制空物品

@@ -26,6 +26,8 @@ namespace UI.MapSystem.Controls {
 			CollExit, // 碰撞结束
 
 			Always, // 总是执行
+
+            Initiactive,//主动触发
 		}
 
 		/// <summary>
