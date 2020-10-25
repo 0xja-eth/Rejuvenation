@@ -11,6 +11,7 @@ using BattleModule.Data;
 namespace UI.BattleSystem.Controls {
 
 	using MapSystem.Controls;
+	using UnityEditor;
 
 	/// <summary>
 	/// 地图上的战斗者实体
@@ -379,5 +380,23 @@ namespace UI.BattleSystem.Controls {
 		}
 
         #endregion
-    }
+
+        #region 音效播放
+		protected void playDeathAudio() {
+			AudioSource audio = gameObject.GetComponent<AudioSource>();
+			AudioClip clip = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Audios/Death", typeof(AudioClip));
+			audio.clip = clip;
+			audio.Play();
+		}
+
+		protected void playSkillAudio() {
+            AudioSource audio = gameObject.GetComponent<AudioSource>();
+            AudioClip clip = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Audios/Sword-Swing", typeof(AudioClip));
+            audio.clip = clip;
+            audio.Play();
+        }
+
+		#endregion
+
+	}
 }
