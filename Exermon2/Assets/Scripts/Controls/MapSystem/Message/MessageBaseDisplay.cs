@@ -22,12 +22,13 @@ namespace UI.MapSystem.Controls {
         /// 外部组件设置
         /// </summary>
         public Text message;
-        public Image image = null;
+		public Image image;
+		public GameObject imageFrame;
 
-        /// <summary>
-        /// 外部变量设置
-        /// </summary>
-        public float printDeltaTime = 0.05f; // 文本打印间隔时间
+		/// <summary>
+		/// 外部变量设置
+		/// </summary>
+		public float printDeltaTime = 0.05f; // 文本打印间隔时间
 
         /// <summary>
         /// 内部变量定义
@@ -39,12 +40,23 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         public bool printing { get; protected set; } = false; // 当前是否打印中
 
+		#region 初始化
 
-        /// <summary>
-        /// 选项数目
-        /// </summary>
-        /// <returns></returns>
-        public int optionCount() {
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
+			base.initializeOnce();
+			imageFrame = imageFrame ?? image?.gameObject;
+		}
+
+		#endregion
+
+		/// <summary>
+		/// 选项数目
+		/// </summary>
+		/// <returns></returns>
+		public int optionCount() {
             return item.options.Count;
         }
 
@@ -68,17 +80,29 @@ namespace UI.MapSystem.Controls {
             doRoutine(printMessage(item.message));
         }
 
+		/// <summary>
+		/// 获取立绘
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		protected virtual Sprite getBust(DialogMessage item) {
+			return item.bust();
+		}
+
         /// <summary>
         /// 绘制立绘
         /// </summary>
         /// <param name="item"></param>
         virtual protected void drawImage(DialogMessage item) {
-            var bust = item.bust();
+			if (!imageFrame || !image) return;
 
-            image.gameObject.SetActive(bust != null);
-            image.overrideSprite = bust;
-            image.gameObject.SetActive(true);
-        }
+			var bust = getBust(item);
+
+			imageFrame.gameObject.SetActive(bust != null);
+
+			image.overrideSprite = bust;
+			image.SetNativeSize();
+		}
 
         /// <summary>
         /// 绘制空物品
@@ -86,9 +110,10 @@ namespace UI.MapSystem.Controls {
         protected override void drawEmptyItem() {
             base.drawEmptyItem();
             message.text = "";
-            image.gameObject.SetActive(false);
-            image.overrideSprite = null;
-            image.SetNativeSize();
+			if (imageFrame && image) {
+				image.overrideSprite = null;
+				imageFrame.gameObject.SetActive(false);
+			}
         }
 
         /// <summary>

@@ -138,8 +138,8 @@ namespace UI.BattleSystem.Controls {
 					drawCharacter(item); break;
 				case RuntimeBattler.State.Using:
 					drawAttackAction(item); break;
-				case RuntimeBattler.State.Dead:
-					requestClear(true); break;
+				//case RuntimeBattler.State.Dead:
+				//	requestClear(true); break;
 				default:
 					drawIdle(item); break;
 			}
