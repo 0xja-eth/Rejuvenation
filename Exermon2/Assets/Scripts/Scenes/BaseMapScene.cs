@@ -104,8 +104,8 @@ namespace UI.MapSystem {
 		/// 地图/时空属性
 		/// </summary>
 		public TimeType timeType {
-			get => playerSer.actor.runtimeActor.timeType;
-			set { playerSer.actor.runtimeActor.timeType = value; }
+			get => playerSer.runtimeActor.timeType;
+			set { playerSer.runtimeActor.timeType = value; }
 		}
 
 		public bool isPresent => timeType == TimeType.Present;
@@ -129,7 +129,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-
+			if (!hasPlayer()) return;
 			refreshMapActive();
 		}
 
@@ -138,8 +138,8 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void start() {
 			base.start();
-			setupPlayer();
-            setupUI();
+			if (!hasPlayer()) return;
+			setupPlayer(); setupUI();
 		}
 
 		/// <summary>
@@ -190,6 +190,14 @@ namespace UI.MapSystem {
 		#endregion
 
 		#region 玩家相关
+
+		/// <summary>
+		/// 是否存在玩家
+		/// </summary>
+		/// <returns></returns>
+		public bool hasPlayer() {
+			return playerSer.player != null;
+		}
 
 		/// <summary>
 		/// 初始化玩家
@@ -362,7 +370,8 @@ namespace UI.MapSystem {
 		/// 重开本关
 		/// </summary>
 		public void restartStage(bool died) {
-			doRoutine(playerSer.resumeGame(onLoadingProgress, onLoadingCompleted));
+			var stage = playerSer.resumeGame();
+			changeStage(stage, true);
 		}
 		public void restartStage() {
 			restartStage(false);
@@ -371,18 +380,22 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 切换关卡
 		/// </summary>
-		public void changeStage(SceneSystem.Scene stage, Vector2? pos) {
+		public void changeStage(SceneSystem.Scene stage, 
+			Vector2? pos, bool reload = false) {
 			animator.setVar(SceneExitAttrName);
-
+			
 			var same = (stage == SceneSystem.Scene.NoneScene || stage == sceneIndex());
 
-			if (!same)
-				changeDifferentStage(stage, pos);
-			else // 同一个场景
+			if (!same || reload)
+				changeDifferentStage(stage, pos, reload);
+			else if (pos != null)// 同一个场景
 				player.transfer(pos.Value, true);
 		}
+		public void changeStage(SceneSystem.Scene stage, bool reload) {
+			changeStage(stage, null, reload);
+		}
 		public void changeStage(SceneSystem.Scene stage) {
-			changeStage(stage, null);
+			changeStage(stage, false);
 		}
 
 		/// <summary>
@@ -390,11 +403,12 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <param name="stage"></param>
 		/// <param name="pos"></param>
-		void changeDifferentStage(SceneSystem.Scene stage, Vector2? pos) {
+		void changeDifferentStage(SceneSystem.Scene stage, 
+			Vector2? pos, bool reload) {
 			loading = true;
 
 			var data = makeTunnelData(pos);
-			sceneSys.changeScene(stage, data, async: true);
+			sceneSys.changeScene(stage, data, reload, true);
 
 			doRoutine(sceneSys.startAsync(
 				onLoadingProgress, onLoadingCompleted));
