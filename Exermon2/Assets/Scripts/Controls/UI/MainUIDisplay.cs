@@ -6,6 +6,9 @@ using UI.Common.Controls.ItemDisplays;
 using MapModule.Data;
 using BattleModule.Data;
 using UnityEngine.UI;
+using UI.MapSystem;
+using Core.UI.Utils;
+using Core.Systems;
 
 namespace UI.Controls {
 
@@ -23,8 +26,14 @@ namespace UI.Controls {
         public Text keyNumber;
 
         /// <summary>
-        /// 内部变量定义
+        /// 场景组件
         /// </summary>
+        BaseMapScene scene => SceneUtils.getCurrentScene() as BaseMapScene;
+
+        /// <summary>
+        /// 外部系统
+        /// </summary>
+        SceneSystem sceneSys;
 
         #region 初始化
 
@@ -144,6 +153,22 @@ namespace UI.Controls {
             if (keyNumber) keyNumber.text = "";
         }
 
+        #endregion
+
+        #region 事件回调
+        /// <summary>
+        /// 返回主菜单
+        /// </summary>
+        public void onExit() {
+            sceneSys.gotoScene(SceneSystem.Scene.TitleScene);
+        }
+
+        /// <summary>
+        /// 重玩
+        /// </summary>
+        public void onRetry() {
+            scene.restartStage(false);
+        }
         #endregion
     }
 }
