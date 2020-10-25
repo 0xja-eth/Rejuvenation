@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace Assets.Scripts.Scenes {
     public class TitleScene : BaseScene {
 
-        SceneSystem sceneSys;
         PlayerService playerSer;
 
         /// <summary>

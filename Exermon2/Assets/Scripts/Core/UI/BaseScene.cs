@@ -11,6 +11,7 @@ using Core.Systems;
 using Core.UI.Utils;
 
 using UI.Common.Windows;
+using PlayerModule.Services;
 
 namespace Core.UI {
 
@@ -41,6 +42,7 @@ namespace Core.UI {
         /// </summary>
         protected GameSystem gameSys;
         protected SceneSystem sceneSys;
+        protected PlayerService playerSer;
 
         /// <summary>
         /// 内部变量设置
@@ -83,7 +85,7 @@ namespace Core.UI {
         /// <returns></returns>
         public void checkFirstScene() {
             var first = Deploy.FirstScene;
-            if (gameSys.isConnectable() && sceneIndex() != first)
+            if (!playerSer.hasPlayer() && sceneIndex() != first)
                 sceneSys.gotoScene(first);
         }
 
