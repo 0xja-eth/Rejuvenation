@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Maps/FusangCopyScene.unity
     guid: f74b9573e69c8324f82f7296b9b4a29e
+  - enabled: 1
+    path: Assets/Scenes/Maps/FinalScene.unity
+    guid: ac850960a8805e743b8a35fab7336e6f
   m_configObjects: {}
