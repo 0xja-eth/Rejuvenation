@@ -91,27 +91,19 @@ namespace PlayerModule.Services {
 		/// <summary>
 		/// 开始游戏（启动了异步场景加载）
 		/// </summary>
-		public IEnumerator startGame(bool load,
-			UnityAction<float> onProgress, UnityAction onCompleted = null) {
-
+		public SceneSystem.Scene startGame(bool load = false) {
 			if (load && hasPlayer()) loadPlayer();
 			else createPlayer();
 
-            //test
-            player.stage = SceneSystem.Scene.TurialScene;
-			sceneSys.pushScene(player.stage, async: true);
-			return sceneSys.startAsync(onProgress, onCompleted);
+			return player.stage;
 		}
 
 		/// <summary>
 		/// 重开本局
 		/// </summary>
-		public IEnumerator resumeGame(
-			UnityAction<float> onProgress, UnityAction onCompleted = null) {
+		public SceneSystem.Scene resumeGame() {
 			player = DataLoader.load<Player>(savedPlayer);
-
-			sceneSys.changeScene(player.stage, true, true);
-			return sceneSys.startAsync(onProgress, onCompleted);
+			return player.stage;
 		}
 
 		/// <summary>

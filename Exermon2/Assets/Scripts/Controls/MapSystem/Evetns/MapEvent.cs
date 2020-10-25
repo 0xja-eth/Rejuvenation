@@ -37,6 +37,19 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		public MapPlayer eventPlayer => processor.eventPlayer;
 
+		#region 初始化
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
+			base.initializeOnce();
+			foreach (var page in eventPages)
+				page.mapEvent = this;
+		}
+
+		#endregion
+
 		#region 更新
 
 		/// <summary>

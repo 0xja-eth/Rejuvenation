@@ -52,7 +52,8 @@ namespace UI.MapSystem.Controls {
 		/// <summary>
 		/// 内部组件定义
 		/// </summary>
-		protected MapEvent mapEvent;
+		[HideInInspector]
+		public MapEvent mapEvent;
 
 		/// <summary>
 		/// 内部变量定义

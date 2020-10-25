@@ -38,15 +38,22 @@ namespace UI.MapSystem {
         /// </summary>
         protected override void initializeOthers() {
             base.initializeOthers();
-			doRoutine(playerSer.startGame(true, 
-				onLoadingProgress, onLoadingCompleted));
-        }
+		}
 
-        /// <summary>
-        /// 场景索引
-        /// </summary>
-        /// <returns></returns>
-        public override SceneSystem.Scene sceneIndex() {
+		/// <summary>
+		/// 开始
+		/// </summary>
+		protected override void start() {
+			var stage = playerSer.startGame(true);
+			changeStage(stage);
+			base.start();
+		}
+
+		/// <summary>
+		/// 场景索引
+		/// </summary>
+		/// <returns></returns>
+		public override SceneSystem.Scene sceneIndex() {
             return SceneSystem.Scene.TurialScene;
         }
 

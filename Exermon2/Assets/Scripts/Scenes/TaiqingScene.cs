@@ -25,7 +25,6 @@ namespace UI.MapSystem {
         /// <summary>
         /// 外部系统定义
         /// </summary>
-        PlayerService playerSer;
         GameService gameSer;
 
         #region 初始化

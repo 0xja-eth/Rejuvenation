@@ -173,7 +173,7 @@ namespace BattleModule.Data {
 			if (index >= count - 1)
 				index = (int)characterStaticFrames[d];
 
-			return character()[start + index];
+			return getSprite(character(), start + index);
 		}
 
 		/// <summary>
@@ -194,9 +194,17 @@ namespace BattleModule.Data {
 			int index = (int)Mathf.Floor(count * rate);
 			if (index >= count) index = count - 1;
 
-			return attackAni()[start + index];
+			return getSprite(attackAni(), start + index);
 		}
 
+		/// <summary>
+		/// 获取单个精灵
+		/// </summary>
+		/// <returns></returns>
+		Sprite getSprite(Sprite[] sprites, int index) {
+			if (index < 0 || index >= sprites.Length) return null;
+			return sprites[index];
+		}
 	}
 
 	/// <summary>
@@ -1639,11 +1647,12 @@ namespace BattleModule.Data {
 		/// 思考时间
 		/// </summary>
 		float idleTime = 0;
+        
 
-		/// <summary>
-		/// 自定义敌人
-		/// </summary>
-		public Enemy customEnemy = null;
+        /// <summary>
+        /// 自定义敌人
+        /// </summary>
+        public Enemy customEnemy = null;
 
 		/// <summary>
 		/// 战斗者
@@ -1709,6 +1718,7 @@ namespace BattleModule.Data {
 		void updateSkill() {
 			var skill = randomSkill();
 			if (skill == null) return;
+
 			addAction(skill.skill);
 		}
 

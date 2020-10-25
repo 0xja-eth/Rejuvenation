@@ -28,10 +28,13 @@ namespace UI.MapSystem.Controls {
 
 		public Skill customSkill = null; // 自定义技能数据
 
-		/// <summary>
-		/// 技能ID
-		/// </summary>
-		public virtual int skillId => 0;
+        public float speed = 1; // 移动速度
+        public float range = 4; // 最大范围（-1为无穷大）
+
+        /// <summary>
+        /// 技能ID
+        /// </summary>
+        public virtual int skillId => 0;
 
 		/// <summary>
 		/// 技能
