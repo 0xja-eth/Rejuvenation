@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Core.UI.Utils;
+
 using GameModule.Services;
 
 using MapModule.Services;
@@ -28,12 +30,14 @@ namespace UI.MapSystem.Windows {
 		/// <summary>
 		/// 外部变量设置
 		/// </summary>
-        public List<DialogMessage> illustrationMessages;
+		public AudioClip illustrationBgm;
 
-        /// <summary>
-        /// 内部组件设置
-        /// </summary>
-        [RequireTarget]
+		public List<DialogMessage> illustrationMessages;
+
+		/// <summary>
+		/// 内部组件设置
+		/// </summary>
+		[RequireTarget]
         MessageBaseDisplay display;
 
         /// <summary>
@@ -42,14 +46,27 @@ namespace UI.MapSystem.Windows {
         GameService gameSer;
 		SceneSystem sceneSys;
 
-        #region 流程控制
+		#region 流程控制
 
-        /// <summary>
-        /// 开始
-        /// </summary>
-        protected override void start() {
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		protected override void initializeOnce() {
+			base.initializeOnce();
+
+			if (illustrationBgm) {
+				SceneUtils.audioSource.clip = illustrationBgm;
+				SceneUtils.audioSource.Play();
+			}
+		}
+
+		/// <summary>
+		/// 开始
+		/// </summary>
+		protected override void start() {
             base.start();
-            refreshMessage();
+
+			refreshMessage();
         }
 
         /// <summary>
@@ -64,6 +81,7 @@ namespace UI.MapSystem.Windows {
 		/// </summary>
 		protected override void onWindowShown() {
 			base.onWindowShown();
+
 			if (foreground) foreground.SetActive(true);
 		}
 

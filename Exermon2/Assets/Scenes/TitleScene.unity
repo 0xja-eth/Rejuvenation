@@ -917,6 +917,11 @@ PrefabInstance:
       propertyPath: foreground
       value: 
       objectReference: {fileID: 692847937}
+    - target: {fileID: 1289766491842805465, guid: dfb7db755e50c9344b80cf16bd3d031d,
+        type: 3}
+      propertyPath: illustrationBgm
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f87481ae824c6744a780ea850abbcb3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfb7db755e50c9344b80cf16bd3d031d, type: 3}
 --- !u!224 &284934264 stripped

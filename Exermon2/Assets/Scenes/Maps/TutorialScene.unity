@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -164,7 +164,7 @@ MonoBehaviour:
   showDebug: 1
   promptLayer: {fileID: 508884095}
   audioSource: {fileID: 1437995990}
-  bgmClip: {fileID: 8300000, guid: 650210d711736324ab37b0e222b5840d, type: 3}
+  bgmClip: {fileID: 8300000, guid: fdb29b767f44d4e4f85a97d1a24fb9fe, type: 3}
   camera: {fileID: 622805541}
   map1: {fileID: 537545458}
   map2: {fileID: 1450215392}

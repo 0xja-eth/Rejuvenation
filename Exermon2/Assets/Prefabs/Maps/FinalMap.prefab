@@ -1309,7 +1309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4995123452230108881}
-  - component: {fileID: 5129976315751001006}
+  - component: {fileID: 9132185931195615900}
   m_Layer: 0
   m_Name: NextStage
   m_TagString: Untagged
@@ -1331,7 +1331,7 @@ Transform:
   m_Father: {fileID: 7329383374129594077}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5129976315751001006
+--- !u!114 &9132185931195615900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1340,11 +1340,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2780294938607749289}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8520f28be014840beaee323c3af802, type: 3}
+  m_Script: {fileID: 11500000, guid: c4f4b6e956b49764a92fd1f561cf76d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  triggerType: 1
+  triggerType: 3
   actions:
     m_PersistentCalls:
       m_Calls: []
