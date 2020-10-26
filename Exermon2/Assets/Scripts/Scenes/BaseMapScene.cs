@@ -384,20 +384,28 @@ namespace UI.MapSystem {
 		}
 
 		/// <summary>
+		/// 游戏胜利回调
+		/// </summary>
+		protected virtual void onGameWin() { }
+		
+		/// <summary>
 		/// 切换关卡
 		/// </summary>
 		public void changeStage(SceneSystem.Scene stage, 
 			Vector2? pos, bool reload = false) {
 
-			var flag = false;
-			var same = (stage == SceneSystem.Scene.NoneScene || stage == sceneIndex());
+			if (stage == SceneSystem.Scene.NoneScene) onGameWin();
+			else {
+				var flag = false;
 
-			if (flag = (!same || reload))
-				changeDifferentStage(stage, pos, reload);
-			else if (flag = pos != null)// 同一个场景
-				player.transfer(pos.Value, true);
+				if (flag = (stage != sceneIndex() || reload))
+					changeDifferentStage(stage, pos, reload);
+				else if (flag = pos != null)// 同一个场景
+					player.transfer(pos.Value, true);
 
-			if (flag) animator.setVar(SceneExitAttrName);
+				if (flag) animator.setVar(SceneExitAttrName);
+			}
+
 		}
 		public void changeStage(SceneSystem.Scene stage, bool reload) {
 			changeStage(stage, null, reload);

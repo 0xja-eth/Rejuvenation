@@ -106,22 +106,12 @@ MonoBehaviour:
   triggerType: 3
   actions:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6642311540137778397}
-        m_MethodName: A
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _picture: {fileID: 0}
   invokeOnce: 1
   mapEvent: {fileID: 0}
   isDialog: 0
+  relatedSwitch: 0
   messages:
   - cacheable: 0
     message: "\u65E5\u5FD71\r\n\u827E\u745F\u5386495\u5E74 \r      \t \n \r     
@@ -147,7 +137,7 @@ PrefabInstance:
     - target: {fileID: 4222710307528809724, guid: a69a5a4e0e176f74792bc601a5c679b0,
         type: 3}
       propertyPath: m_Name
-      value: TriggerPlatform Variant
+      value: TriggerPlatform
       objectReference: {fileID: 0}
     - target: {fileID: 4600101488515391783, guid: a69a5a4e0e176f74792bc601a5c679b0,
         type: 3}

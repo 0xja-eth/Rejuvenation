@@ -267,7 +267,7 @@ namespace BattleModule.Data {
 		public const int DefaultMHP = 10; // 初始体力值
 		public const float DefaultAttack = 0; // 初始力量
         public const float DefaultDefense = 0; // 初始格挡
-        public const float DefaultSpeed = 2; // 初始速度
+        public const float DefaultSpeed = 3; // 初始速度
 
         /// <summary>
         /// 控制模式

@@ -326,6 +326,7 @@ MonoBehaviour:
   startPos: {x: 1, y: 0}
   renderTexture: {fileID: 8400000, guid: 9fb670e8e7551c849b655d9b6cfccf43, type: 2}
   illustrationWindow: {fileID: 166025346}
+  illustrationAudio: {fileID: 8300000, guid: a668fec551a32cf448cc1487c0ba3109, type: 3}
 --- !u!114 &298741144
 MonoBehaviour:
   m_ObjectHideFlags: 0

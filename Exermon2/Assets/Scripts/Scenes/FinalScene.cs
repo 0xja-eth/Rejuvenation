@@ -21,9 +21,14 @@ namespace UI.MapSystem {
     public class FinalScene : BaseMapScene {
 
         /// <summary>
-        /// 外部变量
+        /// 外部组件设置
         /// </summary>
         public IllustrationWindow illustrationWindow = null;
+
+		/// <summary>
+		/// 外部变量设置
+		/// </summary>
+		public AudioClip illustrationAudio;
 
         /// <summary>
         /// 外部系统定义
@@ -37,9 +42,9 @@ namespace UI.MapSystem {
         /// </summary>
         protected override void initializeOthers() {
             base.initializeOthers();
-			//playerSer.createPlayer("TestPlayer");
-			//playerSer.actor.runtimeActor.direction = MapModule.Data.RuntimeCharacter.Direction.Up;
-			//playerSer.actor.runtimeActor.addEnergy(100);
+			playerSer.createPlayer("TestPlayer");
+			playerSer.actor.runtimeActor.direction = MapModule.Data.RuntimeCharacter.Direction.Up;
+			playerSer.actor.runtimeActor.addEnergy(100);
 		}
 
 		/// <summary>
@@ -61,8 +66,9 @@ namespace UI.MapSystem {
         /// <summary>
         /// 游戏结束
         /// </summary>
-        public void gameOver() {
-            illustrationWindow?.activate();
+        protected override void onGameWin() {
+			audioSource.clip = illustrationAudio;
+			illustrationWindow?.activate();
         }
 
 		#endregion
