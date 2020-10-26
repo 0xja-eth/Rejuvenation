@@ -134,7 +134,9 @@ MonoBehaviour:
   showDebug: 0
   collider: {fileID: 7071688587378960410}
   autoZ: 1
+  map: {fileID: 0}
   eventPages: []
+  processor: {fileID: 0}
 --- !u!70 &7071688587378960410
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -196,21 +198,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.75
-  m_Color: {r: 0.07450981, g: 0.14901961, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.48584908, g: 1, b: 1, a: 1}
+  m_Intensity: 1
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
-  m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
+  m_LightOrder: 2
+  m_AlphaBlendOnOverlap: 1
   m_ShadowIntensity: 0
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 1
-  m_PointLightOuterRadius: 5
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 8
   m_PointLightDistance: 3.37
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -282,9 +284,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  picture: {fileID: -8931714214777382208, guid: 51c0bb071223eaa4b8c96816d3ce8148,
-    type: 3}
+  _picture: {fileID: 0}
   invokeOnce: 1
+  mapEvent: {fileID: 0}
+  isDialog: 1
   messages:
   - cacheable: 0
     message: "\u4F60\u9192\u4E86\uFF1F"

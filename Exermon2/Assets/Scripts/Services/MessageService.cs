@@ -15,7 +15,7 @@ namespace MapModule.Services {
         /// <summary>
         /// 是否为对话标识
         /// </summary>
-        public bool DialogFlag = true;
+        public bool dialogFlag = true;
 
 		/// <summary>
 		/// 消息队列

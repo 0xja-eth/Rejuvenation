@@ -121,7 +121,6 @@ namespace UI.MapSystem {
 		/// <summary>
 		/// 外部系统设置
 		/// </summary>
-		protected PlayerService playerSer;
 		protected MessageService messageSer;
 
 		#region  初始化
@@ -131,8 +130,6 @@ namespace UI.MapSystem {
 		/// </summary>
 		protected override void initializeOnce() {
 			base.initializeOnce();
-            //test
-            playerSer.startGame(false);
 
             if (!hasPlayer()) return;
 			refreshMapActive();
@@ -189,7 +186,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		void updateDialog() {
             if (messageSer.messageCount() > 0 && !isBusy()) {
-                if (messageSer.DialogFlag)
+                if (messageSer.dialogFlag)
                     dialogWindow.activate();
                 else
                     logWindow.activate();
@@ -269,7 +266,7 @@ namespace UI.MapSystem {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isDialogued() {
-			return dialogWindow.shown || logWindow .shown;
+			return dialogWindow.shown || logWindow.shown;
 		}
 
 		#endregion
