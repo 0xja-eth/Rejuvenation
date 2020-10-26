@@ -37417,6 +37417,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ' OnBoardMessageTirgger'
       objectReference: {fileID: 0}
+    - target: {fileID: 4084940506140411469, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
       propertyPath: messages.Array.data[0].message
@@ -38678,6 +38683,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ' OnBoardMessageTirgger'
       objectReference: {fileID: 0}
+    - target: {fileID: 4084940506140411469, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
       propertyPath: messages.Array.data[0].message
@@ -39886,7 +39896,7 @@ PrefabInstance:
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
       propertyPath: messages.Array.data[1].message
-      value: "......\uFF08\u6C89\u75DB\uFF09"
+      value: "......\uFF08\u6C89\u75DB\uFF09\n\u6218\u4E89\u7684\u4F24\u75D5\u65E0\u6CD5\u62B9\u53BB\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
@@ -39902,7 +39912,7 @@ PrefabInstance:
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
       propertyPath: messages.Array.data[2].message
-      value: "\u8BF7\u60A8\u7EE7\u7EED\u52C7\u6562\u7684\u5411\u524D\u3002"
+      value: "\u8BF7\u60A8\u6CE8\u610F\uFF0C\u7531\u4E8E\u957F\u4E45\u4F11\u7720\uFF0C\u73B0\u5728\u7684\u60A8\u8EAB\u4E0A\u9644\u5E26\u7684\u80FD\u91CF\u4E0D\u8DB3\uFF0C\u65E0\u6CD5\u542F\u52A8<\u8239\u53EA>\u7B49\u5DE5\u5177\u3002\u60A8\u4E5F\u8BB8\u53EF\u4EE5\u5229\u7528<\u65F6\u7A7A\u7A7F\u8D8A>\uFF0C\u56DE\u5230<\u672A\u6765>\u56DE\u6536\u80FD\u91CF\u3002\u80FD\u91CF\u7684\u50A8\u85CF\u5730\u56FE\u5728\u6B63\u5317\u65B9\u5411\u7684\u623F\u95F4\u91CC..."
       objectReference: {fileID: 0}
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
@@ -39918,7 +39928,7 @@ PrefabInstance:
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
       propertyPath: messages.Array.data[3].message
-      value: "\u8BF7\u60A8\u6CE8\u610F\uFF0C\u7531\u4E8E\u957F\u4E45\u4F11\u7720\uFF0C\u73B0\u5728\u7684\u60A8\u8EAB\u4E0A\u9644\u5E26\u7684\u80FD\u91CF\u4E0D\u8DB3\uFF0C\u65E0\u6CD5\u542F\u52A8<\u8239\u53EA>\u7B49\u5DE5\u5177\u3002\u63D0\u9192\u60A8\u4E5F\u8BB8\u53EF\u4EE5\u5229\u7528<\u65F6\u7A7A\u7A7F\u8D8A>\uFF0C\u524D\u5F80<\u8FC7\u53BB>\u56DE\u6536\u80FD\u91CF\u3002\u5728<\u8FC7\u53BB>\uFF0C\u80FD\u91CF\u88AB\u50A8\u85CF\u5730\u56FE\u6B63\u5317\u65B9\u5411\u7684\u623F\u95F4\u91CC\u3002"
+      value: "\u80FD\u91CF\u8865\u5145\u5B8C\u6210\u540E\u56DE\u5230\u8FD9\u91CC\u53EF\u6309L\u952E\u53EF\u8FDB\u884C\u5438\u5F15\u5F00\u8239\uFF0C\u5E76\u4E14\u8239\u53EA\u53EA\u80FD\u6B63\u5BF9\u7740\u80FD\u91CF\u67F1\u8FD0\u884C\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
@@ -39934,7 +39944,7 @@ PrefabInstance:
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}
       propertyPath: messages.Array.data[4].message
-      value: "\u6700\u540E\u63D0\u9192\u60A8\uFF0C<\u65F6\u7A7A\u7A7F\u8D8A>\u53D1\u751F\u540E\uFF0C\u5468\u56F4\u7684\u573A\u666F\u53EF\u80FD\u53D1\u751F\u53D8\u5316\uFF0C\u8BF7\u6CE8\u610F\u8BE5\u53D8\u5316\u3002"
+      value: "\u6700\u540E\u63D0\u9192\u60A8\uFF0C<\u65F6\u7A7A\u7A7F\u8D8A>\u53D1\u751F\u540E\uFF0C\u5468\u56F4\u7684\u573A\u666F\u53EF\u80FD\u53D1\u751F\u53D8\u5316\uFF0C\u5E76\u4E14\u53EF\u80FD\u6709\u4E00\u4E9B\u80FD\u91CF\u67F1\u5E76\u4E0D\u5B58\u5728\uFF0C\u8BF7\u6CE8\u610F\u8BE5\u53D8\u5316\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 4084940506222867907, guid: 3a081daeda3e1cd4b83a5c736c8b8610,
         type: 3}

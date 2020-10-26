@@ -22961,6 +22961,11 @@ PrefabInstance:
       propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 298741143}
+    - target: {fileID: 3422880219740837414, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[0].message
+      value: "\u524D\u65B9\u6709\u4E00\u9053\u6C9F\u58D1\uFF0C\u6309Space\u952E\u8FDB\u884C\u5F53\u524D\u65B9\u5411\u95EA\u70C1\u3002"
+      objectReference: {fileID: 0}
     - target: {fileID: 3422880219951470297, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -22981,6 +22986,46 @@ PrefabInstance:
         type: 3}
       propertyPath: actions.m_PersistentCalls.m_Calls.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422880220131828663, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422880220131828663, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[3].message
+      value: "\u597D\uFF0C\u90A3\u5C31\u8BA9\u6211\u6765\u8BD5\u8BD5\u770B\u5427\u3002\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422880220131828663, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[3].name
+      value: "\u738B\u5B50"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422880220131828663, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[1].message
+      value: "\u5E76\u4E14\u8BF7\u60A8\u6CE8\u610F\uFF0C\u5B9E\u9A8C\u5BA4\u4E2D\u653E\u7F6E\u6709\u88AB\u79F0\u4E3A<\u65F6\u7A7A\u5947\u70B9\u7684\u955C\u5B50>\u7684\u4E1C\u897F\u3002\u6839\u636E\u5B9E\u9A8C\u6709\u63A8\u6D4B\uFF0C\u5B83\u80FD\u8BA9\u4EBA\u8FDB\u884C\u65F6\u7A7A\u7A7F\u8D8A\u3002\u4F46\u7531\u4E8E\u5176\u9644\u5E26\u7684\u5F3A\u70C8\u7834\u574F\u6548\u679C\uFF0C\u6240\u6709\u5B9E\u9A8C\u4EBA\u5458\u90FD\u65E0\u6CD5\u7A7F\u8D8A\u6210\u529F\u3002\u7ECF\u8FC7\u65F6\u95F4\u7684\u6D17\u793C\uFF0C\u73B0\u5728\u5DF2\u5E94\u8D8B\u4E8E\u7A33\u5B9A\r\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422880220131828663, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[2].message
+      value: "\u6211\u4EEC\u63A8\u6D4B\u5728\u60A8\u7684\u7279\u6B8A\u80FD\u529B\u7684\u5E2E\u52A9\u4E0B\uFF0C\u5E94\u8BE5\u53EF\u4EE5\u5B8C\u6210\u8FD9\u4E00\u70B9\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422880220131828663, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[0].message
+      value: "\u8FDB\u7A0B\u4E2D\u65E5\u5FD7\u5C4F\u5E55\u524D\u6309E\u952E\u53EF\u4EE5\u8FDB\u884C\u67E5\u770B\u8FC7\u53BB\u4EBA\u4EEC\u7559\u4E0B\u7684\u4FE1\u606F\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422880220131828663, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[1].name
+      value: "\u667A\u5B50"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422880220131828663, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[2].name
+      value: "\u667A\u5B50"
       objectReference: {fileID: 0}
     - target: {fileID: 3422880220427809497, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
@@ -27567,6 +27612,11 @@ PrefabInstance:
       propertyPath: m_UsedByEffector
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7940575470248878474, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8082686288119216141, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: actions.m_PersistentCalls.m_Calls.Array.size
@@ -27575,7 +27625,7 @@ PrefabInstance:
     - target: {fileID: 8398891291721641887, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: messages.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8398891291721641887, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
@@ -27610,7 +27660,7 @@ PrefabInstance:
     - target: {fileID: 8398891291721641887, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: messages.Array.data[4].message
-      value: "\u4F46\u6211\u4EEC\u6700\u540E\u53D1\u73B0\u4E86\u4E00\u4E2A<\u5951\u673A>\uFF0C\u5E76\u5C06\u5176\u57CB\u85CF\u5728<\u6700\u540E\u7684\u5B9E\u9A8C\u5BA4>\u4E2D\u3002\u73B0\u5728\u5DF2\u7ECF\u5230\u8FBE\u60A8\u6240\u8BF4\u7684<\u6700\u540E\u7684\u65F6\u523B>\u3002"
+      value: "\u4F46\u6211\u4EEC\u6700\u540E\u53D1\u73B0\u4E86\u4E00\u4E2A<\u5951\u673A>\uFF0C\u5E76\u5C06\u5176\u57CB\u85CF\u5728<\u6700\u540E\u7684\u5B9E\u9A8C\u5BA4>\u4E2D\u3002\u73B0\u5728\u73B0\u5728\u4E3A\u827E\u745F\u5386801\u5E74\uFF0C\u5DF2\u7ECF\u5230\u8FBE\u60A8\u6240\u8BF4\u7684<\u6700\u540E\u7684\u65F6\u523B>\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 8398891291721641887, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
@@ -27620,12 +27670,23 @@ PrefabInstance:
     - target: {fileID: 8398891291721641887, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: messages.Array.data[5].message
-      value: "\u547D\u8FD0\u6765\u4E34\u4E86\u3002\u90A3\u5C31\u6307\u5F15\u6211\u524D\u8FDB\u5427\u3002\r"
+      value: "\u6211\u662F\u6700\u540E\u7559\u5B88\u5728\u8FD9\u91CC\u7684\u4EBA\u5DE5\u667A\u80FD\u667A\u5B50\uFF0C\u5C06\u7531\u6211\u6765\u5F15\u5BFC\u4F60\u5B8C\u6210\u63A5\u4E0B\u6765\u7684\u4F7F\u547D\r\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 8398891291721641887, guid: 0a63fe41472b129469ffa0a65dada09d,
         type: 3}
       propertyPath: messages.Array.data[5].name
-      value: "\u738B\u5B50"
+      value: "\u667A\u5B50"
       objectReference: {fileID: 0}
+    - target: {fileID: 8398891291721641887, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[6].message
+      value: "\u547D\u8FD0\u6765\u4E34\u4E86\u3002\u90A3\u5C31\u6307\u5F15\u6211\u524D\u8FDB\u5427\u3002\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398891291721641887, guid: 0a63fe41472b129469ffa0a65dada09d,
+        type: 3}
+      propertyPath: messages.Array.data[6]._bust
+      value: 
+      objectReference: {fileID: 21300000, guid: 66b887aa446b92445b2dd4369bd525e1,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a63fe41472b129469ffa0a65dada09d, type: 3}
