@@ -58,7 +58,7 @@ namespace UI.MapSystem.Controls {
 		protected override void initializeOnce() {
 			base.initializeOnce();
 			bustIdDict.Add(WangZi, 0); // 0 表示跟随主角
-			bustIdDict.Add(Zhizi, 2);
+			bustIdDict.Add(Zhizi, 3);
 		}
 
 		#region 数据操作

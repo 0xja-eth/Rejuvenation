@@ -645,6 +645,7 @@ MonoBehaviour:
   map2: {fileID: 1493853869}
   dialogWindow: {fileID: 203126814}
   logWindow: {fileID: 1020559915}
+  deadWindow: {fileID: 0}
   splitCanvas: {fileID: 453596598}
   mainUIDisplay: {fileID: 992157329}
   playerPerfab: {fileID: 3358975077202514727, guid: 88696545c11e37e4a888fea5e69006f9,
@@ -732,8 +733,8 @@ Canvas:
   m_GameObject: {fileID: 606993344}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 622805541}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -741,8 +742,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingLayerID: 1162879463
+  m_SortingOrder: 80
   m_TargetDisplay: 0
 --- !u!224 &606993348
 RectTransform:
@@ -1240,6 +1241,51 @@ PrefabInstance:
     - target: {fileID: 201623445447581573, guid: 69640ad8630f0ca4e8dae530abb03e8f,
         type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 314743239154180407, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 314743239154180407, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 314743239154180407, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 314743239154180407, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555371363920032280, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700342020972215494, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700342020972215494, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700342020972215494, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700342020972215494, guid: 69640ad8630f0ca4e8dae530abb03e8f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

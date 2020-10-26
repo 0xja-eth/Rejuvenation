@@ -538,7 +538,7 @@ MonoBehaviour:
     attackAniFlip: 1
     _description: 
     _refreshType: 1
-    _frequency: 1
+    _frequency: 3
     _criticalRange: 4
     _generalBehaviour: 1
     _criticalBehaviour: 2
