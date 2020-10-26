@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013556726252049549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4069599169198552812}
@@ -4781,7 +4781,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4541788559196174378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4069599169198552812}
@@ -9509,6 +9509,95 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &4837508976901055563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1547023948606241221}
+  - component: {fileID: 7099647133183701588}
+  m_Layer: 16
+  m_Name: Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1547023948606241221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4837508976901055563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4069599169198552812}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7099647133183701588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4837508976901055563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.719
+  m_Color: {r: 0, g: 0.53669995, b: 0.8396226, a: 1}
+  m_Intensity: 2
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 30
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 2
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 4
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.2
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.09344572, y: -0.703666, z: 0}
+  - {x: 0.08845341, y: -0.7611338, z: 0}
+  - {x: 0.2661031, y: -0.76475954, z: 0}
+  - {x: 0.4979089, y: -0.68844426, z: 0}
+  - {x: 0.1300661, y: -0.5146276, z: 0}
+  - {x: -0.098124325, y: -0.27327207, z: 0}
+  - {x: -0.16577786, y: 0.015252605, z: 0}
+  - {x: -0.12408054, y: 0.25880095, z: 0}
+  - {x: 0.03937763, y: 0.44354376, z: 0}
+  - {x: 0.20905536, y: 0.59560764, z: 0}
+  - {x: 0.5118466, y: 0.6833732, z: 0}
+  - {x: 0.25010282, y: 0.75460154, z: 0}
+  - {x: -0.0193173, y: 0.7559167, z: 0}
+  - {x: -0.24578895, y: 0.67529464, z: 0}
+  - {x: -0.4235295, y: 0.54336786, z: 0}
+  - {x: -0.59576434, y: 0.35802665, z: 0}
+  - {x: -0.6640302, y: 0.13504398, z: 0}
+  - {x: -0.65710706, y: -0.08896169, z: 0}
+  - {x: -0.58150756, y: -0.3456804, z: 0}
+  - {x: -0.44905442, y: -0.5011689, z: 0}
+  - {x: -0.2636651, y: -0.6385635, z: 0}
 --- !u!1 &6344433871323983421
 GameObject:
   m_ObjectHideFlags: 0
@@ -9522,7 +9611,6 @@ GameObject:
   - component: {fileID: 506948187378267203}
   - component: {fileID: 859271692558789895}
   - component: {fileID: 607232698818203747}
-  - component: {fileID: 4565059671119746777}
   m_Layer: 16
   m_Name: SwordBullet
   m_TagString: Untagged
@@ -9543,6 +9631,7 @@ Transform:
   m_Children:
   - {fileID: 4046049679775206224}
   - {fileID: 6242069225541393465}
+  - {fileID: 1547023948606241221}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9670,61 +9759,3 @@ MonoBehaviour:
   skillProcessor: {fileID: 0}
   throughEntities: -1
   throughWalls: -1
---- !u!114 &4565059671119746777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6344433871323983421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LightType: 1
-  m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 0, g: 1, b: 1, a: 1}
-  m_Intensity: 2
-  m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 00000000
-  m_LightCookieSprite: {fileID: 0}
-  m_UseNormalMap: 0
-  m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
-  m_ShadowIntensity: 0
-  m_ShadowVolumeIntensity: 0
-  m_PointLightInnerAngle: 360
-  m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 2
-  m_PointLightDistance: 3
-  m_PointLightQuality: 1
-  m_ShapeLightParametricSides: 4
-  m_ShapeLightParametricAngleOffset: 0
-  m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.2
-  m_ShapeLightFalloffOffset: {x: 0, y: 0}
-  m_ShapePath:
-  - {x: -0.09344572, y: -0.703666, z: 0}
-  - {x: 0.08845341, y: -0.7611338, z: 0}
-  - {x: 0.2661031, y: -0.76475954, z: 0}
-  - {x: 0.4979089, y: -0.68844426, z: 0}
-  - {x: 0.1300661, y: -0.5146276, z: 0}
-  - {x: -0.098124325, y: -0.27327207, z: 0}
-  - {x: -0.16577786, y: 0.015252605, z: 0}
-  - {x: -0.12408054, y: 0.25880095, z: 0}
-  - {x: 0.03937763, y: 0.44354376, z: 0}
-  - {x: 0.20905536, y: 0.59560764, z: 0}
-  - {x: 0.5118466, y: 0.6833732, z: 0}
-  - {x: 0.25010282, y: 0.75460154, z: 0}
-  - {x: -0.0193173, y: 0.7559167, z: 0}
-  - {x: -0.24578895, y: 0.67529464, z: 0}
-  - {x: -0.4235295, y: 0.54336786, z: 0}
-  - {x: -0.59576434, y: 0.35802665, z: 0}
-  - {x: -0.6640302, y: 0.13504398, z: 0}
-  - {x: -0.65710706, y: -0.08896169, z: 0}
-  - {x: -0.58150756, y: -0.3456804, z: 0}
-  - {x: -0.44905442, y: -0.5011689, z: 0}
-  - {x: -0.2636651, y: -0.6385635, z: 0}
