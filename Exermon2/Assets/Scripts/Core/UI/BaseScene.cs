@@ -64,7 +64,7 @@ namespace Core.UI {
             base.initializeOnce();
             initializeSceneUtils();
             initializeOthers();
-			checkFirstScene();
+			//checkFirstScene();
 		}
 
         /// <summary>
