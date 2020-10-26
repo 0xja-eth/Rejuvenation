@@ -89,6 +89,12 @@ namespace Core.UI {
 
 		#endregion
 		*/
+
+		/// <summary>
+		/// 内置元素
+		/// </summary>
+		Transform transform { get; }
+		
 		/// <summary>
 		/// RectTransform
 		/// </summary>
