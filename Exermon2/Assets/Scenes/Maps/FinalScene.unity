@@ -2089,6 +2089,11 @@ PrefabInstance:
       propertyPath: actions.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1392905627328380785, guid: 1349b35674ce6d544b8d1d5664187953,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1709827824943219448, guid: 1349b35674ce6d544b8d1d5664187953,
         type: 3}
       propertyPath: m_RootOrder
@@ -2098,6 +2103,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328351995868785747, guid: 1349b35674ce6d544b8d1d5664187953,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3860663044701566432, guid: 1349b35674ce6d544b8d1d5664187953,
         type: 3}
