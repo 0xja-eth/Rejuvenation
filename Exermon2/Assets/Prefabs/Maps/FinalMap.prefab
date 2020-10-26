@@ -17495,7 +17495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 1
   active: 0
-  type: 0
+  type: 1
   player: {fileID: 0}
 --- !u!1 &9045182883880941040
 GameObject:
