@@ -1,45 +1,24 @@
 fileFormatVersion: 2
-guid: ec21b954dd3553544a092439be43eac9
+guid: 1e910e42aa886564aa1b19580d4dec8d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2836990889036095894
-    second: Battler_4_0
+      213: -7142407384910453236
+    second: Battler_4_Em_0
   - first:
-      213: -3028227100751065100
-    second: Battler_4_1
+      213: 985966742539626215
+    second: Battler_4_Em_1
   - first:
-      213: -720577918192332743
-    second: Battler_4_2
+      213: -7120805813890080774
+    second: Battler_4_Em_2
   - first:
-      213: 8491358574968000055
-    second: Battler_4_3
-  - first:
-      213: 5896429837351690974
-    second: Battler_4_4
-  - first:
-      213: -7756202469842822938
-    second: Battler_4_5
-  - first:
-      213: -7589857321460723074
-    second: Battler_4_6
-  - first:
-      213: 5034644654469403640
-    second: Battler_4_7
-  - first:
-      213: -8980935177145573827
-    second: Battler_4_8
-  - first:
-      213: 6163983193410922540
-    second: Battler_4_9
-  - first:
-      213: -621250133011587022
-    second: Battler_4_10
+      213: -2794615361170035915
+    second: Battler_4_Em_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -67,8 +46,8 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -100
-    wrapU: 1
-    wrapV: 1
+    wrapU: -1
+    wrapV: -1
     wrapW: -1
   nPOTScale: 0
   lightmap: 0
@@ -82,9 +61,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   maxTextureSizeSet: 0
@@ -119,106 +98,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Battler_4_6
+      name: Battler_4_Em_1
       rect:
         serializedVersion: 2
-        x: 119
-        y: 20
-        width: 71
-        height: 71
-      alignment: 9
-      pivot: {x: 0.43, y: 0.07}
+        x: 335
+        y: 43
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e729f6a9af86ba690800000000000000
-      internalID: -7589857321460723074
+      spriteID: 7e66c69478bdead00800000000000000
+      internalID: 985966742539626215
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Battler_4_7
+      name: Battler_4_Em_2
       rect:
         serializedVersion: 2
-        x: 204
-        y: 19
-        width: 64
-        height: 72
-      alignment: 9
-      pivot: {x: 0.43, y: 0.07}
+        x: 411
+        y: 43
+        width: 24
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f3d7f773a6aed540800000000000000
-      internalID: 5034644654469403640
+      spriteID: aff9b8407d0dd2d90800000000000000
+      internalID: -7120805813890080774
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Battler_4_8
+      name: Battler_4_Em_3
       rect:
         serializedVersion: 2
-        x: 280
-        y: 19
-        width: 68
-        height: 72
-      alignment: 9
-      pivot: {x: 0.43, y: 0.07}
+        x: 490
+        y: 43
+        width: 24
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3e9d671a0f4d5380800000000000000
-      internalID: -8980935177145573827
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Battler_4_9
-      rect:
-        serializedVersion: 2
-        x: 356
-        y: 20
-        width: 79
-        height: 71
-      alignment: 9
-      pivot: {x: 0.43, y: 0.07}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c286cb46e0eda8550800000000000000
-      internalID: 6163983193410922540
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Battler_4_10
-      rect:
-        serializedVersion: 2
-        x: 435
-        y: 20
-        width: 79
-        height: 71
-      alignment: 9
-      pivot: {x: 0.43, y: 0.07}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2302e29ab40e067f0800000000000000
-      internalID: -621250133011587022
+      spriteID: 53b2c91b2288739d0800000000000000
+      internalID: -2794615361170035915
       vertices: []
       indices: 
       edges: []
@@ -226,15 +163,13 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 473b893bc9cc79d4d8a492f309c60658
+    spriteID: 9c11f1b014d862e41bed44fdc9353bdf
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: 1e910e42aa886564aa1b19580d4dec8d, type: 3}
-      name: _Emission
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -52,13 +52,15 @@ namespace UI.MapSystem.Controls {
         /// 更新子弹
         /// </summary>
         void udpateBullet() {
+            var bullets = new List<BigBulletProcessor>(this.bullets);
+
             foreach (var bullet in bullets) {
                 if (!bullet) return;
                 if (bullet.destroyFlag) {
-                    bullets.Remove(bullet);
                     bullet.destroy(true);
+                    this.bullets.Remove(bullet);
+                    //bullet = null;
                 }
-
             }
         }
 
