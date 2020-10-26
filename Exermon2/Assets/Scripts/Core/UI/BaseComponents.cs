@@ -17,7 +17,7 @@ namespace Core.UI {
 	/// 组件接口
 	/// </summary>
 	public interface IBaseComponent {
-
+		/*
 		#region Unity内置元素
 
 		//
@@ -88,7 +88,7 @@ namespace Core.UI {
 		Component light { get; }
 
 		#endregion
-
+		*/
 		/// <summary>
 		/// RectTransform
 		/// </summary>

@@ -66,15 +66,26 @@ namespace UI.BattleSystem.Controls {
         bool flashBegin = false;//角色是否开始消失
         bool flashEnd = false;//角色是否开始出现
 
-        /// <summary>
-        /// 分身
-        /// </summary>
-        List<MapSeperation> mapSeperations = null;
+		/// <summary>
+		/// 碰撞的事件
+		/// </summary>
+		List<MapEvent> collEvents = new List<MapEvent>();
 
-        /// <summary>
-        /// 外部系统设置
-        /// </summary>
-        protected GameService gameSer;
+		/// <summary>
+		/// 乘降标志
+		/// </summary>
+		[HideInInspector]
+		public bool keyTipVehicle = false;
+
+		/// <summary>
+		/// 分身
+		/// </summary>
+		List<MapSeperation> mapSeperations = null;
+
+		/// <summary>
+		/// 外部系统设置
+		/// </summary>
+		protected GameService gameSer;
         protected PlayerService playerSer;
 
         #region 初始化
@@ -93,7 +104,7 @@ namespace UI.BattleSystem.Controls {
         protected override void initializeCollFuncs() {
             base.initializeCollFuncs();
             registerOnEnterFunc<MapEvent>(onEventCollEnter);
-            registerOnStayFunc<MapEvent>(onEventCollStay);
+            //registerOnStayFunc<MapEvent>(onEventCollStay);
             registerOnExitFunc<MapEvent>(onEventCollExit);
 		}
 
@@ -114,8 +125,10 @@ namespace UI.BattleSystem.Controls {
         protected override void update() {
             base.update();
 
-            //测试用，跳过对话
-            if (Input.GetKey(KeyCode.T)) {
+			updateEventsStay();
+
+			//测试用，跳过对话
+			if (Input.GetKey(KeyCode.T)) {
                 MapModule.Services.MessageService.Get().messages.Clear();
             }
 		}
@@ -249,30 +262,52 @@ namespace UI.BattleSystem.Controls {
             return search || searching;
         }
 
-        /// <summary>
-        /// 事件碰撞开始
-        /// </summary>
-        /// <param name="player"></param>
-        void onEventCollEnter(MapEvent event_) {
-            event_.processTrigger(this, MapEventPage.TriggerType.CollEnter);
+		/// <summary>
+		/// 更新事件停留
+		/// </summary>
+		void updateEventsStay() {
+			if (keyTipVehicle) return;
+
+			var search = false;
+			foreach (var event_ in collEvents)
+				search = onEventCollStay(event_) || search; // 顺序不能改变
+
+			if(keyTip) keyTip.SetActive(search);
+		}
+
+		/// <summary>
+		/// 事件碰撞开始
+		/// </summary>
+		/// <param name="player"></param>
+		void onEventCollEnter(MapEvent event_) {
+			if (!collEvents.Contains(event_))
+				collEvents.Add(event_);
+
+			event_.processTrigger(this, MapEventPage.TriggerType.CollEnter);
         }
 
-        /// <summary>
-        /// 事件碰撞持续
-        /// </summary>
-        /// <param name="player"></param>
-        void onEventCollStay(MapEvent event_) {
-            event_.processTrigger(this, search ?
-                MapEventPage.TriggerType.CollSearch :
-                MapEventPage.TriggerType.CollStay);
-        }
+		/// <summary>
+		/// 事件碰撞持续
+		/// </summary>
+		/// <param name="player"></param>
+		bool onEventCollStay(MapEvent event_) {
+			event_.processTrigger(this,
+				MapEventPage.TriggerType.CollStay);
+			if (search) event_.processTrigger(this,
+				MapEventPage.TriggerType.CollSearch);
 
-        /// <summary>
-        /// 事件碰撞结束
-        /// </summary>
-        /// <param name="player"></param>
-        void onEventCollExit(MapEvent event_) {
-            event_.processTrigger(this, MapEventPage.TriggerType.CollExit);
+			return event_.isCurrentSearch();
+		}
+
+		/// <summary>
+		/// 事件碰撞结束
+		/// </summary>
+		/// <param name="player"></param>
+		void onEventCollExit(MapEvent event_) {
+			if (collEvents.Contains(event_))
+				collEvents.Remove(event_);
+
+			event_.processTrigger(this, MapEventPage.TriggerType.CollExit);
         }
 
         #endregion

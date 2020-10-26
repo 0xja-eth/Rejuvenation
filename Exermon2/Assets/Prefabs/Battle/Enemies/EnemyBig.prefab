@@ -303,7 +303,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.433, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5023392157157090283}
   - {fileID: 3479919003036810849}
   m_Father: {fileID: 3413261519202816937}
   m_RootOrder: 2
@@ -625,7 +624,7 @@ MonoBehaviour:
   customEnemy:
     cacheable: 1
     _name: "\u673A\u5668\u4EBAB"
-    _mhp: 4
+    _mhp: 6
     _speed: 1
     _attack: 0
     _defense: 0
@@ -639,8 +638,8 @@ MonoBehaviour:
     attackAniFlip: 1
     _description: 
     _refreshType: 1
-    _frequency: 6
-    _criticalRange: 4
+    _frequency: 9
+    _criticalRange: 6
     _generalBehaviour: 1
     _criticalBehaviour: 2
 --- !u!114 &3413261519202816934
@@ -736,99 +735,6 @@ MonoBehaviour:
   autoZ: 1
   map: {fileID: 0}
   battler: {fileID: 0}
---- !u!1 &5023392157157090282
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5023392157157090283}
-  - component: {fileID: 5023392157157090280}
-  - component: {fileID: 6252147613592401861}
-  m_Layer: 12
-  m_Name: NormalAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5023392157157090283
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5023392157157090282}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.433, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1809004709218277863}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &5023392157157090280
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5023392157157090282}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 0.75}
-      - {x: -0.8, y: 1.25}
-      - {x: -0.8, y: -0.5}
-      - {x: 0, y: 0}
---- !u!114 &6252147613592401861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5023392157157090282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b071c2ccf40c864e80c03d1fbbed606, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showDebug: 0
-  collider: {fileID: 5023392157157090280}
-  rate: 10
-  useCustomParams: 1
-  customSkill:
-    cacheable: 1
-    _name: "\u77ED\u7A0B\u653B\u51FB"
-    _description: 
-    _rangeType: 0
-    _frequency: 0
-    _speed: 0
-    _range: 0
-    _power: 1
-    _hitting: 0.8
-    _freezing: 0.1
-    _startAnimation: {fileID: 7400000, guid: ae31fc19a23ebf34eac39f111bf1a1bf, type: 2}
-    _targetAnimation: {fileID: 7400000, guid: d5562b2009bacc84cb812c2971c12062, type: 2}
-  speed: 1
-  range: 4
-  battler: {fileID: 0}
 --- !u!1 &5355653915258119724
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,7 +814,7 @@ SpriteRenderer:
   m_Size: {x: 1.4791666, y: 1.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!1 &6063730517493158019
@@ -1034,7 +940,7 @@ PrefabInstance:
     - target: {fileID: 7891810647444413499, guid: 32d7da2fbcaf92745918c3be0fc50642,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7891810647444413499, guid: 32d7da2fbcaf92745918c3be0fc50642,
         type: 3}

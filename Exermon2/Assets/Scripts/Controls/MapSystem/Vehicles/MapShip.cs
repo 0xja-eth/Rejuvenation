@@ -19,6 +19,11 @@ namespace UI.MapSystem.Controls {
     /// </summary>
     public class MapShip : MapVehicle {
 
+		/// <summary>
+		/// 常量定义
+		/// </summary>
+		const int GroundLayer = 13;
+
         /// <summary>
         /// 外部变量设置
         /// </summary>
@@ -169,35 +174,43 @@ namespace UI.MapSystem.Controls {
         /// <summary>
         /// 人进入船碰撞体
         /// </summary>
-        void onColliderEnterWithPlayer(MapPlayer p) {
-            p?.keyTip.SetActive(true);
-        }
+        void onColliderEnterWithPlayer(MapPlayer player) {
+			if (!player) return;
+			player.keyTip.SetActive(true);
+			player.keyTipVehicle = true;
+		}
 
         /// <summary>
         /// 船进入地面碰撞体
         /// </summary>
         /// <param name="region"></param>
         void onColliderEnterWithGround(MapRegion region) {
-            if (region.gameObject.layer == 13)//"Ground"
-                player?.keyTip.SetActive(true);
+			if (player && region.gameObject.layer == GroundLayer) {
+				player.keyTip.SetActive(true);
+				player.keyTipVehicle = true;
+			}
         }
 
         /// <summary>
         /// 人离开船碰撞体
         /// </summary>
-        /// <param name="p"></param>
-        void onColliderExitWithPlayer(MapPlayer p) {
-            p?.keyTip.SetActive(false);
-        }
+        /// <param name="player"></param>
+        void onColliderExitWithPlayer(MapPlayer player) {
+			if (!player) return;
+			player?.keyTip.SetActive(false);
+			player.keyTipVehicle = false;
+		}
 
-        /// <summary>
-        /// 船离开地面碰撞体
-        /// </summary>
-        /// <param name="region"></param>
-        void onColliderExitWithGround(MapRegion region) {
-            if (region.gameObject.layer == 13)//"Ground"
-                player?.keyTip.SetActive(false);
-        }
+		/// <summary>
+		/// 船离开地面碰撞体
+		/// </summary>
+		/// <param name="region"></param>
+		void onColliderExitWithGround(MapRegion region) {
+            if (player && region.gameObject.layer == GroundLayer) {
+				player.keyTip.SetActive(false);
+				player.keyTipVehicle = false;
+			}
+		}
 
         #endregion
     }

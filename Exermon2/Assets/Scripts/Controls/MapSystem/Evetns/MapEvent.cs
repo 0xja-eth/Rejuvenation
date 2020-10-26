@@ -94,6 +94,15 @@ namespace UI.MapSystem.Controls {
 		}
 
 		/// <summary>
+		/// 当前事件页是否需要Search触发
+		/// </summary>
+		/// <returns></returns>
+		public bool isCurrentSearch() {
+			if (currentPage() == null) return false;
+			return currentPage().triggerType == MapEventPage.TriggerType.CollSearch;
+		}
+
+		/// <summary>
 		/// 添加事件
 		/// </summary>
 		/// <param name="action">事件</param>

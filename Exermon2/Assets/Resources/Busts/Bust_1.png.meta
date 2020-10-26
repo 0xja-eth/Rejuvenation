@@ -8,6 +8,12 @@ TextureImporter:
   - first:
       213: 7364682651488144517
     second: Fuwen-Present_Bust
+  - first:
+      213: 3190518152889444905
+    second: Fuwen-Present_Full
+  - first:
+      213: -8668538486133831830
+    second: Fuwen-Present_Bust
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -51,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 72
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -132,9 +138,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 71
-        width: 473
-        height: 596
+        y: 278
+        width: 2000
+        height: 2503
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,8 +148,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7465c336855befd0800000000000000
-      internalID: -2311659948842064771
+      spriteID: 92a29602b5ff64c20800000000000000
+      internalID: 3190518152889444905
       vertices: []
       indices: 
       edges: []
@@ -152,10 +158,10 @@ TextureImporter:
       name: Fuwen-Present_Bust
       rect:
         serializedVersion: 2
-        x: 107
-        y: 337
-        width: 366
-        height: 330
+        x: 452
+        y: 1429
+        width: 1517
+        height: 1351
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,8 +169,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58cce6d0adb943660800000000000000
-      internalID: 7364682651488144517
+      spriteID: a67c03cbc2a23b780800000000000000
+      internalID: -8668538486133831830
       vertices: []
       indices: 
       edges: []

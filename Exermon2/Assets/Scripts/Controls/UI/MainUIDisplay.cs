@@ -3,6 +3,8 @@
 using UI.Common.Controls.AnimationSystem;
 using UI.Common.Controls.ItemDisplays;
 
+using Core.UI;
+
 using MapModule.Data;
 using BattleModule.Data;
 using UnityEngine.UI;
@@ -20,8 +22,8 @@ namespace UI.Controls {
         /// <summary>
         /// 常量
         /// </summary>
-        const string ExitMessage = "确认退出？";
-        const string RetryMessage = "确认重来？";
+        const string ExitMessage = "确定结束复国之旅？";
+        const string RetryMessage = "确定重新开始本关？";
 
         /// <summary>
         /// 外部组件设置
@@ -31,7 +33,7 @@ namespace UI.Controls {
         public Text keyNumber;
         public Button confirmButton;
         public Button cancelButton;
-        public GameObject confirmUI;
+        public BaseWindow confirmUI;
         public Text confirmText;
 
         /// <summary>
@@ -189,7 +191,7 @@ namespace UI.Controls {
         /// 显示确认界面
         /// </summary>
         void confirmShow() {
-            confirmUI?.SetActive(true);
+            confirmUI?.activate();
             confirmButton.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
         }
@@ -198,7 +200,7 @@ namespace UI.Controls {
         /// 隐藏确认界面
         /// </summary>
         void confirmHide() {
-            confirmUI?.SetActive(false);
+            confirmUI?.deactivate();
         }
 
         /// <summary>
