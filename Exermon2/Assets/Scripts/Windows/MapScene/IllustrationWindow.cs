@@ -20,9 +20,14 @@ namespace UI.MapSystem.Windows {
     [RequireComponent(typeof(MessageBaseDisplay))]
     public class IllustrationWindow : BaseWindow {
 
-        /// <summary>
-        /// 外部控件
-        /// </summary>
+		/// <summary>
+		/// 外部组件设置
+		/// </summary>
+		public GameObject foreground; // 前景，用于最后窗口隐藏后覆盖在最上面的背景
+
+		/// <summary>
+		/// 外部变量设置
+		/// </summary>
         public List<DialogMessage> illustrationMessages;
 
         /// <summary>
@@ -35,14 +40,16 @@ namespace UI.MapSystem.Windows {
         /// 外部系统设置
         /// </summary>
         GameService gameSer;
+		SceneSystem sceneSys;
 
         #region 流程控制
+
         /// <summary>
         /// 开始
         /// </summary>
         protected override void start() {
             base.start();
-            next();
+            refreshMessage();
         }
 
         /// <summary>
@@ -50,22 +57,50 @@ namespace UI.MapSystem.Windows {
         /// </summary>
         public override void deactivate() {
             base.deactivate();
-            var titleScene = scene as TitleScene;
-            if (titleScene)
-                titleScene.startGame();
-
-            var finaleScene = scene as FinalScene;
-            if (finaleScene)
-                SceneSystem.Get().pushScene(SceneSystem.Scene.TitleScene);
         }
-        #endregion
 
-        #region 更新控制
+		/// <summary>
+		/// 窗口完全开启回调
+		/// </summary>
+		protected override void onWindowShown() {
+			base.onWindowShown();
+			if (foreground) foreground.SetActive(true);
+		}
 
-        /// <summary>
-        /// 更新
-        /// </summary>
-        protected override void update() {
+		/// <summary>
+		/// 窗口完全隐藏回调
+		/// </summary>
+		protected override void onWindowHidden() {
+			base.onWindowHidden();
+
+			if (hasMessages()) refreshMessage();
+			else processSceneChange();
+		}
+
+		/// <summary>
+		/// 处理场景切换
+		/// </summary>
+		void processSceneChange() {
+			// 开始游戏
+			var titleScene = scene as TitleScene;
+			if (titleScene) {
+				titleScene.startGame(); return;
+			}
+
+			// 游戏结束
+			var finaleScene = scene as FinalScene;
+			if (finaleScene)
+				sceneSys.gotoScene(SceneSystem.Scene.TitleScene);
+		}
+
+		#endregion
+
+		#region 更新控制
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		protected override void update() {
             base.update();
             updateInput();
         }
@@ -82,32 +117,34 @@ namespace UI.MapSystem.Windows {
 
         #region 内容绘制
 
-        /// <summary>
-        /// 刷新
-        /// </summary>
-        protected void next() {
-            debugLog("next refresh:" + illustrationMessages.Count);
-            if (illustrationMessages.Count != 0) {
-                var msg = illustrationMessages[0];
-                display.setItem(msg);
-                illustrationMessages.RemoveAt(0);
-                requestRefresh();
-            }
-            else
-                deactivate();
-        }
+		/// <summary>
+		/// 是否还有消息
+		/// </summary>
+		/// <returns></returns>
+		public bool hasMessages() {
+			return illustrationMessages.Count > 0;
+		}
 
-        #endregion
+		/// <summary>
+		/// 显示新消息
+		/// </summary>
+		public void refreshMessage() {
+			var msg = illustrationMessages[0];
+			illustrationMessages.RemoveAt(0);
+			display.setItem(msg);
+			activate();
+		}
 
-        #region 消息事件
+		#endregion
 
-        /// <summary>
-        /// 下一条消息或者快速展开文字
-        /// </summary>
-        void nextOrRevealAll() {
-            debugLog("next:" + display.printing);
+		#region 消息事件
+
+		/// <summary>
+		/// 下一条消息或者快速展开文字
+		/// </summary>
+		void nextOrRevealAll() {
             if (display.printing) display.stopPrint();
-            else next();
+            else deactivate();
         }
 
         #endregion

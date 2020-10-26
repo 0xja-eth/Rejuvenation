@@ -3,9 +3,14 @@
 using UI.Common.Controls.AnimationSystem;
 using UI.Common.Controls.ItemDisplays;
 
+using Core.UI;
+
 using MapModule.Data;
 using BattleModule.Data;
 using UnityEngine.UI;
+using UI.MapSystem;
+using Core.UI.Utils;
+using Core.Systems;
 
 namespace UI.Controls {
 
@@ -14,6 +19,11 @@ namespace UI.Controls {
     /// </summary>
     //[RequireComponent(typeof(SpriteRenderer))]
     public class MainUIDisplay : ItemDisplay<UIShowAttributes> {
+        /// <summary>
+        /// 常量
+        /// </summary>
+        const string ExitMessage = "确定结束复国之旅？";
+        const string RetryMessage = "确定重新开始本关？";
 
         /// <summary>
         /// 外部组件设置
@@ -21,10 +31,20 @@ namespace UI.Controls {
         public Image hpBar = null;
         public Image powerBar = null;
         public Text keyNumber;
+        public Button confirmButton;
+        public Button cancelButton;
+        public BaseWindow confirmUI;
+        public Text confirmText;
 
         /// <summary>
-        /// 内部变量定义
+        /// 场景组件
         /// </summary>
+        BaseMapScene scene => SceneUtils.getCurrentScene() as BaseMapScene;
+
+        /// <summary>
+        /// 外部系统
+        /// </summary>
+        SceneSystem sceneSys;
 
         #region 初始化
 
@@ -144,6 +164,58 @@ namespace UI.Controls {
             if (keyNumber) keyNumber.text = "";
         }
 
+        #endregion
+
+        #region 事件回调
+        /// <summary>
+        /// 点击退出
+        /// </summary>
+        public void onExitClicked() {
+            confirmShow();
+            confirmText.text = ExitMessage;
+            confirmButton.onClick.AddListener(onExit);
+            cancelButton.onClick.AddListener(confirmHide);
+        }
+
+        /// <summary>
+        /// 点击重试
+        /// </summary>
+        public void onRetryClicked() {
+            confirmShow();
+            confirmText.text = RetryMessage;
+            confirmButton.onClick.AddListener(onRetry);
+            cancelButton.onClick.AddListener(confirmHide);
+        }
+
+        /// <summary>
+        /// 显示确认界面
+        /// </summary>
+        void confirmShow() {
+            confirmUI?.activate();
+            confirmButton.onClick.RemoveAllListeners();
+            cancelButton.onClick.RemoveAllListeners();
+        }
+
+        /// <summary>
+        /// 隐藏确认界面
+        /// </summary>
+        void confirmHide() {
+            confirmUI?.deactivate();
+        }
+
+        /// <summary>
+        /// 返回主菜单
+        /// </summary>
+        public void onExit() {
+            sceneSys.gotoScene(SceneSystem.Scene.TitleScene);
+        }
+
+        /// <summary>
+        /// 重玩
+        /// </summary>
+        public void onRetry() {
+            scene.restartStage(false);
+        }
         #endregion
     }
 }
