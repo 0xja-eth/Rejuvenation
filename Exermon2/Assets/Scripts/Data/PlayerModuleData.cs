@@ -55,6 +55,8 @@ namespace PlayerModule.Data {
 			FusangBlock2,
 			FusangBlock3,
 			FusangBlock4,
+
+			DialogSwitch1, // 对话控制
 		}
 
 		/// <summary>

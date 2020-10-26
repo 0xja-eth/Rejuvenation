@@ -37,7 +37,7 @@ namespace UI.MapSystem.Controls {
 		public UnityEvent actions = new UnityEvent(); // 事件
 
 		/// <summary>
-		/// 显示的图片
+		/// 显示的图片（在地图上显示）
 		/// </summary>
 		[SerializeField]
 		Sprite _picture = null;
