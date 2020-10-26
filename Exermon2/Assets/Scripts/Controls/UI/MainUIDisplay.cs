@@ -17,6 +17,11 @@ namespace UI.Controls {
     /// </summary>
     //[RequireComponent(typeof(SpriteRenderer))]
     public class MainUIDisplay : ItemDisplay<UIShowAttributes> {
+        /// <summary>
+        /// 常量
+        /// </summary>
+        const string ExitMessage = "确认退出？";
+        const string RetryMessage = "确认重来？";
 
         /// <summary>
         /// 外部组件设置
@@ -24,6 +29,10 @@ namespace UI.Controls {
         public Image hpBar = null;
         public Image powerBar = null;
         public Text keyNumber;
+        public Button confirmButton;
+        public Button cancelButton;
+        public GameObject confirmUI;
+        public Text confirmText;
 
         /// <summary>
         /// 场景组件
@@ -156,6 +165,42 @@ namespace UI.Controls {
         #endregion
 
         #region 事件回调
+        /// <summary>
+        /// 点击退出
+        /// </summary>
+        public void onExitClicked() {
+            confirmShow();
+            confirmText.text = ExitMessage;
+            confirmButton.onClick.AddListener(onExit);
+            cancelButton.onClick.AddListener(confirmHide);
+        }
+
+        /// <summary>
+        /// 点击重试
+        /// </summary>
+        public void onRetryClicked() {
+            confirmShow();
+            confirmText.text = RetryMessage;
+            confirmButton.onClick.AddListener(onRetry);
+            cancelButton.onClick.AddListener(confirmHide);
+        }
+
+        /// <summary>
+        /// 显示确认界面
+        /// </summary>
+        void confirmShow() {
+            confirmUI?.SetActive(true);
+            confirmButton.onClick.RemoveAllListeners();
+            cancelButton.onClick.RemoveAllListeners();
+        }
+
+        /// <summary>
+        /// 隐藏确认界面
+        /// </summary>
+        void confirmHide() {
+            confirmUI?.SetActive(false);
+        }
+
         /// <summary>
         /// 返回主菜单
         /// </summary>
