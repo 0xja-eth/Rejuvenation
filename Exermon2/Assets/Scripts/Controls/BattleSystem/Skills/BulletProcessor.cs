@@ -142,7 +142,7 @@ namespace UI.MapSystem.Controls {
 		/// 更新碰撞体
 		/// </summary>
 		void updateCollider() {
-			collider.enabled = !skillProcessor.isTerminated();
+			//collider.enabled = !skillProcessor.isTerminated();
         }
 
         /// <summary>
