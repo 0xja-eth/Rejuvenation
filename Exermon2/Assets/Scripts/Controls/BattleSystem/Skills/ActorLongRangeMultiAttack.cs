@@ -58,6 +58,7 @@ namespace UI.MapSystem.Controls {
                 if (!bullet) return;
 
                 if (battler.runtimeBattler.isDead()) {
+                    bullet.destroy();
                 }
                 if (bullet.destroyFlag) {
                     bullet.destroy(true);
@@ -103,6 +104,8 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         /// <returns></returns>
         BigBulletProcessor createBullet() {
+            if (battler.runtimeBattler.isDead())
+                return null;
             var obj = Instantiate(bulletPerfab, world);
             var bullet = SceneUtils.get<BigBulletProcessor>(obj);
             obj.name = "big bullet" + bullets.Count;
@@ -114,6 +117,8 @@ namespace UI.MapSystem.Controls {
             for (int i = 0; i < 5; i++) {
                 yield return new WaitForSeconds(0.8f);
                 var bullet = createBullet();
+                if (bullet == null)
+                    break;
 
                 bullets.Add(bullet);
                 bullet.activate(this, battler.direction);
