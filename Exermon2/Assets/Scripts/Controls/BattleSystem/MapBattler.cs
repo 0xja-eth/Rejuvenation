@@ -173,6 +173,8 @@ namespace UI.BattleSystem.Controls {
 		/// 受击回调
 		/// </summary>
 		protected virtual void onHit() {
+			// 取消技能
+			
 			onFreezeStart();
 		}
 
@@ -369,7 +371,7 @@ namespace UI.BattleSystem.Controls {
 		}
 
 		/// <summary>
-		/// 行动开始F
+		/// 行动结束
 		/// </summary>
 		protected virtual void onActionEnd() {
 			runtimeBattler.onActionEnd(currentAction);

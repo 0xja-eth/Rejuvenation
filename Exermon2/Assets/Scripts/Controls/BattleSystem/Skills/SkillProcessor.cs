@@ -135,7 +135,8 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isTerminated() {
-			return isStarted && !battler.isPlayingSkillAnimation();
+			if (!isStarted) return true;
+			return !battler.isPlayingSkillAnimation();
 		}
 
 		/// <summary>
