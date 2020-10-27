@@ -303,15 +303,14 @@ namespace UI.MapSystem {
 
 			traveling = true;
 
+			playEffect();
 			currentMap.travel(getMap(timeType = type));
-			playEffect(type);
 		}
 
 		/// <summary>
 		/// 执行切换效果
 		/// </summary>
-		/// <param name="type"></param>
-		void playEffect(TimeType type) {
+		void playEffect() {
 			animator.setVar(TravelAttrName);
 
 			// 以镜子为中心进行扭曲
