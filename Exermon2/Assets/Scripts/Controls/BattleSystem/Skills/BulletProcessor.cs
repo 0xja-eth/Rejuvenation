@@ -124,15 +124,25 @@ namespace UI.MapSystem.Controls {
         protected override void update() {
             base.update();
 
+			updateProcessor();
+			if (!skillProcessor) return;
+
             updateCollider();
             updateRange();
         }
 
-        /// <summary>
-        /// 更新碰撞体
-        /// </summary>
-        void updateCollider() {
-            collider.enabled = !skillProcessor.isTerminated();
+		/// <summary>
+		/// 更新处理器（使用者是否死亡）
+		/// </summary>
+		void updateProcessor() {
+			if (!skillProcessor) destroy(true);
+		}
+
+		/// <summary>
+		/// 更新碰撞体
+		/// </summary>
+		void updateCollider() {
+			collider.enabled = !skillProcessor.isTerminated();
         }
 
         /// <summary>
