@@ -54,6 +54,7 @@ namespace UI.MapSystem.Controls {
 
 			foreach (var bullet in bullets) {
                 if (!bullet) return;
+                if (battler.runtimeBattler.isDead()) bullet.destroy();
                 if (bullet.destroyFlag) {
                     bullet.destroy(true);
                     this.bullets.Remove(bullet);
