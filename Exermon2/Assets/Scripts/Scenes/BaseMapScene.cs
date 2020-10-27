@@ -478,6 +478,9 @@ namespace UI.MapSystem {
             else if (Input.GetKeyDown(KeyCode.Y)) {
                 Debug.Log("K " + messageSer.messageCount());
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha5)) {
+                changeNextStage();
+            }
         }
 
         #endregion
