@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b8fcbe2429a22645bb0d4b4807d6382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 0
+  showDebug: 1
   sprite: {fileID: 0}
   eventPlayer: {fileID: 0}
 --- !u!114 &5323425619040689252
@@ -272,22 +272,13 @@ MonoBehaviour:
   triggerType: 5
   actions:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 93129127615806488}
-        m_MethodName: A
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _picture: {fileID: 0}
+      m_Calls: []
+  _picture: {fileID: -349315402007839180, guid: 33577b5d85e03d94cb0e9a1431666987,
+    type: 3}
   invokeOnce: 1
   mapEvent: {fileID: 0}
   isDialog: 1
+  relatedSwitch: 0
   messages:
   - cacheable: 0
     message: "\u4F60\u9192\u4E86\uFF1F"

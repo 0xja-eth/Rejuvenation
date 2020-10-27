@@ -80,6 +80,10 @@ namespace UI.MapSystem.Controls {
 		/// </summary>
 		public override void onUse() {
 			base.onUse();
+
+            if (battler.runtimeBattler.isDead())
+                return;
+
             var bullet = createBullet();
             bullets.Add(bullet);
 		}

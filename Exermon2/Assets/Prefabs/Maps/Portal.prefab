@@ -120,9 +120,9 @@ MonoBehaviour:
   actions:
     m_PersistentCalls:
       m_Calls: []
-  _picture: {fileID: 0}
+  _picture: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   invokeOnce: 0
-  needGater: 0
+  mapEvent: {fileID: 0}
 --- !u!1 &704038675803228755
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 704038675803228753}
   eventPlayer: {fileID: 0}
 --- !u!114 &648446413
 MonoBehaviour:
@@ -4990,7 +4990,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 24
+  m_SortingOrder: 20
   m_RenderMode: 4
   m_SortMode: 0
   m_MinParticleSize: 0

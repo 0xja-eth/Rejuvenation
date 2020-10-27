@@ -96,22 +96,27 @@ namespace UI.MapSystem.Controls {
 
 		#region 界面刷新
 
-		/// <summary>
-		/// 绘制物品
-		/// </summary>
-		/// <param name="item"></param>
-		protected override void drawExactlyItem(MapEventPage item) {
-			base.drawExactlyItem(item);
-			if (sprite) sprite.sprite = item.picture;
-		}
+        //紧急修复
+		///// <summary>
+		///// 绘制物品
+		///// </summary>
+		///// <param name="item"></param>
+		//protected override void drawExactlyItem(MapEventPage item) {
+		//	base.drawExactlyItem(item);
+  //          debugLog("AAAAA" + sprite);
+  //          debugLog("AAAAA" + item);
+  //          debugLog("AAAAA" + item.picture);
+  //          if (sprite) sprite.sprite = item.picture;
+		//}
 
-		/// <summary>
-		/// 绘制空物品
-		/// </summary>
-		protected override void drawEmptyItem() {
-			base.drawEmptyItem();
-			if (sprite) sprite.sprite = null;
-		}
+		///// <summary>
+		///// 绘制空物品
+		///// </summary>
+		//protected override void drawEmptyItem() {
+		//	base.drawEmptyItem();
+  //          debugLog("AAAAAB" + sprite);
+  //          if (sprite) sprite.sprite = null;
+		//}
 
 		#endregion
 	}
