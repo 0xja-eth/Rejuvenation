@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  promptLayer: {fileID: 449017070}
+  promptLayer: {fileID: 0}
   audioSource: {fileID: 505041162}
   bgmClip: {fileID: 8300000, guid: 650210d711736324ab37b0e222b5840d, type: 3}
   camera: {fileID: 622805541}
@@ -309,7 +309,7 @@ MonoBehaviour:
   logWindow: {fileID: 449017068}
   deadWindow: {fileID: 449017067}
   splitCanvas: {fileID: 75998918}
-  mainUIDisplay: {fileID: 449017066}
+  mainUIDisplay: {fileID: 0}
   playerPerfab: {fileID: 3358975077202514727, guid: 88696545c11e37e4a888fea5e69006f9,
     type: 3}
   timeTravelEffect: {fileID: 0}
@@ -575,11 +575,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4175447467387906849, guid: ef9b6c6ff3b208548837f00da961698d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -810
-      objectReference: {fileID: 0}
     - target: {fileID: 8198088938266596954, guid: ef9b6c6ff3b208548837f00da961698d,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -607,18 +602,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef9b6c6ff3b208548837f00da961698d, type: 3}
---- !u!114 &449017066 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3455770070404960306, guid: ef9b6c6ff3b208548837f00da961698d,
-    type: 3}
-  m_PrefabInstance: {fileID: 449017065}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb6d22ba50361e042b740a2abbef8f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &449017067 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1898778821980516978, guid: ef9b6c6ff3b208548837f00da961698d,
@@ -653,18 +636,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4345d766cf828814e863b5d40c38c447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &449017070 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1809907167559863974, guid: ef9b6c6ff3b208548837f00da961698d,
-    type: 3}
-  m_PrefabInstance: {fileID: 449017065}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282728a028abdd340830050d5dbb3c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &505041161
