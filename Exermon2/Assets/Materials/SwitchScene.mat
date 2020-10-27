@@ -26,6 +26,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_4872583E: 0
-    - _Strength: -0.16872853
+    - _Strength: -0.101389766
     m_Colors:
-    - _CenterPos: {r: 0.46210575, g: 0.07839811, b: 0, a: 0}
+    - _CenterPos: {r: 0.8602351, g: 0.20050225, b: 0, a: 0}
