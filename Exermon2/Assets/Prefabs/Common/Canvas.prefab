@@ -30,7 +30,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 3455770070404960305}
+  - {fileID: 8082200661062507790}
   - {fileID: 4175447467387906849}
   - {fileID: 6060570364958815835}
   - {fileID: 5517717707362200352}
@@ -815,7 +815,7 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3258657680659311295}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3258657680920373916
+--- !u!1001 &8279289410915116963
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1024,9 +1024,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69640ad8630f0ca4e8dae530abb03e8f, type: 3}
---- !u!224 &3455770070404960305 stripped
+--- !u!224 &8082200661062507790 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 201623445177465517, guid: 69640ad8630f0ca4e8dae530abb03e8f,
     type: 3}
-  m_PrefabInstance: {fileID: 3258657680920373916}
+  m_PrefabInstance: {fileID: 8279289410915116963}
   m_PrefabAsset: {fileID: 0}
