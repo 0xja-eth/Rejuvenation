@@ -99,10 +99,11 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         /// <returns></returns>
         BigBulletProcessor createBullet() {
-
             var obj = Instantiate(bulletPerfab, world);
             var bullet = SceneUtils.get<BigBulletProcessor>(obj);
 
+            if (battler.runtimeBattler.isDead())
+                return null;
             return bullet;
         }
 
@@ -111,6 +112,8 @@ namespace UI.MapSystem.Controls {
             for (int i = 0; i < 5; i++) {
                 yield return new WaitForSeconds(0.8f);
                 var bullet = createBullet();
+
+                if (!bullet) break;
                 bullets.Add(bullet);
 
                 bullet.activate(this, battler.direction);

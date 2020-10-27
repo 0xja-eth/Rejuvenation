@@ -107,7 +107,8 @@ MonoBehaviour:
   actions:
     m_PersistentCalls:
       m_Calls: []
-  _picture: {fileID: 0}
+  _picture: {fileID: -2790242883508383323, guid: 33577b5d85e03d94cb0e9a1431666987,
+    type: 3}
   invokeOnce: 1
   mapEvent: {fileID: 0}
   isDialog: 0
