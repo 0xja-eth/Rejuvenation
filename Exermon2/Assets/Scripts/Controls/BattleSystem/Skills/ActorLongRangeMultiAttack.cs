@@ -56,6 +56,10 @@ namespace UI.MapSystem.Controls {
 
             foreach (var bullet in bullets) {
                 if (!bullet) return;
+
+                if (battler.runtimeBattler.isDead()) {
+                    bullet.destroy();
+                }
                 if (bullet.destroyFlag) {
                     bullet.destroy(true);
                     this.bullets.Remove(bullet);
@@ -82,7 +86,8 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         public override void onUse() {
             base.onUse();
-
+            if (battler.runtimeBattler.isDead())
+                return;
             doRoutine("test");
         }
 
@@ -99,11 +104,11 @@ namespace UI.MapSystem.Controls {
         /// </summary>
         /// <returns></returns>
         BigBulletProcessor createBullet() {
-            var obj = Instantiate(bulletPerfab, world);
-            var bullet = SceneUtils.get<BigBulletProcessor>(obj);
-
             if (battler.runtimeBattler.isDead())
                 return null;
+            var obj = Instantiate(bulletPerfab, world);
+            var bullet = SceneUtils.get<BigBulletProcessor>(obj);
+            obj.name = "big bullet" + bullets.Count;
             return bullet;
         }
 
@@ -112,12 +117,11 @@ namespace UI.MapSystem.Controls {
             for (int i = 0; i < 5; i++) {
                 yield return new WaitForSeconds(0.8f);
                 var bullet = createBullet();
+                if (bullet == null)
+                    break;
 
-                if (!bullet) break;
                 bullets.Add(bullet);
-
                 bullet.activate(this, battler.direction);
-
             }
 
         }
