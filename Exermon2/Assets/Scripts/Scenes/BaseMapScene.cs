@@ -303,8 +303,8 @@ namespace UI.MapSystem {
 
 			traveling = true;
 
-			currentMap.travel(getMap(timeType = type));
 			playEffect(type);
+			currentMap.travel(getMap(timeType = type));
 		}
 
 		/// <summary>
